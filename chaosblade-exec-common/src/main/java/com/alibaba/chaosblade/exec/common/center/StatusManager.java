@@ -1,0 +1,75 @@
+/*
+ * Copyright 1999-2019 Alibaba Group Holding Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.alibaba.chaosblade.exec.common.center;
+
+import java.util.List;
+import java.util.Map;
+
+import com.alibaba.chaosblade.exec.common.model.Model;
+
+/**
+ * @author Changjun Xiao
+ */
+public interface StatusManager extends ManagerService {
+
+    /**
+     * Register method enhancer name
+     *
+     * @param enhancerName
+     */
+    void registerEnhancer(String enhancerName);
+
+    /**
+     * Register the experiment rule
+     *
+     * @param model
+     * @return
+     */
+    RegisterResult registerExp(String uid, Model model);
+
+    /**
+     * Remove the experiment by exp uid
+     *
+     * @param uid
+     * @return
+     */
+    Model removeExp(String uid);
+
+    /**
+     * List all experiments
+     *
+     * @return
+     */
+    Map<String, List<StatusMetric>> listExps();
+
+    /**
+     * List experiments by the exp target
+     *
+     * @param targetName
+     * @return
+     */
+    List<StatusMetric> getExpByTarget(String targetName);
+
+    /**
+     * Assert the target experiment exist or not
+     *
+     * @param targetName
+     * @return
+     */
+    boolean expExists(String targetName);
+
+}

@@ -1,0 +1,132 @@
+/*
+ * Copyright 1999-2019 Alibaba Group Holding Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.alibaba.chaosblade.exec.plugin.dubbo;
+
+import java.lang.reflect.Method;
+
+import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author Changjun Xiao
+ */
+public abstract class DubboEnhancer extends BeforeEnhancer {
+
+    public static final String DEFAULT_VERSION = "0.0.0";
+    public static final String GET_URL = "getUrl";
+    public static final String GET_PARAMETER = "getParameter";
+    public static final String APPLICATION_KEY = "application";
+    public static final String GET_SERVICE_KEY = "getServiceKey";
+    public static final String GET_METHOD_NAME = "getMethodName";
+    public static final String SPLIT_TOKEN = ":";
+    public static final String GET_INVOKER = "getInvoker";
+    private static final Logger LOGGER = LoggerFactory.getLogger(DubboEnhancer.class);
+
+    @Override
+    public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
+                                        Method method, Object[]
+                                            methodArguments)
+        throws Exception {
+        Object invocation = methodArguments[0];
+        if (object == null || invocation == null) {
+            LOGGER.info("The necessary parameter is null.");
+            return null;
+        }
+        Object url = getUrl(object, invocation);
+        if (url == null) {
+            LOGGER.info("Url is null, can not get necessary values.");
+        }
+        String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {APPLICATION_KEY}, false);
+        String methodName = ReflectUtil.invokeMethod(invocation, GET_METHOD_NAME, new Object[0], false);
+        String[] serviceAndVersion = getServiceNameWithVersion(invocation, url);
+
+        MatcherModel matcherModel = new MatcherModel();
+        matcherModel.add(DubboConstant.APP_KEY, appName);
+        matcherModel.add(DubboConstant.SERVICE_KEY, serviceAndVersion[0]);
+        matcherModel.add(DubboConstant.VERSION_KEY, serviceAndVersion[1]);
+        matcherModel.add(DubboConstant.METHOD_KEY, methodName);
+        int timeout = getTimeout(methodName, object, invocation);
+        matcherModel.add(DubboConstant.TIMEOUT_KEY, timeout + "");
+
+        EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
+        enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout));
+
+        postDoBeforeAdvice(enhancerModel);
+        return enhancerModel;
+    }
+
+    protected abstract void postDoBeforeAdvice(EnhancerModel enhancerModel);
+
+    /**
+     * Get service name with version
+     *
+     * @param invocation
+     * @param url
+     * @return
+     * @throws Exception
+     */
+    private String[] getServiceNameWithVersion(Object invocation, Object url) throws Exception {
+        // com.alibaba.dubbo.demo.DemoService | com.alibaba.dubbo.demo.DemoService:1.0
+        String serviceKey = ReflectUtil.invokeMethod(url, GET_SERVICE_KEY, new Object[0], false);
+        if (serviceKey == null) {
+            LOGGER.warn("Service key is null in dubbo consumer. invocation: {}", invocation);
+            return null;
+        } else {
+            String[] serviceAndVersion = serviceKey.split(SPLIT_TOKEN);
+            if (serviceAndVersion.length == 1) {
+                return new String[] {serviceAndVersion[0], DEFAULT_VERSION};
+            }
+            return serviceAndVersion;
+        }
+    }
+
+    /**
+     * Get service timeout
+     *
+     * @param method
+     * @param instance
+     * @param invocation
+     * @return
+     */
+    protected abstract int getTimeout(String method, Object instance, Object invocation);
+
+    /**
+     * Get service url
+     *
+     * @param instance
+     * @param invocation
+     * @return
+     * @throws Exception
+     */
+    protected abstract Object getUrl(Object instance, Object invocation) throws Exception;
+
+    /**
+     * Create timeout executor
+     *
+     * @param classLoader
+     * @param timeout
+     * @return
+     */
+    protected abstract TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout);
+
+}
