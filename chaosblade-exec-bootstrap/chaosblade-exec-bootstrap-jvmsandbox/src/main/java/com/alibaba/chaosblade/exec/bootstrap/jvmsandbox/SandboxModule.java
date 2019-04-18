@@ -172,6 +172,11 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
         if (plugin.getPointCut() == null) {
             return;
         }
-        watchIds.remove(PluginUtil.getIdentifier(plugin));
+        String identifier = PluginUtil.getIdentifier(plugin);
+        Integer watcherId = watchIds.get(identifier);
+        if (watcherId != null) {
+            moduleEventWatcher.delete(watcherId);
+        }
+        watchIds.remove(identifier);
     }
 }
