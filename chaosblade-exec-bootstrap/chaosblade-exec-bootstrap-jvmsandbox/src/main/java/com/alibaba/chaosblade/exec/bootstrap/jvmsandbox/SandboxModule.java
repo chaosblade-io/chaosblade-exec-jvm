@@ -52,6 +52,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Changjun Xiao
+ * @author hzyangshurui
  */
 @Information(id = "chaosblade", version = "0.0.1", author = "Changjun Xiao", isActiveOnLoad = false)
 public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleListener {
