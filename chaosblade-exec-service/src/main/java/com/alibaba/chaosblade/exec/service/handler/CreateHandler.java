@@ -68,7 +68,7 @@ public class CreateHandler implements RequestHandler {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "the target not supported");
         }
         ActionSpec actionSpec = modelSpec.getActionSpec(actionArg);
-        if (actionArg == null) {
+        if (actionSpec == null) {
             return Response.ofFailure(Code.NOT_FOUND, "the action not supported");
         }
         // parse request to model
