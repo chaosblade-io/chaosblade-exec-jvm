@@ -21,9 +21,11 @@ import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
 import com.alibaba.chaosblade.exec.common.center.RegisterResult;
 import com.alibaba.chaosblade.exec.common.center.StatusManager;
+import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
@@ -79,21 +81,25 @@ public class CreateHandler implements RequestHandler {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, predicate.getErr());
         }
         // handle injection
+        try {
+            applyPreInjectionModelHandler(modelSpec, model);
+        } catch (ExperimentException ex) {
+            return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
+        }
         return handleInjection(suid, model);
     }
 
     private Response handleInjection(String suid, Model model) {
-        if (model.getTarget().equals(JVM)) {
-            try {
-                MethodPreInjectHandler.preHandleInjection(model);
-            } catch (ExperimentException e) {
-                return Response.ofFailure(Response.Code.SERVER_ERROR, e.getMessage());
-            }
-        }
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
             return Response.ofSuccess(model.toString());
         }
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
+    }
+
+    private void applyPreInjectionModelHandler(ModelSpec modelSpec, Model model) throws ExperimentException {
+        if (modelSpec instanceof PreCreateInjectionModelHandler) {
+            ((PreCreateInjectionModelHandler)modelSpec).preCreate(model);
+        }
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.service.handler;
+package com.alibaba.chaosblade.exec.common.exception;
 
 /**
  * @author Changjun Xiao
