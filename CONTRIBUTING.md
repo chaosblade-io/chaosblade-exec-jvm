@@ -135,8 +135,7 @@ participation in our project and our community a harassment-free experience for 
 size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, 
 socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation..."*
 
-See details of [CONTRIBUTOR COVENANT CODE OF CONDUCT](https://github
-.com/chaosblade-io/chaosblade-exec-jvm/blob/master/CODE_OF_CONDUCT.md)
+See details of [CONTRIBUTOR COVENANT CODE OF CONDUCT](https://github.com/chaosblade-io/chaosblade-exec-jvm/blob/master/CODE_OF_CONDUCT.md)
 
 ### Sign your work
 The sign-off is a simple line at the end of the explanation for the patch, which certifies that you wrote it or otherwise have the right to pass it on as an open-source patch.
