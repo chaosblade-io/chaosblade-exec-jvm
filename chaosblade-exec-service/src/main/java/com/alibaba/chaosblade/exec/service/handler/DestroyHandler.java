@@ -19,7 +19,10 @@ package com.alibaba.chaosblade.exec.service.handler;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
 import com.alibaba.chaosblade.exec.common.center.StatusManager;
+import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
@@ -51,16 +54,25 @@ public class DestroyHandler implements RequestHandler {
             return Response.ofFailure(Code.ILLEGAL_PARAMETER, "less experiment uid");
         }
         Model model = statusManager.removeExp(uid);
+
         if (model == null) {
             return Response.ofSuccess("success");
         }
-        if (model.getTarget().equals(JVM)) {
-            try {
-                MethodPreInjectHandler.preHandleRecovery(model);
-            } catch (ExperimentException e) {
-                return Response.ofFailure(Response.Code.SERVER_ERROR, e.getMessage());
-            }
+        ModelSpec modelSpec = this.modelSpecManager.getModelSpec(model.getTarget());
+        if (modelSpec == null) {
+            return Response.ofSuccess("success");
+        }
+        try {
+            applyPreDestroyInjectionModelHandler(modelSpec, model);
+        } catch (ExperimentException ex) {
+            return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
         }
         return Response.ofSuccess("success");
+    }
+
+    private void applyPreDestroyInjectionModelHandler(ModelSpec modelSpec, Model model) throws ExperimentException {
+        if (modelSpec instanceof PreDestroyInjectionModelHandler) {
+            ((PreDestroyInjectionModelHandler)modelSpec).preDestroy(model);
+        }
     }
 }

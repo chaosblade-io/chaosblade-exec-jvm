@@ -21,7 +21,6 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.common.plugin.MethodModelSpec;
 import com.alibaba.chaosblade.exec.common.plugin.MethodEnhancer;
 
 /**
@@ -36,7 +35,7 @@ public class JvmPlugin implements Plugin {
 
     @Override
     public ModelSpec getModelSpec() {
-        return new MethodModelSpec();
+        return new JvmModelSpec();
     }
 
     @Override
