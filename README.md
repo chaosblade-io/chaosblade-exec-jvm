@@ -22,5 +22,13 @@ The compilation result will be stored in the target directory.
 We welcome every contribution, even if it is just a punctuation. See details of [CONTRIBUTING](CONTRIBUTING.md)
 
 
+## Bugs and Feedback
+For bug report, questions and discussions please submit [GitHub Issues](https://github.com/chaosblade-io/chaosblade-exec-jvm/issues).
+
+Contact us: chaosblade.io.01@gmail.com
+
+Gitter room: [chaosblade community](https://gitter.im/chaosblade-io/community)
+
+
 ## License
 Chaosblade-exec-jvm is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
