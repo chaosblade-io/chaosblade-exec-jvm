@@ -18,5 +18,9 @@ Sh build.sh
 The compilation result will be stored in the target directory.
 
 
+## Contributing
+We welcome every contribution, even if it is just a punctuation. See details of [CONTRIBUTING](CONTRIBUTING.md)
+
+
 ## License
 Chaosblade-exec-jvm is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
