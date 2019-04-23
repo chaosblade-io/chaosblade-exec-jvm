@@ -3,6 +3,7 @@ package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.OomObject;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
@@ -14,26 +15,31 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
  */
 public class HeapJvmOomExecutor extends JvmOomExecutor {
 
+    private List<OomObject> oomObjects = new ArrayList<OomObject>();
+
     @Override
-    public boolean supportArea(String area) {
-        return JvmMemoryArea.HEAP.name().equalsIgnoreCase(area);
+    public JvmMemoryArea supportArea() {
+        return JvmMemoryArea.HEAP;
     }
 
     @Override
-    public void startInjection() {
-        List<OomObject> oomObjects = new ArrayList<OomObject>();
-        while (true) {
-            try {
-                oomObjects.add(new OomObject());
-            } catch (Throwable throwable) {
-                LOGGER.warn("add oom object error", throwable);
-            }
+    protected void innerRun(EnhancerModel enhancerModel) {
+        try {
+            oomObjects.add(new OomObject());
+        } catch (Throwable throwable) {
+            handleThrowable(throwable);
         }
     }
 
     @Override
-    public void stopInjection() {
+    public void run(EnhancerModel enhancerModel) throws Exception {
+        oomObjects = new ArrayList<OomObject>();
+        super.run(enhancerModel);
+    }
 
+    @Override
+    protected void innerStop(EnhancerModel enhancerModel) {
+        oomObjects = null;
     }
 
 }

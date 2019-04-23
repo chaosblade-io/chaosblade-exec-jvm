@@ -33,7 +33,6 @@ import com.alibaba.chaosblade.exec.common.util.StringUtil;
  */
 public class DestroyHandler implements RequestHandler {
 
-    public static final String JVM = "jvm";
     private ModelSpecManager modelSpecManager;
     private StatusManager statusManager;
 
@@ -63,16 +62,17 @@ public class DestroyHandler implements RequestHandler {
             return Response.ofSuccess("success");
         }
         try {
-            applyPreDestroyInjectionModelHandler(modelSpec, model);
+            applyPreDestroyInjectionModelHandler(uid, modelSpec, model);
         } catch (ExperimentException ex) {
             return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
         }
         return Response.ofSuccess("success");
     }
 
-    private void applyPreDestroyInjectionModelHandler(ModelSpec modelSpec, Model model) throws ExperimentException {
+    private void applyPreDestroyInjectionModelHandler(String uid, ModelSpec modelSpec, Model model)
+        throws ExperimentException {
         if (modelSpec instanceof PreDestroyInjectionModelHandler) {
-            ((PreDestroyInjectionModelHandler)modelSpec).preDestroy(model);
+            ((PreDestroyInjectionModelHandler)modelSpec).preDestroy(uid, model);
         }
     }
 }

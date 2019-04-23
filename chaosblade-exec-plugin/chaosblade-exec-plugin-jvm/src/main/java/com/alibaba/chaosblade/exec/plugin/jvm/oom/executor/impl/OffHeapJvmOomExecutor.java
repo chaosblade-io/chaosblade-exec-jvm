@@ -1,5 +1,10 @@
 package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl;
 
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
 
@@ -9,19 +14,34 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
  * @email haibin.lhb@alibaba-inc.com
  */
 public class OffHeapJvmOomExecutor extends JvmOomExecutor {
+
+    private static final int _1MB = 1024 * 1024;
+
     @Override
-    public boolean supportArea(String area) {
-        return JvmMemoryArea.OFFHEAP.name().equalsIgnoreCase(area);
+    public JvmMemoryArea supportArea() {
+        return JvmMemoryArea.OFFHEAP;
+    }
+
+    private List<ByteBuffer> oomObjects = new ArrayList<ByteBuffer>();
+
+    @Override
+    protected void innerRun(EnhancerModel enhancerModel) {
+        try {
+            oomObjects.add(ByteBuffer.allocateDirect(20 * _1MB));
+        } catch (Throwable throwable) {
+            handleThrowable(throwable);
+        }
     }
 
     @Override
-    public void startInjection() {
-
+    public void run(EnhancerModel enhancerModel) throws Exception {
+        oomObjects = new ArrayList<ByteBuffer>();
+        super.run(enhancerModel);
     }
 
     @Override
-    public void stopInjection() {
-
+    protected void innerStop(EnhancerModel enhancerModel) {
+        this.oomObjects = null;
     }
 
 }

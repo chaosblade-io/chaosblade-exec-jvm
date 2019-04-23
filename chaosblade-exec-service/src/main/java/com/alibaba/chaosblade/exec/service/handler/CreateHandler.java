@@ -82,10 +82,11 @@ public class CreateHandler implements RequestHandler {
         }
         // handle injection
         try {
-            applyPreInjectionModelHandler(modelSpec, model);
+            applyPreInjectionModelHandler(suid, modelSpec, model);
         } catch (ExperimentException ex) {
             return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
         }
+
         return handleInjection(suid, model);
     }
 
@@ -97,9 +98,10 @@ public class CreateHandler implements RequestHandler {
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
     }
 
-    private void applyPreInjectionModelHandler(ModelSpec modelSpec, Model model) throws ExperimentException {
+    private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
+        throws ExperimentException {
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
-            ((PreCreateInjectionModelHandler)modelSpec).preCreate(model);
+            ((PreCreateInjectionModelHandler)modelSpec).preCreate(suid, model);
         }
     }
 }

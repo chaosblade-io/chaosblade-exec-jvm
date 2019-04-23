@@ -20,8 +20,9 @@ public interface PreCreateInjectionModelHandler {
     /**
      * Invoke before create injections
      *
+     * @param suid  the injection event id
      * @param model model object
      * @throws ExperimentException throw if anything wrong
      */
-    public void preCreate(Model model) throws ExperimentException;
+    public void preCreate(String suid, Model model) throws ExperimentException;
 }
