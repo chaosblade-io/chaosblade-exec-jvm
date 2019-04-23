@@ -26,8 +26,7 @@ public enum JvmMemoryArea {
      *
      * @see {@link ByteBuffer}
      */
-    OFFHEAP,
-    EMPTY;
+    OFFHEAP;
 
     public static String[] getAreaNames() {
         String[] names = new String[JvmMemoryArea.values().length];

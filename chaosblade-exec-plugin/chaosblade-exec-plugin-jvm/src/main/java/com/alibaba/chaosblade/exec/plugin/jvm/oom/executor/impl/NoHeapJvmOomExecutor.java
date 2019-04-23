@@ -53,6 +53,6 @@ public class NoHeapJvmOomExecutor extends JvmOomExecutor {
 
     @Override
     protected int threadCount() {
-        return 40;
+        return 5;
     }
 }

@@ -9,5 +9,11 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
  */
 public interface StoppableActionExecutor extends ActionExecutor {
 
+    /**
+     * stop action executor
+     *
+     * @param enhancerModel
+     * @throws Exception
+     */
     public void stop(EnhancerModel enhancerModel) throws Exception;
 }
