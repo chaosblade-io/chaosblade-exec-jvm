@@ -7,7 +7,6 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.EmptyOomExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.HeapJvmOomExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.NoHeapJvmOomExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.OffHeapJvmOomExecutor;
@@ -25,7 +24,6 @@ public class JvmOomExecutorFacade implements StoppableActionExecutor {
         jvmOomExecutors.add(new HeapJvmOomExecutor());
         jvmOomExecutors.add(new NoHeapJvmOomExecutor());
         jvmOomExecutors.add(new OffHeapJvmOomExecutor());
-        jvmOomExecutors.add(new EmptyOomExecutor());
     }
 
     @Override

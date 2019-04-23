@@ -28,6 +28,9 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
 
     protected ExecutorService executorService;
 
+    /**
+     * the thread count to cause oom
+     */
     protected int DEFAULT_THREAD_COUNT = 1;
 
     /**
