@@ -23,4 +23,8 @@ public class ExperimentException extends Exception {
     public ExperimentException(String message) {
         super(message);
     }
+
+    public ExperimentException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

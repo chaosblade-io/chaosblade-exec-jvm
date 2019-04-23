@@ -20,8 +20,9 @@ public interface PreDestroyInjectionModelHandler {
     /**
      * Invoke before destroy injections
      *
+     * @param suid  the injection event id
      * @param model the model
      * @throws ExperimentException throw if anything wrong
      */
-    public void preDestroy(Model model) throws ExperimentException;
+    public void preDestroy(String suid, Model model) throws ExperimentException;
 }
