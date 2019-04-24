@@ -15,7 +15,7 @@ public class SystemGcFlagSpec implements FlagSpec {
 
     @Override
     public String getDesc() {
-        return "invoke System.gc() after stop injection,option value:[true,false],default value is true";
+        return "Invoke System.gc() after stop injection,option value:[true,false],default value is true";
     }
 
     @Override

@@ -29,11 +29,6 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
     protected ExecutorService executorService;
 
     /**
-     * the thread count to cause oom
-     */
-    protected int DEFAULT_THREAD_COUNT = 1;
-
-    /**
      * the jvm area that executor support
      *
      * @return
@@ -53,7 +48,8 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
     @Override
     public void run(final EnhancerModel enhancerModel) throws Exception {
         if (started.compareAndSet(false, true)) {
-            executorService = Executors.newFixedThreadPool(threadCount());
+            JvmOomConfiguration jvmOomConfiguration = parse(enhancerModel);
+            executorService = Executors.newFixedThreadPool(jvmOomConfiguration.getThreadCount());
             executorService.submit(new Runnable() {
                 @Override
                 public void run() {
@@ -68,20 +64,15 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
     @Override
     public void stop(EnhancerModel enhancerModel) throws Exception {
         if (started.compareAndSet(true, false)) {
+            JvmOomConfiguration jvmOomConfiguration = parse(enhancerModel);
             if (executorService == null) { return; }
             safelyShutdownExecutor(executorService);
             innerStop(enhancerModel);
-            if (enableSystemGc(enhancerModel)) {
+            if (jvmOomConfiguration.isEnabledSystemGc()) {
                 LOGGER.info("invoke  System.gc() after stop injection");
                 System.gc();
             }
         }
-    }
-
-    private boolean enableSystemGc(EnhancerModel enhancerModel) {
-        String flag = enhancerModel.getActionFlag(JvmConstant.FLAG_NAME_ENABLE_SYSTEM_GC);
-        if (flag == null) { return true; }
-        return Boolean.valueOf(flag);
     }
 
     /**
@@ -98,20 +89,43 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
      */
     protected abstract void innerStop(EnhancerModel enhancerModel);
 
-    /**
-     * thread count to create oom
-     *
-     * @return
-     */
-    protected int threadCount() {
-        return DEFAULT_THREAD_COUNT;
-    }
-
     protected void safelyShutdownExecutor(ExecutorService executorService) {
         try {
             executorService.shutdownNow();
         } catch (Throwable throwable) {
 
+        }
+    }
+
+    private JvmOomConfiguration parse(EnhancerModel enhancerModel) {
+        JvmOomConfiguration jvmOomConfiguration = new JvmOomConfiguration();
+        String gcFlag = enhancerModel.getActionFlag(JvmConstant.FLAG_NAME_ENABLE_SYSTEM_GC);
+        jvmOomConfiguration.setEnabledSystemGc(gcFlag == null || Boolean.parseBoolean(gcFlag));
+        String threadCount = enhancerModel.getActionFlag(JvmConstant.FLAG_NAME_THREAD_COUNT);
+        jvmOomConfiguration.setThreadCount(
+            threadCount == null ? JvmConstant.FLAG_VALUE_OOM_THREAD_COUNT : Integer.valueOf(threadCount));
+        return jvmOomConfiguration;
+    }
+
+    private static class JvmOomConfiguration {
+        private boolean enabledSystemGc;
+
+        public Integer getThreadCount() {
+            return threadCount;
+        }
+
+        public void setThreadCount(Integer threadCount) {
+            this.threadCount = threadCount;
+        }
+
+        private Integer threadCount;
+
+        public boolean isEnabledSystemGc() {
+            return enabledSystemGc;
+        }
+
+        public void setEnabledSystemGc(boolean enabledSystemGc) {
+            this.enabledSystemGc = enabledSystemGc;
         }
     }
 

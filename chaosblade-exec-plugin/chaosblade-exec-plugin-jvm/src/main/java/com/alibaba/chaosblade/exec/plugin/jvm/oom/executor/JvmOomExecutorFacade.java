@@ -44,7 +44,7 @@ public class JvmOomExecutorFacade implements StoppableActionExecutor {
                 return jvmOomExecutor;
             }
         }
-        throw new Exception("Not found jvmOomExecutor for area:" + area);
+        throw new Exception("Illegal jvm error");
     }
 
 }

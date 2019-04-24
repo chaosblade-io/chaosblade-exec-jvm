@@ -1,27 +1,24 @@
 package com.alibaba.chaosblade.exec.plugin.jvm.oom.flag;
 
-import java.util.Arrays;
-
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
 
 /**
  * @author haibin
- * @date 2019-04-18
+ * @date 2019-04-24
  * @email haibin.lhb@alibaba-inc.com
  */
-public class JvmMemoryAreaFlagSpec implements FlagSpec {
 
+public class ThreadCountFlagSpec implements FlagSpec {
     @Override
     public String getName() {
-        return JvmConstant.FLAG_NAME_MEMORY_AREA;
+        return JvmConstant.FLAG_NAME_THREAD_COUNT;
     }
 
     @Override
     public String getDesc() {
-        return "Jvm memory area you want  to cause OutOfMemoryError,the options:" + Arrays.toString(
-            JvmMemoryArea.getAreaNames());
+        return "Thread count to make oom error,if you want to speed up the oom.default value is :"
+            + JvmConstant.FLAG_VALUE_OOM_THREAD_COUNT;
     }
 
     @Override
@@ -31,6 +28,6 @@ public class JvmMemoryAreaFlagSpec implements FlagSpec {
 
     @Override
     public boolean required() {
-        return true;
+        return false;
     }
 }
