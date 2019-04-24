@@ -62,8 +62,14 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
         try {
             Class<?> clazz = classLoader.loadClass(exception);
             if (Exception.class.isAssignableFrom(clazz)) {
-                Constructor<?> constructor = clazz.getConstructor(String.class);
-                return (Exception)constructor.newInstance("chaosblade-mock-exception");
+            	Constructor<?>[] constructors = clazz.getConstructors();
+    			for(Constructor<?> constructor: constructors) {
+    				if(constructor.getParameterCount() == 0) 
+    					return (Exception)constructor.newInstance();
+    				else if (constructor.getParameterCount() == 1 && constructor.getParameters()[0].getType().getSimpleName().equals("String")) 
+    	                return (Exception)constructor.newInstance("chaosblade-mock-exception");
+    			}
+                return new RuntimeException("Failed to instantiate exception: "+ exception +", no default or single-string-param constructor found.");
             }
             return new RuntimeException(exception + " not assign from java.lang.Exception");
         } catch (Throwable e) {
@@ -88,8 +94,14 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
         Class<?> exceptionType = exceptionTypes[0];
         try {
             if (Exception.class.isAssignableFrom(exceptionType)) {
-                Constructor<?> constructor = exceptionType.getConstructor(String.class);
-                return (Exception)constructor.newInstance("chaosblade-mock-exception");
+            	Constructor<?>[] constructors = exceptionType.getConstructors();
+    			for(Constructor<?> constructor: constructors) {
+    				if(constructor.getParameterCount() == 0) 
+    					return (Exception)constructor.newInstance();
+    				else if (constructor.getParameterCount() == 1 && constructor.getParameters()[0].getType().getSimpleName().equals("String")) 
+    	                return (Exception)constructor.newInstance("chaosblade-mock-exception");
+    			}
+                return new RuntimeException("Failed to instantiate exception: "+ exceptionType.getName() +", no default or single-string-param constructor found.");
             }
             return new RuntimeException("the " + exceptionType.getName() + " not assign from java.lang.Exception");
         } catch (Throwable e) {
