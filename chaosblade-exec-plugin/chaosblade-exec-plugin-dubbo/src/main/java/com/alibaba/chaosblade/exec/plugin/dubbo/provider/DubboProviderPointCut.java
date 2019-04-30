@@ -19,9 +19,12 @@ package com.alibaba.chaosblade.exec.plugin.dubbo.provider;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.SuperClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
 /**
@@ -31,7 +34,10 @@ public class DubboProviderPointCut implements PointCut {
 
     @Override
     public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher("com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker");
+        return new OrClassMatcher()
+            .or(new NameClassMatcher("com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker"))
+            // for thread pool
+            .or(new SuperClassMatcher("com.alibaba.dubbo.remoting.transport.dispatcher.WrappedChannelHandler"));
     }
 
     @Override
@@ -41,6 +47,9 @@ public class DubboProviderPointCut implements PointCut {
             "com.alibaba.dubbo.rpc.Invocation"}, 0,
             ParameterMethodMatcher.GREAT_THAN);
         methodMatcher.and(new NameMethodMatcher("invoke")).and(parameterMethodMatcher);
-        return methodMatcher;
+
+        OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
+        orMethodMatcher.or(methodMatcher).or(new NameMethodMatcher("received"));
+        return orMethodMatcher;
     }
 }

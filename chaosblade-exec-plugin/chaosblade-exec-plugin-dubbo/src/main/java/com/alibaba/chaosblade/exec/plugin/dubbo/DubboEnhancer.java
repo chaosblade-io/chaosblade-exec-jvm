@@ -23,6 +23,7 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboThreadPoolFullExecutor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
     public static final String GET_METHOD_NAME = "getMethodName";
     public static final String SPLIT_TOKEN = ":";
     public static final String GET_INVOKER = "getInvoker";
+    public static final String RECEIVED_METHOD = "received";
     private static final Logger LOGGER = LoggerFactory.getLogger(DubboEnhancer.class);
 
     @Override
@@ -47,14 +49,21 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
                                         Method method, Object[]
                                             methodArguments)
         throws Exception {
+        if (method.getName().equals(RECEIVED_METHOD)) {
+            // received method for thread pool experiment
+            DubboThreadPoolFullExecutor.INSTANCE.setWrappedChannelHandler(object);
+            return null;
+        }
+
         Object invocation = methodArguments[0];
         if (object == null || invocation == null) {
-            LOGGER.info("The necessary parameter is null.");
+            LOGGER.warn("The necessary parameter is null.");
             return null;
         }
         Object url = getUrl(object, invocation);
         if (url == null) {
-            LOGGER.info("Url is null, can not get necessary values.");
+            LOGGER.warn("Url is null, can not get necessary values.");
+            return null;
         }
         String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {APPLICATION_KEY}, false);
         String methodName = ReflectUtil.invokeMethod(invocation, GET_METHOD_NAME, new Object[0], false);

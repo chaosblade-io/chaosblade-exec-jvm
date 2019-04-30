@@ -49,6 +49,12 @@ public class CreateHandler implements RequestHandler {
         return "create";
     }
 
+    /**
+     * Handle request for creating chaos experiment
+     *
+     * @param request
+     * @return
+     */
     @Override
     public Response handle(Request request) {
         // check necessary arguments
@@ -90,6 +96,13 @@ public class CreateHandler implements RequestHandler {
         return handleInjection(suid, model);
     }
 
+    /**
+     * Handle injection
+     *
+     * @param suid
+     * @param model
+     * @return
+     */
     private Response handleInjection(String suid, Model model) {
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
@@ -98,6 +111,14 @@ public class CreateHandler implements RequestHandler {
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
     }
 
+    /**
+     * Pre-handle for injection
+     *
+     * @param suid
+     * @param modelSpec
+     * @param model
+     * @throws ExperimentException
+     */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
         throws ExperimentException {
         if (modelSpec instanceof PreCreateInjectionModelHandler) {

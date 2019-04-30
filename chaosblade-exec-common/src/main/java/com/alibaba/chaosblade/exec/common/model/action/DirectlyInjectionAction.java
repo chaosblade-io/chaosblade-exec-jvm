@@ -15,7 +15,7 @@ public interface DirectlyInjectionAction {
      * @param model the injection model
      * @throws Exception
      */
-    public void createInjection(String uid, Model model) throws Exception;
+    void createInjection(String uid, Model model) throws Exception;
 
     /**
      * destroy injection
@@ -24,5 +24,5 @@ public interface DirectlyInjectionAction {
      * @param model the injection model
      * @throws Exception
      */
-    public void destroyInjection(String uid, Model model) throws Exception;
+    void destroyInjection(String uid, Model model) throws Exception;
 }

@@ -24,5 +24,5 @@ public interface PreDestroyInjectionModelHandler {
      * @param model the model
      * @throws ExperimentException throw if anything wrong
      */
-    public void preDestroy(String suid, Model model) throws ExperimentException;
+    void preDestroy(String suid, Model model) throws ExperimentException;
 }

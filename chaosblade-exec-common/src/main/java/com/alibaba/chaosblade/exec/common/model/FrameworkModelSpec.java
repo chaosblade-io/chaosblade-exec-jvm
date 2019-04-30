@@ -19,6 +19,7 @@ package com.alibaba.chaosblade.exec.common.model;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
@@ -51,6 +52,16 @@ public abstract class FrameworkModelSpec extends BaseModelSpec {
         }
         for (MatcherSpec newMatcherSpec : newMatcherSpecs) {
             addMatcherDefToAllActions(newMatcherSpec);
+        }
+    }
+
+    public void addAllMatchersToTheAction(ActionSpec actionSpec) {
+        List<MatcherSpec> newMatcherSpecs = createNewMatcherSpecs();
+        if (newMatcherSpecs == null) {
+            return;
+        }
+        for (MatcherSpec matcherSpec : newMatcherSpecs) {
+            actionSpec.addMatcherDesc(matcherSpec);
         }
     }
 
