@@ -31,6 +31,10 @@ public class SuperClassMatcher implements ClassMatcher {
         this.superClass = superClass;
     }
 
+    public SuperClassMatcher(String superClass) {
+        this.superClass = superClass;
+    }
+
     /**
      * @param className 类名，格式：xxx.xxx.xxx
      * @param classInfo 类信息
@@ -38,6 +42,6 @@ public class SuperClassMatcher implements ClassMatcher {
      */
     @Override
     public boolean isMatched(String className, ClassInfo classInfo) {
-        return this.superClass.equals(classInfo.getSuperName()) && (!this.className.equals(className));
+        return this.superClass.equals(classInfo.getSuperName()) && (!className.equals(this.className));
     }
 }

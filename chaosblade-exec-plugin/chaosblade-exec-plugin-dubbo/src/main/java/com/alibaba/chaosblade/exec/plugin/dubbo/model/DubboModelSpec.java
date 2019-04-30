@@ -21,8 +21,14 @@ import java.util.List;
 import java.util.Set;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.threadpool.ThreadPoolFullActionSpec;
+import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
+import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
@@ -30,7 +36,13 @@ import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 /**
  * @author Changjun Xiao
  */
-public class DubboModelSpec extends FrameworkModelSpec {
+public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjectionModelHandler,
+    PreDestroyInjectionModelHandler {
+
+    public DubboModelSpec() {
+        super();
+        addThreadPoolFullActionSpec();
+    }
 
     @Override
     public String getShortDesc() {
@@ -44,7 +56,7 @@ public class DubboModelSpec extends FrameworkModelSpec {
 
     @Override
     public String getExample() {
-        return "dubbo delay --time 3000 --consumer --service com.example.service.HellService";
+        return "dubbo delay --time 3000 --consumer --service com.example.service.HelloService";
     }
 
     @Override
@@ -79,4 +91,39 @@ public class DubboModelSpec extends FrameworkModelSpec {
         return DubboConstant.TARGET_NAME;
     }
 
+    @Override
+    public void preCreate(String suid, Model model) throws ExperimentException {
+        if (ThreadPoolFullActionSpec.NAME.equals(model.getActionName())) {
+            ActionSpec actionSpec = this.getActionSpec(model.getActionName());
+            ActionExecutor actionExecutor = actionSpec.getActionExecutor();
+            if (actionExecutor instanceof DubboThreadPoolFullExecutor) {
+                DubboThreadPoolFullExecutor threadPoolFullExecutor = (DubboThreadPoolFullExecutor)actionExecutor;
+                threadPoolFullExecutor.setExpReceived(true);
+            } else {
+                throw new ExperimentException("actionExecutor is not instance of DubboThreadPoolFullExecutor");
+            }
+        }
+    }
+
+    @Override
+    public void preDestroy(String suid, Model model) throws ExperimentException {
+        if (ThreadPoolFullActionSpec.NAME.equals(model.getActionName())) {
+            ActionSpec actionSpec = this.getActionSpec(model.getActionName());
+            ActionExecutor actionExecutor = actionSpec.getActionExecutor();
+            if (actionExecutor instanceof DubboThreadPoolFullExecutor) {
+                DubboThreadPoolFullExecutor threadPoolFullExecutor = (DubboThreadPoolFullExecutor)actionExecutor;
+                threadPoolFullExecutor.revoke();
+            } else {
+                throw new ExperimentException("actionExecutor is not instance of DubboThreadPoolFullExecutor");
+            }
+        }
+    }
+
+    private void addThreadPoolFullActionSpec() {
+        ThreadPoolFullActionSpec threadPoolFullActionSpec = new ThreadPoolFullActionSpec(
+            DubboThreadPoolFullExecutor.INSTANCE);
+        addActionSpec(threadPoolFullActionSpec);
+        // the thread pool full experiment applies to provider
+        addMatcherDefToAllActions(new ProviderMatcherSpec());
+    }
 }

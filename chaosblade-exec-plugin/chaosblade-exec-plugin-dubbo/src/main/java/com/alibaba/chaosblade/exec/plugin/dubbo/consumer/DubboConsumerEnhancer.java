@@ -80,7 +80,6 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
                 }
             }
         }
-        LOGGER.info("Can not get the url of provider.");
         return ReflectUtil.invokeMethod(instance, GET_URL, new Object[0], false);
     }
 

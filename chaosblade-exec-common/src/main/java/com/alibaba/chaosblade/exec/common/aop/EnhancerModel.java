@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.model.action.threadpool.ThreadPoolFullExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 
 /**
@@ -38,6 +39,7 @@ public class EnhancerModel {
     private Object returnValue;
 
     private TimeoutExecutor timeoutExecutor;
+    private ThreadPoolFullExecutor threadPoolFullExecutor;
 
     public EnhancerModel(ClassLoader classLoader, MatcherModel matcherModel) {
         this.classLoader = classLoader;
@@ -121,6 +123,15 @@ public class EnhancerModel {
     public EnhancerModel setTimeoutExecutor(TimeoutExecutor timeoutExecutor) {
         this.timeoutExecutor = timeoutExecutor;
         return this;
+    }
+
+    public ThreadPoolFullExecutor getThreadPoolFullExecutor() {
+        return threadPoolFullExecutor;
+    }
+
+    public void setThreadPoolFullExecutor(
+        ThreadPoolFullExecutor threadPoolFullExecutor) {
+        this.threadPoolFullExecutor = threadPoolFullExecutor;
     }
 
     public void merge(Model model) {

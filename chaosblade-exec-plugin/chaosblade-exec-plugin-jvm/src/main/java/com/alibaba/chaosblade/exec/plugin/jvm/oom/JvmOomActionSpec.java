@@ -41,12 +41,12 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
 
     @Override
     public String getShortDesc() {
-        return "";
+        return "JVM out of memory";
     }
 
     @Override
     public String getLongDesc() {
-        return null;
+        return "JVM out of memory";
     }
 
     @Override

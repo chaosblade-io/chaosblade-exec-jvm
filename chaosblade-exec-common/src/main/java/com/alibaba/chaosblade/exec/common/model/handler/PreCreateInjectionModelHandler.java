@@ -24,5 +24,5 @@ public interface PreCreateInjectionModelHandler {
      * @param model model object
      * @throws ExperimentException throw if anything wrong
      */
-    public void preCreate(String suid, Model model) throws ExperimentException;
+    void preCreate(String suid, Model model) throws ExperimentException;
 }
