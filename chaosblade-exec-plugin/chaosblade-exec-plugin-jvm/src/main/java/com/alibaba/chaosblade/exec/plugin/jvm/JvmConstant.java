@@ -17,7 +17,7 @@ public final class JvmConstant {
 
     public static Integer FLAG_VALUE_OOM_THREAD_COUNT = 1;
 
-    public static String ACTION_OUT_OF_MEMORY_ERROR_NAME = "OutOfMemoryError";
+    public static String ACTION_OUT_OF_MEMORY_ERROR_NAME = "outofmemoryerror";
 
     public static String ACTION_OUT_OF_MEMORY_ERROR_ALIAS = "oom";
 
