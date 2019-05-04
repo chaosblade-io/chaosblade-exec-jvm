@@ -25,5 +25,7 @@ import com.alibaba.chaosblade.exec.common.transport.Response;
 public interface DispatchService {
     Response dispatch(String paramString, Request paramRequest);
 
-    void close();
+    void unload();
+
+    void load();
 }

@@ -22,7 +22,12 @@ package com.alibaba.chaosblade.exec.common.center;
 public interface ManagerService {
 
     /**
+     * Load service
+     */
+    void load();
+
+    /**
      * Close service, release resource
      */
-    void close();
+    void unload();
 }

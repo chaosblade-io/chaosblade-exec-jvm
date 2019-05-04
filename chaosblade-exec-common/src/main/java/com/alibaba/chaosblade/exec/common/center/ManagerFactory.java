@@ -46,12 +46,18 @@ public class ManagerFactory {
         return listenerManager;
     }
 
+    public static void load() {
+        modelSpecManager.load();
+        listenerManager.load();
+        statusManager.load();
+    }
+
     /**
      * Close manager service
      */
-    public static void close() {
-        modelSpecManager.close();
-        listenerManager.close();
-        statusManager.close();
+    public static void unload() {
+        modelSpecManager.unload();
+        listenerManager.unload();
+        statusManager.unload();
     }
 }

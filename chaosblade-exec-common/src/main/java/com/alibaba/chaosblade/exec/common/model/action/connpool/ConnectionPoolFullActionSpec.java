@@ -19,10 +19,6 @@ public class ConnectionPoolFullActionSpec extends BaseActionSpec {
         super(actionExecutor);
     }
 
-    public ConnectionPoolFullActionSpec() {
-        super(new NoopConnectionPoolFullExecutor());
-    }
-
     @Override
     public String getName() {
         return NAME;

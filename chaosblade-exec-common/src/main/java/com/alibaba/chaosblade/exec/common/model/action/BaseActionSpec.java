@@ -53,10 +53,7 @@ public abstract class BaseActionSpec implements ActionSpec {
 
     @Override
     public void addMatcherDesc(MatcherSpec matcherSpec) {
-        MatcherSpec oldMatcherSpec = matcherSpecs.putIfAbsent(matcherSpec.getName(), matcherSpec);
-        if (oldMatcherSpec != null) {
-            LOGGER.warn("{} matcher has defined", matcherSpec.getName());
-        }
+        matcherSpecs.putIfAbsent(matcherSpec.getName(), matcherSpec);
     }
 
     @Override

@@ -33,12 +33,6 @@ public class DefaultDispatchService implements DispatchService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultDispatchService.class);
     private ConcurrentHashMap<String, RequestHandler> handles = new ConcurrentHashMap();
 
-    public DefaultDispatchService() {
-        registerHandler(new CreateHandler());
-        registerHandler(new DestroyHandler());
-        registerHandler(new StatusHandler());
-    }
-
     private void registerHandler(RequestHandler requestHandler) {
         String handlerName = requestHandler.getHandlerName();
         RequestHandler handler = this.handles.putIfAbsent(handlerName, requestHandler);
@@ -69,7 +63,14 @@ public class DefaultDispatchService implements DispatchService {
     }
 
     @Override
-    public void close() {
+    public void load() {
+        registerHandler(new CreateHandler());
+        registerHandler(new DestroyHandler());
+        registerHandler(new StatusHandler());
+    }
+
+    @Override
+    public void unload() {
         handles.clear();
     }
 }
