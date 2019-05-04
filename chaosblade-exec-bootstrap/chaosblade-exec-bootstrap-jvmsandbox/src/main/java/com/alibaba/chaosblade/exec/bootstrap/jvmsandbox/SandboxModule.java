@@ -74,13 +74,16 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
     public void onLoad() throws Throwable {
         LOGGER.info("load chaosblade module");
         ManagerFactory.getListenerManager().setPluginLifecycleListener(this);
+        dispatchService.load();
+        ManagerFactory.load();
     }
 
     @Override
     public void onUnload() throws Throwable {
+        LOGGER.info("unload chaosblade module");
         watchIds.clear();
-        dispatchService.close();
-        ManagerFactory.close();
+        dispatchService.unload();
+        ManagerFactory.unload();
     }
 
     @Override

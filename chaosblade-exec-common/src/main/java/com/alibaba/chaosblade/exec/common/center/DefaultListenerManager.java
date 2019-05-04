@@ -39,6 +39,10 @@ public class DefaultListenerManager implements ListenerManager {
     }
 
     @Override
-    public void close() {
+    public void load() {
+    }
+
+    @Override
+    public void unload() {
     }
 }

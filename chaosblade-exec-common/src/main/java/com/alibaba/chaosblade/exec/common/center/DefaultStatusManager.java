@@ -54,8 +54,13 @@ public class DefaultStatusManager implements StatusManager {
      */
     private ConcurrentHashMap<String, String> experiments = new ConcurrentHashMap<String, String>();
 
+    private volatile boolean closed;
+
     @Override
     public void registerEnhancer(String enhancerName) {
+        if (isClosed()) {
+            return;
+        }
         Boolean oldValue = enhancers.putIfAbsent(enhancerName, Boolean.TRUE);
         if (oldValue == null) {
             LOGGER.info("register enhancer: " + enhancerName);
@@ -146,9 +151,19 @@ public class DefaultStatusManager implements StatusManager {
     }
 
     @Override
-    public void close() {
+    public void load() {
+        closed = false;
+    }
+
+    @Override
+    public void unload() {
+        closed = true;
         experiments.clear();
         models.clear();
         enhancers.clear();
+    }
+
+    public boolean isClosed() {
+        return closed;
     }
 }

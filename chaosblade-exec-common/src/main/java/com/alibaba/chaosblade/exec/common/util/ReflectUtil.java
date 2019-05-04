@@ -93,6 +93,10 @@ public class ReflectUtil {
                 argsClass[i] = int.class;
                 continue;
             }
+            if (args[i] instanceof Long) {
+                argsClass[i] = long.class;
+                continue;
+            }
             if (args[i] == null) {
                 continue;
             }

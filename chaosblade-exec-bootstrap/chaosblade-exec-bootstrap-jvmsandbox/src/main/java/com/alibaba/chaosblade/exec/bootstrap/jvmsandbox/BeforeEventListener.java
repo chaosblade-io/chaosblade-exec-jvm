@@ -17,6 +17,7 @@
 package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
@@ -27,10 +28,14 @@ import com.alibaba.jvm.sandbox.api.event.BeforeEvent;
 import com.alibaba.jvm.sandbox.api.event.Event;
 import com.alibaba.jvm.sandbox.api.listener.EventListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Changjun Xiao
  */
 public class BeforeEventListener implements EventListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BeforeEventListener.class);
 
     private Plugin plugin;
 
@@ -63,6 +68,8 @@ public class BeforeEventListener implements EventListener {
             // get method object by the method information
             method = ReflectUtil.getMethod(clazz, event.javaMethodName, event.argumentArray);
         } catch (NoSuchMethodException e) {
+            LOGGER.warn("get method by reflection exception. class: {}, method: {}, arguments: {}, desc: {}", event
+                .javaClassName, event.javaMethodName, Arrays.toString(event.argumentArray), event.javaMethodDesc, e);
             return;
         }
         try {

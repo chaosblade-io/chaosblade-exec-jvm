@@ -2,7 +2,6 @@ package com.alibaba.chaosblade.exec.common.model.action.connpool;
 
 import javax.sql.DataSource;
 
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 
 /**
@@ -10,9 +9,23 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
  */
 public interface ConnectionPoolFullExecutor extends ActionExecutor {
 
-    void full(DataSource dataSource, String uniqueName) throws ExperimentException;
+    /**
+     * Trigger connection pool full.
+     *
+     * @param dataSource
+     */
+    void full(DataSource dataSource);
 
-    void revoke(String uniqueName);
+    /**
+     * Revoke connection pool full.
+     *
+     */
+    void revoke();
 
-    int getMaxPoolSize(DataSource dataSource);
+    /**
+     * Get max pool size from datasource
+     *
+     * @return
+     */
+    int getMaxPoolSize();
 }

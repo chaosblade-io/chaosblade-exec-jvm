@@ -49,7 +49,11 @@ public class DefaultModelSpecManager implements ModelSpecManager {
     }
 
     @Override
-    public void close() {
+    public void load() {
+    }
+
+    @Override
+    public void unload() {
         modelSpecs.clear();
     }
 }
