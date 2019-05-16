@@ -5,7 +5,7 @@ package com.alibaba.chaosblade.exec.common.model.action.threadpool;
  */
 public class InterruptableRunnable implements Runnable {
 
-    public static final long MAX_SLEEP_TIME_IN_MILLS = 24 * 60 * 60 * 60 * 1000;
+    public static final long MAX_SLEEP_TIME_IN_MILLS = 24 * 60 * 60 * 60 * 1000L;
 
     @Override
     public void run() {
