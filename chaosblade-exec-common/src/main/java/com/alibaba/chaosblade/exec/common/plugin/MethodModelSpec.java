@@ -34,7 +34,6 @@ public class MethodModelSpec extends BaseModelSpec {
         addThrowExceptionActionDef();
         addReturnValueAction();
         addDelayAction();
-
         addMethodMatcherDef();
     }
 
@@ -48,8 +47,8 @@ public class MethodModelSpec extends BaseModelSpec {
     }
 
     private void addMethodMatcherDef() {
-        addMatcherDefToAllActions(new ClassNameMatcherSpec());
-        addMatcherDefToAllActions(new MethodNameMatcherSpec());
+        addMatcherDefToAllActions(new ClassNameMatcherSpec(false, true));
+        addMatcherDefToAllActions(new MethodNameMatcherSpec(false, true));
     }
 
     private void addThrowExceptionActionDef() {
