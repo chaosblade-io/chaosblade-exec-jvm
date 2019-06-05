@@ -23,20 +23,6 @@ import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
  */
 public abstract class BasePredicateMatcherSpec implements MatcherSpec {
 
-    protected boolean noArgs;
-
-    protected boolean required;
-
-    public BasePredicateMatcherSpec() {
-        this.noArgs = false;
-        this.required = false;
-    }
-
-    public BasePredicateMatcherSpec(boolean noArgs, boolean required) {
-        this.noArgs = noArgs;
-        this.required = required;
-    }
-
     @Override
     public PredicateResult predicate(MatcherModel matcherModel) {
         String value = matcherModel.get(getName());
@@ -46,15 +32,5 @@ public abstract class BasePredicateMatcherSpec implements MatcherSpec {
             }
         }
         return PredicateResult.success();
-    }
-
-    @Override
-    public boolean required() {
-        return this.required;
-    }
-
-    @Override
-    public boolean noArgs() {
-        return this.noArgs;
     }
 }

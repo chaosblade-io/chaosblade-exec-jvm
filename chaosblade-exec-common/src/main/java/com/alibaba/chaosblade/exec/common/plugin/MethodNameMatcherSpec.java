@@ -23,12 +23,15 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
  */
 public class MethodNameMatcherSpec extends BasePredicateMatcherSpec {
 
+    private boolean required;
+
     public MethodNameMatcherSpec() {
         super();
     }
 
-    public MethodNameMatcherSpec(boolean noArgs, boolean required) {
-        super(noArgs, required);
+    public MethodNameMatcherSpec(boolean required) {
+        super();
+        this.required = required;
     }
 
     @Override
@@ -39,6 +42,16 @@ public class MethodNameMatcherSpec extends BasePredicateMatcherSpec {
     @Override
     public String getDesc() {
         return "The method name";
+    }
+
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
+
+    @Override
+    public boolean required() {
+        return this.required;
     }
 
 }
