@@ -16,7 +16,7 @@ public class RestTemplatePlugin extends HttpPlugin {
 
     @Override
     public String getName() {
-        return "resttemplate";
+        return "rest";
     }
 
     @Override
