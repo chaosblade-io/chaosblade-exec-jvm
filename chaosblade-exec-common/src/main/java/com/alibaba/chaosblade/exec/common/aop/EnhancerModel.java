@@ -71,6 +71,10 @@ public class EnhancerModel {
         return actionModel.getFlag(key);
     }
 
+    public void addActionFlag(String key, String value) {
+        actionModel.addFlag(key, value);
+    }
+
     public ClassLoader getClassLoader() {
         return classLoader;
     }
