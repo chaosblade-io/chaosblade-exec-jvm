@@ -21,4 +21,9 @@ public final class JvmConstant {
 
     public static String ACTION_OUT_OF_MEMORY_ERROR_ALIAS = "oom";
 
+    public static String ACTION_CPU_FULL_LOAD_NAME = "cpufullload";
+
+    public static String ACION_CPU_FULL_LOAD_ALIAS = "cfl";
+
+    public static String FLAG_NAME_CPU_COUNT = "cpu-count";
 }

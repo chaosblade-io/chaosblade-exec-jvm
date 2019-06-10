@@ -7,6 +7,7 @@ import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
 import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.plugin.MethodModelSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.cpu.JvmCpuFullLoadActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
 
 /**
@@ -31,6 +32,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
     public JvmModelSpec() {
         super();
         addActionSpec(new JvmOomActionSpec());
+        addActionSpec(new JvmCpuFullLoadActionSpec());
     }
 
     @Override
