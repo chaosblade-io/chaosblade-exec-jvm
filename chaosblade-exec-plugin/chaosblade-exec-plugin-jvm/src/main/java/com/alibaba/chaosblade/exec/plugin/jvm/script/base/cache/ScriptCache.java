@@ -14,22 +14,39 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
-
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+package com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache;
 
 /**
- * @author haibin
- * @date 2019-04-23
+ * @author RinaisSuper
  */
-public interface StoppableActionExecutor extends ActionExecutor {
+public interface ScriptCache<Key, Value> {
 
     /**
-     * stop action executor
+     * Put operation
      *
-     * @param enhancerModel
-     * @throws Exception
+     * @param key
+     * @param value
      */
-    void stop(EnhancerModel enhancerModel) throws Exception;
+    void put(Key key, Value value);
+
+    /**
+     * Get operation
+     *
+     * @param key
+     * @return
+     */
+    Value get(Key key);
+
+    /**
+     * Evict(Delete) Operation
+     *
+     * @param key
+     */
+    boolean evict(Key key);
+
+    /**
+     * Delete all key
+     */
+    void clean();
+
 }

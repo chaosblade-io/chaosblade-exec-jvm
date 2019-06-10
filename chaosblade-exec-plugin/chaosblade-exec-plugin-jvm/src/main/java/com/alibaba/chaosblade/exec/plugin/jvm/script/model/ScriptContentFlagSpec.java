@@ -14,22 +14,33 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
+package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
 /**
- * @author haibin
- * @date 2019-04-23
+ * @author Changjun Xiao
  */
-public interface StoppableActionExecutor extends ActionExecutor {
+public class ScriptContentFlagSpec implements FlagSpec {
 
-    /**
-     * stop action executor
-     *
-     * @param enhancerModel
-     * @throws Exception
-     */
-    void stop(EnhancerModel enhancerModel) throws Exception;
+    @Override
+    public String getName() {
+        return JvmConstant.FLAG_NAME_SCRIPT_CONTENT;
+    }
+
+    @Override
+    public String getDesc() {
+        return "The script contents";
+    }
+
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
+
+    @Override
+    public boolean required() {
+        return false;
+    }
 }

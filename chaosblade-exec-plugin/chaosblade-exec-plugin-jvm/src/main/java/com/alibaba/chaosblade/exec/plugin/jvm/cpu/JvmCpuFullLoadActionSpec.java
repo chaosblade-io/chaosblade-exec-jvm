@@ -29,7 +29,7 @@ public class JvmCpuFullLoadActionSpec extends BaseActionSpec implements Directly
 
     @Override
     public String[] getAliases() {
-        return new String[] {JvmConstant.ACION_CPU_FULL_LOAD_ALIAS};
+        return new String[] {JvmConstant.ACTION_CPU_FULL_LOAD_ALIAS};
     }
 
     @Override

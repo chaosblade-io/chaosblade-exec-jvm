@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
-
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
 /**
- * @author haibin
- * @date 2019-04-23
+ * Script finder
+ *
+ * @author RinaisSuper
  */
-public interface StoppableActionExecutor extends ActionExecutor {
+public interface ScriptFinder {
 
     /**
-     * stop action executor
+     * Find script by id
      *
-     * @param enhancerModel
-     * @throws Exception
+     * @param scriptId
+     * @return
      */
-    void stop(EnhancerModel enhancerModel) throws Exception;
+    Script find(String scriptId);
 }
