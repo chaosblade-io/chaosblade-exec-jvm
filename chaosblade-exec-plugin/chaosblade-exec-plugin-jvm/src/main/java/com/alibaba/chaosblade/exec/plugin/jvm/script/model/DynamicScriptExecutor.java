@@ -172,6 +172,7 @@ public class DynamicScriptExecutor implements ActionExecutor, StoppableActionExe
         String decodeScriptContent = enhancerModel.getActionFlag(JvmConstant.FLAG_NAME_SCRIPT_CONTENT_DECODE);
         if (StringUtil.isBlank(decodeScriptContent)) {
             // parse script content and cache
+            scriptContent = scriptContent.replaceAll(" ", "+");
             String decode = Base64Util.decode(scriptContent.getBytes(Charset.forName("UTF-8")));
             enhancerModel.addActionFlag(JvmConstant.FLAG_NAME_SCRIPT_CONTENT_DECODE, decode);
             return decode;
