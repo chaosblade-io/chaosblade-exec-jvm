@@ -41,8 +41,6 @@ public class JvmCpuFullLoadExecutor implements ActionExecutor, StoppableActionEx
             Integer count = Integer.valueOf(cpuCount.trim());
             if (count > 0 && count < maxProcessors) {
                 threadCount = count;
-            } else {
-                throw new IllegalArgumentException("cpu-count value is illegal: " + cpuCount);
             }
         }
         synchronized (lock) {
