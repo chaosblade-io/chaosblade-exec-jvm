@@ -65,7 +65,7 @@ public class BeforeEventListener implements EventListener {
         }
         Method method;
         try {
-            method = ReflectUtil.getMethod(clazz, event.javaMethodDesc);
+            method = ReflectUtil.getMethod(clazz, event.javaMethodDesc, event.javaMethodName);
         } catch (NoSuchMethodException e) {
             LOGGER.warn("get method by reflection exception. class: {}, method: {}, arguments: {}, desc: {}", event
                 .javaClassName, event.javaMethodName, Arrays.toString(event.argumentArray), event.javaMethodDesc, e);

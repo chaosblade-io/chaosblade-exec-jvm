@@ -78,6 +78,7 @@ public class ReflectUtil {
     /**
      * Get method object
      * TODO
+     *
      * @param clazz
      * @param methodName
      * @param args
@@ -116,12 +117,12 @@ public class ReflectUtil {
      * @return
      * @throws NoSuchMethodException
      */
-    public static Method getMethod(Class<?> clazz, String methodDescriptor)
+    public static Method getMethod(Class<?> clazz, String methodDescriptor, String methodName)
         throws NoSuchMethodException {
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
             String desc = ASMUtils.desc(method);
-            if (desc.equals(methodDescriptor)) {
+            if (method.getName().equals(methodName) && desc.equals(methodDescriptor)) {
                 return method;
             }
         }
