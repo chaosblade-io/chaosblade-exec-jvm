@@ -40,6 +40,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
+import java.util.regex.Pattern;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.NestingKind;
@@ -62,14 +63,13 @@ import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptEngine;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
 
-/**
- * @author RinaisSuper
- */
 public class JavaCodeScriptEngine implements ScriptEngine {
 
     private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
+    private static final Pattern PACKAGE_REGREX = Pattern.compile("(^|\n)package\\s+(.*);");
+    private static final String EMPTY_STR = "";
     private static String NAME = "Java";
-    private static String PACKAGE_NAME = "com.alibaba.chaosblade.exec.plugin.jvm.script.java.source";
+    private static String PACKAGE_NAME = "com.taobao.csp.monkeyking.script.java.source";
 
     private static void generateDiagnosticReport(
         DiagnosticCollector<JavaFileObject> collector, StringBuilder reporter) throws IOException {
@@ -109,17 +109,18 @@ public class JavaCodeScriptEngine implements ScriptEngine {
             throw new ScriptException("Not found class name in script content,class name must in alpha format");
         }
         String completeClassName = PACKAGE_NAME + "." + className;
-        return compileClass(classLoader, completeClassName, script.getId(), fillPackage(script.getContent()));
+        return compileClass(classLoader, completeClassName, script.getId(), replacePackage(script.getContent()));
     }
 
-    private String fillPackage(String content) {
-        //已经有package了就不处理了
-        if (content.trim().startsWith("package")) {
-            return content;
-        }
-        StringBuilder stringBuilder = new StringBuilder("package " + PACKAGE_NAME + ";\n");
-        stringBuilder.append(content);
-        return stringBuilder.toString();
+    /**
+     * Replace user package
+     *
+     * @param content
+     * @return
+     */
+    private String replacePackage(String content) {
+        String newContent = PACKAGE_REGREX.matcher(content).replaceFirst(EMPTY_STR).trim();
+        return "package " + PACKAGE_NAME + ";\n" + newContent;
     }
 
     @Override
@@ -330,7 +331,7 @@ public class JavaCodeScriptEngine implements ScriptEngine {
 
         // --------------------------------- Output ---------------------------------
         @Override
-        public JavaFileObject getJavaFileForOutput(Location location, String className, Kind kind,
+        public JavaFileObject getJavaFileForOutput(Location location, String className, JavaFileObject.Kind kind,
                                                    FileObject sibling) throws IOException {
             OutputClassJavaFileObject file = new OutputClassJavaFileObject(className, kind);
             outputFiles.add(file);
@@ -361,7 +362,7 @@ public class JavaCodeScriptEngine implements ScriptEngine {
             throws IOException {
             if (location == StandardLocation.PLATFORM_CLASS_PATH) {
                 return super.list(location, packageName, kinds, recurse);
-            } else if (location == StandardLocation.CLASS_PATH && kinds.contains(Kind.CLASS)) {
+            } else if (location == StandardLocation.CLASS_PATH && kinds.contains(JavaFileObject.Kind.CLASS)) {
                 if (packageName.startsWith("java")) {
                     return super.list(location, packageName, kinds, recurse);
                 } else {
@@ -460,5 +461,4 @@ public class JavaCodeScriptEngine implements ScriptEngine {
             return code;
         }
     }
-
 }
