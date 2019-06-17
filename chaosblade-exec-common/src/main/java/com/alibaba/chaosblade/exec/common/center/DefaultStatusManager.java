@@ -151,6 +151,21 @@ public class DefaultStatusManager implements StatusManager {
     }
 
     @Override
+    public StatusMetric getStatusMetricByUid(String uid) {
+        // get model identifier
+        String identifier = experiments.get(uid);
+        if (StringUtil.isBlank(identifier)) {
+            return null;
+        }
+        String target = ModelUtil.getTarget(identifier);
+        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
+        if (metricMap == null || metricMap.size() == 0) {
+            return null;
+        }
+        return metricMap.get(identifier);
+    }
+
+    @Override
     public void load() {
         closed = false;
     }
