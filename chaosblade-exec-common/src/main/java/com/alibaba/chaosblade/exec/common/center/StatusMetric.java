@@ -16,6 +16,8 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import com.alibaba.chaosblade.exec.common.model.Model;
 
 /**
@@ -23,12 +25,22 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  */
 public class StatusMetric {
     private Model model;
+    private AtomicLong hitCounts;
 
     public StatusMetric(Model model) {
         this.model = model;
+        this.hitCounts = new AtomicLong(0);
     }
 
     public Model getModel() {
         return model;
+    }
+
+    public void increase() {
+        hitCounts.incrementAndGet();
+    }
+
+    public long getCount() {
+        return hitCounts.get();
     }
 }

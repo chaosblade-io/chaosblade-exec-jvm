@@ -16,13 +16,23 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
+import com.alibaba.chaosblade.exec.common.center.StatusManager;
+import com.alibaba.chaosblade.exec.common.center.StatusMetric;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
+import com.alibaba.chaosblade.exec.common.transport.Response.Code;
+import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
 /**
  * @author Changjun Xiao
  */
 public class StatusHandler implements RequestHandler {
+    private StatusManager statusManager;
+
+    public StatusHandler() {
+        this.statusManager = ManagerFactory.getStatusManager();
+    }
 
     @Override
     public String getHandlerName() {
@@ -30,7 +40,15 @@ public class StatusHandler implements RequestHandler {
     }
 
     @Override
-    public Response handle(Request paramRequest) {
-        return Response.ofSuccess("success");
+    public Response handle(Request request) {
+        String suid = request.getParam("suid");
+        if (StringUtil.isBlank(suid)) {
+            return Response.ofFailure(Code.ILLEGAL_PARAMETER, "suid must not be empty");
+        }
+        StatusMetric statusMetric = statusManager.getStatusMetricByUid(suid);
+        if (statusMetric == null) {
+            return Response.ofFailure(Code.NOT_FOUND, "data not found");
+        }
+        return Response.ofSuccess(String.valueOf(statusMetric.getCount()));
     }
 }

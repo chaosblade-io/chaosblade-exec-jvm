@@ -24,6 +24,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
+import com.alibaba.chaosblade.exec.common.model.matcher.EffectCountMatcherSpec;
+import com.alibaba.chaosblade.exec.common.model.matcher.EffectPercentMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.prepare.AgentPrepareSpec;
 import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
@@ -60,6 +63,12 @@ public abstract class BaseModelSpec implements ModelSpec {
         ActionSpec oldActionSpec = actionSpecs.putIfAbsent(actionSpec.getName(), actionSpec);
         if (oldActionSpec != null) {
             LOGGER.warn("{} action has defined in {} target model", actionSpec.getName(), getTarget());
+            return;
+        }
+        if (!(actionSpec instanceof DirectlyInjectionAction)) {
+            // add effect matcher
+            actionSpec.addMatcherDesc(new EffectCountMatcherSpec());
+            actionSpec.addMatcherDesc(new EffectPercentMatcherSpec());
         }
     }
 

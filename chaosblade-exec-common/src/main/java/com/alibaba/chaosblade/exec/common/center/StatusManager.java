@@ -72,4 +72,12 @@ public interface StatusManager extends ManagerService {
      */
     boolean expExists(String targetName);
 
+    /**
+     * Get status metric by uid
+     *
+     * @param uid
+     * @return
+     */
+    StatusMetric getStatusMetricByUid(String uid);
+
 }

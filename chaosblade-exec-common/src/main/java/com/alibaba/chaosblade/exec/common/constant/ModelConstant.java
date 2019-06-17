@@ -21,4 +21,14 @@ package com.alibaba.chaosblade.exec.common.constant;
  */
 public interface ModelConstant {
     String JVM_TARGET = "jvm";
+
+    /**
+     * The name of effect percent matcher
+     */
+    String EFFECT_PERCENT_MATCHER_NAME = "effect-percent";
+
+    /**
+     * The name of effect count matcher
+     */
+    String EFFECT_COUNT_MATCHER_NAME = "effect-count";
 }
