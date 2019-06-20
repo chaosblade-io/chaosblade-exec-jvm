@@ -55,11 +55,11 @@ public class Injector {
             target);
         for (StatusMetric statusMetric : statusMetrics) {
             Model model = statusMetric.getModel();
+            if (!compare(model, enhancerModel)) {
+                continue;
+            }
             try {
-                if (!compare(model, enhancerModel)) {
-                    continue;
-                }
-                boolean pass = limitCheck(statusMetric);
+                boolean pass = limitAndIncrease(statusMetric);
                 if (!pass) {
                     LOGGER.info("Limited by: {}", JSON.toJSONString(model));
                     break;
@@ -69,29 +69,35 @@ public class Injector {
                 ModelSpec modelSpec = ManagerFactory.getModelSpecManager().getModelSpec(target);
                 ActionSpec actionSpec = modelSpec.getActionSpec(model.getActionName());
                 actionSpec.getActionExecutor().run(enhancerModel);
-                // record injection count
-                statusMetric.increase();
             } catch (InterruptProcessException e) {
-                // record injection count
-                statusMetric.increase();
                 throw e;
             } catch (UnsupportedReturnTypeException e) {
                 LOGGER.warn("unsupported return type for return experiment", e);
+                // decrease the count if throw unexpected exception
+                statusMetric.decrease();
             } catch (Throwable e) {
                 LOGGER.warn("inject exception", e);
+                // decrease the count if throw unexpected exception
+                statusMetric.decrease();
             }
             // break it if compared success
             break;
         }
     }
 
-    private static boolean limitCheck(StatusMetric statusMetric) {
+    /**
+     * @param statusMetric
+     * @return
+     */
+    private static boolean limitAndIncrease(StatusMetric statusMetric) {
         Model model = statusMetric.getModel();
         String limitCount = model.getMatcher().get("effect-count");
         if (!StringUtil.isBlank(limitCount)) {
-            if (statusMetric.getCount() >= Long.valueOf(limitCount)) {
+            Long count = Long.valueOf(limitCount);
+            if (statusMetric.getCount() >= count) {
                 return false;
             }
+            return statusMetric.increaseWithLock(count);
         }
         String limitPercent = model.getMatcher().get("effect-percent");
         if (!StringUtil.isBlank(limitPercent)) {
@@ -102,6 +108,7 @@ public class Injector {
                 return false;
             }
         }
+        statusMetric.increase();
         return true;
     }
 
