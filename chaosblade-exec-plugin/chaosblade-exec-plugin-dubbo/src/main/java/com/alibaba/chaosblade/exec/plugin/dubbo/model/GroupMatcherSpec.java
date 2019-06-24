@@ -14,27 +14,33 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo;
+package com.alibaba.chaosblade.exec.plugin.dubbo.model;
 
-import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
+import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 
 /**
- * @author Changjun Xiao
+ * @author dknight.chen
  */
-public interface DubboConstant {
+public class GroupMatcherSpec extends BasePredicateMatcherSpec {
 
-    String TIMEOUT_KEY = "timeout";
-    String TIMEOUT_EXCEPTION_MSG = "from chaosblade mock timeout";
+    @Override
+    public String getName() {
+        return DubboConstant.GROUP_KEY;
+    }
 
-    String VERSION_KEY = "version";
-    String APP_KEY = "appname";
-    String SERVICE_KEY = "service";
-    String METHOD_KEY = MethodConstant.METHOD_MATCHER_NAME;
-    String GROUP_KEY = "group";
+    @Override
+    public String getDesc() {
+        return "The service group";
+    }
 
-    String TARGET_NAME = "dubbo";
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
 
-    String CONSUMER_KEY = "consumer";
-    String PROVIDER_KEY = "provider";
-
+    @Override
+    public boolean required() {
+        return false;
+    }
 }
