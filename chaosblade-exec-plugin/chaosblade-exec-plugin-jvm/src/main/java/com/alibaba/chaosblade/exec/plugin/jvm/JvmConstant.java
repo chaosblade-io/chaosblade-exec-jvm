@@ -33,9 +33,7 @@ public interface JvmConstant {
 
     Integer FLAG_VALUE_OOM_THREAD_COUNT = 1;
 
-    String ACTION_OUT_OF_MEMORY_ERROR_NAME = "outofmemoryerror";
-
-    String ACTION_OUT_OF_MEMORY_ERROR_ALIAS = "oom";
+    String ACTION_OUT_OF_MEMORY_ERROR_NAME = "OutOfMemoryError";
 
     String ACTION_CPU_FULL_LOAD_NAME = "cpufullload";
 

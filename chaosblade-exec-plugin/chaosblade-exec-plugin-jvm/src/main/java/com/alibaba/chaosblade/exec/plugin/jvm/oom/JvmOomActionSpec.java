@@ -36,7 +36,7 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
 
     @Override
     public String[] getAliases() {
-        return new String[] {JvmConstant.ACTION_OUT_OF_MEMORY_ERROR_ALIAS, "OutOfMemoryError"};
+        return new String[] {"oom", "outofmemoryerror"};
     }
 
     @Override
