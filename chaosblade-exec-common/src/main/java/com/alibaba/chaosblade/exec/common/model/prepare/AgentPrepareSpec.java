@@ -56,6 +56,28 @@ public class AgentPrepareSpec implements PrepareSpec {
             }
         };
         flagSpecs.add(flagSpec);
+        FlagSpec javaHome = new FlagSpec() {
+            @Override
+            public String getName() {
+                return "javaHome";
+            }
+
+            @Override
+            public String getDesc() {
+                return "java home path";
+            }
+
+            @Override
+            public boolean noArgs() {
+                return false;
+            }
+
+            @Override
+            public boolean required() {
+                return false;
+            }
+        };
+        flagSpecs.add(javaHome);
         return flagSpecs;
     }
 
