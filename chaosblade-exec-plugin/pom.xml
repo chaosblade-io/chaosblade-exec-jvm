@@ -33,6 +33,7 @@
         <module>chaosblade-exec-plugin-mysql</module>
         <module>chaosblade-exec-plugin-servlet</module>
         <module>chaosblade-exec-plugin-druid</module>
+        <module>chaosblade-exec-plugin-rocketmq</module>
     </modules>
 
     <dependencies>
