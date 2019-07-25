@@ -8,7 +8,7 @@ import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 /**
  * @author RinaisSuper
  * @date 2019-07-23
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 public class RocketMqPlugin implements Plugin, RocketMqConstant {
     @Override

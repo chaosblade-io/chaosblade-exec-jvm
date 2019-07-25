@@ -3,7 +3,7 @@ package com.alibaba.chaosblade.exec.plugin.rocketmq;
 /**
  * @author RinaisSuper
  * @date 2019-07-23
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 public interface RocketMqConstant {
 

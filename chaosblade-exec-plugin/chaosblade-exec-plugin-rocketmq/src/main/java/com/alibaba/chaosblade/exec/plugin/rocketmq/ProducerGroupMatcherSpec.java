@@ -7,7 +7,7 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
  *
  * @author RinaisSuper
  * @date 2019-07-24
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 public class ProducerGroupMatcherSpec extends BasePredicateMatcherSpec implements RocketMqConstant {
     @Override

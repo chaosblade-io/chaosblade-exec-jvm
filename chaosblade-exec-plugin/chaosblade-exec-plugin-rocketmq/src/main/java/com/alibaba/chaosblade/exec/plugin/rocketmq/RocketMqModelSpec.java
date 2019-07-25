@@ -9,7 +9,7 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 /**
  * @author RinaisSuper
  * @date 2019-07-24
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 public class RocketMqModelSpec extends FrameworkModelSpec implements RocketMqConstant {
 

@@ -11,7 +11,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
 /**
  * @author RinaisSuper
  * @date 2019-04-18
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 public class OffHeapJvmOomExecutor extends JvmOomExecutor {
 
