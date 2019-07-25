@@ -24,6 +24,7 @@ import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboThreadPoolFullExecutor;
+import com.alibaba.fastjson.JSON;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +44,8 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
     public static final String GROUP_SEP = "/";
     public static final String GET_INVOKER = "getInvoker";
     public static final String RECEIVED_METHOD = "received";
-    private static final Logger LOGGER = LoggerFactory.getLogger(DubboEnhancer.class);
     public static final int INVALID_POS = -1;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DubboEnhancer.class);
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
@@ -76,12 +77,14 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         matcherModel.add(DubboConstant.SERVICE_KEY, serviceAndVersionGroup[0]);
         matcherModel.add(DubboConstant.VERSION_KEY, serviceAndVersionGroup[1]);
         if (2 < serviceAndVersionGroup.length &&
-                null != serviceAndVersionGroup[2]) {
+            null != serviceAndVersionGroup[2]) {
             matcherModel.add(DubboConstant.GROUP_KEY, serviceAndVersionGroup[2]);
         }
         matcherModel.add(DubboConstant.METHOD_KEY, methodName);
         int timeout = getTimeout(methodName, object, invocation);
         matcherModel.add(DubboConstant.TIMEOUT_KEY, timeout + "");
+
+        LOGGER.info("dubbo matchers: {}", JSON.toJSONString(matcherModel));
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout));

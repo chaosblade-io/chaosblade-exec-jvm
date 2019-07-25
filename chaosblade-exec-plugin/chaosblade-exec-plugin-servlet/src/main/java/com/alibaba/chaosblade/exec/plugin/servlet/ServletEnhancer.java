@@ -22,11 +22,17 @@ import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.fastjson.JSON;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Changjun Xiao
  */
 public class ServletEnhancer extends BeforeEnhancer {
+
+    private static final Logger LOOGER = LoggerFactory.getLogger(ServletEnhancer.class);
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
@@ -43,6 +49,9 @@ public class ServletEnhancer extends BeforeEnhancer {
         matcherModel.add(ServletConstant.QUERY_STRING_KEY, queryString);
         matcherModel.add(ServletConstant.SERVLET_PATH_KEY, servletPath);
         matcherModel.add(ServletConstant.METHOD_KEY, requestMethod);
+
+        LOOGER.info("servlet matchers: {}", JSON.toJSONString(matcherModel));
+
         return new EnhancerModel(classLoader, matcherModel);
     }
 }
