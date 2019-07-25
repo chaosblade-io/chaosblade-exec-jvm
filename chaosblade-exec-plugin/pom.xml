@@ -21,7 +21,7 @@
     <parent>
         <artifactId>chaosblade-exec-jvm</artifactId>
         <groupId>com.alibaba.chaosblade</groupId>
-        <version>0.0.3</version>
+        <version>0.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -33,6 +33,7 @@
         <module>chaosblade-exec-plugin-mysql</module>
         <module>chaosblade-exec-plugin-servlet</module>
         <module>chaosblade-exec-plugin-druid</module>
+        <module>chaosblade-exec-plugin-http</module>
         <module>chaosblade-exec-plugin-rocketmq</module>
     </modules>
 

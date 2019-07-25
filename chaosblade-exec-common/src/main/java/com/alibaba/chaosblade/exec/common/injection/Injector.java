@@ -19,16 +19,19 @@ package com.alibaba.chaosblade.exec.common.injection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.StatusMetric;
+import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.returnv.UnsupportedReturnTypeException;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import com.alibaba.fastjson.JSON;
 
 import org.slf4j.Logger;
@@ -52,9 +55,14 @@ public class Injector {
             target);
         for (StatusMetric statusMetric : statusMetrics) {
             Model model = statusMetric.getModel();
+            if (!compare(model, enhancerModel)) {
+                continue;
+            }
             try {
-                if (!compare(model, enhancerModel)) {
-                    continue;
+                boolean pass = limitAndIncrease(statusMetric);
+                if (!pass) {
+                    LOGGER.info("Limited by: {}", JSON.toJSONString(model));
+                    break;
                 }
                 LOGGER.info("Match rule: {}", JSON.toJSONString(model));
                 enhancerModel.merge(model);
@@ -65,10 +73,43 @@ public class Injector {
                 throw e;
             } catch (UnsupportedReturnTypeException e) {
                 LOGGER.warn("unsupported return type for return experiment", e);
+                // decrease the count if throw unexpected exception
+                statusMetric.decrease();
             } catch (Throwable e) {
                 LOGGER.warn("inject exception", e);
+                // decrease the count if throw unexpected exception
+                statusMetric.decrease();
+            }
+            // break it if compared success
+            break;
+        }
+    }
+
+    /**
+     * @param statusMetric
+     * @return
+     */
+    private static boolean limitAndIncrease(StatusMetric statusMetric) {
+        Model model = statusMetric.getModel();
+        String limitCount = model.getMatcher().get("effect-count");
+        if (!StringUtil.isBlank(limitCount)) {
+            Long count = Long.valueOf(limitCount);
+            if (statusMetric.getCount() >= count) {
+                return false;
+            }
+            return statusMetric.increaseWithLock(count);
+        }
+        String limitPercent = model.getMatcher().get("effect-percent");
+        if (!StringUtil.isBlank(limitPercent)) {
+            Integer percent = Integer.valueOf(limitPercent);
+            Random random = new Random();
+            int randomValue = random.nextInt(100) + 1;
+            if (randomValue > percent) {
+                return false;
             }
         }
+        statusMetric.increase();
+        return true;
     }
 
     /**
@@ -89,6 +130,11 @@ public class Injector {
         }
         Map<String, String> matchers = matcher.getMatchers();
         for (Entry<String, String> entry : matchers.entrySet()) {
+            // filter effect count and effect percent
+            if (entry.getKey().equalsIgnoreCase(ModelConstant.EFFECT_COUNT_MATCHER_NAME) ||
+                entry.getKey().equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)) {
+                continue;
+            }
             String value = enhancerMatcherModel.get(entry.getKey());
             if (value == null) {
                 return false;

@@ -19,7 +19,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.SystemGcFlagSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.ThreadCountFlagSpec;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-18
  * @email haibin.lhb@alibaba-inc.com
  */
@@ -36,7 +36,7 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
 
     @Override
     public String[] getAliases() {
-        return new String[] {JvmConstant.ACTION_OUT_OF_MEMORY_ERROR_ALIAS};
+        return new String[] {"oom", "outofmemoryerror"};
     }
 
     @Override

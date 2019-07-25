@@ -3,7 +3,7 @@ package com.alibaba.chaosblade.exec.plugin.rocketmq;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-07-24
  * @email haibin.lhb@alibaba-inc.com
  */

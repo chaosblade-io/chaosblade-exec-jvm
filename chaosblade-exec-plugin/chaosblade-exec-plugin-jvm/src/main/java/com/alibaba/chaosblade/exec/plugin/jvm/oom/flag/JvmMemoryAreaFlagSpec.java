@@ -7,7 +7,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-18
  * @email haibin.lhb@alibaba-inc.com
  */

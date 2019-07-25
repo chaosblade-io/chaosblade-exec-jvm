@@ -31,6 +31,7 @@ import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelH
 import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.chaosblade.exec.common.plugin.MethodNameMatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 
 /**
@@ -67,7 +68,8 @@ public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjec
         matcherSpecs.add(new AppNameMatcherDefSpec());
         matcherSpecs.add(new ServiceMatcherSpec());
         matcherSpecs.add(new VersionMatcherSpec());
-        matcherSpecs.add(new MethodMatcherSpec());
+        matcherSpecs.add(new MethodNameMatcherSpec());
+        matcherSpecs.add(new GroupMatcherSpec());
         return matcherSpecs;
     }
 

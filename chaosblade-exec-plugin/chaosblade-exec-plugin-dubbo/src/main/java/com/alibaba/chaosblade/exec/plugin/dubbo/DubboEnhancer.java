@@ -40,9 +40,11 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
     public static final String GET_SERVICE_KEY = "getServiceKey";
     public static final String GET_METHOD_NAME = "getMethodName";
     public static final String SPLIT_TOKEN = ":";
+    public static final String GROUP_SEP = "/";
     public static final String GET_INVOKER = "getInvoker";
     public static final String RECEIVED_METHOD = "received";
     private static final Logger LOGGER = LoggerFactory.getLogger(DubboEnhancer.class);
+    public static final int INVALID_POS = -1;
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
@@ -67,12 +69,16 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         }
         String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {APPLICATION_KEY}, false);
         String methodName = ReflectUtil.invokeMethod(invocation, GET_METHOD_NAME, new Object[0], false);
-        String[] serviceAndVersion = getServiceNameWithVersion(invocation, url);
+        String[] serviceAndVersionGroup = getServiceNameWithVersionGroup(invocation, url);
 
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(DubboConstant.APP_KEY, appName);
-        matcherModel.add(DubboConstant.SERVICE_KEY, serviceAndVersion[0]);
-        matcherModel.add(DubboConstant.VERSION_KEY, serviceAndVersion[1]);
+        matcherModel.add(DubboConstant.SERVICE_KEY, serviceAndVersionGroup[0]);
+        matcherModel.add(DubboConstant.VERSION_KEY, serviceAndVersionGroup[1]);
+        if (2 < serviceAndVersionGroup.length &&
+                null != serviceAndVersionGroup[2]) {
+            matcherModel.add(DubboConstant.GROUP_KEY, serviceAndVersionGroup[2]);
+        }
         matcherModel.add(DubboConstant.METHOD_KEY, methodName);
         int timeout = getTimeout(methodName, object, invocation);
         matcherModel.add(DubboConstant.TIMEOUT_KEY, timeout + "");
@@ -94,18 +100,25 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
      * @return
      * @throws Exception
      */
-    private String[] getServiceNameWithVersion(Object invocation, Object url) throws Exception {
+    public String[] getServiceNameWithVersionGroup(Object invocation, Object url) throws Exception {
         // com.alibaba.dubbo.demo.DemoService | com.alibaba.dubbo.demo.DemoService:1.0
         String serviceKey = ReflectUtil.invokeMethod(url, GET_SERVICE_KEY, new Object[0], false);
         if (serviceKey == null) {
             LOGGER.warn("Service key is null in dubbo consumer. invocation: {}", invocation);
             return null;
         } else {
+            int groupSep = serviceKey.indexOf(GROUP_SEP);
+            String group = null;
+            if (INVALID_POS != groupSep) {
+                group = serviceKey.substring(0, groupSep);
+                serviceKey = serviceKey.substring(groupSep + 1);
+            }
+
             String[] serviceAndVersion = serviceKey.split(SPLIT_TOKEN);
             if (serviceAndVersion.length == 1) {
-                return new String[] {serviceAndVersion[0], DEFAULT_VERSION};
+                return new String[] {serviceAndVersion[0], DEFAULT_VERSION, group};
             }
-            return serviceAndVersion;
+            return new String[] {serviceAndVersion[0], serviceAndVersion[1], group};
         }
     }
 

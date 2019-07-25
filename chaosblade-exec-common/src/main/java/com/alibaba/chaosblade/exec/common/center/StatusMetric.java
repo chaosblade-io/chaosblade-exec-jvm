@@ -16,6 +16,10 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import com.alibaba.chaosblade.exec.common.model.Model;
 
 /**
@@ -23,12 +27,40 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  */
 public class StatusMetric {
     private Model model;
+    private AtomicLong hitCounts;
+    private Lock lock = new ReentrantLock();
 
     public StatusMetric(Model model) {
         this.model = model;
+        this.hitCounts = new AtomicLong(0);
     }
 
     public Model getModel() {
         return model;
+    }
+
+    public void increase() {
+        hitCounts.incrementAndGet();
+    }
+
+    public void decrease() {
+        hitCounts.decrementAndGet();
+    }
+
+    public boolean increaseWithLock(long limitCount) {
+        try {
+            lock.tryLock();
+            if (hitCounts.get() < limitCount) {
+                increase();
+                return true;
+            }
+        } finally {
+            lock.unlock();
+        }
+        return false;
+    }
+
+    public long getCount() {
+        return hitCounts.get();
     }
 }

@@ -3,7 +3,7 @@ package com.alibaba.chaosblade.exec.common.model.action;
 import com.alibaba.chaosblade.exec.common.model.Model;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-19
  */
 public interface DirectlyInjectionAction {

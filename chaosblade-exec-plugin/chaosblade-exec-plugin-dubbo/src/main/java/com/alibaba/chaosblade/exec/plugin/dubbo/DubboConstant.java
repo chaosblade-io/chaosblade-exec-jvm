@@ -16,6 +16,8 @@
 
 package com.alibaba.chaosblade.exec.plugin.dubbo;
 
+import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
+
 /**
  * @author Changjun Xiao
  */
@@ -27,7 +29,8 @@ public interface DubboConstant {
     String VERSION_KEY = "version";
     String APP_KEY = "appname";
     String SERVICE_KEY = "service";
-    String METHOD_KEY = "methodname";
+    String METHOD_KEY = MethodConstant.METHOD_MATCHER_NAME;
+    String GROUP_KEY = "group";
 
     String TARGET_NAME = "dubbo";
 

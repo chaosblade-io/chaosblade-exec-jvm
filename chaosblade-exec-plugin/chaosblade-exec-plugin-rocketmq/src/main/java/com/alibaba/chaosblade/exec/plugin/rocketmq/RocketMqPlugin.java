@@ -6,7 +6,7 @@ import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-07-23
  * @email haibin.lhb@alibaba-inc.com
  */

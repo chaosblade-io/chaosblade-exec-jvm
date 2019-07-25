@@ -23,14 +23,6 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
  */
 public class ClassNameMatcherSpec extends BasePredicateMatcherSpec {
 
-    public ClassNameMatcherSpec() {
-        super();
-    }
-
-    public ClassNameMatcherSpec(boolean noArgs, boolean required) {
-        super(noArgs, required);
-    }
-
     @Override
     public String getName() {
         return MethodConstant.CLASS_MATCHER_NAME;
@@ -39,6 +31,16 @@ public class ClassNameMatcherSpec extends BasePredicateMatcherSpec {
     @Override
     public String getDesc() {
         return "The class name with package";
+    }
+
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
+
+    @Override
+    public boolean required() {
+        return true;
     }
 
 }

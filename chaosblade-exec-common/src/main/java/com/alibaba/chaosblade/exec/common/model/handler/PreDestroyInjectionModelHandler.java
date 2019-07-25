@@ -10,7 +10,7 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  * <p>
  * For example,a module contains multiple actions, before invoke destroy actions,we need do something,so you can make
  *
- * @author haibin
+ * @author RinaisSuper
  * @{@link com.alibaba.chaosblade.exec.common.model.ModelSpec} implements this interface.
  * </p>
  * @date 2019-04-19

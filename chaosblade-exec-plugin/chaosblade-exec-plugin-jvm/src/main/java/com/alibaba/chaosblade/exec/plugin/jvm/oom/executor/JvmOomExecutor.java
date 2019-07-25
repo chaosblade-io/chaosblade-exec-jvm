@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * jvm oom abstract executor
  *
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-18
  * @email haibin.lhb@alibaba-inc.com
  */

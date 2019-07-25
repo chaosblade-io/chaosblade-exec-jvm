@@ -4,7 +4,7 @@ import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-23
  */
 public class SystemGcFlagSpec implements FlagSpec {

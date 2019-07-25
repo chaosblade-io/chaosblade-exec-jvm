@@ -19,6 +19,8 @@ package com.alibaba.chaosblade.exec.common.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import com.alibaba.fastjson.util.ASMUtils;
+
 /**
  * @author Changjun Xiao
  */
@@ -75,6 +77,7 @@ public class ReflectUtil {
 
     /**
      * Get method object
+     * TODO
      *
      * @param clazz
      * @param methodName
@@ -104,6 +107,33 @@ public class ReflectUtil {
         }
 
         return getMethod(clazz, methodName, argsClass);
+    }
+
+    /**
+     * Get method by name and descriptor
+     *
+     * @param clazz
+     * @param methodDescriptor
+     * @return
+     * @throws NoSuchMethodException
+     */
+    public static Method getMethod(Class<?> clazz, String methodDescriptor, String methodName)
+        throws NoSuchMethodException {
+        Method[] methods = clazz.getMethods();
+        for (Method method : methods) {
+            String desc = ASMUtils.desc(method);
+            if (method.getName().equals(methodName) && desc.equals(methodDescriptor)) {
+                return method;
+            }
+        }
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        for (Method method : declaredMethods) {
+            String desc = ASMUtils.desc(method);
+            if (desc.equals(methodDescriptor)) {
+                return method;
+            }
+        }
+        throw new NoSuchMethodException(methodDescriptor + " descriptor");
     }
 
     public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)

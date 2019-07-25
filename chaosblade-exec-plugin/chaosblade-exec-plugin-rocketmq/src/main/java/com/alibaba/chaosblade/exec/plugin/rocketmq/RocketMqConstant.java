@@ -1,7 +1,7 @@
 package com.alibaba.chaosblade.exec.plugin.rocketmq;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-07-23
  * @email haibin.lhb@alibaba-inc.com
  */

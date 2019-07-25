@@ -13,7 +13,7 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
  *                                                                                                                  invokeSyncImpl
  *  conusmer----->DefaultMQPullConsumerImpl.pull---->MQClientAPIImpl.pullMessage---
  *
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-07-24
  * @email haibin.lhb@alibaba-inc.com
  */

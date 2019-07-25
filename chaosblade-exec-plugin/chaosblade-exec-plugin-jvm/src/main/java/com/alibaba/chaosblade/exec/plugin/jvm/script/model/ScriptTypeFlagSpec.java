@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo.model;
+package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
+import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
 /**
  * @author Changjun Xiao
  */
-public class MethodMatcherSpec extends BasePredicateMatcherSpec {
+public class ScriptTypeFlagSpec implements FlagSpec {
 
     @Override
     public String getName() {
-        return DubboConstant.METHOD_KEY;
+        return JvmConstant.FLAG_NAME_SCRIPT_TYPE;
     }
 
     @Override
     public String getDesc() {
-        return "The method name in service interface";
+        return "The script file type, java or groovy, default value is java";
     }
 
     @Override

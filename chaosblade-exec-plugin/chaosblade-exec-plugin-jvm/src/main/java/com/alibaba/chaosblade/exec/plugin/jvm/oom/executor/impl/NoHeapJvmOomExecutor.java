@@ -12,7 +12,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-18
  * @email haibin.lhb@alibaba-inc.com
  */
