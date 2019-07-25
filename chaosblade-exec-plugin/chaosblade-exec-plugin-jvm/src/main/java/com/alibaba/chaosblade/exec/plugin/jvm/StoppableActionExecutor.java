@@ -20,7 +20,7 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-23
  */
 public interface StoppableActionExecutor extends ActionExecutor {

@@ -17,7 +17,7 @@
 package com.alibaba.chaosblade.exec.plugin.jvm;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-18
  */
 public interface JvmConstant {

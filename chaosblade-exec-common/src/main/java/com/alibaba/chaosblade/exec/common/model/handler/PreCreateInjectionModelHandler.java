@@ -12,7 +12,7 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  * com.alibaba.chaosblade.exec.common.model.ModelSpec} implements this interface.
  * </p>
  *
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-19
  */
 public interface PreCreateInjectionModelHandler {

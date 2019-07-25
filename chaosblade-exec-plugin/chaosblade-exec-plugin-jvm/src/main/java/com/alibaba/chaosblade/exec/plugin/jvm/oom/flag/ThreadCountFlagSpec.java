@@ -4,9 +4,9 @@ import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-24
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 
 public class ThreadCountFlagSpec implements FlagSpec {

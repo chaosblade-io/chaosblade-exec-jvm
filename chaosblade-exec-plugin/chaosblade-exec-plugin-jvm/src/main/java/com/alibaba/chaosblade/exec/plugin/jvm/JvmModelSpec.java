@@ -42,7 +42,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
  * </ul>
  * </p>
  *
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-19
  */
 public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionModelHandler,

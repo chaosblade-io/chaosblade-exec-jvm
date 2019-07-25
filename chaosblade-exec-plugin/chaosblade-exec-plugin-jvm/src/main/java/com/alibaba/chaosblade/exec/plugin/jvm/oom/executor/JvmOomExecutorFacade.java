@@ -12,9 +12,9 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.NoHeapJvmOomExec
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.OffHeapJvmOomExecutor;
 
 /**
- * @author haibin
+ * @author RinaisSuper
  * @date 2019-04-18
- * @email haibin.lhb@alibaba-inc.com
+ * @email rinalhb@icloud.com
  */
 public class JvmOomExecutorFacade implements StoppableActionExecutor {
 
