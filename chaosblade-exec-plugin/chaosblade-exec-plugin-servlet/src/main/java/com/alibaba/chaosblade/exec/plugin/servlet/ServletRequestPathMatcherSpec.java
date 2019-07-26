@@ -16,16 +16,28 @@
 
 package com.alibaba.chaosblade.exec.plugin.servlet;
 
-/**
- * @author Changjun Xiao
- */
-public interface ServletConstant {
+import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-    String PATH_INFO_KEY = "pathinfo";
-    String QUERY_STRING_KEY = "querystring";
-    String SERVLET_PATH_KEY = "servletpath";
-    String METHOD_KEY = "method";
-    String REQUEST_PATH_KEY = "requestpath";
+public class ServletRequestPathMatcherSpec extends BasePredicateMatcherSpec {
 
-    String TARGET_NAME = "servlet";
+    @Override
+    public String getName() {
+        return ServletConstant.REQUEST_PATH_KEY;
+    }
+
+    @Override
+    public String getDesc() {
+        return "equal RequestUri without ContextPath";
+    }
+
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
+
+    @Override
+    public boolean required() {
+        return false;
+    }
+
 }
