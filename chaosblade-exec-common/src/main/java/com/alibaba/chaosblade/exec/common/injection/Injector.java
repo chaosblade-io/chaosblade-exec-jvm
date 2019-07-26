@@ -91,7 +91,7 @@ public class Injector {
      */
     private static boolean limitAndIncrease(StatusMetric statusMetric) {
         Model model = statusMetric.getModel();
-        String limitCount = model.getMatcher().get("effect-count");
+        String limitCount = model.getMatcher().get(ModelConstant.EFFECT_COUNT_MATCHER_NAME);
         if (!StringUtil.isBlank(limitCount)) {
             Long count = Long.valueOf(limitCount);
             if (statusMetric.getCount() >= count) {
@@ -99,7 +99,7 @@ public class Injector {
             }
             return statusMetric.increaseWithLock(count);
         }
-        String limitPercent = model.getMatcher().get("effect-percent");
+        String limitPercent = model.getMatcher().get(ModelConstant.EFFECT_PERCENT_MATCHER_NAME);
         if (!StringUtil.isBlank(limitPercent)) {
             Integer percent = Integer.valueOf(limitPercent);
             Random random = new Random();
