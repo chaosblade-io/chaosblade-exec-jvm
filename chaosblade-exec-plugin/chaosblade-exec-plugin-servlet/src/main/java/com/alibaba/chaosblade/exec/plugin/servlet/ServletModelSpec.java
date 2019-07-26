@@ -54,6 +54,7 @@ public class ServletModelSpec extends FrameworkModelSpec {
         matcherSpecs.add(new ServletQueryStringMatcherSpec());
         matcherSpecs.add(new ServletPathMatcherSpec());
         matcherSpecs.add(new ServletMethodMatcherSpec());
+        matcherSpecs.add(new ServletRequestPathMatcherSpec());
         return matcherSpecs;
     }
 }
