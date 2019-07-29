@@ -33,16 +33,18 @@ public interface ThrowExceptionExecutor extends ActionExecutor {
      *
      * @param classLoader
      * @param exception
+     * @param exceptionMessage
      * @return
      */
-    Exception throwCustomException(ClassLoader classLoader, String exception);
+    Exception throwCustomException(ClassLoader classLoader, String exception, String exceptionMessage);
 
     /**
      * Throw the first exception of the method declared
      *
      * @param classLoader
      * @param method
+     * @param exceptionMessage
      * @return
      */
-    Exception throwDeclaredException(ClassLoader classLoader, Method method);
+    Exception throwDeclaredException(ClassLoader classLoader, Method method, String exceptionMessage);
 }

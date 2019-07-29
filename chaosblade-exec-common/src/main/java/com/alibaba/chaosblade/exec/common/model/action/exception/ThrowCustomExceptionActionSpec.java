@@ -31,9 +31,10 @@ import com.alibaba.chaosblade.exec.common.util.StringUtil;
 public class ThrowCustomExceptionActionSpec extends BaseActionSpec {
 
     private static FlagSpec exceptionFlag = new ExceptionFlagSpec();
+    private static FlagSpec exceptionMessageFlag = new ExceptionMessageFlagSpec();
 
     public ThrowCustomExceptionActionSpec() {
-        super(new DefaultThrowExceptionExecutor(exceptionFlag));
+        super(new DefaultThrowExceptionExecutor(exceptionFlag, exceptionMessageFlag));
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ThrowCustomExceptionActionSpec extends BaseActionSpec {
 
     @Override
     public List<FlagSpec> getActionFlags() {
-        return Arrays.asList(exceptionFlag);
+        return Arrays.asList(exceptionFlag, exceptionMessageFlag);
     }
 
     @Override
