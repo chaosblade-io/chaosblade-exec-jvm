@@ -18,6 +18,7 @@ package com.alibaba.chaosblade.exec.common.util;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
@@ -47,7 +48,8 @@ public class ModelUtil {
         MatcherModel matcher = model.getMatcher();
         if (matcher != null) {
             Map<String, String> matchers = matcher.getMatchers();
-            for (Entry<String, String> entry : matchers.entrySet()) {
+            TreeMap<String, String> treeMap = new TreeMap<String, String>(matchers);
+            for (Entry<String, String> entry : treeMap.entrySet()) {
                 sb.append(SEPARATOR).append(entry.getKey()).append("=").append(entry.getValue());
             }
         }

@@ -16,9 +16,12 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
@@ -30,6 +33,10 @@ import com.alibaba.chaosblade.exec.common.util.StringUtil;
  * @author Changjun Xiao
  */
 public class ModelParser {
+
+    public final static Set<String> assistantFlag = new HashSet<String>(Arrays.asList(
+        "target", "action", "process", "pid", "debug", "suid", "help", "pod"
+    ));
 
     public static Model parseRequest(String target, Request request, ActionSpec actionSpec) {
         Model model = new Model(target, actionSpec.getName());
@@ -48,8 +55,7 @@ public class ModelParser {
         }
         for (Entry<String, String> entry : params.entrySet()) {
             String key = entry.getKey();
-            if ("target".equals(key) || "action".equals(key) || "process".equals(key) || "debug".equals(key)
-                || "suid".equals(key) || "help".equals(key) || "pod".equals(key)) {
+            if (assistantFlag.contains(key)) {
                 continue;
             }
             // add matcher flag

@@ -43,6 +43,7 @@ public class ActionSpecBean {
         this.flags = createFlags(spec.getActionFlags());
         // add jvm process flag to identify the experiment java process
         this.flags.add(new FlagSpecBean(new ProcessFlagBean()));
+        this.flags.add(new FlagSpecBean(new ProcessIdBean()));
     }
 
     private List<FlagSpecBean> createFlags(List<FlagSpec> actionFlags) {

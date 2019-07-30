@@ -34,29 +34,14 @@ public class AgentPrepareSpec implements PrepareSpec {
     @Override
     public List<FlagSpec> getFlags() {
         ArrayList<FlagSpec> flagSpecs = new ArrayList<FlagSpec>();
-        FlagSpec flagSpec = new FlagSpec() {
-            @Override
-            public String getName() {
-                return "process";
-            }
+        flagSpecs.add(createProcessNameFlag());
+        flagSpecs.add(createJavaHomeFlag());
+        flagSpecs.add(createProcessIdFlag());
+        return flagSpecs;
+    }
 
-            @Override
-            public String getDesc() {
-                return "java application process";
-            }
-
-            @Override
-            public boolean noArgs() {
-                return false;
-            }
-
-            @Override
-            public boolean required() {
-                return true;
-            }
-        };
-        flagSpecs.add(flagSpec);
-        FlagSpec javaHome = new FlagSpec() {
+    private FlagSpec createJavaHomeFlag() {
+        return new FlagSpec() {
             @Override
             public String getName() {
                 return "javaHome";
@@ -64,7 +49,7 @@ public class AgentPrepareSpec implements PrepareSpec {
 
             @Override
             public String getDesc() {
-                return "java home path";
+                return "Java home path";
             }
 
             @Override
@@ -77,8 +62,54 @@ public class AgentPrepareSpec implements PrepareSpec {
                 return false;
             }
         };
-        flagSpecs.add(javaHome);
-        return flagSpecs;
+    }
+
+    private FlagSpec createProcessNameFlag() {
+        return new FlagSpec() {
+            @Override
+            public String getName() {
+                return "process";
+            }
+
+            @Override
+            public String getDesc() {
+                return "Java application process";
+            }
+
+            @Override
+            public boolean noArgs() {
+                return false;
+            }
+
+            @Override
+            public boolean required() {
+                return false;
+            }
+        };
+    }
+
+    private FlagSpec createProcessIdFlag() {
+        return new FlagSpec() {
+            @Override
+            public String getName() {
+                return "pid";
+            }
+
+            @Override
+            public String getDesc() {
+                return "The process id of java application";
+            }
+
+            @Override
+            public boolean noArgs() {
+                return false;
+            }
+
+            @Override
+            public boolean required() {
+                return false;
+            }
+        };
     }
 
     @Override
