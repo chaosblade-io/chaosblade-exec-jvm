@@ -86,14 +86,8 @@ public class CreateHandler implements RequestHandler {
         if (!predicate.isSuccess()) {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, predicate.getErr());
         }
-        // handle injection
-        try {
-            applyPreInjectionModelHandler(suid, modelSpec, model);
-        } catch (ExperimentException ex) {
-            return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
-        }
 
-        return handleInjection(suid, model);
+        return handleInjection(suid, model, modelSpec);
     }
 
     /**
@@ -103,9 +97,17 @@ public class CreateHandler implements RequestHandler {
      * @param model
      * @return
      */
-    private Response handleInjection(String suid, Model model) {
+    private Response handleInjection(String suid, Model model, ModelSpec modelSpec ) {
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
+            // handle injection
+            try {
+                applyPreInjectionModelHandler(suid, modelSpec, model);
+            } catch (ExperimentException ex) {
+                this.statusManager.removeExp(suid);
+                return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
+            }
+
             return Response.ofSuccess(model.toString());
         }
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
