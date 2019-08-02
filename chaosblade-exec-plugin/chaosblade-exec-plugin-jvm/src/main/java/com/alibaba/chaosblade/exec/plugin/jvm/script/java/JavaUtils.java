@@ -39,7 +39,7 @@ public class JavaUtils {
                     endIndex = i;
                 }
             } else {
-                if (!isAsciiAlpha(chars[i])) {
+                if (!(isAsciiAlpha(chars[i]) || isDigital(chars[i]))) {
                     endIndex = i;
                     break;
                 }
@@ -52,7 +52,7 @@ public class JavaUtils {
         return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
     }
 
-    public static void main(String[] args) {
-
+    public static boolean isDigital(char ch) {
+        return ch >= '0' && ch <= '9';
     }
 }
