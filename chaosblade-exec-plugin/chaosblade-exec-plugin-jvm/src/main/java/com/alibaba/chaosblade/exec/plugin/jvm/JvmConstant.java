@@ -39,6 +39,10 @@ public interface JvmConstant {
 
     String ACTION_CPU_FULL_LOAD_ALIAS = "cfl";
 
+    String ACTION_CODE_CACHE_FILLING_NAME = "CodeCacheFilling";
+
+    String ACTION_CODE_CACHE_FILLING_ALIAS = "ccf";
+
     String FLAG_NAME_CPU_COUNT = "cpu-count";
 
     String ACTION_DYNAMIC_SCRIPT_NAME = "script";
