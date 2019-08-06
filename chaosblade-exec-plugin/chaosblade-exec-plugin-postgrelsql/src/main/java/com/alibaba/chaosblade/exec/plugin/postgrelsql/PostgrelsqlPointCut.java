@@ -23,7 +23,7 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
 /**
- * @author Changjun Xiao
+ * @author guoping.yao <a href="mailto:bryan880901@qq.com">
  */
 public class PostgrelsqlPointCut implements PointCut {
 

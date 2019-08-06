@@ -17,7 +17,8 @@
 package com.alibaba.chaosblade.exec.plugin.postgrelsql;
 
 /**
- * @author Changjun Xiao
+ * @author guoping.yao <a href="mailto:bryan880901@qq.com">
+ *
  */
 public interface PostgrelsqlConstant {
 

@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Changjun Xiao
+ * @author guoping.yao <a href="mailto:bryan880901@qq.com">
  */
 public class PostgrelsqlEnhancer extends BeforeEnhancer {
 

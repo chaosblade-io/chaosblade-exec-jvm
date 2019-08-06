@@ -19,7 +19,7 @@ package com.alibaba.chaosblade.exec.plugin.postgrelsql;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
- * @author Changjun Xiao
+ * @author guoping.yao <a href="mailto:bryan880901@qq.com">
  */
 public class PostgrelsqlSqlTypeMatcherSpec extends BasePredicateMatcherSpec {
     @Override

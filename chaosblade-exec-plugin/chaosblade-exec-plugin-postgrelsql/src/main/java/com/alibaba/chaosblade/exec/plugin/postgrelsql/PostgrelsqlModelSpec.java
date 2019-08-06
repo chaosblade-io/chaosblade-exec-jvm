@@ -23,7 +23,7 @@ import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
 /**
- * @author Changjun Xiao
+ * @author guoping.yao <a href="mailto:bryan880901@qq.com">
  */
 public class PostgrelsqlModelSpec extends FrameworkModelSpec {
 
