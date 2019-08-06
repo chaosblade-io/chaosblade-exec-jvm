@@ -221,6 +221,41 @@ public class ReflectUtil {
         return null;
     }
 
+    /**
+     * Get object fields
+     *
+     * @param obj
+     * @param fieldName
+     * @param throwException
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
+    public static <T> T getSuperclassFieldValue(Object obj, String fieldName, boolean throwException) throws Exception {
+        Field field = null;
+        Class clz = null;
+        try {
+            try {
+                if (obj == null) {
+                    return null;
+                }
+                clz = obj.getClass().getSuperclass();
+                field = clz.getField(fieldName);
+                field.setAccessible(true);
+                return (T)field.get(obj);
+            } catch (Exception e) {
+                field = clz.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                return (T)field.get(obj);
+            }
+        } catch (Exception e) {
+            if (throwException) {
+                throw e;
+            }
+        }
+        return null;
+    }
+
     public static boolean isAssignableFrom(ClassLoader classLoader, Class<?> clazz, String clazzName) {
         if (clazz == null || clazzName == null) {
             return false;
