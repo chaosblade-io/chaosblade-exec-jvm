@@ -16,16 +16,17 @@
 
 package com.alibaba.chaosblade.exec.plugin.servlet;
 
+import java.lang.reflect.Method;
+
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.fastjson.JSON;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
 
 /**
  * @author Changjun Xiao
@@ -53,7 +54,7 @@ public class ServletEnhancer extends BeforeEnhancer {
         matcherModel.add(ServletConstant.METHOD_KEY, requestMethod);
         matcherModel.add(ServletConstant.REQUEST_PATH_KEY, requestPath);
 
-        LOOGER.info("servlet matchers: {}", JSON.toJSONString(matcherModel));
+        LOOGER.debug("servlet matchers: {}", JSON.toJSONString(matcherModel));
 
         return new EnhancerModel(classLoader, matcherModel);
     }

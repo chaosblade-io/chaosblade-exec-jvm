@@ -1,10 +1,14 @@
 package com.alibaba.chaosblade.exec.common.model.action.threadpool;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Changjun Xiao
  */
 public abstract class WaitingTriggerThreadPoolFullExecutor extends AbstractThreadPoolFullExecutor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(WaitingTriggerThreadPoolFullExecutor.class);
     /**
      * Whether the rule of the experiment is received.
      */
@@ -30,6 +34,7 @@ public abstract class WaitingTriggerThreadPoolFullExecutor extends AbstractThrea
         if (isRunning()) {
             return;
         }
+        LOGGER.debug("trigger thread pool full");
         full(getThreadPoolExecutor());
     }
 
@@ -37,6 +42,7 @@ public abstract class WaitingTriggerThreadPoolFullExecutor extends AbstractThrea
     public void revoke() {
         super.revoke();
         doRevoke();
+        LOGGER.debug("has revoked thread pool full");
     }
 
     /**
