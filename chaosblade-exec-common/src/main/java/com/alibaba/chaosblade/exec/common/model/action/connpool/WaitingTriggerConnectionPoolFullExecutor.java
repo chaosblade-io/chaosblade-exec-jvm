@@ -2,10 +2,15 @@ package com.alibaba.chaosblade.exec.common.model.action.connpool;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Changjun Xiao
  */
 public abstract class WaitingTriggerConnectionPoolFullExecutor extends AbstractConnPoolFullExecutor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WaitingTriggerConnectionPoolFullExecutor.class);
+
     protected Object dataSource;
     /**
      * Whether the rule of the experiment is received.
@@ -58,6 +63,7 @@ public abstract class WaitingTriggerConnectionPoolFullExecutor extends AbstractC
     public void setDataSource(Object dataSource) {
         if (isExpReceived() && this.dataSource == null) {
             this.dataSource = dataSource;
+            LOGGER.debug("trigger druid connection pool full");
             triggerFull();
         }
     }

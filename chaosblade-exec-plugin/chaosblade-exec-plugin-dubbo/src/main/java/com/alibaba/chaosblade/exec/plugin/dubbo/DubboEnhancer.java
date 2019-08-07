@@ -84,7 +84,7 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         int timeout = getTimeout(methodName, object, invocation);
         matcherModel.add(DubboConstant.TIMEOUT_KEY, timeout + "");
 
-        LOGGER.info("dubbo matchers: {}", JSON.toJSONString(matcherModel));
+        LOGGER.debug("dubbo matchers: {}", JSON.toJSONString(matcherModel));
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout));

@@ -20,7 +20,11 @@ public class DruidDataSourceEnhancer extends BeforeEnhancer {
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
                                         Object[] methodArguments) throws Exception {
         if (object != null && DataSource.class.isInstance(object)) {
+            LOGGER.debug("match the druid dataSource, object: {}", className);
             DruidConnectionPoolFullExecutor.INSTANCE.setDataSource(object);
+        } else {
+            LOGGER.debug("the object is null or is not instance of DataSource class, object: {}", object ==
+                null ? null : object.getClass().getName());
         }
         return null;
     }

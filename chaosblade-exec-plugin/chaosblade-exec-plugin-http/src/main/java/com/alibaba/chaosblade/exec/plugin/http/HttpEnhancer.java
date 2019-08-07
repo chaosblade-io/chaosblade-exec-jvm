@@ -16,13 +16,15 @@
 
 package com.alibaba.chaosblade.exec.plugin.http;
 
+import java.lang.reflect.Method;
+
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.fastjson.JSON;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
 
 /**
  * @Author yuhan
@@ -40,6 +42,7 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
         throws Exception {
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(HttpConstant.URI_KEY, getUrl(methodArguments));
+        LOGGER.debug("http matchers: {}", JSON.toJSONString(matcherModel));
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         postDoBeforeAdvice(enhancerModel);
         return new EnhancerModel(classLoader, matcherModel);
@@ -49,13 +52,14 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
 
     /**
      * 获取Http Url
+     *
      * @param object
      * @return
      */
-    protected abstract String getUrl(Object [] object) throws Exception;
+    protected abstract String getUrl(Object[] object) throws Exception;
 
-    public String getUrl(String url){
-        if(url.contains("?")){
+    public String getUrl(String url) {
+        if (url.contains("?")) {
             return url.substring(0, url.indexOf("?"));
         }
         return url;

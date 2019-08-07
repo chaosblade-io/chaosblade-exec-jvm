@@ -16,7 +16,6 @@
 
 package com.alibaba.chaosblade.exec.plugin.postgrelsql;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
@@ -25,6 +24,7 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil.SqlType;
+import com.alibaba.fastjson.JSON;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,18 +36,14 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PostgrelsqlEnhancer.class);
 
-
     /**
-     *
      * Object[] methodArguments
-         * Query query,
-         * ParameterList parameters,
-         * ResultHandler handler,
-         * int maxRows,
-         * int fetchSize,
-         * int flags
-     *
-     *
+     * Query query,
+     * ParameterList parameters,
+     * ResultHandler handler,
+     * int maxRows,
+     * int fetchSize,
+     * int flags
      */
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
@@ -60,11 +56,10 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
         }
         Object query = methodArguments[0];
 
-        Object pgStream = ReflectUtil.getSuperclassFieldValue(object,"pgStream",false);
-        Object hostSpec = ReflectUtil.getFieldValue(pgStream,"hostSpec",false);
+        Object pgStream = ReflectUtil.getSuperclassFieldValue(object, "pgStream", false);
+        Object hostSpec = ReflectUtil.getFieldValue(pgStream, "hostSpec", false);
         String host = ReflectUtil.getFieldValue(hostSpec, "host", false);
         Integer port = ReflectUtil.getFieldValue(hostSpec, "port", false);
-
 
         String sql = null;
         if (query != null) {
@@ -72,7 +67,7 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
             boolean isPreparedStatement = ReflectUtil.isAssignableFrom(classLoader, query.getClass(),
                 "org.postgresql.core.Query");
             if (isPreparedStatement) {
-                sql = ReflectUtil.invokeMethod(query, "getNativeSql", new Object[0],false);
+                sql = ReflectUtil.invokeMethod(query, "getNativeSql", new Object[0], false);
             }
         } else {
             //sql = (String)query;
@@ -80,8 +75,7 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
 
         String table = SQLParserUtil.findTableName(sql);
         SqlType type = SQLParserUtil.getSqlType(sql);
-        String database = ReflectUtil.getFieldValue(object,"database",false);
-
+        String database = ReflectUtil.getFieldValue(object, "database", false);
 
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(PostgrelsqlConstant.HOST_MATCHER_NAME, host);
@@ -93,6 +87,7 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
         if (port != null) {
             matcherModel.add(PostgrelsqlConstant.PORT_MATCHER_NAME, port.toString());
         }
+        LOGGER.debug("postgrelsql matchers: {}", JSON.toJSONString(matcherModel));
         return new EnhancerModel(classLoader, matcherModel);
     }
 }

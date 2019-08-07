@@ -9,6 +9,7 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
+import com.alibaba.fastjson.JSON;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionExecutor {
 
-    protected AtomicBoolean started = new AtomicBoolean(false);
-
     protected static final Logger LOGGER = LoggerFactory.getLogger(JvmOomExecutor.class);
-
+    protected AtomicBoolean started = new AtomicBoolean(false);
     protected ExecutorService executorService;
 
     /**
@@ -49,6 +48,8 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
     public void run(final EnhancerModel enhancerModel) throws Exception {
         if (started.compareAndSet(false, true)) {
             JvmOomConfiguration jvmOomConfiguration = parse(enhancerModel);
+            LOGGER.debug("run jvm oom configuration: {}", JSON.toJSONString(jvmOomConfiguration));
+
             executorService = Executors.newFixedThreadPool(jvmOomConfiguration.getThreadCount());
             executorService.submit(new Runnable() {
                 @Override
@@ -65,6 +66,7 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
     public void stop(EnhancerModel enhancerModel) throws Exception {
         if (started.compareAndSet(true, false)) {
             JvmOomConfiguration jvmOomConfiguration = parse(enhancerModel);
+            LOGGER.debug("stop jvm oom configuration: {}", JSON.toJSONString(jvmOomConfiguration));
             if (executorService == null) { return; }
             safelyShutdownExecutor(executorService);
             innerStop(enhancerModel);
@@ -109,6 +111,7 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
 
     private static class JvmOomConfiguration {
         private boolean enabledSystemGc;
+        private Integer threadCount;
 
         public Integer getThreadCount() {
             return threadCount;
@@ -117,8 +120,6 @@ public abstract class JvmOomExecutor implements ActionExecutor, StoppableActionE
         public void setThreadCount(Integer threadCount) {
             this.threadCount = threadCount;
         }
-
-        private Integer threadCount;
 
         public boolean isEnabledSystemGc() {
             return enabledSystemGc;

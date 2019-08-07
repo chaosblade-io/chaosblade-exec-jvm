@@ -21,14 +21,10 @@ import java.lang.reflect.Method;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.injection.Injector;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Changjun Xiao
  */
 public abstract class BeforeEnhancer implements Enhancer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BeforeEnhancer.class);
 
     /**
      * Do fault-inject
