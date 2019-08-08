@@ -9,31 +9,31 @@ package com.alibaba.chaosblade.exec.plugin.jvm.oom;
  */
 public class OomObject {
 
+    String[] strings;
+
     public OomObject() {
         this(1);
     }
-
-    private StringBuilder stringBuilder;
 
     /**
      * size,unit mb
      */
     public OomObject(int size) {
-        stringBuilder = new StringBuilder();
-        if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                stringBuilder.append(createObject());
-            }
+        if (size <= 0) {
+            size = 1;
+        }
+        strings = new String[size];
+        for (int i = 0; i < size; i++) {
+            strings[i] = new String(createObject());
         }
     }
 
     /**
-     * create 2mb object
+     * create 1mb object
      *
      * @return
      */
-    private String createObject() {
-        byte[] bytes = new byte[1024 * 512];
-        return new String(bytes);
+    private byte[] createObject() {
+        return new byte[1024 * 300];
     }
 }

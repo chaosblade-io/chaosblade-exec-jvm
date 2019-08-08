@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
 
@@ -15,8 +16,6 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
  */
 public class OffHeapJvmOomExecutor extends JvmOomExecutor {
 
-    private static final int _1MB = 1024 * 1024;
-
     @Override
     public JvmMemoryArea supportArea() {
         return JvmMemoryArea.OFFHEAP;
@@ -25,18 +24,19 @@ public class OffHeapJvmOomExecutor extends JvmOomExecutor {
     private List<ByteBuffer> oomObjects = new ArrayList<ByteBuffer>();
 
     @Override
-    protected void innerRun(EnhancerModel enhancerModel) {
-        try {
-            oomObjects.add(ByteBuffer.allocateDirect(20 * _1MB));
-        } catch (Throwable throwable) {
-            handleThrowable(throwable);
-        }
+    protected void innerRun(EnhancerModel enhancerModel, JvmOomConfiguration jvmOomConfiguration) {
+        oomObjects.add(ByteBuffer.allocateDirect(jvmOomConfiguration.getBlock() * JvmConstant.ONE_MB));
     }
 
     @Override
     public void run(EnhancerModel enhancerModel) throws Exception {
         oomObjects = new ArrayList<ByteBuffer>();
         super.run(enhancerModel);
+    }
+
+    @Override
+    protected void recycleMemory() {
+        this.oomObjects = new ArrayList<ByteBuffer>();
     }
 
     @Override
