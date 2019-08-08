@@ -24,6 +24,7 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil.SqlType;
+import com.alibaba.fastjson.JSON;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class MysqlEnhancer extends BeforeEnhancer {
                                         Method method, Object[] methodArguments)
         throws Exception {
         if (methodArguments == null || object == null || methodArguments.length != 10) {
-            LOGGER.info("The necessary parameters is null or length is not equal 10, {}",
+            LOGGER.warn("The necessary parameters is null or length is not equal 10, {}",
                 methodArguments != null ? methodArguments.length : null);
             return null;
         }
@@ -85,6 +86,7 @@ public class MysqlEnhancer extends BeforeEnhancer {
         if (port != null) {
             matcherModel.add(MysqlConstant.PORT_MATCHER_NAME, port.toString());
         }
+        LOGGER.debug("mysql matchers: {}", JSON.toJSONString(matcherModel));
         return new EnhancerModel(classLoader, matcherModel);
     }
 }

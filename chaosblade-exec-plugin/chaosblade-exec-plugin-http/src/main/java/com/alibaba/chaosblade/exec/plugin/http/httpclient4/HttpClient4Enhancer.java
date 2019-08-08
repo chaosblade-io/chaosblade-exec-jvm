@@ -23,10 +23,10 @@ public class HttpClient4Enhancer extends HttpEnhancer {
     @Override
     protected String getUrl(Object [] object) throws Exception {
         Object httpRequestBase = object[1];
-        Method method = methodMap.get(getMehodName());
+        Method method = methodMap.get(getMethodName());
         if (null == method) {
             method = object[1].getClass().getMethod(getURI, null);
-            methodMap.put(getMehodName(), method);
+            methodMap.put(getMethodName(), method);
         }
         if (null != method) {
             Object invoke = method.invoke(httpRequestBase, null);
@@ -37,7 +37,7 @@ public class HttpClient4Enhancer extends HttpEnhancer {
         return null;
     }
 
-    public String getMehodName(){
+    public String getMethodName(){
         return HTTPCLIENT4 + getURI;
     }
 }

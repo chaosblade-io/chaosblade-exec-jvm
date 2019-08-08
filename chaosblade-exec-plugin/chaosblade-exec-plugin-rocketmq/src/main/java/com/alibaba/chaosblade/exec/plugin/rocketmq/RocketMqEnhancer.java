@@ -6,6 +6,10 @@ import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.fastjson.JSON;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author RinaisSuper
@@ -14,22 +18,19 @@ import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
  */
 public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant {
 
-    private static String FIELD_CUSTOM_HEADER = "customHeader";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(RocketMqEnhancer.class);
     public static String CLASS_PULL_MESSAGE_REQUEST_HEADER
         = "com.alibaba.rocketmq.common.protocol.header.PullMessageRequestHeader";
-
     public static String CLASS_SEND_MESSAGE_REQUEST_HEADER
         = "com.alibaba.rocketmq.common.protocol.header.SendMessageRequestHeader";
-
     public static String CLASS_SEND_MESSAGE_REQUEST_HEADERV2
         = "com.alibaba.rocketmq.common.protocol.header.SendMessageRequestHeaderV2";
-
     public static String CLASS_REMOTEING_COMMAND_CLASS = "com.alibaba.rocketmq.remoting.protocol.RemotingCommand";
+    private static String FIELD_CUSTOM_HEADER = "customHeader";
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
-        Object[] methodArguments) throws Exception {
+                                        Object[] methodArguments) throws Exception {
         MatcherModel matcherModel = new MatcherModel();
         Object remoteingCommnadRequest = selectParamByClassName(classLoader, methodArguments,
             CLASS_REMOTEING_COMMAND_CLASS);
@@ -56,6 +57,7 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
             matcherModel.add(FLAG_NAME_TOPIC, topic);
             matcherModel.add(FLAG_CONSUMER_GROUP, consumerGroup);
             matcherModel.add(FLAG_PRODUCER_GROUP, producerGroup);
+            LOGGER.debug("rocketmq matchers: {}", JSON.toJSONString(matcherModel));
             return new EnhancerModel(classLoader, matcherModel);
         }
     }

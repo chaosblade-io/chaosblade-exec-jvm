@@ -29,13 +29,19 @@ import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelH
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
+import com.alibaba.chaosblade.exec.common.util.LogUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author changjun.xcj
  */
 public class CreateHandler implements RequestHandler {
-    public static final String JVM = "jvm";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreateHandler.class);
+
     private ModelSpecManager modelSpecManager;
     private StatusManager statusManager;
 
@@ -70,6 +76,8 @@ public class CreateHandler implements RequestHandler {
         if (StringUtil.isBlank(actionArg)) {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less action argument");
         }
+        // change level from info to debug if open debug mode
+        checkAndSetLogLevel(request);
         // check the command supported or not
         ModelSpec modelSpec = this.modelSpecManager.getModelSpec(target);
         if (modelSpec == null) {
@@ -86,14 +94,25 @@ public class CreateHandler implements RequestHandler {
         if (!predicate.isSuccess()) {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, predicate.getErr());
         }
-        // handle injection
-        try {
-            applyPreInjectionModelHandler(suid, modelSpec, model);
-        } catch (ExperimentException ex) {
-            return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
-        }
 
-        return handleInjection(suid, model);
+        return handleInjection(suid, model, modelSpec);
+    }
+
+    /**
+     * Set log level to debug if debug parameter is true
+     *
+     * @param request
+     */
+    private void checkAndSetLogLevel(Request request) {
+        String debug = request.getParam("debug");
+        if (Boolean.TRUE.toString().equalsIgnoreCase(debug)) {
+            try {
+                LogUtil.setDebug();
+                LOGGER.info("change log level to debug");
+            } catch (Exception e) {
+                LOGGER.warn("set log level to debug failed", e);
+            }
+        }
     }
 
     /**
@@ -103,9 +122,17 @@ public class CreateHandler implements RequestHandler {
      * @param model
      * @return
      */
-    private Response handleInjection(String suid, Model model) {
+    private Response handleInjection(String suid, Model model, ModelSpec modelSpec) {
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
+            // handle injection
+            try {
+                applyPreInjectionModelHandler(suid, modelSpec, model);
+            } catch (ExperimentException ex) {
+                this.statusManager.removeExp(suid);
+                return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
+            }
+
             return Response.ofSuccess(model.toString());
         }
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");

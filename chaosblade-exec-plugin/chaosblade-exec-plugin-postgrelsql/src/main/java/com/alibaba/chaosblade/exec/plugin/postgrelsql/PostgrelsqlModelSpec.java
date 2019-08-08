@@ -45,12 +45,12 @@ public class PostgrelsqlModelSpec extends FrameworkModelSpec {
 
     @Override
     public String getShortDesc() {
-        return "postgresql experiment";
+        return "Postgrelsql experiment";
     }
 
     @Override
     public String getLongDesc() {
-        return "postgresql experiment contains delay and exception by table name and so on.";
+        return "Postgrelsql experiment contains delay and exception by table name and so on.";
     }
 
     @Override

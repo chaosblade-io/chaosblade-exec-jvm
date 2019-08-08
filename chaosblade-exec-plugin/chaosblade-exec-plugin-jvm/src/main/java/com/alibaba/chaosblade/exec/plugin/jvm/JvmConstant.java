@@ -24,14 +24,15 @@ public interface JvmConstant {
 
     String FLAG_NAME_MEMORY_AREA = "area";
 
-    /**
-     * enabled System.gc()
-     */
-    String FLAG_NAME_ENABLE_SYSTEM_GC = "enableSystemGc";
+    int ONE_MB = 1024 * 1024;
 
-    String FLAG_NAME_THREAD_COUNT = "threads";
+    String FLAG_NAME_OOM_HAPPEN_MODE = "wild-mode";
 
-    Integer FLAG_VALUE_OOM_THREAD_COUNT = 1;
+    String FLAG_NAME_OOM_BLOCK = "block";
+
+    String FLAG_OOM_ERROR_INTERVAL = "interval";
+
+    Integer MIN_OOM_HAPPEN_INTERVAL_IN_MILLS = 500;
 
     String ACTION_OUT_OF_MEMORY_ERROR_NAME = "OutOfMemoryError";
 
