@@ -15,8 +15,9 @@ import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutorFacade;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.JvmMemoryAreaFlagSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.SystemGcFlagSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.ThreadCountFlagSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.OOMMemeoryErrorIntervalFlagSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.OOMMemoryBlockFlagSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.oom.flag.OOMModeFlagSpec;
 
 /**
  * @author RinaisSuper
@@ -53,8 +54,9 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
     public List<FlagSpec> getActionFlags() {
         List<FlagSpec> flagSpecs = new ArrayList<FlagSpec>();
         flagSpecs.add(new JvmMemoryAreaFlagSpec());
-        flagSpecs.add(new SystemGcFlagSpec());
-        flagSpecs.add(new ThreadCountFlagSpec());
+        flagSpecs.add(new OOMModeFlagSpec());
+        flagSpecs.add(new OOMMemeoryErrorIntervalFlagSpec());
+        flagSpecs.add(new OOMMemoryBlockFlagSpec());
         return flagSpecs;
     }
 
