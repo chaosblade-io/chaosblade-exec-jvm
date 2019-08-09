@@ -14,47 +14,47 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.postgrelsql;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.alibaba.chaosblade.exec.plugin.jedis;
 
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author guoping.yao <a href="mailto:bryan880901@qq.com">
  */
-public class PostgrelsqlModelSpec extends FrameworkModelSpec {
+public class JedisModelSpec extends FrameworkModelSpec {
 
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
-        matcherSpecs.add(new PostgrelsqlHostMatcherSpec());
-        matcherSpecs.add(new PostgrelsqlTableMatcherSpec());
-        matcherSpecs.add(new PostgrelsqlDatabaseMatcherSpec());
-        matcherSpecs.add(new PostgrelsqlSqlTypeMatcherSpec());
-        matcherSpecs.add(new PostgrelsqlPortMatcherSpec());
+      //  matcherSpecs.add(new JedisHostMatcherSpec());
+      //  matcherSpecs.add(new JedisPortMatcherSpec());
+      //  matcherSpecs.add(new JedisDatabaseMatcherSpec());
+        matcherSpecs.add(new JedisCmdTypeMatcherSpec());
+        matcherSpecs.add(new JedisKeyMatcherSpec());
         return matcherSpecs;
     }
 
     @Override
     public String getTarget() {
-        return PostgrelsqlConstant.TARGET_NAME;
+        return JedisConstant.TARGET_NAME;
     }
 
     @Override
     public String getShortDesc() {
-        return "Postgrelsql experiment";
+        return "jedis experiment";
     }
 
     @Override
     public String getLongDesc() {
-        return "Postgrelsql experiment contains delay and exception by table name and so on.";
+        return "jedis experiment contains delay and exception by command and so on.";
     }
 
     @Override
     public String getExample() {
-        return "psql --sqltype select --port 5432";
+        return "jedis  --cmd hset --key test_key ";
     }
 }
