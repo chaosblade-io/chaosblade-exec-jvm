@@ -45,7 +45,9 @@ public class CompoundScriptFinder implements ScriptFinder {
     @Override
     public Script find(String scriptId) {
         for (ScriptFinder scriptFinder : scriptFinderList) {
-            LOGGER.debug("find script by finder:" + scriptFinder.getClass().getCanonicalName());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("find script by finder:" + scriptFinder.getClass().getCanonicalName());
+            }
             try {
                 Script script = scriptFinder.find(scriptId);
                 if (script != null) {

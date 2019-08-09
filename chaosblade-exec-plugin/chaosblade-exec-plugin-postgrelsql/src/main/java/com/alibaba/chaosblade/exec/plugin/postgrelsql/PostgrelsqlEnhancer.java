@@ -87,7 +87,9 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
         if (port != null) {
             matcherModel.add(PostgrelsqlConstant.PORT_MATCHER_NAME, port.toString());
         }
-        LOGGER.debug("postgrelsql matchers: {}", JSON.toJSONString(matcherModel));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("postgrelsql matchers: {}", JSON.toJSONString(matcherModel));
+        }
         return new EnhancerModel(classLoader, matcherModel);
     }
 }

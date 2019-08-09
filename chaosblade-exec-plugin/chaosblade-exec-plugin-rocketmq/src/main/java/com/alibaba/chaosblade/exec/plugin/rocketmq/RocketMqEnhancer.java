@@ -57,7 +57,9 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
             matcherModel.add(FLAG_NAME_TOPIC, topic);
             matcherModel.add(FLAG_CONSUMER_GROUP, consumerGroup);
             matcherModel.add(FLAG_PRODUCER_GROUP, producerGroup);
-            LOGGER.debug("rocketmq matchers: {}", JSON.toJSONString(matcherModel));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("rocketmq matchers: {}", JSON.toJSONString(matcherModel));
+            }
             return new EnhancerModel(classLoader, matcherModel);
         }
     }

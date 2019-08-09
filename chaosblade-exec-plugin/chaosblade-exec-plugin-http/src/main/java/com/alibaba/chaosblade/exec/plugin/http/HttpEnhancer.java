@@ -42,7 +42,9 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
         throws Exception {
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(HttpConstant.URI_KEY, getUrl(methodArguments));
-        LOGGER.debug("http matchers: {}", JSON.toJSONString(matcherModel));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("http matchers: {}", JSON.toJSONString(matcherModel));
+        }
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         postDoBeforeAdvice(enhancerModel);
         return new EnhancerModel(classLoader, matcherModel);

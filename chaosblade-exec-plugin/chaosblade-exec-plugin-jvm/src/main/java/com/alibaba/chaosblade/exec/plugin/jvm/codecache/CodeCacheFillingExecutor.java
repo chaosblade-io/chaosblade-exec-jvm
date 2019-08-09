@@ -227,7 +227,9 @@ public class CodeCacheFillingExecutor implements ActionExecutor, StoppableAction
             while(flag.get()) {
                 MemoryUsage usage = getCodeCacheUsage();
 
-                LOGGER.debug("Code cache usage: " + usage);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Code cache usage: " + usage);
+                }
 
                 if (null == usage) {
                     LOGGER.warn("Can't get code cache memory usage. Stop code cache monitor.");

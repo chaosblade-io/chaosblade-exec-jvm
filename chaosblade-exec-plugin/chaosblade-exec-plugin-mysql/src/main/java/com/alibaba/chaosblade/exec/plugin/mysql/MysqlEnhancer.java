@@ -86,7 +86,9 @@ public class MysqlEnhancer extends BeforeEnhancer {
         if (port != null) {
             matcherModel.add(MysqlConstant.PORT_MATCHER_NAME, port.toString());
         }
-        LOGGER.debug("mysql matchers: {}", JSON.toJSONString(matcherModel));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("mysql matchers: {}", JSON.toJSONString(matcherModel));
+        }
         return new EnhancerModel(classLoader, matcherModel);
     }
 }
