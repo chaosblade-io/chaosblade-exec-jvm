@@ -99,7 +99,7 @@ public class CreateHandler implements RequestHandler {
      */
     private Response handleInjection(String suid, Model model, ModelSpec modelSpec ) {
         RegisterResult result = this.statusManager.registerExp(suid, model);
-        if (result.isSuccess()) {
+        if (result.isCreateSuccess()) {
             // handle injection
             try {
                 applyPreInjectionModelHandler(suid, modelSpec, model);
@@ -108,7 +108,9 @@ public class CreateHandler implements RequestHandler {
                 return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
             }
 
-            return Response.ofSuccess(model.toString());
+            return Response.ofSuccess("create:" + model.toString());
+        } else if (result.isForceSuccess()) {
+            return Response.ofSuccess("force:" + model.toString());
         }
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
     }

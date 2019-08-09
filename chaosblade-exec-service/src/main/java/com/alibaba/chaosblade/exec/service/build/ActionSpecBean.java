@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.ForceFlagBean;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
 /**
@@ -44,6 +45,7 @@ public class ActionSpecBean {
         // add jvm process flag to identify the experiment java process
         this.flags.add(new FlagSpecBean(new ProcessFlagBean()));
         this.flags.add(new FlagSpecBean(new ProcessIdBean()));
+        this.flags.add(new FlagSpecBean(new ForceFlagBean()));
     }
 
     private List<FlagSpecBean> createFlags(List<FlagSpec> actionFlags) {

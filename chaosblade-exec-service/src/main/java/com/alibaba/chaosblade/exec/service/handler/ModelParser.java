@@ -34,8 +34,9 @@ import com.alibaba.chaosblade.exec.common.util.StringUtil;
  */
 public class ModelParser {
 
+    private final static String FORCE_PARAM = "force";
     public final static Set<String> assistantFlag = new HashSet<String>(Arrays.asList(
-        "target", "action", "process", "pid", "debug", "suid", "help", "pod"
+        "target", "action", "process", "pid", "debug", "suid", "help", "pod",FORCE_PARAM
     ));
 
     public static Model parseRequest(String target, Request request, ActionSpec actionSpec) {
@@ -53,6 +54,7 @@ public class ModelParser {
                 request.getParams().remove(actionFlag.getName());
             }
         }
+        model.setForce(params.containsKey(FORCE_PARAM));
         for (Entry<String, String> entry : params.entrySet()) {
             String key = entry.getKey();
             if (assistantFlag.contains(key)) {

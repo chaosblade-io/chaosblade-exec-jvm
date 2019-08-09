@@ -76,12 +76,18 @@ public class DefaultStatusManager implements StatusManager {
         String identifier = ModelUtil.getIdentifier(model);
         // check identifier exists or not
         StatusMetric metric = metricMap.putIfAbsent(identifier, new StatusMetric(model));
-        if (metric != null) {
+        if (metric == null){
+            experiments.put(suid, identifier);
+            return RegisterResult.createSuccess();
+        } else if (model.isForce()) {
+            metricMap.put(identifier, new StatusMetric(model));
+            experiments.put(suid, identifier);
+            return RegisterResult.forceSuccess();
+        } else {
             LOGGER.warn(model.toString() + " exists");
             return RegisterResult.fail(metric.getModel());
         }
-        experiments.put(suid, identifier);
-        return RegisterResult.success();
+
     }
 
     @Override

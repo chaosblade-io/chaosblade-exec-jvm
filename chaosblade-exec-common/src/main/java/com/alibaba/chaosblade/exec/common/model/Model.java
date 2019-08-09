@@ -27,6 +27,7 @@ public class Model {
     private String target;
     private MatcherModel matcher;
     private ActionModel action;
+    private boolean force;
 
     public Model(String target, String actionName) {
         this.target = target;
@@ -60,6 +61,14 @@ public class Model {
 
     public void setMatcher(MatcherModel matcher) {
         this.matcher = matcher;
+    }
+
+    public boolean isForce() {
+        return force;
+    }
+
+    public void setForce(boolean force) {
+        this.force = force;
     }
 
     @Override

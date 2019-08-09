@@ -23,26 +23,36 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  */
 public class RegisterResult {
     private Model model;
-    private boolean success;
+    private boolean forceSuccess;
+    private boolean createSuccess;
 
-    public RegisterResult(Model model, boolean success) {
+    public RegisterResult(Model model, boolean forceSuccess, boolean createSuccess) {
         this.model = model;
-        this.success = success;
+        this.forceSuccess = forceSuccess;
+        this.createSuccess = createSuccess;
+    }
+
+    public static RegisterResult forceSuccess() {
+        return new RegisterResult(null, true,false);
+    }
+    public static RegisterResult createSuccess() {
+        return new RegisterResult(null, false,true);
     }
 
     public static RegisterResult fail(Model model) {
-        return new RegisterResult(model, false);
+        return new RegisterResult(model, false,false);
     }
 
-    public static RegisterResult success() {
-        return new RegisterResult(null, true);
-    }
 
     public Model getModel() {
         return model;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public boolean isForceSuccess() {
+        return forceSuccess;
+    }
+
+    public boolean isCreateSuccess() {
+        return createSuccess;
     }
 }
