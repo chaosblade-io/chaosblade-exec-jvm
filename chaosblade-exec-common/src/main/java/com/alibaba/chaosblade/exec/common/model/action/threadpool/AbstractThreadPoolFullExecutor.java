@@ -32,6 +32,10 @@ public abstract class AbstractThreadPoolFullExecutor implements ThreadPoolFullEx
 
     @Override
     public void full(final ThreadPoolExecutor threadPoolExecutor) {
+        if (threadPoolExecutor == null) {
+            LOGGER.warn("threadPoolExecutor is null");
+            return;
+        }
         if (futureCache.size() > 0) {
             LOGGER.info("thread pool has started");
             return;
