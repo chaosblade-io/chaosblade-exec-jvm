@@ -19,6 +19,9 @@ public class DubboThreadPoolFullExecutor extends WaitingTriggerThreadPoolFullExe
 
     private volatile Object wrappedChannelHandler;
 
+    private static final String SIDE_KEY = "side";
+    private static final String CONSUMER_SIDE = "consumer";
+
     @Override
     public ThreadPoolExecutor getThreadPoolExecutor() {
         if (wrappedChannelHandler == null) {
@@ -28,7 +31,7 @@ public class DubboThreadPoolFullExecutor extends WaitingTriggerThreadPoolFullExe
             Object executorService = ReflectUtil.invokeMethod(wrappedChannelHandler, "getExecutorService",
                 new Object[0], true);
             if (executorService == null) {
-                LOGGER.warn("can get executor service by getExecutorService method");
+                LOGGER.warn("can't get executor service by getExecutorService method");
                 return null;
             }
             if (ThreadPoolExecutor.class.isInstance(executorService)) {
@@ -47,8 +50,22 @@ public class DubboThreadPoolFullExecutor extends WaitingTriggerThreadPoolFullExe
      */
     public void setWrappedChannelHandler(Object wrappedChannelHandler) {
         if (isExpReceived() && this.wrappedChannelHandler == null) {
-            this.wrappedChannelHandler = wrappedChannelHandler;
-            triggerThreadPoolFull();
+            try {
+                Object url = ReflectUtil.invokeMethod(wrappedChannelHandler, "getUrl", new Object[0],
+                        true);
+                String sideKey = ReflectUtil.invokeMethod(url, "getParameter", new Object[]{SIDE_KEY},
+                        true);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("url: {}, sideKey: {}", url, sideKey);
+                }
+                // avoid getting consumer thread pool
+                if (!CONSUMER_SIDE.equalsIgnoreCase(sideKey)) {
+                    this.wrappedChannelHandler = wrappedChannelHandler;
+                    triggerThreadPoolFull();
+                }
+            } catch (Exception e) {
+                LOGGER.warn("set WrappedChannelHandler exception", e);
+            }
         }
     }
 
