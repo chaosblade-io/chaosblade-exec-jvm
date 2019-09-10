@@ -64,8 +64,12 @@ public class ThrowCustomExceptionActionSpec extends BaseActionSpec {
 
     @Override
     public PredicateResult predicate(ActionModel actionModel) {
-        if (StringUtil.isBlank(actionModel.getFlag(exceptionFlag.getName()))) {
+        String exceptionClass = actionModel.getFlag(exceptionFlag.getName());
+        if (StringUtil.isBlank(exceptionClass)) {
             return PredicateResult.fail("less exception argument");
+        }
+        if (exceptionClass.startsWith("-")) {
+            return PredicateResult.fail("illegal exception value");
         }
         return PredicateResult.success();
     }
