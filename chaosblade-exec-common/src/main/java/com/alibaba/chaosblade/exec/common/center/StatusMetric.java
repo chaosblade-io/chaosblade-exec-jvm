@@ -48,14 +48,15 @@ public class StatusMetric {
     }
 
     public boolean increaseWithLock(long limitCount) {
-        try {
-            lock.tryLock();
-            if (hitCounts.get() < limitCount) {
-                increase();
-                return true;
+        if (lock.tryLock()) {
+            try {
+                if (hitCounts.get() < limitCount) {
+                    increase();
+                    return true;
+                }
+            } finally {
+                lock.unlock();
             }
-        } finally {
-            lock.unlock();
         }
         return false;
     }
