@@ -39,9 +39,7 @@ public abstract class BeforeEnhancer implements Enhancer {
      */
     @Override
     public void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                             Method method,
-                             Object[] methodArguments)
-        throws Exception {
+                             Method method, Object[] methodArguments) throws Exception {
         if (!ManagerFactory.getStatusManager().expExists(targetName)) {
             return;
         }
@@ -65,7 +63,11 @@ public abstract class BeforeEnhancer implements Enhancer {
      * @throws Exception
      */
     public abstract EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
-                                                 Method method,
-                                                 Object[] methodArguments) throws Exception;
+                                                 Method method, Object[] methodArguments) throws Exception;
 
+    @Override
+    public void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object,
+                            Method method, Object[] methodArguments, Object returnObject) throws Exception {
+        return;
+    }
 }

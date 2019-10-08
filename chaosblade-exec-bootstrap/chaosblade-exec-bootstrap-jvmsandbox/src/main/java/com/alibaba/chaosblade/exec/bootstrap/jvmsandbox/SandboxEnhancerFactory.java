@@ -92,4 +92,14 @@ public class SandboxEnhancerFactory {
     public static EventListener createBeforeEventListener(Plugin plugin) {
         return new BeforeEventListener(plugin);
     }
+
+    /**
+     * Create the after event listener for handing the method result
+     *
+     * @param plugin
+     * @return
+     */
+    public static EventListener createAfterEventListener(Plugin plugin) {
+        return new AfterEventListener(plugin);
+    }
 }

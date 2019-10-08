@@ -17,6 +17,7 @@
 package com.alibaba.chaosblade.exec.common.aop;
 
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.chaosblade.exec.common.plugin.MethodPlugin;
 
 /**
  * @author Changjun Xiao
@@ -27,12 +28,16 @@ public class PluginBean implements Plugin {
     private ModelSpec modelSpec;
     private PointCut pointCut;
     private Enhancer enhancer;
+    private boolean isAfterEvent;
 
     public PluginBean(Plugin plugin) {
         this.name = plugin.getName();
         this.modelSpec = plugin.getModelSpec();
         this.pointCut = new PointCutBean(plugin.getPointCut());
         this.enhancer = plugin.getEnhancer();
+        if (plugin instanceof MethodPlugin) {
+            this.isAfterEvent = ((MethodPlugin)plugin).isAfterEvent();
+        }
     }
 
     @Override
@@ -53,5 +58,9 @@ public class PluginBean implements Plugin {
     @Override
     public Enhancer getEnhancer() {
         return this.enhancer;
+    }
+
+    public boolean isAfterEvent() {
+        return isAfterEvent;
     }
 }

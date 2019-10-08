@@ -27,4 +27,8 @@ public class PluginUtil {
     public static String getIdentifier(Plugin plugin) {
         return plugin.getModelSpec().getTarget() + DelimiterConstant.BETWEEN_TARGET_PLUGIN_NAME + plugin.getName();
     }
+
+    public static String getIdentifierForAfterEvent(Plugin plugin) {
+        return getIdentifier(plugin) + DelimiterConstant.BETWEEN_TARGET_PLUGIN_NAME + "after";
+    }
 }

@@ -18,30 +18,32 @@ package com.alibaba.chaosblade.exec.common.plugin;
 
 import java.lang.reflect.Method;
 
+import com.alibaba.chaosblade.exec.common.aop.AfterEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 
 /**
  * @author Changjun Xiao
  */
-public class MethodEnhancer extends BeforeEnhancer {
+public class MethodEnhancer implements Enhancer {
+
+    private BeforeEnhancer beforeEnhancer;
+    private AfterEnhancer afterEnhancer;
+
+    public MethodEnhancer() {
+        beforeEnhancer = new MethodEnhancerForBefore();
+        afterEnhancer = new MethodEnhancerForAfter();
+    }
 
     @Override
-    public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
-                                        Method method, Object[] methodArguments)
-        throws Exception {
-        MatcherModel matcherModel = new MatcherModel();
-        matcherModel.add(MethodConstant.CLASS_MATCHER_NAME, className);
-        matcherModel.add(MethodConstant.METHOD_MATCHER_NAME, method.getName());
+    public void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object, Method method,
+                             Object[] methodArguments) throws Exception {
+        beforeEnhancer.beforeAdvice(targetName, classLoader, className, object, method, methodArguments);
+    }
 
-        EnhancerModel model = new EnhancerModel(classLoader, matcherModel);
-        model.setTarget(ModelConstant.JVM_TARGET)
-            .setClassLoader(classLoader)
-            .setObject(object)
-            .setMethod(method)
-            .setMethodArguments(methodArguments);
-        return model;
+    @Override
+    public void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object, Method method,
+                            Object[] methodArguments, Object returnObject) throws Exception {
+        afterEnhancer.afterAdvice(targetName, classLoader, className, object, method, methodArguments, returnObject);
     }
 }
