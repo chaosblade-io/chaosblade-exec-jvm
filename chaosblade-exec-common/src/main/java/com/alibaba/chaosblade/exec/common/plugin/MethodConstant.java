@@ -22,4 +22,5 @@ package com.alibaba.chaosblade.exec.common.plugin;
 public interface MethodConstant {
     String CLASS_MATCHER_NAME = "classname";
     String METHOD_MATCHER_NAME = "methodname";
+    String AFTER_METHOD_FLAG = "after";
 }

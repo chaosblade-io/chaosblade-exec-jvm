@@ -35,6 +35,12 @@ import com.alibaba.chaosblade.exec.common.plugin.MethodPlugin;
  */
 public class MethodPreInjectHandler {
 
+    /**
+     * Add class and method listeners
+     *
+     * @param model
+     * @throws ExperimentException
+     */
     public static void preHandleInjection(Model model)
         throws ExperimentException {
         MethodPlugin methodPlugin = createMethodPlugin(model);
@@ -62,6 +68,7 @@ public class MethodPreInjectHandler {
         MatcherModel matcher = model.getMatcher();
         final String className = matcher.get(MethodConstant.CLASS_MATCHER_NAME);
         final String methodName = matcher.get(MethodConstant.METHOD_MATCHER_NAME);
+        final String afterFlag = matcher.get(MethodConstant.AFTER_METHOD_FLAG);
         PointCut pointCut = new PointCut() {
             @Override
             public ClassMatcher getClassMatcher() {
@@ -74,8 +81,11 @@ public class MethodPreInjectHandler {
             }
         };
         String pluginName = className + "#" + methodName;
-
-        return new MethodPlugin(pluginName, pointCut);
+        boolean isAfterEvent = false;
+        if (Boolean.valueOf(afterFlag).equals(Boolean.TRUE)) {
+            isAfterEvent = true;
+        }
+        return new MethodPlugin(pluginName, pointCut, isAfterEvent);
     }
 }
 

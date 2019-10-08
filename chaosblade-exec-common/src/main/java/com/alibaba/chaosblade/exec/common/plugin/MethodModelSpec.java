@@ -49,6 +49,7 @@ public class MethodModelSpec extends BaseModelSpec {
     private void addMethodMatcherDef() {
         addMatcherDefToAllActions(new ClassNameMatcherSpec());
         addMatcherDefToAllActions(new MethodNameMatcherSpec(true));
+        addMatcherDefToAllActions(new MethodAfterMatcherSpec());
     }
 
     private void addThrowExceptionActionDef() {

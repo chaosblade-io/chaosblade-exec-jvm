@@ -44,6 +44,8 @@ import com.alibaba.jvm.sandbox.api.Information;
 import com.alibaba.jvm.sandbox.api.Module;
 import com.alibaba.jvm.sandbox.api.ModuleLifecycle;
 import com.alibaba.jvm.sandbox.api.event.Event;
+import com.alibaba.jvm.sandbox.api.event.Event.Type;
+import com.alibaba.jvm.sandbox.api.filter.Filter;
 import com.alibaba.jvm.sandbox.api.http.Http;
 import com.alibaba.jvm.sandbox.api.resource.ModuleEventWatcher;
 
@@ -165,10 +167,18 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
             return;
         }
         String enhancerName = plugin.getEnhancer().getClass().getSimpleName();
-        int watcherId = moduleEventWatcher.watch(
-            SandboxEnhancerFactory.createFilter(enhancerName, pointCut),
-            SandboxEnhancerFactory.createBeforeEventListener(plugin), Event.Type.BEFORE);
-        watchIds.put(PluginUtil.getIdentifier(plugin), watcherId);
+        Filter filter = SandboxEnhancerFactory.createFilter(enhancerName, pointCut);
+        // add after event listener. For the after event, the reason for adding the before event is to cache the
+        // necessary parameters.
+        if (plugin.isAfterEvent()) {
+            int watcherId = moduleEventWatcher.watch(filter, SandboxEnhancerFactory.createAfterEventListener(plugin),
+                Type.BEFORE, Type.RETURN);
+            watchIds.put(PluginUtil.getIdentifierForAfterEvent(plugin), watcherId);
+        } else {
+            int watcherId = moduleEventWatcher.watch(
+                filter, SandboxEnhancerFactory.createBeforeEventListener(plugin), Event.Type.BEFORE);
+            watchIds.put(PluginUtil.getIdentifier(plugin), watcherId);
+        }
     }
 
     @Override
@@ -176,7 +186,13 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
         if (plugin.getPointCut() == null) {
             return;
         }
-        String identifier = PluginUtil.getIdentifier(plugin);
+        String identifier;
+        // remove the after event plugin
+        if (plugin.isAfterEvent()) {
+            identifier = PluginUtil.getIdentifierForAfterEvent(plugin);
+        } else {
+            identifier = PluginUtil.getIdentifier(plugin);
+        }
         Integer watcherId = watchIds.get(identifier);
         if (watcherId != null) {
             moduleEventWatcher.delete(watcherId);

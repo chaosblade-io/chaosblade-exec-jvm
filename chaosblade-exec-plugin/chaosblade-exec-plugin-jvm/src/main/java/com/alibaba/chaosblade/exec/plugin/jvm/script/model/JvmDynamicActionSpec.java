@@ -24,6 +24,7 @@ import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
 import com.alibaba.chaosblade.exec.common.plugin.ClassNameMatcherSpec;
+import com.alibaba.chaosblade.exec.common.plugin.MethodAfterMatcherSpec;
 import com.alibaba.chaosblade.exec.common.plugin.MethodNameMatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
@@ -36,6 +37,7 @@ public class JvmDynamicActionSpec extends BaseActionSpec {
         super(new DynamicScriptExecutor());
         addMatcherDesc(new ClassNameMatcherSpec());
         addMatcherDesc(new MethodNameMatcherSpec(true));
+        addMatcherDesc(new MethodAfterMatcherSpec());
     }
 
     @Override

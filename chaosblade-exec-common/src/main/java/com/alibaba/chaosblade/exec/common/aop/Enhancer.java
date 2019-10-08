@@ -24,19 +24,32 @@ import java.lang.reflect.Method;
 public interface Enhancer {
 
     /**
-     * 方法执行前，增强处理
+     * Enhanced processing before method execution
      *
      * @param targetName
-     * @param classLoader     类加载器
+     * @param classLoader
      * @param className
-     * @param object          处理的对象
-     * @param method          对象的方法
-     * @param methodArguments 对象的方法参数
-     * @return 自定义结果
+     * @param object
+     * @param method
+     * @param methodArguments
      * @throws Exception
      */
     void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                      Method method,
-                      Object[] methodArguments)
+                      Method method, Object[] methodArguments)
+        throws Exception;
+
+    /**
+     * Enhanced processing after method execution
+     *
+     * @param targetName
+     * @param classLoader
+     * @param className
+     * @param object
+     * @param method
+     * @param methodArguments
+     * @param returnObject
+     */
+    void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object,
+                     Method method, Object[] methodArguments, Object returnObject)
         throws Exception;
 }

@@ -28,10 +28,12 @@ public class MethodPlugin implements Plugin {
 
     private PointCut pointCut;
     private String pluginName;
+    private boolean afterEvent;
 
-    public MethodPlugin(String pluginName, PointCut pointCut) {
+    public MethodPlugin(String pluginName, PointCut pointCut, boolean afterEvent) {
         this.pluginName = pluginName;
         this.pointCut = pointCut;
+        this.afterEvent = afterEvent;
     }
 
     @Override
@@ -52,5 +54,9 @@ public class MethodPlugin implements Plugin {
     @Override
     public Enhancer getEnhancer() {
         return new MethodEnhancer();
+    }
+
+    public boolean isAfterEvent() {
+        return afterEvent;
     }
 }

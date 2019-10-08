@@ -234,6 +234,7 @@ public class DynamicScriptExecutor implements ActionExecutor, StoppableActionExe
      */
     private Map<String, Object> createParams(ScriptTypeEnum scriptType, EnhancerModel enhancerModel) {
         HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(JvmConstant.SCRIPT_INVOKE_RETURN, enhancerModel.getReturnValue());
         Object[] methodArguments = enhancerModel.getMethodArguments();
         if (methodArguments != null) {
             for (int i = 0; i < methodArguments.length; i++) {
