@@ -34,18 +34,24 @@ import org.slf4j.LoggerFactory;
  */
 public class DubboConsumerEnhancer extends DubboEnhancer {
 
-    public static final String RPC_CONTEXT = "com.alibaba.dubbo.rpc.RpcContext";
+    public static final String RPC_CONTEXT_LESS_2700 = "com.alibaba.dubbo.rpc.RpcContext";
+    public static final String RPC_CONTEXT_THAN_2700 = "org.apache.dubbo.rpc.RpcContext";
+
     public static final String GET_CONTEXT = "getContext";
     public static final String GET_INVOKERS = "getInvokers";
-    public static final String REGISTRY_DIRECTORY$_INVOKER_DELEGETE
+    public static final String REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2700
         = "com.alibaba.dubbo.registry.integration.RegistryDirectory$InvokerDelegete";
+    public static final String REGISTRY_DIRECTORY$_INVOKER_DELEGETE_THAN_2700
+        = "org.apache.dubbo.registry.integration.RegistryDirectory$InvokerDelegete";
+
     public static final String GET_PROVIDER_URL = "getProviderUrl";
     public static final int TIMEOUT_EXCEPTION_CODE = 2;
     public static final String TIMEOUT_KEY = "timeout";
     public static final int DEFAULT_TIMEOUT = 1000;
     public static final String GET_METHOD_PARAMETER = "getMethodParameter";
     private static final Logger LOGGER = LoggerFactory.getLogger(DubboConsumerEnhancer.class);
-    private static final String DUBBO_TIMEOUT_EXCEPTION = "com.alibaba.dubbo.rpc.RpcException";
+    private static final String DUBBO_TIMEOUT_EXCEPTION_LESS_2700 = "com.alibaba.dubbo.rpc.RpcException";
+    private static final String DUBBO_TIMEOUT_EXCEPTION_THAN_2700 = "org.apache.dubbo.rpc.RpcException";
 
     /**
      * Get service url
@@ -57,7 +63,10 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
      */
     @Override
     protected Object getUrl(Object instance, Object invocation) throws Exception {
-        String rpcContextClassName = RPC_CONTEXT;
+        String rpcContextClassName = RPC_CONTEXT_LESS_2700;
+        if (isThan2700Version(invocation.getClass().getName())) {
+            rpcContextClassName = RPC_CONTEXT_THAN_2700;
+        }
         // load class
         Class<?> rpcContextClass = instance.getClass().getClassLoader().loadClass(rpcContextClassName);
         Object context = ReflectUtil.invokeStaticMethod(rpcContextClass, GET_CONTEXT, new Object[0], false);
@@ -68,9 +77,12 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
             if (invokers == null || invokers.size() == 0) {
                 LOGGER.warn("Get invokers from rpcContext is empty, can not get the url of provider.");
             } else {
+                String delegeteClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2700;
+                if (isThan2700Version(invocation.getClass().getName())) {
+                    delegeteClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_THAN_2700;
+                }
                 for (Object invoker : invokers) {
-                    if (!invoker.getClass().getName().equals(
-                        REGISTRY_DIRECTORY$_INVOKER_DELEGETE)) {
+                    if (!invoker.getClass().getName().equals(delegeteClassName)) {
                         continue;
                     }
                     Object providerUrl = ReflectUtil.invokeMethod(invoker, GET_PROVIDER_URL, new Object[0], false);
@@ -103,13 +115,17 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
     }
 
     @Override
-    protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout) {
+    protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout, final String className) {
         return new BaseTimeoutExecutor(classLoader, timeout) {
             @Override
             public Exception generateTimeoutException(ClassLoader classLoader) {
                 Class timeOutExceptionClass;
+                String exceptionClassName = DUBBO_TIMEOUT_EXCEPTION_LESS_2700;
+                if (isThan2700Version(className)) {
+                    exceptionClassName = DUBBO_TIMEOUT_EXCEPTION_THAN_2700;
+                }
                 try {
-                    timeOutExceptionClass = classLoader.loadClass(DUBBO_TIMEOUT_EXCEPTION);
+                    timeOutExceptionClass = classLoader.loadClass(exceptionClassName);
 
                     Class[] paramTypes = {int.class, String.class};
                     Object[] params = {TIMEOUT_EXCEPTION_CODE,
@@ -117,12 +133,14 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
                     Constructor con = timeOutExceptionClass.getConstructor(paramTypes);
                     return (Exception)con.newInstance(params);
                 } catch (ClassNotFoundException e) {
-                    LOGGER.error("chaosblade-dubbo", "Can not find " + DUBBO_TIMEOUT_EXCEPTION, e);
+
+                    LOGGER.error("chaosblade-dubbo", "Can not find " + exceptionClassName, e);
                 } catch (Exception e) {
-                    LOGGER.error("chaosblade-dubbo", "Can not generate " + DUBBO_TIMEOUT_EXCEPTION, e);
+                    LOGGER.error("chaosblade-dubbo", "Can not generate " + exceptionClassName, e);
                 }
                 return new RuntimeException(DubboConstant.TIMEOUT_EXCEPTION_MSG);
             }
         };
     }
+
 }

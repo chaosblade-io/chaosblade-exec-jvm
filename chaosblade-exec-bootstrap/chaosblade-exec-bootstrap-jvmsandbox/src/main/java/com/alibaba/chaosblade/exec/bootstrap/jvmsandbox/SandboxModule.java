@@ -16,6 +16,7 @@
 
 package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,11 +37,13 @@ import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
+import com.alibaba.chaosblade.exec.common.transport.Response.Code;
 import com.alibaba.chaosblade.exec.common.util.PluginJarUtil;
 import com.alibaba.chaosblade.exec.common.util.PluginLoader;
 import com.alibaba.chaosblade.exec.common.util.PluginUtil;
 import com.alibaba.chaosblade.exec.service.handler.DefaultDispatchService;
 import com.alibaba.chaosblade.exec.service.handler.DispatchService;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.jvm.sandbox.api.Information;
 import com.alibaba.jvm.sandbox.api.Module;
 import com.alibaba.jvm.sandbox.api.ModuleLifecycle;
@@ -56,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * @author Changjun Xiao
  * @author hzyangshurui
  */
-@Information(id = "chaosblade", version = "0.3.0", author = "Changjun Xiao", isActiveOnLoad = false)
+@Information(id = "chaosblade", version = "0.4.0", author = "Changjun Xiao", isActiveOnLoad = false)
 public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleListener {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SandboxModule.class);
@@ -135,18 +139,23 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
 
     private void service(String command, HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse) {
-        Request request = new Request();
-        Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
-        Set<Entry<String, String[]>> entries = parameterMap.entrySet();
-        for (Entry<String, String[]> entry : entries) {
-            String value = "";
-            String[] values = entry.getValue();
-            if (values.length > 0) {
-                value = values[0];
+        Request request;
+        if ("POST".equalsIgnoreCase(httpServletRequest.getMethod())) {
+            try {
+                request = getRequestFromBody(httpServletRequest);
+            } catch (IOException e) {
+                Response response = Response.ofFailure(Code.ILLEGAL_PARAMETER, e.getMessage());
+                output(httpServletResponse, response);
+                return;
             }
-            request.addParam(entry.getKey(), value);
+        } else {
+            request = getRequestFromParams(httpServletRequest);
         }
         Response response = dispatchService.dispatch(command, request);
+        output(httpServletResponse, response);
+    }
+
+    private void output(HttpServletResponse httpServletResponse, Response response) {
         PrintWriter writer = null;
         try {
             writer = httpServletResponse.getWriter();
@@ -158,6 +167,30 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
                 writer.close();
             }
         }
+    }
+
+    private Request getRequestFromParams(HttpServletRequest httpServletRequest) {
+        Request request;
+        request = new Request();
+        Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
+        Set<Entry<String, String[]>> entries = parameterMap.entrySet();
+        for (Entry<String, String[]> entry : entries) {
+            String value = "";
+            String[] values = entry.getValue();
+            if (values.length > 0) {
+                value = values[0];
+            }
+            request.addParam(entry.getKey(), value);
+        }
+        return request;
+    }
+
+    private Request getRequestFromBody(HttpServletRequest httpServletRequest) throws IOException {
+        ServletInputStream inputStream = httpServletRequest.getInputStream();
+        Map<String, String> parameters = JSON.parseObject(inputStream, Map.class);
+        Request request = new Request();
+        request.addParams(parameters);
+        return request;
     }
 
     @Override

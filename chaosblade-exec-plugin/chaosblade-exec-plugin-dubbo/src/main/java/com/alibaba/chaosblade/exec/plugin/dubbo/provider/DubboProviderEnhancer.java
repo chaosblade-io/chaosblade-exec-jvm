@@ -34,7 +34,7 @@ public class DubboProviderEnhancer extends DubboEnhancer {
     }
 
     @Override
-    protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout) {
+    protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout, String className) {
         return null;
     }
 

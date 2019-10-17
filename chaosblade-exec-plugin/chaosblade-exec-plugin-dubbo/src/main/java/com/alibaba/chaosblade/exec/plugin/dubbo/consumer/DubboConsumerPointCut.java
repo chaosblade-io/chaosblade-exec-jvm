@@ -23,6 +23,7 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
 /**
@@ -36,7 +37,11 @@ public class DubboConsumerPointCut implements PointCut {
         classMatcher
             .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.DubboInvoker"))
             .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.thrift.ThriftInvoker"))
-            .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"));
+            .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"))
+
+            .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker"))
+            .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.thrift.ThriftInvoker"))
+            .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"));
         return classMatcher;
     }
 
@@ -47,6 +52,13 @@ public class DubboConsumerPointCut implements PointCut {
             "com.alibaba.dubbo.rpc.Invocation"}, 1,
             ParameterMethodMatcher.EQUAL);
         methodMatcher.and(new NameMethodMatcher("doInvoke")).and(parameterMethodMatcher);
-        return methodMatcher;
+
+        AndMethodMatcher methodMatcherThan2700 = new AndMethodMatcher();
+        ParameterMethodMatcher parameterMethodMatcherThan2700 = new ParameterMethodMatcher(new String[] {
+            "org.apache.dubbo.rpc.Invocation"}, 1,
+            ParameterMethodMatcher.EQUAL);
+        methodMatcherThan2700.and(new NameMethodMatcher("doInvoke")).and(parameterMethodMatcherThan2700);
+
+        return new OrMethodMatcher().or(methodMatcher).or(methodMatcherThan2700);
     }
 }
