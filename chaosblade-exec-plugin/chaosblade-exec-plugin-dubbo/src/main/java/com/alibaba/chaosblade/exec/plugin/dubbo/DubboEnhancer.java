@@ -89,7 +89,7 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         }
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
-        enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout));
+        enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout, className));
 
         postDoBeforeAdvice(enhancerModel);
         return enhancerModel;
@@ -152,8 +152,19 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
      *
      * @param classLoader
      * @param timeout
+     * @param className
      * @return
      */
-    protected abstract TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout);
+    protected abstract TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout,
+                                                             String className);
 
+    /**
+     * The dubbo version is than 2.7.0
+     *
+     * @param className
+     * @return
+     */
+    protected boolean isThan2700Version(String className) {
+        return className.startsWith("org.apache");
+    }
 }

@@ -37,7 +37,9 @@ public class DubboProviderPointCut implements PointCut {
         return new OrClassMatcher()
             .or(new NameClassMatcher("com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker"))
             // for thread pool
-            .or(new SuperClassMatcher("com.alibaba.dubbo.remoting.transport.dispatcher.WrappedChannelHandler"));
+            .or(new SuperClassMatcher("com.alibaba.dubbo.remoting.transport.dispatcher.WrappedChannelHandler"))
+            .or(new NameClassMatcher("org.apache.dubbo.rpc.proxy.AbstractProxyInvoker"))
+            .or(new SuperClassMatcher("org.apache.dubbo.remoting.transport.dispatcher.WrappedChannelHandler"));
     }
 
     @Override
@@ -48,8 +50,14 @@ public class DubboProviderPointCut implements PointCut {
             ParameterMethodMatcher.GREAT_THAN);
         methodMatcher.and(new NameMethodMatcher("invoke")).and(parameterMethodMatcher);
 
+        AndMethodMatcher methodMatcherThan2700 = new AndMethodMatcher();
+        ParameterMethodMatcher parameterMethodMatcherThan2700 = new ParameterMethodMatcher(new String[] {
+            "org.apache.dubbo.rpc.Invocation"}, 0,
+            ParameterMethodMatcher.GREAT_THAN);
+        methodMatcherThan2700.and(new NameMethodMatcher("invoke")).and(parameterMethodMatcherThan2700);
+
         OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
-        orMethodMatcher.or(methodMatcher).or(new NameMethodMatcher("received"));
+        orMethodMatcher.or(methodMatcher).or(methodMatcherThan2700).or(new NameMethodMatcher("received"));
         return orMethodMatcher;
     }
 }
