@@ -65,4 +65,6 @@ public interface JvmConstant {
     String GROOVY_VAL_KEY = "params";
 
     String SCRIPT_INVOKE_RETURN = "return";
+
+    String SCRIPT_INVOKE_TARGET = "target";
 }
