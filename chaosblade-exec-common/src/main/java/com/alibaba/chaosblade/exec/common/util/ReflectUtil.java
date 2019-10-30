@@ -119,20 +119,18 @@ public class ReflectUtil {
      */
     public static Method getMethod(Class<?> clazz, String methodDescriptor, String methodName)
         throws NoSuchMethodException {
-        Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        for (Method method : declaredMethods) {
             String desc = ASMUtils.desc(method);
             if (method.getName().equals(methodName) && desc.equals(methodDescriptor)) {
                 return method;
             }
         }
-        Method[] declaredMethods = clazz.getDeclaredMethods();
-        for (Method method : declaredMethods) {
-            String desc = ASMUtils.desc(method);
-            if (desc.equals(methodDescriptor)) {
-                return method;
-            }
+
+        if (clazz.getSuperclass() != null) {
+            return getMethod(clazz.getSuperclass(), methodDescriptor, methodName);
         }
+
         throw new NoSuchMethodException(methodDescriptor + " descriptor");
     }
 
