@@ -16,6 +16,8 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import java.util.Set;
+
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
 import com.alibaba.chaosblade.exec.common.center.StatusManager;
@@ -28,11 +30,14 @@ import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Changjun Xiao
  */
 public class DestroyHandler implements RequestHandler {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DestroyHandler.class);
     private ModelSpecManager modelSpecManager;
     private StatusManager statusManager;
 
@@ -52,6 +57,10 @@ public class DestroyHandler implements RequestHandler {
         if (StringUtil.isBlank(uid)) {
             return Response.ofFailure(Code.ILLEGAL_PARAMETER, "less experiment uid");
         }
+        return destroy(uid);
+    }
+
+    private Response destroy(String uid) {
         Model model = statusManager.removeExp(uid);
 
         if (model == null) {
@@ -64,9 +73,22 @@ public class DestroyHandler implements RequestHandler {
         try {
             applyPreDestroyInjectionModelHandler(uid, modelSpec, model);
         } catch (ExperimentException ex) {
-            return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
+            return Response.ofFailure(Code.SERVER_ERROR, ex.getMessage());
         }
         return Response.ofSuccess("success");
+    }
+
+    @Override
+    public void unload() {
+        Set<String> uids = statusManager.getAllUids();
+        for (String uid : uids) {
+            Response response = destroy(uid);
+            if (response.isSuccess()) {
+                LOGGER.debug("destroy {} successfully when unload", uid);
+            } else {
+                LOGGER.warn("destroy {} failed because of {} when unload", uid, response.getError());
+            }
+        }
     }
 
     private void applyPreDestroyInjectionModelHandler(String uid, ModelSpec modelSpec, Model model)

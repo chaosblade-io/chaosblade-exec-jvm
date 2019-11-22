@@ -51,4 +51,8 @@ public class StatusHandler implements RequestHandler {
         }
         return Response.ofSuccess(String.valueOf(statusMetric.getCount()));
     }
+
+    @Override
+    public void unload() {
+    }
 }

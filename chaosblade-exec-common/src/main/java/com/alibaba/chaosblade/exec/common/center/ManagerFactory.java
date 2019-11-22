@@ -56,8 +56,8 @@ public class ManagerFactory {
      * Close manager service
      */
     public static void unload() {
+        statusManager.unload();
         modelSpecManager.unload();
         listenerManager.unload();
-        statusManager.unload();
     }
 }
