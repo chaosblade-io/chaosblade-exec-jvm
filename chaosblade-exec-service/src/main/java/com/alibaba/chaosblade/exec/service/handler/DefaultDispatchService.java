@@ -16,6 +16,8 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.alibaba.chaosblade.exec.common.transport.Request;
@@ -71,6 +73,10 @@ public class DefaultDispatchService implements DispatchService {
 
     @Override
     public void unload() {
+        Set<Entry<String, RequestHandler>> entries = handles.entrySet();
+        for (Entry<String, RequestHandler> entry : entries) {
+            entry.getValue().unload();
+        }
         handles.clear();
     }
 }

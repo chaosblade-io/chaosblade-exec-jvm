@@ -26,4 +26,6 @@ public interface RequestHandler {
     String getHandlerName();
 
     Response handle(Request paramRequest);
+
+    void unload();
 }

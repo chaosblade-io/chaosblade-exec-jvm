@@ -17,7 +17,9 @@
 package com.alibaba.chaosblade.exec.common.center;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -163,6 +165,16 @@ public class DefaultStatusManager implements StatusManager {
             return null;
         }
         return metricMap.get(identifier);
+    }
+
+    @Override
+    public Set<String> getAllUids() {
+        Enumeration<String> keys = experiments.keys();
+        HashSet<String> uids = new HashSet<String>();
+        while (keys.hasMoreElements()) {
+            uids.add(keys.nextElement());
+        }
+        return uids;
     }
 
     @Override

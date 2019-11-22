@@ -87,9 +87,10 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
     @Override
     public void onUnload() throws Throwable {
         LOGGER.info("unload chaosblade module");
-        watchIds.clear();
         dispatchService.unload();
         ManagerFactory.unload();
+        watchIds.clear();
+        LOGGER.info("unload chaosblade module successfully");
     }
 
     @Override

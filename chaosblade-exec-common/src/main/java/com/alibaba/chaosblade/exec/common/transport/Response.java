@@ -146,8 +146,8 @@ public class Response {
         NOT_FOUND(404, "request handler not found"),
         ILLEGAL_PARAMETER(405, "illegal parameter"),
         DUPLICATE_INJECTION(406, "duplicate injection"),
-        SERVER_ERROR(500, "server error");
-
+        SERVER_ERROR(500, "server error"),
+        ILLEGAL_STATE(504, "illegal state");
         private int code;
         private String msg;
 

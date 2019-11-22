@@ -18,6 +18,7 @@ package com.alibaba.chaosblade.exec.common.center;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.alibaba.chaosblade.exec.common.model.Model;
 
@@ -79,5 +80,10 @@ public interface StatusManager extends ManagerService {
      * @return
      */
     StatusMetric getStatusMetricByUid(String uid);
+
+    /**
+     * @return all running experiment uids
+     */
+    Set<String> getAllUids();
 
 }

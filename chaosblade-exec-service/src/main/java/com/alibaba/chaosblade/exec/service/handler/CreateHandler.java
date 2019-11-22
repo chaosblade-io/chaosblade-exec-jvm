@@ -44,6 +44,7 @@ public class CreateHandler implements RequestHandler {
 
     private ModelSpecManager modelSpecManager;
     private StatusManager statusManager;
+    private volatile boolean unloaded;
 
     public CreateHandler() {
         this.modelSpecManager = ManagerFactory.getModelSpecManager();
@@ -63,6 +64,9 @@ public class CreateHandler implements RequestHandler {
      */
     @Override
     public Response handle(Request request) {
+        if (unloaded) {
+            return Response.ofFailure(Code.ILLEGAL_STATE, "the agent is uninstalling");
+        }
         // check necessary arguments
         String suid = request.getParam("suid");
         if (StringUtil.isBlank(suid)) {
@@ -96,6 +100,11 @@ public class CreateHandler implements RequestHandler {
         }
 
         return handleInjection(suid, model, modelSpec);
+    }
+
+    @Override
+    public void unload() {
+        unloaded = true;
     }
 
     /**
