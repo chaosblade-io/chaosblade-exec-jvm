@@ -89,7 +89,7 @@ public class DefaultStatusManager implements StatusManager {
     @Override
     public Model removeExp(String suid) {
         // get model identifier
-        String identifier = experiments.get(suid);
+        String identifier = experiments.remove(suid);
         if (StringUtil.isBlank(identifier)) {
             return null;
         }
@@ -173,6 +173,28 @@ public class DefaultStatusManager implements StatusManager {
         HashSet<String> uids = new HashSet<String>();
         while (keys.hasMoreElements()) {
             uids.add(keys.nextElement());
+        }
+        return uids;
+    }
+
+    @Override
+    public Set<String> listUids(String target, String action) {
+        HashSet<String> uids = new HashSet<String>();
+        // identifier
+        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
+        if (metricMap == null) {
+            return uids;
+        }
+        HashSet<String> identifiers = new HashSet<String>();
+        Set<Entry<String, StatusMetric>> entries = metricMap.entrySet();
+        for (Entry<String, StatusMetric> entry : entries) {
+            identifiers.add(entry.getKey());
+        }
+        Set<Entry<String, String>> uidIdentifierEntries = experiments.entrySet();
+        for (Entry<String, String> entry : uidIdentifierEntries) {
+            if (identifiers.contains(entry.getValue())) {
+                uids.add(entry.getKey());
+            }
         }
         return uids;
     }

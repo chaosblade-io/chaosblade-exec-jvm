@@ -25,7 +25,7 @@ public class SpecMain {
             throw new RuntimeException("less plugin path");
         }
         String pluginPath = args[0];
-        String specFileName = "jvm.spec.yaml";
+        String specFileName = "chaosblade-jvm-spec.yaml";
         if (args.length > 1) {
             specFileName = args[1];
         }

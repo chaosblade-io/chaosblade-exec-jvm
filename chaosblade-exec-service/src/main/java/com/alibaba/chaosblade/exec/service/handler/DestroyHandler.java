@@ -54,15 +54,60 @@ public class DestroyHandler implements RequestHandler {
     @Override
     public Response handle(Request request) {
         String uid = request.getParam("suid");
+        String target = request.getParam("target");
+        String action = request.getParam("action");
         if (StringUtil.isBlank(uid)) {
-            return Response.ofFailure(Code.ILLEGAL_PARAMETER, "less experiment uid");
+            if (StringUtil.isBlank(target) || StringUtil.isBlank(action)) {
+                return Response.ofFailure(Code.ILLEGAL_PARAMETER, "less necessary parameters, such as uid, target and"
+                    + " action");
+            }
+            return destroy(target, action);
         }
         return destroy(uid);
     }
 
+    /**
+     * Destroy experiments by target and action parameters
+     *
+     * @param target
+     * @param action
+     * @return
+     */
+    private Response destroy(String target, String action) {
+        // search model by target and action and remove it
+        Set<String> uids = statusManager.listUids(target, action);
+        StringBuilder errMsg = new StringBuilder();
+        StringBuilder successMsg = new StringBuilder();
+        boolean success = true;
+        for (String uid : uids) {
+            Response response = destroy(uid);
+            if (response.isSuccess()) {
+                successMsg.append(uid).append(",");
+            } else {
+                errMsg.append(uid + ":" + response.getError()).append(",");
+            }
+        }
+        if (success) {
+            if (successMsg.length() > 0) {
+                successMsg.deleteCharAt(successMsg.length() - 1);
+            }
+            return Response.ofSuccess(successMsg.toString());
+        }
+        return Response.ofFailure(Code.SERVER_ERROR, errMsg.toString());
+    }
+
+    /**
+     * Destroy experiment by uid
+     *
+     * @param uid
+     * @return
+     */
     private Response destroy(String uid) {
         Model model = statusManager.removeExp(uid);
+        return destroy(uid, model);
+    }
 
+    private Response destroy(String uid, Model model) {
         if (model == null) {
             return Response.ofSuccess("success");
         }

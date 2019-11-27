@@ -55,7 +55,7 @@
                         <classpath/>
                         <argument>com.alibaba.chaosblade.exec.service.build.SpecMain</argument>
                         <argument>${project.parent.basedir}/plugins</argument>
-                        <argument>jvm.spec.yaml</argument>
+                        <argument>chaosblade-jvm-spec-${project.version}.yaml</argument>
                     </arguments>
                 </configuration>
             </plugin>

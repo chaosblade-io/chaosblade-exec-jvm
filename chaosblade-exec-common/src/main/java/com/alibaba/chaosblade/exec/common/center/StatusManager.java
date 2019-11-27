@@ -86,4 +86,12 @@ public interface StatusManager extends ManagerService {
      */
     Set<String> getAllUids();
 
+    /**
+     * Search uids by target and action
+     *
+     * @param target
+     * @param action
+     * @return
+     */
+    Set<String> listUids(String target, String action);
 }
