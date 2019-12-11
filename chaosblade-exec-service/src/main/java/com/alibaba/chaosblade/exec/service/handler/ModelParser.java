@@ -35,7 +35,7 @@ import com.alibaba.chaosblade.exec.common.util.StringUtil;
 public class ModelParser {
 
     public final static Set<String> assistantFlag = new HashSet<String>(Arrays.asList(
-        "target", "action", "process", "pid", "debug", "suid", "help", "pod"
+        "target", "action", "process", "pid", "debug", "suid", "help", "pod", "uid"
     ));
 
     public static Model parseRequest(String target, Request request, ActionSpec actionSpec) {
