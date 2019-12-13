@@ -44,7 +44,10 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
     @Override
     public void run(EnhancerModel enhancerModel) throws Exception {
         Exception exception = null;
-        String exceptionMessage = enhancerModel.getActionFlag(exceptionMessageFlag.getName());
+        String exceptionMessage = null;
+        if (exceptionMessageFlag != null) {
+            exceptionMessage = enhancerModel.getActionFlag(exceptionMessageFlag.getName());
+        }
         if (StringUtil.isBlank(exceptionMessage)) {
             exceptionMessage = DEFAULT_EXCEPTION_MESSAGE;
         }
