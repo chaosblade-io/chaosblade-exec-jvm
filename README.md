@@ -12,7 +12,7 @@ experiments on Java applications by enhancing classes. The drill can be implemen
 ## Compiling
 In the project root directory, execute the following command to compile
 ```bash
-Sh build.sh
+make
 ```
 
 The compilation result will be stored in the target directory.
