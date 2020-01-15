@@ -37,6 +37,7 @@ target/*
 .idea/*
 *.iml
 */*.iml
+build-target
 # Logs and databases #
 ######################
 *.log
