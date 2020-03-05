@@ -40,8 +40,8 @@ public abstract class AbstractScriptCache<K, V> implements ScriptCache<K, V> {
     public void put(K k, V v) {
         ObjectsUtil.requireNonNull(v);
         Lock lock = readWriteLock.writeLock();
+        lock.lock();
         try {
-            lock.lock();
             cacheMap.put(k, v);
         } finally {
             lock.unlock();
@@ -51,8 +51,8 @@ public abstract class AbstractScriptCache<K, V> implements ScriptCache<K, V> {
     @Override
     public V get(K k) {
         Lock lock = readWriteLock.readLock();
+        lock.lock();
         try {
-            lock.lock();
             return cacheMap.get(k);
         } finally {
             lock.unlock();
@@ -63,8 +63,8 @@ public abstract class AbstractScriptCache<K, V> implements ScriptCache<K, V> {
     public boolean evict(K k) {
         if (cacheMap.containsKey(k)) {
             Lock lock = readWriteLock.writeLock();
+            lock.lock();
             try {
-                lock.lock();
                 cacheMap.remove(k);
                 return true;
             } finally {
@@ -77,8 +77,8 @@ public abstract class AbstractScriptCache<K, V> implements ScriptCache<K, V> {
     @Override
     public void clean() {
         Lock lock = readWriteLock.writeLock();
+        lock.lock();
         try {
-            lock.lock();
             cacheMap.clear();
         } finally {
             lock.unlock();
