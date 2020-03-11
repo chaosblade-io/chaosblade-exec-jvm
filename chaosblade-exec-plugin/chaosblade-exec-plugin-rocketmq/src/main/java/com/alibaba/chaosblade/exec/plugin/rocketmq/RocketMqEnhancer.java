@@ -19,21 +19,38 @@ import org.slf4j.LoggerFactory;
 public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RocketMqEnhancer.class);
-    public static String CLASS_PULL_MESSAGE_REQUEST_HEADER
+    public static String CLASS_PULL_MESSAGE_REQUEST_HEADER_ALIBABA
         = "com.alibaba.rocketmq.common.protocol.header.PullMessageRequestHeader";
-    public static String CLASS_SEND_MESSAGE_REQUEST_HEADER
+    public static String CLASS_PULL_MESSAGE_REQUEST_HEADER_APACHE
+        = "org.apache.rocketmq.common.protocol.header.PullMessageRequestHeader";
+
+    public static String CLASS_SEND_MESSAGE_REQUEST_HEADER_ALIBABA
         = "com.alibaba.rocketmq.common.protocol.header.SendMessageRequestHeader";
-    public static String CLASS_SEND_MESSAGE_REQUEST_HEADERV2
+    public static String CLASS_SEND_MESSAGE_REQUEST_HEADER_APACHE
+        = "org.apache.rocketmq.common.protocol.header.SendMessageRequestHeader";
+
+    public static String CLASS_SEND_MESSAGE_REQUEST_HEADERV2_ALIBABA
         = "com.alibaba.rocketmq.common.protocol.header.SendMessageRequestHeaderV2";
-    public static String CLASS_REMOTEING_COMMAND_CLASS = "com.alibaba.rocketmq.remoting.protocol.RemotingCommand";
+    public static String CLASS_SEND_MESSAGE_REQUEST_HEADERV2_APACHE
+        = "org.apache.rocketmq.common.protocol.header.SendMessageRequestHeaderV2";
+
+    public static String CLASS_REMOTEING_COMMAND_CLASS_ALIBABA
+        = "com.alibaba.rocketmq.remoting.protocol.RemotingCommand";
+    public static String CLASS_REMOTEING_COMMAND_CLASS_APACHE
+        = "org.apache.rocketmq.remoting.protocol.RemotingCommand";
+
     private static String FIELD_CUSTOM_HEADER = "customHeader";
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
                                         Object[] methodArguments) throws Exception {
         MatcherModel matcherModel = new MatcherModel();
-        Object remoteingCommnadRequest = selectParamByClassName(classLoader, methodArguments,
-            CLASS_REMOTEING_COMMAND_CLASS);
+        String remotingCommandClassName = CLASS_REMOTEING_COMMAND_CLASS_ALIBABA;
+        if (isApache(className)) {
+            remotingCommandClassName = CLASS_REMOTEING_COMMAND_CLASS_APACHE;
+        }
+        Object remoteingCommnadRequest = selectParamByClassName(classLoader, methodArguments, remotingCommandClassName);
+
         if (remoteingCommnadRequest == null) {
             return new EnhancerModel(classLoader, matcherModel);
         } else {
@@ -44,13 +61,13 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
             String topic = null;
             String consumerGroup = null;
             String producerGroup = null;
-            if (isPullMessageHeader(classLoader, header)) {
+            if (isPullMessageHeader(classLoader, header, className)) {
                 topic = ReflectUtil.getFieldValue(header, FLAG_NAME_TOPIC, false);
                 consumerGroup = ReflectUtil.getFieldValue(header, FLAG_CONSUMER_GROUP, false);
-            } else if (isSendMessageHeader(classLoader, header)) {
+            } else if (isSendMessageHeader(classLoader, header, className)) {
                 topic = ReflectUtil.getFieldValue(header, FLAG_NAME_TOPIC, false);
                 producerGroup = ReflectUtil.getFieldValue(header, FLAG_PRODUCER_GROUP, false);
-            } else if (isSendMessageHeaderV2(classLoader, header)) {
+            } else if (isSendMessageHeaderV2(classLoader, header, className)) {
                 topic = ReflectUtil.getFieldValue(header, "b", false);
                 producerGroup = ReflectUtil.getFieldValue(header, "a", false);
             }
@@ -64,16 +81,25 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
         }
     }
 
-    private boolean isSendMessageHeader(ClassLoader classLoader, Object header) {
-        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADER);
+    private boolean isSendMessageHeader(ClassLoader classLoader, Object header, String className) {
+        if (isApache(className)) {
+            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADER_APACHE);
+        }
+        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADER_ALIBABA);
     }
 
-    private boolean isSendMessageHeaderV2(ClassLoader classLoader, Object header) {
-        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADERV2);
+    private boolean isSendMessageHeaderV2(ClassLoader classLoader, Object header, String className) {
+        if (isApache(className)) {
+            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADERV2_APACHE);
+        }
+        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADERV2_ALIBABA);
     }
 
-    private boolean isPullMessageHeader(ClassLoader classLoader, Object header) {
-        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_PULL_MESSAGE_REQUEST_HEADER);
+    private boolean isPullMessageHeader(ClassLoader classLoader, Object header, String className) {
+        if (isApache(className)) {
+            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_PULL_MESSAGE_REQUEST_HEADER_APACHE);
+        }
+        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_PULL_MESSAGE_REQUEST_HEADER_ALIBABA);
     }
 
     private Object selectParamByClassName(ClassLoader classLoader, Object[] methodArguments, String filterClassName) {
@@ -85,4 +111,7 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
         return null;
     }
 
+    protected boolean isApache(String className) {
+        return className.startsWith("org.apache");
+    }
 }

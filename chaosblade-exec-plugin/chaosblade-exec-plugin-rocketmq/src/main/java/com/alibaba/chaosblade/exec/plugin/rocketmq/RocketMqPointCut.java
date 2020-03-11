@@ -4,6 +4,7 @@ import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 
 /**
@@ -21,7 +22,9 @@ public class RocketMqPointCut implements PointCut, RocketMqConstant {
 
     @Override
     public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(REMOTEING_SUPER_CLASS);
+        return new OrClassMatcher()
+                .or(new NameClassMatcher(REMOTEING_SUPER_CLASS_ALIBABA))
+                .or(new NameClassMatcher(REMOTEING_SUPER_CLASS_APACHE));
     }
 
     @Override
