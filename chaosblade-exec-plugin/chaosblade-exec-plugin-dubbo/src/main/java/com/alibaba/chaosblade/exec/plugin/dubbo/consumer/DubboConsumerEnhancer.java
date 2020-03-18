@@ -23,6 +23,7 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
 
@@ -39,10 +40,12 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
 
     public static final String GET_CONTEXT = "getContext";
     public static final String GET_INVOKERS = "getInvokers";
+    public static final String REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2590
+            = "com.alibaba.dubbo.registry.integration.RegistryDirectory$InvokerDelegete";
     public static final String REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2700
-        = "com.alibaba.dubbo.registry.integration.RegistryDirectory$InvokerDelegete";
+            = "com.alibaba.dubbo.registry.integration.RegistryDirectory$InvokerDelegate";
     public static final String REGISTRY_DIRECTORY$_INVOKER_DELEGETE_THAN_2700
-        = "org.apache.dubbo.registry.integration.RegistryDirectory$InvokerDelegete";
+            = "org.apache.dubbo.registry.integration.RegistryDirectory$InvokerDelegate";
 
     public static final String GET_PROVIDER_URL = "getProviderUrl";
     public static final int TIMEOUT_EXCEPTION_CODE = 2;
@@ -77,13 +80,19 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
             if (invokers == null || invokers.size() == 0) {
                 LOGGER.warn("Get invokers from rpcContext is empty, can not get the url of provider.");
             } else {
-                String delegeteClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2700;
-                if (isThan2700Version(invocation.getClass().getName())) {
-                    delegeteClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_THAN_2700;
+                String delegateClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_THAN_2700;
+                String orDelegateClassName = StringUtils.EMPTY;
+                if (!isThan2700Version(invocation.getClass().getName())) {
+                    delegateClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2700;
+                    orDelegateClassName = REGISTRY_DIRECTORY$_INVOKER_DELEGETE_LESS_2590;
                 }
+
                 for (Object invoker : invokers) {
-                    if (!invoker.getClass().getName().equals(delegeteClassName)) {
-                        continue;
+                    if (!invoker.getClass().getName().equals(delegateClassName)) {
+                        if (StringUtils.isBlank(orDelegateClassName) ||
+                                !invoker.getClass().getName().equals(orDelegateClassName)) {
+                            continue;
+                        }
                     }
                     Object providerUrl = ReflectUtil.invokeMethod(invoker, GET_PROVIDER_URL, new Object[0], false);
                     if (providerUrl != null) {
@@ -105,8 +114,8 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
         try {
             Object url = ReflectUtil.invokeMethod(instance, GET_URL, new Object[0], false);
             if (url != null) {
-                return ReflectUtil.invokeMethod(url, GET_METHOD_PARAMETER, new Object[] {method, TIMEOUT_KEY,
-                    DEFAULT_TIMEOUT}, false);
+                return ReflectUtil.invokeMethod(url, GET_METHOD_PARAMETER, new Object[]{method, TIMEOUT_KEY,
+                        DEFAULT_TIMEOUT}, false);
             }
         } catch (Exception e) {
             LOGGER.warn("Getting timeout from url occurs exception. return default value " + DEFAULT_TIMEOUT, e);
@@ -129,9 +138,9 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
 
                     Class[] paramTypes = {int.class, String.class};
                     Object[] params = {TIMEOUT_EXCEPTION_CODE,
-                        "chaosblade-mock-TimeoutException,timeout=" + timeoutInMillis};
+                            "chaosblade-mock-TimeoutException,timeout=" + timeoutInMillis};
                     Constructor con = timeOutExceptionClass.getConstructor(paramTypes);
-                    return (Exception)con.newInstance(params);
+                    return (Exception) con.newInstance(params);
                 } catch (ClassNotFoundException e) {
 
                     LOGGER.error("chaosblade-dubbo", "Can not find " + exceptionClassName, e);
