@@ -37,6 +37,7 @@
         <module>chaosblade-exec-plugin-http</module>
         <module>chaosblade-exec-plugin-jedis</module>
         <module>chaosblade-exec-plugin-rocketmq</module>
+        <module>chaosblade-exec-plugin-tars</module>
     </modules>
 
     <dependencies>
