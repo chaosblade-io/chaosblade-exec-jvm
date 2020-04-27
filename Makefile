@@ -24,7 +24,7 @@ JVM_AGENT_FILE_NAME=chaosblade-java-agent-$(BLADE_VERSION).jar
 # oss url
 BLADE_OSS_URL=https://chaosblade.oss-cn-hangzhou.aliyuncs.com/agent/release
 # sandbox
-JVM_SANDBOX_VERSION=1.2.0
+JVM_SANDBOX_VERSION=1.3.1
 JVM_SANDBOX_NAME=sandbox-$(JVM_SANDBOX_VERSION)-bin.zip
 JVM_SANDBOX_OSS_URL=https://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/$(JVM_SANDBOX_NAME)
 JVM_SANDBOX_DEST_PATH=$(BUILD_TARGET_CACHE)/$(JVM_SANDBOX_NAME)
