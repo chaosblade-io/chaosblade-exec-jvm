@@ -1,11 +1,11 @@
 # Contributing to chaosblade-exec-jvm
 
 Welcome to ChaosBlade world, here is a list of contributing guide for you. If you find something incorrect or missing
- content in the page, please submit an issue or PR to fix it.
+ content on the page, please submit an issue or PR to fix it.
 
 
 ## What can you do 
-Every action to make project better is encouraged. On GitHub, every improvement for the project could be via a PR 
+Every action to make the project better is encouraged. On GitHub, every improvement for the project could be via a PR 
 (short 
 for pull request).
 
@@ -17,10 +17,10 @@ for pull request).
 * If you find code implicit, try to add comments to make it clear!
 * If you find code ugly, try to refactor that!
 * If you can help to improve documents, it could not be better!
-* If you find document incorrect, just do it and fix that!
+* If you find the document incorrect, just do it and fix that!
 * ...
 
-Actually it is impossible to list them completely. Just remember one principle:
+Actually, it is impossible to list them completely. Just remember one principle:
 
 **WE ARE LOOKING FORWARD TO ANY PR FROM YOU.**
 
@@ -32,12 +32,12 @@ Before you contribute, you need to register a Github ID. Prepare the following e
 * git
 
 ### Workflow
-We use the `master` branch as the development branch, which indicates that this is a unstable branch.
+We use the `master` branch as the development branch, which indicates that this is an unstable branch.
 
 Here are the workflow for contributors:
 
 1. Fork to your own
-2. Clone fork to local repository
+2. Clone fork to the local repository
 3. Create a new branch and work on it
 4. Keep your branch in sync
 5. Commit your changes (make sure your commit message concise)
@@ -68,7 +68,7 @@ analyze code quality.
 ### Commit Rules
 #### Commit Message
 
-Commit message could help reviewers better understand what is the purpose of submitted PR. It could help accelerate the code review procedure as well. We encourage contributors to use **EXPLICIT** commit message rather than ambiguous message. In general, we advocate the following commit message type:
+Commit message could help reviewers better understand what is the purpose of submitted PR. It could help accelerate the code review procedure as well. We encourage contributors to use **EXPLICIT** commit message rather than an ambiguous message. In general, we advocate the following commit message type:
 
 * feat: A new feature
 * fix: A bug fix
@@ -94,13 +94,13 @@ Commit content represents all content changes included in one commit. We had bet
 * avoid very large change in a commit;
 * complete and reviewable for each commit.
 
-No matter commit message, or commit content, we do take more emphasis on code review.
+No matter commit message or commit content, we do take more emphasis on code review.
 
 
 ### Pull Request
 We use [GitHub Issues](https://github.com/chaosblade-io/chaosblade-exec-jvm/issues) and [Pull Requests](https://github.com/chaosblade-io/chaosblade-exec-jvm/pulls) for trackers.
 
-If you find a typo in document, find a bug in code, or want new features, or want to give suggestions,
+If you find a typo in the document, find a bug in code, or want new features, or want to give suggestions,
 you can [open an issue on GitHub](https://github.com/chaosblade-io/chaosblade-exec-jvm/issues/new) to report it.
 Please follow the guideline message in the issue template.
 
