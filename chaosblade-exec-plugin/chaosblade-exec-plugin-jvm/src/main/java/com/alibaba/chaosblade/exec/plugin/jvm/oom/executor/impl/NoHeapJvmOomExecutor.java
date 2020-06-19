@@ -1,6 +1,7 @@
 package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
@@ -40,7 +41,6 @@ public class NoHeapJvmOomExecutor extends JvmOomExecutor {
             }
         });
         enhancer.create();
-
     }
 
     @Override

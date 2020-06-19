@@ -16,22 +16,17 @@
 
 package com.alibaba.chaosblade.exec.common.model.action;
 
+import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Changjun Xiao
  */
 public abstract class BaseActionSpec implements ActionSpec {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseActionSpec.class);
 
     private ConcurrentHashMap<String, MatcherSpec> matcherSpecs = new ConcurrentHashMap<String, MatcherSpec>();
 

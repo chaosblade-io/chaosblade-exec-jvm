@@ -39,20 +39,19 @@ public class ServletModelSpec extends FrameworkModelSpec {
 
     @Override
     public String getLongDesc() {
-        return "Java servlet experiment, support path, query string, servlet path and request method matcher";
+        return "Java servlet experiment, support path, query string, context path and request method matcher";
     }
 
     @Override
     public String getExample() {
-        return "servlet --pathinfo hello --method post";
+        return "servlet --requestpath /hello --method post";
     }
 
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
-        matcherSpecs.add(new ServletPathInfoMatcherSpec());
+        matcherSpecs.add(new ServletContextPathMatcherSpec());
         matcherSpecs.add(new ServletQueryStringMatcherSpec());
-        matcherSpecs.add(new ServletPathMatcherSpec());
         matcherSpecs.add(new ServletMethodMatcherSpec());
         matcherSpecs.add(new ServletRequestPathMatcherSpec());
         return matcherSpecs;
