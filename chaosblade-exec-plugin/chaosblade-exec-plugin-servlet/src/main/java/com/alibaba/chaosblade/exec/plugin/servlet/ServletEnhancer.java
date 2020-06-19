@@ -40,17 +40,15 @@ public class ServletEnhancer extends BeforeEnhancer {
                                         Method method, Object[] methodArguments)
         throws Exception {
         Object request = methodArguments[0];
-        String pathInfo = ReflectUtil.invokeMethod(request, "getPathInfo", new Object[] {}, false);
         String queryString = ReflectUtil.invokeMethod(request, "getQueryString", new Object[] {}, false);
-        String servletPath = ReflectUtil.invokeMethod(request, "getServletPath", new Object[] {}, false);
+        String contextPath = ReflectUtil.invokeMethod(request, "getContextPath", new Object[] {}, false);
+        String requestURI = ReflectUtil.invokeMethod(request, "getRequestURI", new Object[] {}, false);
         String requestMethod = ReflectUtil.invokeMethod(request, "getMethod", new Object[] {}, false);
-        // RequestUri without ContextPath
-        String requestPath = StringUtils.isNotBlank(pathInfo) ? servletPath + pathInfo : servletPath;
+
+        String requestPath = StringUtils.isBlank(contextPath) ? requestURI : requestURI.replaceFirst(contextPath, "");
 
         MatcherModel matcherModel = new MatcherModel();
-        matcherModel.add(ServletConstant.PATH_INFO_KEY, pathInfo);
         matcherModel.add(ServletConstant.QUERY_STRING_KEY, queryString);
-        matcherModel.add(ServletConstant.SERVLET_PATH_KEY, servletPath);
         matcherModel.add(ServletConstant.METHOD_KEY, requestMethod);
         matcherModel.add(ServletConstant.REQUEST_PATH_KEY, requestPath);
 

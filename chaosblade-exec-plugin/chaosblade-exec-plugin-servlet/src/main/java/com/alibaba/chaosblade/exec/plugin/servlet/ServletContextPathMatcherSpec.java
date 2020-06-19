@@ -19,19 +19,18 @@ package com.alibaba.chaosblade.exec.plugin.servlet;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
- * @author Changjun Xiao
+ * @author yefei
  */
-public class ServletPathInfoMatcherSpec extends BasePredicateMatcherSpec {
+public class ServletContextPathMatcherSpec extends BasePredicateMatcherSpec {
 
     @Override
     public String getName() {
-        return ServletConstant.PATH_INFO_KEY;
+        return ServletConstant.CONTEXT_PATH;
     }
 
     @Override
     public String getDesc() {
-        return "The extra path information follows the servlet path but precedes the query string and start "
-            + "with a / character";
+        return "context path";
     }
 
     @Override
