@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.StatusMetric;
@@ -128,20 +129,32 @@ public class Injector {
         if (enhancerMatcherModel == null) {
             return false;
         }
-        Map<String, String> matchers = matcher.getMatchers();
-        for (Entry<String, String> entry : matchers.entrySet()) {
+        Map<String, Object> matchers = matcher.getMatchers();
+        for (Entry<String, Object> entry : matchers.entrySet()) {
             // filter effect count and effect percent
             if (entry.getKey().equalsIgnoreCase(ModelConstant.EFFECT_COUNT_MATCHER_NAME) ||
                 entry.getKey().equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)) {
                 continue;
             }
-            String value = enhancerMatcherModel.get(entry.getKey());
+
+            Object value = enhancerMatcherModel.get(entry.getKey());
             if (value == null) {
                 return false;
             }
-            if (!value.equalsIgnoreCase(entry.getValue())) {
+
+            CustomMatcher customMatcher = enhancerModel.getMatcher(entry.getKey());
+            if (customMatcher == null) {
+                // default match
+                if (String.valueOf(value).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+                    continue;
+                }
                 return false;
             }
+            // custom match
+            if (customMatcher.match(String.valueOf(entry.getValue()), value)) {
+                continue;
+            }
+            return false;
         }
         return true;
     }

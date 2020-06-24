@@ -24,25 +24,25 @@ import java.util.Map;
  */
 public class MatcherModel {
 
-    private Map<String, String> matchers;
+    private Map<String, Object> matchers;
 
     public MatcherModel() {
-        this.matchers = new LinkedHashMap<String, String>();
+        this.matchers = new LinkedHashMap<String, Object>();
     }
 
-    public MatcherModel(Map<String, String> matchers) {
+    public MatcherModel(Map<String, Object> matchers) {
         this.matchers = matchers;
     }
 
-    public void add(String name, String value) {
+    public void add(String name, Object value) {
         this.matchers.put(name, value);
     }
 
-    public String get(String name) {
-        return matchers.get(name);
+    public <T> T get(String name) {
+        return (T) matchers.get(name);
     }
 
-    public Map<String, String> getMatchers() {
+    public Map<String, Object> getMatchers() {
         return matchers;
     }
 }
