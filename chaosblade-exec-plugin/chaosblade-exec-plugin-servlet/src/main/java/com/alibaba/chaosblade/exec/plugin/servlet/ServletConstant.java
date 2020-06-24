@@ -29,5 +29,20 @@ public interface ServletConstant {
 
     String TARGET_NAME = "servlet";
 
-    String CONTEXT_PATH = "contextpath";
+    String EQUALS_SYMBOL = "=";
+
+    String AND_SYMBOL = "&";
+
+    String CONTENT_TYPE_JSON = "application/json";
+
+    /**----------- servlet request method --------**/
+    String GET_REQUEST_URI = "getRequestURI";
+
+    String GET_METHOD = "getMethod";
+
+    String GET_PARAMETER_MAP = "getParameterMap";
+
+    String GET_QUERY_STRING = "getQueryString";
+    /**----------- servlet request method --------**/
+
 }

@@ -14,32 +14,19 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.servlet;
-
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+package com.alibaba.chaosblade.exec.common.aop;
 
 /**
  * @author yefei
  */
-public class ServletContextPathMatcherSpec extends BasePredicateMatcherSpec {
+public interface CustomMatcher {
 
-    @Override
-    public String getName() {
-        return ServletConstant.CONTEXT_PATH;
-    }
-
-    @Override
-    public String getDesc() {
-        return "context path";
-    }
-
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
-
-    @Override
-    public boolean required() {
-        return false;
-    }
+    /**
+     * match
+     *
+     * @param commandValue
+     * @param originValue
+     * @return
+     */
+    boolean match(String commandValue, Object originValue);
 }

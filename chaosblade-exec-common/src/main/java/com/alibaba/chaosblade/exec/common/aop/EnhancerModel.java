@@ -17,6 +17,8 @@
 package com.alibaba.chaosblade.exec.common.aop;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
@@ -37,6 +39,7 @@ public class EnhancerModel {
     private Method method;
     private Object[] methodArguments;
     private Object returnValue;
+    private Map<String, CustomMatcher> customMatcher;
 
     private TimeoutExecutor timeoutExecutor;
     private ThreadPoolFullExecutor threadPoolFullExecutor;
@@ -44,6 +47,7 @@ public class EnhancerModel {
     public EnhancerModel(ClassLoader classLoader, MatcherModel matcherModel) {
         this.classLoader = classLoader;
         this.matcherModel = matcherModel;
+        this.customMatcher = new HashMap<String, CustomMatcher>();
     }
 
     public String getTarget() {
@@ -141,4 +145,14 @@ public class EnhancerModel {
     public void merge(Model model) {
         this.actionModel = model.getAction();
     }
+
+    public void addCustomMatcher(String key, Object value, CustomMatcher matcher) {
+        this.matcherModel.add(key, value);
+        this.customMatcher.put(key, matcher);
+    }
+
+    public CustomMatcher getMatcher(String key) {
+       return this.customMatcher.get(key);
+    }
+
 }

@@ -47,9 +47,9 @@ public class ModelUtil {
 
         MatcherModel matcher = model.getMatcher();
         if (matcher != null) {
-            Map<String, String> matchers = matcher.getMatchers();
-            TreeMap<String, String> treeMap = new TreeMap<String, String>(matchers);
-            for (Entry<String, String> entry : treeMap.entrySet()) {
+            Map<String, Object> matchers = matcher.getMatchers();
+            TreeMap<String, Object> treeMap = new TreeMap<String, Object>(matchers);
+            for (Entry<String, Object> entry : treeMap.entrySet()) {
                 sb.append(SEPARATOR).append(entry.getKey()).append("=").append(entry.getValue());
             }
         }
