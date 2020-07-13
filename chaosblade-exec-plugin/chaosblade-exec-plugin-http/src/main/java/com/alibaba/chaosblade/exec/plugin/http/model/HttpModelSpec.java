@@ -35,6 +35,7 @@ public class HttpModelSpec extends FrameworkModelSpec {
         matcherSpecs.add(new RestTemplateMatcherSpec());
         matcherSpecs.add(new HttpClient4MatcherSpec());
         matcherSpecs.add(new HttpClient3MatcherSpec());
+        matcherSpecs.add(new Okhttp3MatcherSpec());
         matcherSpecs.add(new UriMatcherDefSpec());
         return matcherSpecs;
     }
