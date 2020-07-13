@@ -3,7 +3,6 @@ package com.alibaba.chaosblade.exec.plugin.http.httpclient3;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
@@ -24,7 +23,7 @@ public class HttpClient3PointCut implements PointCut {
     @Override
     public MethodMatcher getMethodMatcher() {
         AndMethodMatcher methodMatcher = new AndMethodMatcher();
-        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[] {
+        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[]{
                 "org.apache.commons.httpclient.HostConfiguration",
                 "org.apache.commons.httpclient.HttpMethod",
                 "org.apache.commons.httpclient.HttpState"}, 3,

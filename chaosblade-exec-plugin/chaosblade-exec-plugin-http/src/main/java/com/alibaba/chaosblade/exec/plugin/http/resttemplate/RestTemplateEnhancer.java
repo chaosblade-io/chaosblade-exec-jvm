@@ -3,6 +3,7 @@ package com.alibaba.chaosblade.exec.plugin.http.resttemplate;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
+import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
 
 /**
  * @Author yuhan
@@ -25,6 +26,6 @@ public class RestTemplateEnhancer extends HttpEnhancer {
         if(null == object){
             return null;
         }
-        return getUrl(object.toString());
+        return UrlUtils.getUrlExcludeQueryParameters(object.toString());
     }
 }

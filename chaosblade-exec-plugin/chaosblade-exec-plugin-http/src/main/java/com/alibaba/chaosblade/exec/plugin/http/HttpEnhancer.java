@@ -60,11 +60,4 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
      */
     protected abstract String getUrl(Object[] object) throws Exception;
 
-    public String getUrl(String url) {
-        if (url.contains("?")) {
-            return url.substring(0, url.indexOf("?"));
-        }
-        return url;
-    }
-
 }
