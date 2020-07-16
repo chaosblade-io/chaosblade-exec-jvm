@@ -3,8 +3,6 @@ package com.alibaba.chaosblade.exec.plugin.http.httpclient4;
 import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
-import com.alibaba.chaosblade.exec.plugin.http.resttemplate.RestTemplateEnhancer;
-import com.alibaba.chaosblade.exec.plugin.http.resttemplate.RestTemplatePointCut;
 
 /**
  * @Author yuhan

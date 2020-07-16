@@ -4,7 +4,11 @@ import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.*;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
 /**
  * @Author yuhan
@@ -29,7 +33,7 @@ public class HttpClient4PointCut implements PointCut {
         OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
         orMethodMatcher.or(new NameMethodMatcher("execute")).or(new NameMethodMatcher("doExecute"));
 
-        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[] {
+        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[]{
                 "org.apache.http.HttpHost",
                 "org.apache.http.HttpRequest",
                 "org.apache.http.protocol.HttpContext"}, 3,

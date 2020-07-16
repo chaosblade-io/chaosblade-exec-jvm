@@ -3,6 +3,7 @@ package com.alibaba.chaosblade.exec.plugin.http.httpclient4;
 import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
+import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
 
 import java.lang.reflect.Method;
 
@@ -12,8 +13,6 @@ import java.lang.reflect.Method;
  * @Date 2019-05-08 20:23
  */
 public class HttpClient4Enhancer extends HttpEnhancer {
-
-    private static final String prefix = "httpclient4";
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
@@ -31,7 +30,7 @@ public class HttpClient4Enhancer extends HttpEnhancer {
         if (null != method) {
             Object invoke = method.invoke(httpRequestBase, null);
             if (null != invoke) {
-                return getUrl(invoke.toString());
+                return UrlUtils.getUrlExcludeQueryParameters(invoke.toString());
             }
         }
         return null;

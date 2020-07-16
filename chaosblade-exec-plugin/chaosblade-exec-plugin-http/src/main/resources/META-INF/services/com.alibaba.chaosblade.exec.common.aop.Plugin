@@ -17,3 +17,4 @@
 com.alibaba.chaosblade.exec.plugin.http.resttemplate.RestTemplatePlugin
 com.alibaba.chaosblade.exec.plugin.http.httpclient4.HttpClient4Plugin
 com.alibaba.chaosblade.exec.plugin.http.httpclient3.HttpClient3Plugin
+com.alibaba.chaosblade.exec.plugin.http.okhttp3.Okhttp3Plugin
