@@ -149,7 +149,7 @@ public class DefaultStatusManager implements StatusManager {
 
     @Override
     public boolean expExists(String targetName) {
-        return models.containsKey(targetName);
+        return models.containsKey(targetName) && models.get(targetName).size() > 0;
     }
 
     @Override
