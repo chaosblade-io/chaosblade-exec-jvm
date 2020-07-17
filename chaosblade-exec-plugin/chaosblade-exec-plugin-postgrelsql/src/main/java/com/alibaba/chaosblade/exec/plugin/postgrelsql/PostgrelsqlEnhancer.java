@@ -55,27 +55,20 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
             return null;
         }
         Object query = methodArguments[0];
+        if (query == null) {
+            LOGGER.info("query is null, can not get sql");
+            return null;
+        }
 
         Object pgStream = ReflectUtil.getSuperclassFieldValue(object, "pgStream", false);
         Object hostSpec = ReflectUtil.getFieldValue(pgStream, "hostSpec", false);
         String host = ReflectUtil.getFieldValue(hostSpec, "host", false);
         Integer port = ReflectUtil.getFieldValue(hostSpec, "port", false);
 
-        String sql = null;
-        if (query != null) {
-            //获取执行的sql
-            boolean isPreparedStatement = ReflectUtil.isAssignableFrom(classLoader, query.getClass(),
-                "org.postgresql.core.Query");
-            if (isPreparedStatement) {
-                sql = ReflectUtil.invokeMethod(query, "getNativeSql", new Object[0], false);
-            }
-        } else {
-            //sql = (String)query;
-        }
-
+        String sql = query.toString();
         String table = SQLParserUtil.findTableName(sql);
         SqlType type = SQLParserUtil.getSqlType(sql);
-        String database = ReflectUtil.getFieldValue(object, "database", false);
+        String database = ReflectUtil.invokeMethod(object, "getDatabase", new Object[0], false);
 
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(PostgrelsqlConstant.HOST_MATCHER_NAME, host);
