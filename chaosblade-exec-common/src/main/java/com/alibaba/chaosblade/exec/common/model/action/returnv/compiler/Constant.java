@@ -2,6 +2,7 @@ package com.alibaba.chaosblade.exec.common.model.action.returnv.compiler;
 
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 import static com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.ConstantType.*;
@@ -68,6 +69,8 @@ public class Constant {
     public Number getAsNumber() {
         if (value instanceof Number) {
             return (Number) value;
+        } else if (value instanceof BigDecimal) {
+            return ((BigDecimal) value).doubleValue();
         }
         return Double.NaN;
     }
@@ -78,6 +81,14 @@ public class Constant {
         }
         if (value instanceof String) {
             return (String) value;
+        }
+        if (value instanceof Double) {
+            Double value = (Double) this.value;
+            return value % 1 == 0 ? String.valueOf(value.longValue()) : value.toString();
+        }
+        if (value instanceof BigDecimal) {
+            Double value = ((BigDecimal) this.value).doubleValue();
+            return value % 1 == 0 ? String.valueOf(value.longValue()) : value.toString();
         }
         return value.toString();
     }
