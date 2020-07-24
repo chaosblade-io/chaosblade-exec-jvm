@@ -1,5 +1,6 @@
 package com.alibaba.chaosblade.exec.common.model.action.returnv.compiler;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -131,7 +132,8 @@ public abstract class Calculator {
      */
     Constant plus(Constant valueA, Constant valueB) throws CompilerException {
         if (valueA.isNUMERIC() && valueB.isNUMERIC()) {
-            return Constant.build(NUMERIC, valueA.getAsNumber().doubleValue() + valueB.getAsNumber().doubleValue());
+            return Constant.build(NUMERIC, new BigDecimal(valueA.getAsNumber().toString())
+                    .add(new BigDecimal(valueB.getAsNumber().toString())));
         } else if (valueA.isSTRING() && valueB.isSTRING()) {
             return Constant.build(STRING, valueA.getAsString() + valueB.getAsString());
         }
@@ -148,7 +150,8 @@ public abstract class Calculator {
      */
     Constant minus(Constant valueA, Constant valueB) throws CompilerException {
         if (valueA.isNUMERIC() && valueB.isNUMERIC()) {
-            return Constant.build(NUMERIC, valueA.getAsNumber().doubleValue() - valueB.getAsNumber().doubleValue());
+            return Constant.build(NUMERIC, new BigDecimal(valueA.getAsNumber().toString())
+                    .subtract(new BigDecimal(valueB.getAsNumber().toString())));
         }
         return Constant.build(NUMERIC, Double.NaN);
     }
@@ -163,7 +166,8 @@ public abstract class Calculator {
      */
     Constant times(Constant valueA, Constant valueB) throws CompilerException {
         if (valueA.isNUMERIC() && valueB.isNUMERIC()) {
-            return Constant.build(NUMERIC, valueA.getAsNumber().doubleValue() * valueB.getAsNumber().doubleValue());
+            return Constant.build(NUMERIC, new BigDecimal(valueA.getAsNumber().toString())
+                    .multiply(new BigDecimal(valueB.getAsNumber().toString())));
         }
         return Constant.build(NUMERIC, Double.NaN);
     }
@@ -178,7 +182,8 @@ public abstract class Calculator {
      */
     Constant division(Constant valueA, Constant valueB) throws CompilerException {
         if (valueA.isNUMERIC() && valueB.isNUMERIC()) {
-            return Constant.build(NUMERIC, valueA.getAsNumber().doubleValue() / valueB.getAsNumber().doubleValue());
+            return Constant.build(NUMERIC, new BigDecimal(valueA.getAsNumber().toString())
+                    .divide(new BigDecimal(valueB.getAsNumber().toString())));
         }
         return Constant.build(NUMERIC, Double.NaN);
     }
@@ -208,7 +213,9 @@ public abstract class Calculator {
      */
     Constant pow(Constant valueA, Constant valueB) throws CompilerException {
         if (valueA.isNUMERIC() && valueB.isNUMERIC()) {
-            return Constant.build(NUMERIC, Math.pow(valueA.getAsNumber().doubleValue(), valueB.getAsNumber().doubleValue()));
+
+            return Constant.build(NUMERIC, new BigDecimal(valueA.getAsNumber().toString())
+                            .pow(valueB.getAsNumber().intValue()));
         }
         return Constant.build(NUMERIC, Double.NaN);
     }
