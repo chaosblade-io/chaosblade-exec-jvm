@@ -1,5 +1,7 @@
 package com.alibaba.chaosblade.exec.plugin.tars.client;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
@@ -8,13 +10,10 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.tars.TarsConstant;
 import com.alibaba.chaosblade.exec.plugin.tars.TarsEnhancer;
-import com.alibaba.fastjson.JSON;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 
 /**
  * @author saikei
@@ -30,11 +29,17 @@ public class TarsClientEnhancer extends TarsEnhancer {
     private static final String GET_METHOD_NAME = "getMethodName";
     private static final String TARS_TIMEOUT_EXCEPTION = "com.qq.tars.rpc.exc.TimeoutException";
 
-    private static final Logger LOGGER =  LoggerFactory.getLogger(TarsClientEnhancer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TarsClientEnhancer.class);
+
+    private static boolean isAsync(String methodName) {
+        return methodName != null && methodName.startsWith("async_");
+    }
+
     @Override
-    public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method, Object[] methodArguments) throws Exception {
+    public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
+                                        Object[] methodArguments) throws Exception {
         Object servantInvokerContext = methodArguments[0];
-        if(object == null || servantInvokerContext == null){
+        if (object == null || servantInvokerContext == null) {
             LOGGER.warn("The necessary parameter is null");
             return null;
         }
@@ -51,7 +56,8 @@ public class TarsClientEnhancer extends TarsEnhancer {
         matcherModel.add(TarsConstant.CLIENT, "true");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("tars matchers: {}", JSON.toJSONString(matcherModel));
+            LOGGER.debug("tars matchers: {}",
+                new ObjectMapper().writer().writeValueAsString(matcherModel));
         }
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
@@ -66,13 +72,13 @@ public class TarsClientEnhancer extends TarsEnhancer {
             @Override
             public Exception generateTimeoutException(ClassLoader classLoader) {
                 Class timeoutExceptionClass;
-                try{
+                try {
                     timeoutExceptionClass = classLoader.loadClass(TARS_TIMEOUT_EXCEPTION);
                     Class[] paramTypes = {String.class};
                     Object[] params = {"chaosblade-mock-TimeoutException,timeout=" + timeoutInMillis};
                     Constructor con = timeoutExceptionClass.getConstructor(paramTypes);
                     return (Exception)con.newInstance(params);
-                }catch (ClassNotFoundException e) {
+                } catch (ClassNotFoundException e) {
 
                     LOGGER.error("chaosblade-tars", "Can not find " + TARS_TIMEOUT_EXCEPTION, e);
                 } catch (Exception e) {
@@ -84,13 +90,9 @@ public class TarsClientEnhancer extends TarsEnhancer {
         };
     }
 
-    private static boolean isAsync(String methodName) {
-        return methodName != null && methodName.startsWith("async_");
-    }
-
     private int getTimeOut(String methodName, Object servantProxyConfig) throws Exception {
         boolean isAsync = isAsync(methodName);
-        if(isAsync){
+        if (isAsync) {
             return ReflectUtil.invokeMethod(servantProxyConfig, GET_ASYNC_TIMEOUT, new Object[0], false);
         }
         return ReflectUtil.invokeMethod(servantProxyConfig, GET_SYNC_TIMEOUT, new Object[0], false);

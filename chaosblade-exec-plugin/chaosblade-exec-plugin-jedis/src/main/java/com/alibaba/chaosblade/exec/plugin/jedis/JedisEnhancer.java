@@ -23,8 +23,8 @@ import java.util.List;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.fastjson.JSON;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +37,7 @@ public class JedisEnhancer extends BeforeEnhancer {
     private static final Logger LOGGER = LoggerFactory.getLogger(JedisEnhancer.class);
 
     /**
-     * final RedisOutputStream os,
-     * final byte[] command,
-     * final byte[]... args
+     * final RedisOutputStream os, final byte[] command, final byte[]... args
      */
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
@@ -78,7 +76,8 @@ public class JedisEnhancer extends BeforeEnhancer {
             matcherModel.add(JedisConstant.KEY_MATCHER_NAME, key);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("jedis matchers: {}", JSON.toJSONString(matcherModel));
+            LOGGER.debug("jedis matchers: {}",
+                new ObjectMapper().writer().writeValueAsString(matcherModel));
         }
         return new EnhancerModel(classLoader, matcherModel);
     }

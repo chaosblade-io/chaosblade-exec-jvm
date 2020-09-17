@@ -23,8 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
-import com.alibaba.fastjson.JSON;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,9 +47,14 @@ public class DefaultDispatchService implements DispatchService {
 
     @Override
     public Response dispatch(String command, Request request) {
-        LOGGER.info("command: {}, request: {}", command, JSON.toJSONString(request));
         if (StringUtil.isBlank(command)) {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less request command");
+        }
+        try {
+            String requestJson = new ObjectMapper().writer().writeValueAsString(request);
+            LOGGER.info("command: {}, request: {}", command, requestJson);
+        } catch (Throwable e) {
+            LOGGER.warn("marshal request failed, command: {}", command, e);
         }
         RequestHandler handler = this.handles.get(command);
         if (handler == null) {
@@ -58,8 +63,7 @@ public class DefaultDispatchService implements DispatchService {
         try {
             return handler.handle(request);
         } catch (Throwable e) {
-            LOGGER.warn("handle {} request exception, params: {}",
-                new Object[] {command, JSON.toJSONString(request.getParams()), e});
+            LOGGER.warn("handle {} request exception", command, e);
             return Response.ofFailure(Response.Code.SERVER_ERROR, e.getMessage());
         }
     }

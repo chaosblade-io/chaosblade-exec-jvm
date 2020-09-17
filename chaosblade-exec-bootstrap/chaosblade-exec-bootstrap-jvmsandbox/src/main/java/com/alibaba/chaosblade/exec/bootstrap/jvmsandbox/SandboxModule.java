@@ -18,6 +18,7 @@ package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -43,7 +44,6 @@ import com.alibaba.chaosblade.exec.common.util.PluginLoader;
 import com.alibaba.chaosblade.exec.common.util.PluginUtil;
 import com.alibaba.chaosblade.exec.service.handler.DefaultDispatchService;
 import com.alibaba.chaosblade.exec.service.handler.DispatchService;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.jvm.sandbox.api.Information;
 import com.alibaba.jvm.sandbox.api.Module;
 import com.alibaba.jvm.sandbox.api.ModuleLifecycle;
@@ -53,6 +53,9 @@ import com.alibaba.jvm.sandbox.api.filter.Filter;
 import com.alibaba.jvm.sandbox.api.http.Http;
 import com.alibaba.jvm.sandbox.api.resource.ModuleEventWatcher;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,7 +191,8 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
 
     private Request getRequestFromBody(HttpServletRequest httpServletRequest) throws IOException {
         ServletInputStream inputStream = httpServletRequest.getInputStream();
-        Map<String, String> parameters = JSON.parseObject(inputStream, Map.class);
+        MapType mapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, String.class);
+        Map<String, String> parameters = new ObjectMapper().readValue(inputStream, mapType);
         Request request = new Request();
         request.addParams(parameters);
         return request;

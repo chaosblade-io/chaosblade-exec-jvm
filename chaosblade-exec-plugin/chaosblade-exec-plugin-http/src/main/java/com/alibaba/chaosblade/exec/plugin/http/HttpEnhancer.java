@@ -21,8 +21,8 @@ import java.lang.reflect.Method;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.fastjson.JSON;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,8 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(HttpConstant.URI_KEY, getUrl(methodArguments));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("http matchers: {}", JSON.toJSONString(matcherModel));
+            LOGGER.debug("http matchers: {}",
+                new ObjectMapper().writer().writeValueAsString(matcherModel));
         }
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         postDoBeforeAdvice(enhancerModel);
