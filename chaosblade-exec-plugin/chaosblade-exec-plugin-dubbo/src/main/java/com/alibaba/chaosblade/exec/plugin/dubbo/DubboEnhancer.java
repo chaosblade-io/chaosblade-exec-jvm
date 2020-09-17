@@ -23,10 +23,9 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboThreadPoolFullExecutor;
-import com.alibaba.fastjson.JSON;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,11 +72,11 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         }
         String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {APPLICATION_KEY}, false);
         String methodName = null;
-        String generic = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[]{GENERIC}, false);
+        String generic = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {GENERIC}, false);
         if (Boolean.valueOf(generic)) {
             Object[] arguments = ReflectUtil.invokeMethod(invocation, GET_ARGUMENTS, new Object[0], false);
-            if (arguments.length > 1 &&  arguments[0] instanceof String) {
-                methodName = (String) arguments[0];
+            if (arguments.length > 1 && arguments[0] instanceof String) {
+                methodName = (String)arguments[0];
             }
         } else {
             methodName = ReflectUtil.invokeMethod(invocation, GET_METHOD_NAME, new Object[0], false);
@@ -102,7 +101,8 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         matcherModel.add(DubboConstant.TIMEOUT_KEY, timeout + "");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("dubbo matchers: {}", JSON.toJSONString(matcherModel));
+            LOGGER.debug("dubbo matchers: {}",
+                new ObjectMapper().writer().writeValueAsString(matcherModel));
         }
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);

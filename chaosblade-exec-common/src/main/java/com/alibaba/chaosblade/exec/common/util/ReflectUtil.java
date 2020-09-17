@@ -19,8 +19,6 @@ package com.alibaba.chaosblade.exec.common.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.alibaba.fastjson.util.ASMUtils;
-
 /**
  * @author Changjun Xiao
  */
@@ -76,8 +74,7 @@ public class ReflectUtil {
     }
 
     /**
-     * Get method object
-     * TODO
+     * Get method object TODO
      *
      * @param clazz
      * @param methodName
@@ -121,7 +118,7 @@ public class ReflectUtil {
         throws NoSuchMethodException {
         Method[] declaredMethods = clazz.getDeclaredMethods();
         for (Method method : declaredMethods) {
-            String desc = ASMUtils.desc(method);
+            String desc = desc(method);
             if (method.getName().equals(methodName) && desc.equals(methodDescriptor)) {
                 return method;
             }
@@ -132,6 +129,28 @@ public class ReflectUtil {
         }
 
         throw new NoSuchMethodException(methodDescriptor + " descriptor");
+    }
+
+    public static String desc(Class<?> returnType) {
+        if (returnType.isPrimitive()) {
+            return getPrimitiveLetter(returnType);
+        } else {
+            return returnType.isArray() ? "[" + desc(returnType.getComponentType()) : "L" + type(returnType) + ";";
+        }
+    }
+
+    public static String desc(Method method) {
+        Class<?>[] types = method.getParameterTypes();
+        StringBuilder buf = new StringBuilder(types.length + 1 << 4);
+        buf.append('(');
+
+        for (int i = 0; i < types.length; ++i) {
+            buf.append(desc(types[i]));
+        }
+
+        buf.append(')');
+        buf.append(desc(method.getReturnType()));
+        return buf.toString();
     }
 
     public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
@@ -269,6 +288,41 @@ public class ReflectUtil {
             return parentClazz.isAssignableFrom(clazz);
         } catch (ClassNotFoundException e) {
             return false;
+        }
+    }
+
+    public static String type(Class<?> parameterType) {
+        if (parameterType.isArray()) {
+            return "[" + desc(parameterType.getComponentType());
+        } else if (!parameterType.isPrimitive()) {
+            String clsName = parameterType.getName();
+            return clsName.replace('.', '/');
+        } else {
+            return getPrimitiveLetter(parameterType);
+        }
+    }
+
+    public static String getPrimitiveLetter(Class<?> type) {
+        if (Integer.TYPE == type) {
+            return "I";
+        } else if (Void.TYPE == type) {
+            return "V";
+        } else if (Boolean.TYPE == type) {
+            return "Z";
+        } else if (Character.TYPE == type) {
+            return "C";
+        } else if (Byte.TYPE == type) {
+            return "B";
+        } else if (Short.TYPE == type) {
+            return "S";
+        } else if (Float.TYPE == type) {
+            return "F";
+        } else if (Long.TYPE == type) {
+            return "J";
+        } else if (Double.TYPE == type) {
+            return "D";
+        } else {
+            throw new IllegalStateException("Type: " + type.getCanonicalName() + " is not a primitive type");
         }
     }
 

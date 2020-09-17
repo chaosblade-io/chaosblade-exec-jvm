@@ -24,8 +24,8 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil.SqlType;
-import com.alibaba.fastjson.JSON;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,7 +87,8 @@ public class MysqlEnhancer extends BeforeEnhancer {
             matcherModel.add(MysqlConstant.PORT_MATCHER_NAME, port.toString());
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("mysql matchers: {}", JSON.toJSONString(matcherModel));
+            LOGGER.debug("mysql matchers: {}",
+                new ObjectMapper().writer().writeValueAsString(matcherModel));
         }
         return new EnhancerModel(classLoader, matcherModel);
     }

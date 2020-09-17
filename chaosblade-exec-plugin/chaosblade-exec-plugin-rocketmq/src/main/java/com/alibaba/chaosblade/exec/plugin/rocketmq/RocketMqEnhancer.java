@@ -6,8 +6,8 @@ import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.fastjson.JSON;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +75,8 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
             matcherModel.add(FLAG_CONSUMER_GROUP, consumerGroup);
             matcherModel.add(FLAG_PRODUCER_GROUP, producerGroup);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("rocketmq matchers: {}", JSON.toJSONString(matcherModel));
+                LOGGER.debug("rocketmq matchers: {}",
+                    new ObjectMapper().writer().writeValueAsString(matcherModel));
             }
             return new EnhancerModel(classLoader, matcherModel);
         }
@@ -83,21 +84,25 @@ public class RocketMqEnhancer extends BeforeEnhancer implements RocketMqConstant
 
     private boolean isSendMessageHeader(ClassLoader classLoader, Object header, String className) {
         if (isApache(className)) {
-            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADER_APACHE);
+            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(),
+                CLASS_SEND_MESSAGE_REQUEST_HEADER_APACHE);
         }
         return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADER_ALIBABA);
     }
 
     private boolean isSendMessageHeaderV2(ClassLoader classLoader, Object header, String className) {
         if (isApache(className)) {
-            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADERV2_APACHE);
+            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(),
+                CLASS_SEND_MESSAGE_REQUEST_HEADERV2_APACHE);
         }
-        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_SEND_MESSAGE_REQUEST_HEADERV2_ALIBABA);
+        return ReflectUtil.isAssignableFrom(classLoader, header.getClass(),
+            CLASS_SEND_MESSAGE_REQUEST_HEADERV2_ALIBABA);
     }
 
     private boolean isPullMessageHeader(ClassLoader classLoader, Object header, String className) {
         if (isApache(className)) {
-            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_PULL_MESSAGE_REQUEST_HEADER_APACHE);
+            return ReflectUtil.isAssignableFrom(classLoader, header.getClass(),
+                CLASS_PULL_MESSAGE_REQUEST_HEADER_APACHE);
         }
         return ReflectUtil.isAssignableFrom(classLoader, header.getClass(), CLASS_PULL_MESSAGE_REQUEST_HEADER_ALIBABA);
     }

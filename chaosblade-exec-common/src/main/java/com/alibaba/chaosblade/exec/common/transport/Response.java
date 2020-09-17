@@ -16,7 +16,7 @@
 
 package com.alibaba.chaosblade.exec.common.transport;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Changjun Xiao
@@ -135,7 +135,17 @@ public class Response {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        try {
+            return new ObjectMapper().writer().writeValueAsString(this);
+        } catch (Throwable e) {
+        }
+        return "Response{" +
+            "requestId='" + requestId + '\'' +
+            ", code=" + code +
+            ", success=" + success +
+            ", result='" + result + '\'' +
+            ", error='" + error + '\'' +
+            '}';
     }
 
     /**
