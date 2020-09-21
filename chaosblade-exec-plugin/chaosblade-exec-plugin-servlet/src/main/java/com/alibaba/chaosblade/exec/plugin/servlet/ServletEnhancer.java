@@ -25,11 +25,10 @@ import java.util.Set;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,13 +50,10 @@ public class ServletEnhancer extends BeforeEnhancer {
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(ServletConstant.METHOD_KEY, requestMethod);
         matcherModel.add(ServletConstant.REQUEST_PATH_KEY, requestURI);
-        ObjectWriter objectWriter = new ObjectMapper().writer();
-        LOOGER.debug("servlet matchers: {}",
-            objectWriter.writeValueAsString(matcherModel));
+        LOOGER.debug("servlet matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
 
         Map<String, Object> queryString = getQueryString(requestMethod, request);
-        LOOGER.debug("origin params: {}",
-            objectWriter.writeValueAsString(queryString));
+        LOOGER.debug("origin params: {}", JsonUtil.writer().writeValueAsString(queryString));
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.addCustomMatcher(ServletConstant.QUERY_STRING_KEY, queryString,

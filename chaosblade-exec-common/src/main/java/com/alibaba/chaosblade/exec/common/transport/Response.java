@@ -16,7 +16,7 @@
 
 package com.alibaba.chaosblade.exec.common.transport;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 
 /**
  * @author Changjun Xiao
@@ -136,7 +136,7 @@ public class Response {
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writer().writeValueAsString(this);
+            return JsonUtil.writer().writeValueAsString(this);
         } catch (Throwable e) {
         }
         return "Response{" +

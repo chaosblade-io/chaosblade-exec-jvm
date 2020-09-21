@@ -5,11 +5,11 @@ import java.lang.reflect.Method;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +40,7 @@ public class Okhttp3Enhancer extends BeforeEnhancer {
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(HttpConstant.URI_KEY, getUrl(object));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("http matchers: {}",
-                new ObjectMapper().writer().writeValueAsString(matcherModel));
+            LOGGER.debug("http matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.addMatcher(OKHTTP3, "true");

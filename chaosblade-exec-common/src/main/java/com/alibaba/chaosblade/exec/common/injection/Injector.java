@@ -32,9 +32,9 @@ import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.returnv.UnsupportedReturnTypeException;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,11 +62,10 @@ public class Injector {
             try {
                 boolean pass = limitAndIncrease(statusMetric);
                 if (!pass) {
-                    LOGGER.info("Limited by: {}",
-                        new ObjectMapper().writer().writeValueAsString(model));
+                    LOGGER.info("Limited by: {}", JsonUtil.writer().writeValueAsString(model));
                     break;
                 }
-                LOGGER.info("Match rule: {}", new ObjectMapper().writer().writeValueAsString(model));
+                LOGGER.info("Match rule: {}", JsonUtil.writer().writeValueAsString(model));
                 enhancerModel.merge(model);
                 ModelSpec modelSpec = ManagerFactory.getModelSpecManager().getModelSpec(target);
                 ActionSpec actionSpec = modelSpec.getActionSpec(model.getActionName());

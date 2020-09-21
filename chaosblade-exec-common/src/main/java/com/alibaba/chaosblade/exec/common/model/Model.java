@@ -18,8 +18,7 @@ package com.alibaba.chaosblade.exec.common.model;
 
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 
 /**
  * @author Changjun Xiao
@@ -66,7 +65,7 @@ public class Model {
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writer().writeValueAsString(this);
+            return JsonUtil.writer().writeValueAsString(this);
         } catch (Throwable e) {
         }
         return "Model{" +
