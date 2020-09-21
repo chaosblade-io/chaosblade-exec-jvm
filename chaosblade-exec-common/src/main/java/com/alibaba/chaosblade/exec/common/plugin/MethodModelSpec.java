@@ -38,11 +38,17 @@ public class MethodModelSpec extends BaseModelSpec {
     }
 
     private void addDelayAction() {
-        addActionSpec(new DelayActionSpec());
+        DelayActionSpec actionSpec = new DelayActionSpec();
+        actionSpec.setLongDesc("The Java method delays the experiment");
+        actionSpec.setExample("# Inject a 4-second delay failure on the sayHello method\n" +
+                "blade create jvm delay --time 4000 --classname=com.example.controller.DubboController --methodname=sayHello");
+        addActionSpec(actionSpec);
     }
 
     private void addReturnValueAction() {
         ReturnValueActionSpec returnValueActionSpec = new ReturnValueActionSpec();
+        returnValueActionSpec.setExample("# Inject a tamper return value failure on the com.example.controller.DubboController.hello() method\n" +
+                "blade create jvm return --value hello-chaosblade --classname com.example.controller.DubboController --methodname hello");
         addActionSpec(returnValueActionSpec);
     }
 
@@ -54,7 +60,11 @@ public class MethodModelSpec extends BaseModelSpec {
 
     private void addThrowExceptionActionDef() {
         ThrowCustomExceptionActionSpec throwCustomExceptionActionDef = new ThrowCustomExceptionActionSpec();
+        throwCustomExceptionActionDef.setExample("# Inject a custom exception failure on the com.example.controller.DubboController.hello() method, effect the two requests\n" +
+                "blade create jvm throwCustomException --exception java.lang.Exception --classname com.example.controller.DubboController --methodname sayHello --effect-count 2");
         ThrowDeclaredExceptionActionSpec throwDeclaredExceptionActionDef = new ThrowDeclaredExceptionActionSpec();
+        throwDeclaredExceptionActionDef.setExample("# Throw the first declared exception of method, effect the two requests\n" +
+                "blade create jvm throwDeclaredException --classname com.example.controller.DubboController --methodname sayHello --effect-count 2");
         addActionSpec(throwCustomExceptionActionDef);
         addActionSpec(throwDeclaredExceptionActionDef);
     }
@@ -71,16 +81,12 @@ public class MethodModelSpec extends BaseModelSpec {
 
     @Override
     public String getShortDesc() {
-        return "method";
+        return "Experiment with the JVM";
     }
 
     @Override
     public String getLongDesc() {
-        return "method";
+        return "Experiment with the JVM, and you can specify classes, method injection delays, return values, exception failure scenarios, or write Groovy and Java scripts to implement complex scenarios.";
     }
 
-    @Override
-    public String getExample() {
-        return "method";
-    }
 }

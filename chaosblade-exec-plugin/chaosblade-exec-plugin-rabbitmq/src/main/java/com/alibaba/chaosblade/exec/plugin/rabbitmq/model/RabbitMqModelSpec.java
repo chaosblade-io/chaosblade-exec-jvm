@@ -1,11 +1,11 @@
 package com.alibaba.chaosblade.exec.plugin.rabbitmq.model;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
-import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.rabbitmq.RabbitMqConstant;
@@ -18,6 +18,26 @@ import java.util.Set;
  * @author raygenyang@163.com
  */
 public class RabbitMqModelSpec extends FrameworkModelSpec implements RabbitMqConstant {
+
+    public RabbitMqModelSpec() {
+        addActionExample();
+    }
+
+    private void addActionExample() {
+        List<ActionSpec> actions = getActions();
+        for (ActionSpec action : actions) {
+            if (action instanceof DelayActionSpec) {
+                action.setLongDesc("RabbitMq delay experiment");
+                action.setExample("# Delay when the producer sends the message\n" +
+                        "blade create rabbitmq delay --time 3000 --producer");
+            } else if (action instanceof ThrowCustomExceptionActionSpec) {
+                action.setLongDesc("RabbitMq throws custom exception experiment");
+                action.setExample("# Throw exception when the producer sends the message\n" +
+                        "blade create rabbitmq throwCustomException --exception java.lang.Exception --exception-message mock-beans-exception --producer");
+            }
+        }
+    }
+
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> arrayList = new ArrayList<MatcherSpec>();
@@ -42,11 +62,6 @@ public class RabbitMqModelSpec extends FrameworkModelSpec implements RabbitMqCon
     @Override
     public String getLongDesc() {
         return "rabbitmq experiment for testing service delay and exception.";
-    }
-
-    @Override
-    public String getExample() {
-        return "blade c rabbitmq delay --time 3000 --producer";
     }
 
     @Override

@@ -37,7 +37,7 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
 
     @Override
     public String[] getAliases() {
-        return new String[] {"oom", "outofmemoryerror"};
+        return new String[]{"oom", "outofmemoryerror"};
     }
 
     @Override
@@ -84,6 +84,17 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
     public void destroyInjection(String expId, Model model) throws Exception {
         EnhancerModel enhancerModel = new EnhancerModel(EnhancerModel.class.getClassLoader(), model.getMatcher());
         enhancerModel.merge(model);
-        ((StoppableActionExecutor)getActionExecutor()).stop(enhancerModel);
+        ((StoppableActionExecutor) getActionExecutor()).stop(enhancerModel);
     }
+
+    @Override
+    public String getExample() {
+        return "# The Heap area is filled with memory.\n" +
+                "blade c jvm oom --area HEAP --wild-mode true\n\n" +
+
+                "# The Metaspace area is filled with memory. Note that after executing this experiment, the application needs to be restarted ！！！\n" +
+                "blade c jvm oom --area NOHEAP --wild-mode true";
+
+    }
+
 }

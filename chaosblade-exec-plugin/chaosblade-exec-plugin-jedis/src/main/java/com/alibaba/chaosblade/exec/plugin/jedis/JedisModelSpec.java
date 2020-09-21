@@ -17,6 +17,9 @@
 package com.alibaba.chaosblade.exec.plugin.jedis;
 
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
 import java.util.ArrayList;
@@ -27,12 +30,35 @@ import java.util.List;
  */
 public class JedisModelSpec extends FrameworkModelSpec {
 
+    public JedisModelSpec() {
+        addActionExample();
+    }
+
+    private void addActionExample() {
+        List<ActionSpec> actions = getActions();
+        for (ActionSpec action : actions) {
+            if (action instanceof DelayActionSpec) {
+                action.setLongDesc("Jedis commands delay experiments");
+                action.setExample("# Do a delay 2s experiment on Jedis `hset key name lina` command\n" +
+                        "blade create jedis delay --cmd hset --key name --time 2000\n\n" +
+
+                        "#Do a delay 2s experiment on Jedis `key name lina` command\n" +
+                        "blade create jedis delay --key name --time 2000");
+            }
+            if (action instanceof ThrowCustomExceptionActionSpec) {
+                action.setLongDesc("Jedis commands throws custom exception experiments");
+                action.setExample("# Do a throws custom exception experiment on Jedis `key name lina` command\n" +
+                        "blade create jedis throwCustomException --exception java.lang.Exception --key name");
+            }
+        }
+    }
+
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
-      //  matcherSpecs.add(new JedisHostMatcherSpec());
-      //  matcherSpecs.add(new JedisPortMatcherSpec());
-      //  matcherSpecs.add(new JedisDatabaseMatcherSpec());
+        //  matcherSpecs.add(new JedisHostMatcherSpec());
+        //  matcherSpecs.add(new JedisPortMatcherSpec());
+        //  matcherSpecs.add(new JedisDatabaseMatcherSpec());
         matcherSpecs.add(new JedisCmdTypeMatcherSpec());
         matcherSpecs.add(new JedisKeyMatcherSpec());
         return matcherSpecs;
@@ -53,8 +79,4 @@ public class JedisModelSpec extends FrameworkModelSpec {
         return "jedis experiment contains delay and exception by command and so on.";
     }
 
-    @Override
-    public String getExample() {
-        return "jedis  --cmd hset --key test_key ";
-    }
 }

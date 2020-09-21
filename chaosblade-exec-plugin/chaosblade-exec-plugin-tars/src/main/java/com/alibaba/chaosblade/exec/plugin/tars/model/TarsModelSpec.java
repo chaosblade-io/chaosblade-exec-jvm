@@ -1,13 +1,14 @@
 package com.alibaba.chaosblade.exec.plugin.tars.model;
 
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.tars.TarsConstant;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,26 @@ import java.util.Set;
  * @author saikei
  * @email lishiji@huya.com
  */
-public class TarsModelSpec extends FrameworkModelSpec{
+public class TarsModelSpec extends FrameworkModelSpec {
+
+    public TarsModelSpec() {
+        addActionExample();
+    }
+
+    private void addActionExample() {
+        List<ActionSpec> actions = getActions();
+        for (ActionSpec action : actions) {
+            if (action instanceof DelayActionSpec) {
+                action.setLongDesc("Tars delay experiment");
+                action.setExample("# Do a delay 3s experiment on tars interface\n" +
+                        "blade create tars delay --time 3000 --client --servantname app.server.obj --functionname hello");
+            } else if (action instanceof ThrowCustomExceptionActionSpec) {
+                action.setLongDesc("Tars throws custom exception experiment");
+                action.setExample("# Do a throw custom exception experiment on tars interface\n" +
+                        "blade c tars throwCustomException --exception org.springframework.beans.BeansException --exception-message mock-beans-exception --client --servantname=app.server.obj");
+            }
+        }
+    }
 
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
@@ -59,10 +79,4 @@ public class TarsModelSpec extends FrameworkModelSpec{
         }
         return PredicateResult.fail("less necessary matcher is client or servant for tars");
     }
-
-    @Override
-    public String getExample() {
-        return "tars delay --time 3000 --client --servantname app.server.obj --functionname hello";
-    }
-
 }
