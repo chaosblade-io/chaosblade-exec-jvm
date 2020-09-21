@@ -20,7 +20,7 @@ public class JvmMemoryAreaFlagSpec implements FlagSpec {
 
     @Override
     public String getDesc() {
-        return "Jvm memory area you want  to cause OutOfMemoryError,the options:" + Arrays.toString(
+        return "Jvm memory area you want to cause OutOfMemoryError,the options:" + Arrays.toString(
             JvmMemoryArea.getAreaNames());
     }
 

@@ -26,6 +26,8 @@ import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.threadpool.ThreadPoolFullActionSpec;
 import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
@@ -38,26 +40,42 @@ import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
  * @author Changjun Xiao
  */
 public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjectionModelHandler,
-    PreDestroyInjectionModelHandler {
+        PreDestroyInjectionModelHandler {
 
     public DubboModelSpec() {
         super();
         addThreadPoolFullActionSpec();
+        addActionExample();
+    }
+
+    private void addActionExample() {
+        List<ActionSpec> actions = getActions();
+        for (ActionSpec action : actions) {
+            if (action instanceof DelayActionSpec) {
+                action.setLongDesc("Dubbo interface to do delay experiments, support provider and consumer");
+                action.setExample("# Invoke com.alibaba.demo.HelloService.hello() service, do delay 3 seconds experiment\n" +
+                        "blade create dubbo delay --time 3000 --service com.alibaba.demo.HelloService --methodname hello --consumer");
+            } else if (action instanceof ThrowCustomExceptionActionSpec) {
+                action.setLongDesc("Dubbo interface to do throws custom exception experiments, support provider and consumer");
+                action.setExample("# Invoke com.alibaba.demo.HelloService.hello() service, do throws customer exception\n" +
+                        "blade create dubbo throwCustomException --exception java.lang.Exception --service com.alibaba.demo.HelloService --methodname hello --consumer");
+            } else if (action instanceof ThreadPoolFullActionSpec) {
+                action.setLongDesc("Do a full load experiment on the Dubbo provider thread pool");
+                action.setExample("# Do a full load experiment on the Dubbo provider thread pool\n" +
+                        "blade c dubbo threadpoolfull --provider");
+
+            }
+        }
     }
 
     @Override
     public String getShortDesc() {
-        return "dubbo experiment";
+        return "Experiment with the Dubbo";
     }
 
     @Override
     public String getLongDesc() {
         return "Dubbo experiment for testing service delay and exception.";
-    }
-
-    @Override
-    public String getExample() {
-        return "dubbo delay --time 3000 --consumer --service com.example.service.HelloService";
     }
 
     @Override
@@ -99,7 +117,7 @@ public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjec
             ActionSpec actionSpec = this.getActionSpec(model.getActionName());
             ActionExecutor actionExecutor = actionSpec.getActionExecutor();
             if (actionExecutor instanceof DubboThreadPoolFullExecutor) {
-                DubboThreadPoolFullExecutor threadPoolFullExecutor = (DubboThreadPoolFullExecutor)actionExecutor;
+                DubboThreadPoolFullExecutor threadPoolFullExecutor = (DubboThreadPoolFullExecutor) actionExecutor;
                 threadPoolFullExecutor.setExpReceived(true);
             } else {
                 throw new ExperimentException("actionExecutor is not instance of DubboThreadPoolFullExecutor");
@@ -113,7 +131,7 @@ public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjec
             ActionSpec actionSpec = this.getActionSpec(model.getActionName());
             ActionExecutor actionExecutor = actionSpec.getActionExecutor();
             if (actionExecutor instanceof DubboThreadPoolFullExecutor) {
-                DubboThreadPoolFullExecutor threadPoolFullExecutor = (DubboThreadPoolFullExecutor)actionExecutor;
+                DubboThreadPoolFullExecutor threadPoolFullExecutor = (DubboThreadPoolFullExecutor) actionExecutor;
                 threadPoolFullExecutor.revoke();
             } else {
                 throw new ExperimentException("actionExecutor is not instance of DubboThreadPoolFullExecutor");
@@ -123,7 +141,7 @@ public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjec
 
     private void addThreadPoolFullActionSpec() {
         ThreadPoolFullActionSpec threadPoolFullActionSpec = new ThreadPoolFullActionSpec(
-            DubboThreadPoolFullExecutor.INSTANCE);
+                DubboThreadPoolFullExecutor.INSTANCE);
         addActionSpec(threadPoolFullActionSpec);
         // the thread pool full experiment applies to provider
         addMatcherDefToAllActions(new ProviderMatcherSpec());

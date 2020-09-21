@@ -32,6 +32,10 @@ public abstract class BaseActionSpec implements ActionSpec {
 
     private ActionExecutor actionExecutor;
 
+    private String LongDesc;
+
+    private String example;
+
     public BaseActionSpec(ActionExecutor actionExecutor) {
         this.actionExecutor = actionExecutor;
     }
@@ -54,5 +58,25 @@ public abstract class BaseActionSpec implements ActionSpec {
     @Override
     public ActionExecutor getActionExecutor() {
         return actionExecutor;
+    }
+
+    @Override
+    public void setExample(String example) {
+        this.example = example;
+    }
+
+    @Override
+    public String getExample() {
+        return example;
+    }
+
+    @Override
+    public String getLongDesc() {
+        return LongDesc;
+    }
+
+    @Override
+    public void setLongDesc(String longDesc) {
+        LongDesc = longDesc;
     }
 }

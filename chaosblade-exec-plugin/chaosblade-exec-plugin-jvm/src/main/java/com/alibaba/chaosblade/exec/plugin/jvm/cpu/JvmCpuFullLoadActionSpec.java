@@ -29,7 +29,7 @@ public class JvmCpuFullLoadActionSpec extends BaseActionSpec implements Directly
 
     @Override
     public String[] getAliases() {
-        return new String[] {JvmConstant.ACTION_CPU_FULL_LOAD_ALIAS};
+        return new String[]{JvmConstant.ACTION_CPU_FULL_LOAD_ALIAS};
     }
 
     @Override
@@ -65,6 +65,16 @@ public class JvmCpuFullLoadActionSpec extends BaseActionSpec implements Directly
     public void destroyInjection(String uid, Model model) throws Exception {
         EnhancerModel enhancerModel = new EnhancerModel(EnhancerModel.class.getClassLoader(), model.getMatcher());
         enhancerModel.merge(model);
-        ((StoppableActionExecutor)getActionExecutor()).stop(enhancerModel);
+        ((StoppableActionExecutor) getActionExecutor()).stop(enhancerModel);
     }
+
+    @Override
+    public String getExample() {
+        return "# Specifies full load of all kernel\n" +
+                "blade c jvm cfl --process tomcat\n\n" +
+
+                "# Specifies full load of two kernel\n" +
+                "blade c jvm cfl --cpu-count 2 --process tomcat";
+    }
+
 }

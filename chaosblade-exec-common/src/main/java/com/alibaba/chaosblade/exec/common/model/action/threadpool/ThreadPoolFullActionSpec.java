@@ -8,6 +8,7 @@ import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
+import com.alibaba.chaosblade.exec.common.util.StringUtils;
 
 /**
  * @author Changjun Xiao
@@ -41,6 +42,9 @@ public class ThreadPoolFullActionSpec extends BaseActionSpec {
 
     @Override
     public String getLongDesc() {
+        if (StringUtils.isNotBlank(super.getLongDesc())) {
+            return super.getLongDesc();
+        }
         return "Thread pool full";
     }
 

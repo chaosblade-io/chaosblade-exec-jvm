@@ -33,6 +33,7 @@ public class ActionSpecBean {
     private String longDesc;
     private List<MatcherSpecBean> matchers;
     private List<FlagSpecBean> flags;
+    private String example;
 
     public ActionSpecBean(ActionSpec spec) {
         this.action = spec.getName();
@@ -44,6 +45,7 @@ public class ActionSpecBean {
         // add jvm process flag to identify the experiment java process
         this.flags.add(new FlagSpecBean(new ProcessFlagBean()));
         this.flags.add(new FlagSpecBean(new ProcessIdBean()));
+        this.example = spec.getExample();
     }
 
     private List<FlagSpecBean> createFlags(List<FlagSpec> actionFlags) {
@@ -114,5 +116,13 @@ public class ActionSpecBean {
 
     public void setFlags(List<FlagSpecBean> flags) {
         this.flags = flags;
+    }
+
+    public String getExample() {
+        return example;
+    }
+
+    public void setExample(String example) {
+        this.example = example;
     }
 }

@@ -20,12 +20,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
 /**
  * @author Changjun Xiao
  */
 public class MysqlModelSpec extends FrameworkModelSpec {
+
+    public MysqlModelSpec() {
+        addActionExample();
+    }
+
+    private void addActionExample() {
+        List<ActionSpec> actions = getActions();
+        for (ActionSpec action : actions) {
+            if (action instanceof DelayActionSpec) {
+                action.setLongDesc("Mysql delay experiment");
+                action.setExample("# Do a delay 2s experiment for mysql client connection port=3306 INSERT statement\n" +
+                        "blade create mysql --sqltype select --port 3306");
+            }
+            if (action instanceof ThrowCustomExceptionActionSpec) {
+                action.setLongDesc("Mysql throws customer exception experiment");
+                action.setExample("# Do a throws customer exception experiment for mysql client connection port=3306 INSERT statement\n" +
+                        "blade create mysql throwCustomException --exception java.lang.Exception");
+            }
+        }
+    }
 
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
@@ -53,8 +76,4 @@ public class MysqlModelSpec extends FrameworkModelSpec {
         return "Mysql experiment contains delay and exception by table name and so on.";
     }
 
-    @Override
-    public String getExample() {
-        return "mysql --sqltype select --port 3306";
-    }
 }

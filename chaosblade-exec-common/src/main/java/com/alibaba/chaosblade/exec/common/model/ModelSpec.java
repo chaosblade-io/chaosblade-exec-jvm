@@ -51,13 +51,6 @@ public interface ModelSpec {
     String getLongDesc();
 
     /**
-     * Get the experiment example
-     *
-     * @return
-     */
-    String getExample();
-
-    /**
      * Get the experiment actions
      *
      * @return
