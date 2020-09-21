@@ -22,9 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +51,7 @@ public class DefaultDispatchService implements DispatchService {
             return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less request command");
         }
         try {
-            String requestJson = new ObjectMapper().writer().writeValueAsString(request);
+            String requestJson = JsonUtil.writer().writeValueAsString(request);
             LOGGER.info("command: {}, request: {}", command, requestJson);
         } catch (Throwable e) {
             LOGGER.warn("marshal request failed, command: {}", command, e);

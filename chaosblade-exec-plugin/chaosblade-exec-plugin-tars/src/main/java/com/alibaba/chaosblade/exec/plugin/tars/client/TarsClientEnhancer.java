@@ -7,11 +7,11 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.tars.TarsConstant;
 import com.alibaba.chaosblade.exec.plugin.tars.TarsEnhancer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,8 +56,7 @@ public class TarsClientEnhancer extends TarsEnhancer {
         matcherModel.add(TarsConstant.CLIENT, "true");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("tars matchers: {}",
-                new ObjectMapper().writer().writeValueAsString(matcherModel));
+            LOGGER.debug("tars matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
