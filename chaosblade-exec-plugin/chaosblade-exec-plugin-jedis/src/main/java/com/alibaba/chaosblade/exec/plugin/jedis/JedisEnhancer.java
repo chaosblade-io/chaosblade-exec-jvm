@@ -23,8 +23,8 @@ import java.util.List;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,8 +76,7 @@ public class JedisEnhancer extends BeforeEnhancer {
             matcherModel.add(JedisConstant.KEY_MATCHER_NAME, key);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("jedis matchers: {}",
-                new ObjectMapper().writer().writeValueAsString(matcherModel));
+            LOGGER.debug("jedis matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
         return new EnhancerModel(classLoader, matcherModel);
     }

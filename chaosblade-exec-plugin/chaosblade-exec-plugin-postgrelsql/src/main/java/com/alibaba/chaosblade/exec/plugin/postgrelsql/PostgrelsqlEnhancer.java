@@ -21,11 +21,11 @@ import java.lang.reflect.Method;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil;
 import com.alibaba.chaosblade.exec.common.util.SQLParserUtil.SqlType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,8 +76,7 @@ public class PostgrelsqlEnhancer extends BeforeEnhancer {
             matcherModel.add(PostgrelsqlConstant.PORT_MATCHER_NAME, port.toString());
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("postgrelsql matchers: {}",
-                new ObjectMapper().writer().writeValueAsString(matcherModel));
+            LOGGER.debug("postgrelsql matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
         return new EnhancerModel(classLoader, matcherModel);
     }
