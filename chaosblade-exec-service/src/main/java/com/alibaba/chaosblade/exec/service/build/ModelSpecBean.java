@@ -38,7 +38,6 @@ public class ModelSpecBean {
         this.target = spec.getTarget();
         this.shortDesc = spec.getShortDesc();
         this.longDesc = spec.getLongDesc();
-        this.example = spec.getExample();
         this.actions = createActions(spec.getActions());
         this.prepare = new PrepareSpecBean(spec.getPrepareSpec());
         this.scope = spec.getScope();

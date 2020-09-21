@@ -14,7 +14,7 @@ import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModel
  * @author Changjun Xiao
  */
 public class DruidModelSpec extends BaseModelSpec implements PreCreateInjectionModelHandler,
-    PreDestroyInjectionModelHandler {
+        PreDestroyInjectionModelHandler {
 
     public DruidModelSpec() {
         super();
@@ -28,17 +28,12 @@ public class DruidModelSpec extends BaseModelSpec implements PreCreateInjectionM
 
     @Override
     public String getShortDesc() {
-        return "Druid experiment";
+        return "Experiment with the Druid";
     }
 
     @Override
     public String getLongDesc() {
-        return "Druid experiment, for example, druid connection pool full";
-    }
-
-    @Override
-    public String getExample() {
-        return "druid connectionpoolfull";
+        return "Experiment with the Druid database connection pool, For example `blade create druid connectionpoolfull`";
     }
 
     @Override
@@ -52,11 +47,11 @@ public class DruidModelSpec extends BaseModelSpec implements PreCreateInjectionM
             ActionSpec actionSpec = getActionSpec(model.getActionName());
             ActionExecutor actionExecutor = actionSpec.getActionExecutor();
             if (actionExecutor instanceof DruidConnectionPoolFullExecutor) {
-                DruidConnectionPoolFullExecutor executor = (DruidConnectionPoolFullExecutor)actionExecutor;
+                DruidConnectionPoolFullExecutor executor = (DruidConnectionPoolFullExecutor) actionExecutor;
                 executor.setExpReceived(true);
             } else {
                 throw new ExperimentException("The executor about connection pool full for tddl is error when "
-                    + "creating");
+                        + "creating");
             }
         }
     }
@@ -77,6 +72,9 @@ public class DruidModelSpec extends BaseModelSpec implements PreCreateInjectionM
     }
 
     private void addConnectionPoolFullAction() {
-        addActionSpec(new ConnectionPoolFullActionSpec(DruidConnectionPoolFullExecutor.INSTANCE));
+        ConnectionPoolFullActionSpec actionSpec = new ConnectionPoolFullActionSpec(DruidConnectionPoolFullExecutor.INSTANCE);
+        actionSpec.setExample("# Do a full load experiment on the Druid database connection pool\n" +
+                "blade create druid connectionpoolfull");
+        addActionSpec(actionSpec);
     }
 }

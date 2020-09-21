@@ -47,7 +47,7 @@ public class CodeCacheFillingActionSpec extends BaseActionSpec implements Direct
 
     @Override
     public String[] getAliases() {
-        return new String[] {JvmConstant.ACTION_CODE_CACHE_FILLING_ALIAS};
+        return new String[]{JvmConstant.ACTION_CODE_CACHE_FILLING_ALIAS};
     }
 
     @Override
@@ -81,6 +81,13 @@ public class CodeCacheFillingActionSpec extends BaseActionSpec implements Direct
     public void destroyInjection(String uid, Model model) throws Exception {
         EnhancerModel enhancerModel = new EnhancerModel(EnhancerModel.class.getClassLoader(), model.getMatcher());
         enhancerModel.merge(model);
-        ((StoppableActionExecutor)getActionExecutor()).stop(enhancerModel);
+        ((StoppableActionExecutor) getActionExecutor()).stop(enhancerModel);
     }
+
+    @Override
+    public String getExample() {
+        return "# Inject code cache full fault\n" +
+                "blade c jvm CodeCacheFilling --process tomcat";
+    }
+
 }

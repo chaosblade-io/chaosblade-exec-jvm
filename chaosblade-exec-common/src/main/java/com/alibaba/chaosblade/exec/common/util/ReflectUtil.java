@@ -27,6 +27,33 @@ import com.alibaba.fastjson.util.ASMUtils;
 public class ReflectUtil {
 
     /**
+     *
+     * @param obj
+     * @param methodName
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
+    public static <T> T invokeMethod(Object obj, String methodName)
+            throws Exception {
+        return invokeMethod(obj, methodName, new Object[]{});
+    }
+
+    /**
+     *
+     * @param obj
+     * @param methodName
+     * @param args
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
+    public static <T> T invokeMethod(Object obj, String methodName, Object[] args)
+            throws Exception {
+        return invokeMethod(obj, methodName, args, false);
+    }
+
+    /**
      * Invoke method by reflect
      *
      * @param obj
