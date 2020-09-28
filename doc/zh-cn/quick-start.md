@@ -21,7 +21,7 @@ make build_linux
 - 挂载agent：--pid 3356 是被攻击应用的jvm进程号
 每次挂载对应一个 uid，卸载agent的时候需要uid
 ````shell script
-cd target/chaosblade-0.6.0/
+cd target/chaosblade-0.7.0/
 blade prepare jvm --pid 3356
 ````
 ### 混沌实验
@@ -56,7 +56,7 @@ make build
 ````
 - 挂载agent： -p 3356 是被攻击应用的jvm进程号
 ````shell script
-cd ./build-target/chaosblade-0.6.0/lib/sandbox/bin/ && ./sandbox.sh -p 3356
+cd ./build-target/chaosblade-0.7.0/lib/sandbox/bin/ && ./sandbox.sh -p 3356
 ````
 - 激活模块
 ````shell script
