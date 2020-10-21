@@ -58,6 +58,10 @@ public interface JvmConstant {
 
     String FLAG_NAME_SCRIPT_NAME = "script-name";
 
+    String FLAG_NAME_EXTERNAL_JAR = "external-jar";
+
+    String FLAG_NAME_EXTERNAL_JAR_PATH = "external-jar-path";
+
     String SCRIPT_TYPE_JAVA = "java";
 
     String SCRIPT_TYPE_GROOVY = "groovy";
@@ -67,4 +71,8 @@ public interface JvmConstant {
     String SCRIPT_INVOKE_RETURN = "return";
 
     String SCRIPT_INVOKE_TARGET = "target";
+
+    String JAR_FILE_SUFFIX = ".jar";
+
+    String FILE_PROTOCOL = "file:";
 }

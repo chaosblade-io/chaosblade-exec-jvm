@@ -67,6 +67,8 @@ public class JvmDynamicActionSpec extends BaseActionSpec {
         flagSpecs.add(new ScriptTypeFlagSpec());
         flagSpecs.add(new ScriptContentFlagSpec());
         flagSpecs.add(new ScriptNameFlagSpec());
+        flagSpecs.add(new ScriptExternalJarFlagSpec());
+        flagSpecs.add(new ScriptExternalJarPathFlagSpec());
         return flagSpecs;
     }
 
@@ -84,8 +86,10 @@ public class JvmDynamicActionSpec extends BaseActionSpec {
                 "blade c jvm script --classname com.example.controller.DubboController --methodname call --script-file /tmp/ExceptionScript.java --script-name exception\n\n" +
 
                 "# The groovy script experiment scenario is executed with the same parameters as above, but the --script-type Groovy parameter must be added\n" +
-                "blade c jvm script --classname com.example.controller.DubboController --methodname call --script-file /tmp/GroovyScript.groovy --script-name exception --script-type groovy";
+                "blade c jvm script --classname com.example.controller.DubboController --methodname call --script-file /tmp/GroovyScript.groovy --script-name exception --script-type groovy\n\n"+
 
+                "# Load external jar file\n" +
+                "blade c jvm script --classname com.example.controller.DubboController --methodname call --external-jar file:/temp/chaosblade-extends.jar --script-content xxx";
     }
 
 }
