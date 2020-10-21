@@ -28,6 +28,7 @@ import java.io.Writer;
 import java.net.JarURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -147,7 +148,12 @@ public class JavaCodeScriptEngine implements ScriptEngine {
             Arrays.asList(javaFileObject));
         if (Boolean.TRUE.equals(compilationTask.call())) {
             try {
-                return new CompiledClassLoader(classLoader, fileManager.getOutputs()).loadClass(className);
+                if (classLoader instanceof URLClassLoader) {
+                    URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
+                    return new CompiledClassLoader(classLoader, fileManager.getOutputs(), urlClassLoader.getURLs()).loadClass(className);
+                } else {
+                    return new CompiledClassLoader(classLoader, fileManager.getOutputs(), new URL[0]).loadClass(className);
+                }
             } catch (Exception ce) {
                 throw convertToScriptException("compile class failed:" + className, scriptId, ce);
             }
@@ -175,11 +181,11 @@ public class JavaCodeScriptEngine implements ScriptEngine {
         throw new ScriptException(message, cause, stack, scriptId, NAME);
     }
 
-    private static class CompiledClassLoader extends ClassLoader {
+    private static class CompiledClassLoader extends URLClassLoader {
         private final List<OutputClassJavaFileObject> files;
 
-        private CompiledClassLoader(ClassLoader parent, List<OutputClassJavaFileObject> files) {
-            super(parent);
+        private CompiledClassLoader(ClassLoader parent, List<OutputClassJavaFileObject> files, URL[] urls) {
+            super(urls, parent);
             this.files = files;
         }
 
