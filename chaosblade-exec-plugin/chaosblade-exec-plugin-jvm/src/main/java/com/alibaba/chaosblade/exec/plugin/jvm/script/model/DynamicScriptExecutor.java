@@ -16,12 +16,13 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
@@ -30,6 +31,7 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.chaosblade.exec.plugin.jvm.Base64Util;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
@@ -78,7 +80,7 @@ public class DynamicScriptExecutor implements ActionExecutor, StoppableActionExe
             result = executableScript.run();
         } catch (ScriptException e) {
             if (e.getCause() instanceof InvocationTargetException) {
-                InvocationTargetException targetException = (InvocationTargetException)e.getCause();
+                InvocationTargetException targetException = (InvocationTargetException) e.getCause();
                 throw InterruptProcessException.throwThrowsImmediately(targetException.getCause());
             }
             throw e;
@@ -104,7 +106,7 @@ public class DynamicScriptExecutor implements ActionExecutor, StoppableActionExe
                                           EnhancerModel enhancerModel) {
         Object[] methodArguments = enhancerModel.getMethodArguments();
         if (scriptType == ScriptTypeEnum.GROOVY) {
-            params = (Map<String, Object>)params.get(JvmConstant.GROOVY_VAL_KEY);
+            params = (Map<String, Object>) params.get(JvmConstant.GROOVY_VAL_KEY);
         }
         if (methodArguments != null) {
             for (int i = 0; i < methodArguments.length; i++) {
@@ -113,12 +115,40 @@ public class DynamicScriptExecutor implements ActionExecutor, StoppableActionExe
         }
     }
 
-    private ClassLoader getClassLoader(ScriptTypeEnum scriptType, EnhancerModel enhancerModel) {
+    private ClassLoader getClassLoader(ScriptTypeEnum scriptType, EnhancerModel enhancerModel) throws Exception {
         ClassLoader loader = enhancerModel.getClassLoader();
         if (scriptType == ScriptTypeEnum.GROOVY) {
             loader = new ClassLoaderForScript(this.getClass().getClassLoader(),
-                enhancerModel.getClassLoader());
+                    enhancerModel.getClassLoader());
         }
+
+        List<URL> urlList = new ArrayList<URL>();
+        String externalJarFile = enhancerModel.getActionFlag(JvmConstant.FLAG_NAME_EXTERNAL_JAR);
+        if (StringUtils.isNotBlank(externalJarFile)) {
+            String[] jars = externalJarFile.split("\\;");
+            for (String jarName : jars) {
+                urlList.add(new URL(jarName));
+            }
+        }
+        String externalJarFilePath = enhancerModel.getActionFlag(JvmConstant.FLAG_NAME_EXTERNAL_JAR_PATH);
+        if (StringUtils.isNotBlank(externalJarFilePath)) {
+            File file = new File(externalJarFilePath);
+            String[] list = file.list(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(JvmConstant.JAR_FILE_SUFFIX);
+                }
+            });
+            for (String jarName : list) {
+                urlList.add(new URL(JvmConstant.FILE_PROTOCOL + externalJarFilePath + "/" + jarName));
+            }
+        }
+        if (urlList.size() > 0) {
+            URL[] urls = urlList.toArray(new URL[urlList.size()]);
+            loader = new ClassLoaderForScript(this.getClass().getClassLoader(),
+                    enhancerModel.getClassLoader(), urls);
+        }
+
         return loader;
     }
 

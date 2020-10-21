@@ -16,14 +16,22 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 /**
  * @author Changjun Xiao
  */
-public class ClassLoaderForScript extends ClassLoader {
+public class ClassLoaderForScript extends URLClassLoader {
     private ClassLoader pluginClassLoader;
     private ClassLoader bizClassLoader;
 
     public ClassLoaderForScript(ClassLoader pluginClassLoader, ClassLoader bizClassLoader) {
+        this(pluginClassLoader, bizClassLoader, new URL[]{});
+    }
+
+    public ClassLoaderForScript(ClassLoader pluginClassLoader, ClassLoader bizClassLoader, URL[] urls) {
+        super(urls);
         this.pluginClassLoader = pluginClassLoader;
         this.bizClassLoader = bizClassLoader;
     }
