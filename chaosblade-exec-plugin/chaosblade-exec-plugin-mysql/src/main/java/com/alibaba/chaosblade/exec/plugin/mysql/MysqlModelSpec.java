@@ -40,7 +40,7 @@ public class MysqlModelSpec extends FrameworkModelSpec {
             if (action instanceof DelayActionSpec) {
                 action.setLongDesc("Mysql delay experiment");
                 action.setExample("# Do a delay 2s experiment for mysql client connection port=3306 INSERT statement\n" +
-                        "blade create mysql delay --sqltype select --port 3306");
+                        "blade create mysql delay --time 2000 --sqltype select --port 3306");
             }
             if (action instanceof ThrowCustomExceptionActionSpec) {
                 action.setLongDesc("Mysql throws customer exception experiment");
