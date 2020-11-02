@@ -26,7 +26,7 @@ public class RocketMqModelSpec extends FrameworkModelSpec implements RocketMqCon
             if (action instanceof DelayActionSpec) {
                 action.setLongDesc("RocketMq delay experiment");
                 action.setExample("# Do a delay 3s experiment on the RocketMq when topic=xx consumerGroup=xx\n" +
-                        "blade create rocketmq delay --topic=xx --consumerGroup=xx delay --time=3000");
+                        "blade create rocketmq delay --time=3000 --topic=xx --consumerGroup=xx");
             } else if (action instanceof ThrowCustomExceptionActionSpec) {
                 action.setLongDesc("RocketMq throws custom exception experiment");
                 action.setExample("# Do a throw custom exception experiment on the RocketMq when topic=xx consumerGroup=xx\n" +
