@@ -39,6 +39,7 @@
         <module>chaosblade-exec-plugin-rocketmq</module>
         <module>chaosblade-exec-plugin-tars</module>
         <module>chaosblade-exec-plugin-rabbitmq</module>
+        <module>chaosblade-exec-plugin-mongodb</module>
     </modules>
 
     <dependencies>
