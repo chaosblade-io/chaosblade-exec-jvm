@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Changjun Xiao
  * @author hzyangshurui
  */
-@Information(id = "chaosblade", version = "0.8.0", author = "Changjun Xiao", isActiveOnLoad = false)
+@Information(id = "chaosblade", version = "0.9.0", author = "Changjun Xiao", isActiveOnLoad = false)
 public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleListener {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SandboxModule.class);
