@@ -28,13 +28,13 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
  * @Date 2020/11/23 上午11:36
  **/
 public class RedissonPointCut implements PointCut {
-	private static final String REDISSON_CONNECTION = "org.redisson.command.RedisExecutor";
+	private static final String REDISSON_EXECUTOR = "org.redisson.command.RedisExecutor";
 
 	private static final String INTERCEPTOR_PRE_METHOD = "execute";
 
 	@Override
 	public ClassMatcher getClassMatcher() {
-		return new NameClassMatcher(REDISSON_CONNECTION);
+		return new NameClassMatcher(REDISSON_EXECUTOR);
 	}
 
 	@Override
