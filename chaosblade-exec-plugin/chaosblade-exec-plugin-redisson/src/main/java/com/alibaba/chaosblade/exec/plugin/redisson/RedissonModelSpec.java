@@ -26,8 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+ * @author xueshaoyi
+ * @Date 2020/11/23 上午11:36
+ **/
 public class RedissonModelSpec extends FrameworkModelSpec {
 
     public RedissonModelSpec() {

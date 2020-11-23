@@ -19,8 +19,9 @@ package com.alibaba.chaosblade.exec.plugin.redisson;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+ * @author xueshaoyi
+ * @Date 2020/11/23 上午11:36
+ **/
 public class RedissonKeyMatcherSpec extends BasePredicateMatcherSpec {
     @Override
     public String getName() {
