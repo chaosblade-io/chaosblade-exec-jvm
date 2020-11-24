@@ -39,13 +39,15 @@ public class RedissonEnhancer extends BeforeEnhancer {
 	@Override
 	public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
 	                                    Object[] methodArguments) throws Exception {
-		if (object == null) {
-			LOGGER.info("he necessary parameters is null");
+
+		if (methodArguments == null || methodArguments.length != 7) {
+			LOGGER.info("The necessary parameters is null or length is not equal 7, {}",
+			            methodArguments != null ? methodArguments.length : null);
 			return null;
 		}
 
 
-		Object command = ReflectUtil.getFieldValue(object, "command", false);
+		Object command = methodArguments[3];
 		boolean redisCommand =
 				ReflectUtil.isAssignableFrom(
 						classLoader, command.getClass(), "org.redisson.client.protocol.RedisCommand");
@@ -55,7 +57,11 @@ public class RedissonEnhancer extends BeforeEnhancer {
 		}
 
 		String key = null;
-		Object[] params = ReflectUtil.getFieldValue(object, "params", false);
+		Object args = methodArguments[4];
+		if (!args.getClass().isArray() || !(args instanceof Object[])) {
+			return null;
+		}
+		Object[] params = (Object[]) args;
 		if (params != null && params.length >= 1) {
 			key = params[0].toString();
 		}
