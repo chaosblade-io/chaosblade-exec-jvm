@@ -22,8 +22,9 @@ import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
 /**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+ * @author xueshaoyi
+ * @Date 2020/11/23 上午11:36
+ **/
 public class RedissonPlugin implements Plugin {
 
     @Override
