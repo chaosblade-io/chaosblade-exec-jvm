@@ -56,7 +56,7 @@ public class RedissonEnhancer extends BeforeEnhancer {
 
 		String key = null;
 		Object[] params = ReflectUtil.getFieldValue(object, "params", false);
-		if (params != null && params.length > 1) {
+		if (params != null && params.length >= 1) {
 			key = params[0].toString();
 		}
 
