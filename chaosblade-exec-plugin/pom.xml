@@ -40,6 +40,7 @@
         <module>chaosblade-exec-plugin-tars</module>
         <module>chaosblade-exec-plugin-rabbitmq</module>
         <module>chaosblade-exec-plugin-mongodb</module>
+        <module>chaosblade-exec-plugin-redisson</module>
     </modules>
 
     <dependencies>
