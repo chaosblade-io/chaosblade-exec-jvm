@@ -19,24 +19,32 @@ package com.alibaba.chaosblade.exec.plugin.mysql;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
+
+import static com.alibaba.chaosblade.exec.plugin.mysql.MysqlConstant.*;
 
 /**
  * @author Changjun Xiao
  */
 public class MysqlPointCut implements PointCut {
 
-    private static final String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
-    private static final String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
-
     @Override
     public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(MYSQL_IO_CLASS);
+        OrClassMatcher orClassMatcher = new OrClassMatcher();
+
+        return orClassMatcher
+                .or(new NameClassMatcher(MYSQL_IO_CLASS))
+                .or(new NameClassMatcher(MYSQL8_NATIVE_SESSION_CLASS));
     }
 
     @Override
     public MethodMatcher getMethodMatcher() {
-        return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
+        OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
+        return orMethodMatcher
+                .or(new NameMethodMatcher(INTERCEPTOR_PRE_METHOD))
+                .or(new NameMethodMatcher(MYSQL8_NATIVE_SESSION_METHOD));
     }
 }
