@@ -28,4 +28,10 @@ public interface MysqlConstant {
     String DATABASE_MATCHER_NAME = "database";
     String SQL_TYPE_MATCHER_NAME = "sqltype";
     String PORT_MATCHER_NAME = "port";
+
+    String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
+    String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
+
+    String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
+    String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
 }
