@@ -25,7 +25,6 @@ import java.lang.reflect.Method;
 public class ReflectUtil {
 
     /**
-     *
      * @param obj
      * @param methodName
      * @param <T>
@@ -38,7 +37,6 @@ public class ReflectUtil {
     }
 
     /**
-     *
      * @param obj
      * @param methodName
      * @param args
@@ -63,7 +61,7 @@ public class ReflectUtil {
      * @throws Exception
      */
     public static <T> T invokeMethod(Object obj, String methodName, Object[] args, boolean throwException)
-        throws Exception {
+            throws Exception {
         if (obj == null) {
             return null;
         }
@@ -81,17 +79,17 @@ public class ReflectUtil {
      * @return
      */
     public static <T> T invokeStaticMethod(Class<?> clazz, String methodName, Object[] args, boolean throwException)
-        throws Exception {
+            throws Exception {
         return invoke(clazz, null, methodName, args, throwException);
     }
 
     private static <T> T invoke(Class<?> clazz, Object obj, String methodName, Object[] args,
                                 boolean throwException)
-        throws Exception {
+            throws Exception {
         try {
             Method method = getMethod(clazz, methodName, args);
             method.setAccessible(true);
-            return (T)method.invoke(obj, args);
+            return (T) method.invoke(obj, args);
         } catch (Exception e) {
             if (throwException) {
                 throw e;
@@ -142,7 +140,7 @@ public class ReflectUtil {
      * @throws NoSuchMethodException
      */
     public static Method getMethod(Class<?> clazz, String methodDescriptor, String methodName)
-        throws NoSuchMethodException {
+            throws NoSuchMethodException {
         Method[] declaredMethods = clazz.getDeclaredMethods();
         for (Method method : declaredMethods) {
             String desc = desc(method);
@@ -181,7 +179,7 @@ public class ReflectUtil {
     }
 
     public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
-        throws NoSuchMethodException {
+            throws NoSuchMethodException {
         Method method;
         try {
             method = clazz.getMethod(methodName, parameterTypes);
@@ -196,7 +194,7 @@ public class ReflectUtil {
     }
 
     private static Method getMethodByName(Class<?> clazz, String methodName, Class<?>... parameterTypes)
-        throws NoSuchMethodException {
+            throws NoSuchMethodException {
         if (clazz == Object.class) {
             throw new NoSuchMethodException();
         }
@@ -243,7 +241,7 @@ public class ReflectUtil {
      * @throws Exception
      */
     public static <T> T getFieldValue(Object obj, String fieldName, boolean throwException) throws Exception {
-        Field field = null;
+        Field field;
         try {
             try {
                 if (obj == null) {
@@ -251,11 +249,11 @@ public class ReflectUtil {
                 }
                 field = obj.getClass().getField(fieldName);
                 field.setAccessible(true);
-                return (T)field.get(obj);
+                return (T) field.get(obj);
             } catch (Exception e) {
                 field = obj.getClass().getDeclaredField(fieldName);
                 field.setAccessible(true);
-                return (T)field.get(obj);
+                return (T) field.get(obj);
             }
         } catch (Exception e) {
             if (throwException) {
@@ -276,21 +274,17 @@ public class ReflectUtil {
      * @throws Exception
      */
     public static <T> T getSuperclassFieldValue(Object obj, String fieldName, boolean throwException) throws Exception {
-        Field field = null;
-        Class clz = null;
         try {
-            try {
-                if (obj == null) {
-                    return null;
+            if (obj == null) {
+                return null;
+            }
+            for (Class clazz = obj.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+                try {
+                    Field field = clazz.getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    return (T) field.get(obj);
+                } catch (NoSuchFieldException e) {
                 }
-                clz = obj.getClass().getSuperclass();
-                field = clz.getField(fieldName);
-                field.setAccessible(true);
-                return (T)field.get(obj);
-            } catch (Exception e) {
-                field = clz.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                return (T)field.get(obj);
             }
         } catch (Exception e) {
             if (throwException) {
