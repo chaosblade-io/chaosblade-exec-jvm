@@ -41,6 +41,8 @@
         <module>chaosblade-exec-plugin-rabbitmq</module>
         <module>chaosblade-exec-plugin-mongodb</module>
         <module>chaosblade-exec-plugin-hbase</module>
+        <module>chaosblade-exec-plugin-redisson</module>
+        <module>chaosblade-exec-plugin-lettuce</module>
     </modules>
 
     <dependencies>

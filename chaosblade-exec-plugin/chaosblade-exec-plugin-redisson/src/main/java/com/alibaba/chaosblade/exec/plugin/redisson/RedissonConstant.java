@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mysql;
+package com.alibaba.chaosblade.exec.plugin.redisson;
 
 /**
- * @author Changjun Xiao
- */
-public interface MysqlConstant {
+ * @author xueshaoyi
+ * @Date 2020/11/23 上午11:36
+ **/
+public interface RedissonConstant {
 
-    String TARGET_NAME = "mysql";
+	String TARGET_NAME = "redisson";
 
-    String HOST_MATCHER_NAME = "host";
-    String TABLE_MATCHER_NAME = "table";
-    String DATABASE_MATCHER_NAME = "database";
-    String SQL_TYPE_MATCHER_NAME = "sqltype";
-    String PORT_MATCHER_NAME = "port";
-
-    String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
-    String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
-
-    String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
-    String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
+	String KEY_MATCHER_NAME = "key";
+	String COMMAND_TYPE_MATCHER_NAME = "cmd";
 }
