@@ -2,47 +2,53 @@ package com.alibaba.chaosblade.exec.plugin.jvm.thread;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.threadpool.AbstractThreadPoolFullExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.threadpool.NamedThreadFactory;
+import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.chaosblade.exec.plugin.jvm.thread.runstrategy.ThreadRunningStrategy;
+import com.alibaba.chaosblade.exec.plugin.jvm.thread.runstrategy.ThreadWaitStrategy;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author Yuhan Tang
  * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread
  * @Date 2020-11-02 11:09
  */
-public class JvmThreadPoolFullExecutor extends AbstractThreadPoolFullExecutor implements ActionExecutor, StoppableActionExecutor {
+public class JvmThreadPoolFullExecutor implements ActionExecutor, StoppableActionExecutor {
 
-    private static final ThreadFactory FACTORY = new NamedThreadFactory("ChasoBlade");
+    private final Map<String, ThreadRunStrategy> strategyMap = new HashMap<String, ThreadRunStrategy>();
 
-    private static final ArrayBlockingQueue<Runnable> QUEUE = new ArrayBlockingQueue<Runnable>(10);
-
-    private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1,
-            0, TimeUnit.SECONDS,
-            QUEUE,
-            FACTORY);
+    public JvmThreadPoolFullExecutor() {
+        strategyMap.put(JvmConstant.ACTION_THREAD_WAIT, new ThreadWaitStrategy());
+        strategyMap.put(JvmConstant.ACTION_THREAD_RUNNING, new ThreadRunningStrategy());
+    }
 
     @Override
-    public void run(EnhancerModel enhancerModel) throws Exception {
+    public void run(EnhancerModel enhancerModel) {
         int count = Integer.parseInt(enhancerModel.getActionFlag(JvmConstant.ACTION_THREAD_COUNT));
-        getThreadPoolExecutor().setCorePoolSize(count);
-        getThreadPoolExecutor().setMaximumPoolSize(count);
-        super.full(getThreadPoolExecutor());
+        String strategy = getStrategy(enhancerModel);
+        ThreadRunStrategy runStrategy = strategyMap.get(strategy);
+        runStrategy.start(count);
     }
 
     @Override
-    public void stop(EnhancerModel enhancerModel) throws Exception {
-        revoke();
+    public void stop(EnhancerModel enhancerModel) {
+        String strategy = getStrategy(enhancerModel);
+        ThreadRunStrategy runStrategy = strategyMap.get(strategy);
+        runStrategy.stop();
     }
 
-    @Override
-    public ThreadPoolExecutor getThreadPoolExecutor() {
-        return threadPoolExecutor;
+    public String getStrategy(EnhancerModel enhancerModel){
+        String strategy = enhancerModel.getActionFlag(JvmConstant.ACTION_THREAD_WAIT);
+        if (!StringUtil.isBlank(strategy)) {
+            return JvmConstant.ACTION_THREAD_WAIT;
+        }
+        strategy = enhancerModel.getActionFlag(JvmConstant.ACTION_THREAD_RUNNING);
+        if (!StringUtil.isBlank(strategy)) {
+            return JvmConstant.ACTION_THREAD_RUNNING;
+        }
+        return JvmConstant.ACTION_THREAD_WAIT;
     }
 }

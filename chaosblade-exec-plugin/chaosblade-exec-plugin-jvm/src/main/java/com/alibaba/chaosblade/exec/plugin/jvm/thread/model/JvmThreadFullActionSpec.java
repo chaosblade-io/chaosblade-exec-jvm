@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.thread;
+package com.alibaba.chaosblade.exec.plugin.jvm.thread.model;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
@@ -9,6 +9,7 @@ import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.chaosblade.exec.plugin.jvm.thread.JvmThreadPoolFullExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,8 @@ public class JvmThreadFullActionSpec extends BaseActionSpec implements DirectlyI
     public List<FlagSpec> getActionFlags() {
         ArrayList<FlagSpec> flagSpecs = new ArrayList<FlagSpec>();
         flagSpecs.add(new JvmThreadCountSpec());
+        flagSpecs.add(new ThreadRunningMatcherSpec());
+        flagSpecs.add(new ThreadWaitMatcherSpec());
         return flagSpecs;
     }
 

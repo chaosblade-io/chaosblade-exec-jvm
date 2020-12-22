@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.thread;
+package com.alibaba.chaosblade.exec.plugin.jvm.thread.model;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;

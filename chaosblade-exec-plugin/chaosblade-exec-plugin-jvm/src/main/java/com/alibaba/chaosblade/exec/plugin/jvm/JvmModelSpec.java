@@ -29,7 +29,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.codecache.CodeCacheFillingActionSp
 import com.alibaba.chaosblade.exec.plugin.jvm.cpu.JvmCpuFullLoadActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.thread.JvmThreadFullActionSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
 
 /**
  * Jvm model spec

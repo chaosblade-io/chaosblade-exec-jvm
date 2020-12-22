@@ -79,4 +79,7 @@ public interface JvmConstant {
     String THREAD_FULL = "threadfull";
     String ACTION_THREAD_FULL_ALIAS = "tfl";
     String ACTION_THREAD_COUNT = "thread-count";
+
+    String ACTION_THREAD_WAIT = "wait";
+    String ACTION_THREAD_RUNNING = "running";
 }
