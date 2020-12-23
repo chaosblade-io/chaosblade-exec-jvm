@@ -144,7 +144,7 @@ public class JavaCodeScriptEngine implements ScriptEngine {
         JavaFileObject javaFileObject = new InputStringJavaFileObject(className, content);
         StandardJavaFileManager standardFileManager = javaCompiler.getStandardFileManager(null, null, CHARSET_UTF8);
         InMemoryJavaFileManager fileManager = new InMemoryJavaFileManager(classLoader, standardFileManager);
-        JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(null, fileManager, diagnostics, null, null,
+        JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(null, fileManager, diagnostics, Arrays.asList("-XDuseUnsharedTable"), null,
             Arrays.asList(javaFileObject));
         if (Boolean.TRUE.equals(compilationTask.call())) {
             try {

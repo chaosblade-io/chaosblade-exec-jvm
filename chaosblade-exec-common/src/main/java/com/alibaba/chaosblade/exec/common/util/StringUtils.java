@@ -27,6 +27,8 @@ public abstract class StringUtils {
 
 	private static final char EXTENSION_SEPARATOR = '.';
 
+	private static final int INDEX_NOT_FOUND = -1;
+
 
 	//---------------------------------------------------------------------
 	// General convenience methods for working with Strings
@@ -824,4 +826,68 @@ public abstract class StringUtils {
         }
         return true;
     }
+
+
+	public static int indexOf(String str, char searchChar) {
+		if (isEmpty(str)) {
+			return INDEX_NOT_FOUND;
+		}
+		return str.indexOf(searchChar);
+	}
+
+	public static String substring(String str, int start, int end) {
+		if (str == null) {
+			return null;
+		}
+
+		// handle negatives
+		if (end < 0) {
+			// remember end is negative
+			end = str.length() + end;
+		}
+		// remember start is negative
+		if (start < 0) {
+			start = str.length() + start;
+		}
+
+		// check length next
+		if (end > str.length()) {
+			end = str.length();
+		}
+
+		// if start is greater than end, return ""
+		if (start > end) {
+			return EMPTY;
+		}
+
+		if (start < 0) {
+			start = 0;
+		}
+		if (end < 0) {
+			end = 0;
+		}
+
+		return str.substring(start, end);
+	}
+
+	public static String substring(String str, int start) {
+		if (str == null) {
+			return null;
+		}
+
+		// handle negatives, which means last n characters
+		if (start < 0) {
+			// remember start is negative
+			start = str.length() + start;
+		}
+
+		if (start < 0) {
+			start = 0;
+		}
+		if (start > str.length()) {
+			return EMPTY;
+		}
+
+		return str.substring(start);
+	}
 }

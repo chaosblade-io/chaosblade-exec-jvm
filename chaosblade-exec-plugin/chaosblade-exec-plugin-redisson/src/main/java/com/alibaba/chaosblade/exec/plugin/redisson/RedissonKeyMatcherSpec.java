@@ -14,24 +14,32 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mysql;
+package com.alibaba.chaosblade.exec.plugin.redisson;
+
+import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
- * @author Changjun Xiao
- */
-public interface MysqlConstant {
+ * @author xueshaoyi
+ * @Date 2020/11/23 上午11:36
+ **/
+public class RedissonKeyMatcherSpec extends BasePredicateMatcherSpec {
+    @Override
+    public String getName() {
+        return RedissonConstant.KEY_MATCHER_NAME;
+    }
 
-    String TARGET_NAME = "mysql";
+    @Override
+    public String getDesc() {
+        return "The key which command used";
+    }
 
-    String HOST_MATCHER_NAME = "host";
-    String TABLE_MATCHER_NAME = "table";
-    String DATABASE_MATCHER_NAME = "database";
-    String SQL_TYPE_MATCHER_NAME = "sqltype";
-    String PORT_MATCHER_NAME = "port";
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
 
-    String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
-    String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
-
-    String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
-    String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
+    @Override
+    public boolean required() {
+        return false;
+    }
 }
