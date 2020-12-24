@@ -38,4 +38,11 @@ public final class RequestIndexProvider {
         }
         return registry.get(target.getClass().getName());
     }
+
+    public static boolean isRequest(Object target){
+        if (target == null) {
+            return false;
+        }
+        return registry.get(target.getClass().getName()) != null;
+    }
 }

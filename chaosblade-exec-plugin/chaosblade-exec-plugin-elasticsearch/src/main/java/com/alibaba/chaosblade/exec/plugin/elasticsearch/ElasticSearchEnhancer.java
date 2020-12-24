@@ -56,9 +56,10 @@ public class ElasticSearchEnhancer extends BeforeEnhancer {
         }
         if (args.length == 3) {
             return String.valueOf(args[0]);
-        } else {
-            return RequestIndexProvider.get(args[0]).getIndexOfString(args[0]);
+        } else if (RequestIndexProvider.isRequest(args[1])) {
+            return RequestIndexProvider.get(args[1]).getIndexOfString(args[1]);
         }
+        return RequestIndexProvider.get(args[0]).getIndexOfString(args[0]);
     }
 
 }
