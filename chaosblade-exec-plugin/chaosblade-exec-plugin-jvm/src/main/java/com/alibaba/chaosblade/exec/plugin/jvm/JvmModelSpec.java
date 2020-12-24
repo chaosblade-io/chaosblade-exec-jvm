@@ -29,6 +29,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.codecache.CodeCacheFillingActionSp
 import com.alibaba.chaosblade.exec.plugin.jvm.cpu.JvmCpuFullLoadActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
 
 /**
  * Jvm model spec
@@ -55,6 +56,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
         addActionSpec(new JvmCpuFullLoadActionSpec());
         addActionSpec(new JvmDynamicActionSpec());
         addActionSpec(new CodeCacheFillingActionSpec());
+        addActionSpec(new JvmThreadFullActionSpec());
     }
 
     @Override
