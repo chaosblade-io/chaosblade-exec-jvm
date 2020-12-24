@@ -15,7 +15,7 @@ public class JvmThreadCountSpec implements FlagSpec {
 
     @Override
     public String getDesc() {
-        return "Binding thread core count";
+        return "thread count";
     }
 
     @Override

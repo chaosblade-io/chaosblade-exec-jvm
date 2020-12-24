@@ -37,12 +37,12 @@ public class JvmThreadFullActionSpec extends BaseActionSpec implements DirectlyI
 
     @Override
     public String getShortDesc() {
-        return "Process thread full load";
+        return "Specifies that the application thread is soaring";
     }
 
     @Override
     public String getLongDesc() {
-        return "Process thread full load";
+        return "Specifies that the application thread is soaring";
     }
 
     @Override
@@ -75,11 +75,11 @@ public class JvmThreadFullActionSpec extends BaseActionSpec implements DirectlyI
 
     @Override
     public String getExample() {
-        return "# Specifies full load of all kernel\n" +
-                "blade c jvm thread --process tomcat\n\n" +
+        return "# Specifies that the application thread is soaring and the status wait\n" +
+                "blade create jvm threadfull --wait --thread-count 20\n\n" +
 
-                "# Specifies full load of two kernel\n" +
-                "blade c jvm thread --thread-count 2 --process tomcat";
+                "#Specifies that the application thread is soaring and running status\n" +
+                "blade create jvm threadfull --running --thread-count 20";
     }
 
 }
