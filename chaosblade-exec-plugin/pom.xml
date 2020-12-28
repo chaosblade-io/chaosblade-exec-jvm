@@ -44,6 +44,7 @@
         <module>chaosblade-exec-plugin-hbase</module>
         <module>chaosblade-exec-plugin-redisson</module>
         <module>chaosblade-exec-plugin-lettuce</module>
+        <module>chaosblade-exec-plugin-kafka</module>
     </modules>
 
     <dependencies>
