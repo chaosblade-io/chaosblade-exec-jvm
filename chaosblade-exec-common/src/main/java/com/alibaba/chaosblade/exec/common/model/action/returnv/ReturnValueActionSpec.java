@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
@@ -69,5 +70,10 @@ public class ReturnValueActionSpec extends BaseActionSpec {
     @Override
     public PredicateResult predicate(ActionModel actionModel) {
         return PredicateResult.success();
+    }
+
+    @Override
+    public String[] getCategories() {
+        return new String[] {CategoryConstants.JAVA_DATA_TAMPER};
     }
 }

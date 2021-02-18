@@ -35,6 +35,7 @@ public class ActionSpecBean {
     private List<FlagSpecBean> flags;
     private String example;
     private String[] programs;
+    private String[] categories;
 
     public ActionSpecBean(ActionSpec spec) {
         this.action = spec.getName();
@@ -48,6 +49,7 @@ public class ActionSpecBean {
         this.flags.add(new FlagSpecBean(new ProcessIdBean()));
         this.example = spec.getExample();
         this.programs = new String[] {"java"};
+        this.categories = spec.getCategories();
     }
 
     private List<FlagSpecBean> createFlags(List<FlagSpec> actionFlags) {
@@ -134,5 +136,13 @@ public class ActionSpecBean {
 
     public void setPrograms(String[] programs) {
         this.programs = programs;
+    }
+
+    public String[] getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String[] categories) {
+        this.categories = categories;
     }
 }

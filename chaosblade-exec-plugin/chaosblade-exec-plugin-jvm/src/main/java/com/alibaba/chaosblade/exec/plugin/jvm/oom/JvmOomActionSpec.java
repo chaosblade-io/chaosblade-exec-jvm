@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
@@ -97,4 +98,8 @@ public class JvmOomActionSpec extends BaseActionSpec implements DirectlyInjectio
 
     }
 
+    @Override
+    public String[] getCategories() {
+        return new String[]{CategoryConstants.JAVA_RESOURCE_CPU};
+    }
 }
