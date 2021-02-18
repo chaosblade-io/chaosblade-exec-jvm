@@ -54,14 +54,14 @@ public interface ActionSpec {
      *
      * @return
      */
-    void setLongDesc(String longDesc);
+    String getLongDesc();
 
     /**
      * Get long description
      *
      * @return
      */
-    String getLongDesc();
+    void setLongDesc(String longDesc);
 
     /**
      * Get experiment matcher specification
@@ -106,19 +106,24 @@ public interface ActionSpec {
     ActionExecutor getActionExecutor();
 
     /**
-     * Set the experiment example
-     *
-     * @param example
-     *
-     * @return
-     */
-    void setExample(String example);
-
-    /**
      * Get the experiment example
      *
      * @return
      */
     String getExample();
 
+    /**
+     * Set the experiment example
+     *
+     * @param example
+     * @return
+     */
+    void setExample(String example);
+
+    /**
+     * Get the scenario categories
+     *
+     * @return
+     */
+    String[] getCategories();
 }

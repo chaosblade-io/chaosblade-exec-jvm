@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
@@ -72,5 +73,10 @@ public class DelayActionSpec extends BaseActionSpec {
             return PredicateResult.fail("less time argument");
         }
         return PredicateResult.success();
+    }
+
+    @Override
+    public String[] getCategories() {
+        return new String[] {CategoryConstants.JAVA_DELAY};
     }
 }

@@ -1,7 +1,11 @@
 package com.alibaba.chaosblade.exec.plugin.jvm.thread.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
@@ -10,9 +14,6 @@ import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
 import com.alibaba.chaosblade.exec.plugin.jvm.thread.JvmThreadPoolFullExecutor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author Yuhan Tang
@@ -32,7 +33,7 @@ public class JvmThreadFullActionSpec extends BaseActionSpec implements DirectlyI
 
     @Override
     public String[] getAliases() {
-        return new String[]{JvmConstant.ACTION_THREAD_FULL_ALIAS};
+        return new String[] {JvmConstant.ACTION_THREAD_FULL_ALIAS};
     }
 
     @Override
@@ -70,16 +71,20 @@ public class JvmThreadFullActionSpec extends BaseActionSpec implements DirectlyI
     public void destroyInjection(String uid, Model model) throws Exception {
         EnhancerModel enhancerModel = new EnhancerModel(EnhancerModel.class.getClassLoader(), model.getMatcher());
         enhancerModel.merge(model);
-        ((StoppableActionExecutor) getActionExecutor()).stop(enhancerModel);
+        ((StoppableActionExecutor)getActionExecutor()).stop(enhancerModel);
     }
 
     @Override
     public String getExample() {
         return "# Specifies that the application thread is soaring and the status wait\n" +
-                "blade create jvm threadfull --wait --thread-count 20\n\n" +
+            "blade create jvm threadfull --wait --thread-count 20\n\n" +
 
-                "#Specifies that the application thread is soaring and running status\n" +
-                "blade create jvm threadfull --running --thread-count 20";
+            "#Specifies that the application thread is soaring and running status\n" +
+            "blade create jvm threadfull --running --thread-count 20";
     }
 
+    @Override
+    public String[] getCategories() {
+        return new String[] {CategoryConstants.JAVA_RESOURCE_CPU};
+    }
 }

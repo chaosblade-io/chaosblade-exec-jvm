@@ -1,13 +1,14 @@
 package com.alibaba.chaosblade.exec.plugin.lettuce;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author yefei
@@ -53,5 +54,10 @@ public class UpdateActionSpec extends BaseActionSpec {
             return PredicateResult.fail("less value argument");
         }
         return PredicateResult.success();
+    }
+
+    @Override
+    public String[] getCategories() {
+        return new String[] {CategoryConstants.JAVA_DATA_TAMPER};
     }
 }
