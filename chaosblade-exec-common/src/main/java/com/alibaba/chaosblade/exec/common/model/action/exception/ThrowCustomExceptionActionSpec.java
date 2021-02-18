@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
@@ -76,5 +77,10 @@ public class ThrowCustomExceptionActionSpec extends BaseActionSpec {
             return PredicateResult.fail("illegal exception value");
         }
         return PredicateResult.success();
+    }
+
+    @Override
+    public String[] getCategories() {
+        return new String[] {CategoryConstants.JAVA_CUSTOM};
     }
 }

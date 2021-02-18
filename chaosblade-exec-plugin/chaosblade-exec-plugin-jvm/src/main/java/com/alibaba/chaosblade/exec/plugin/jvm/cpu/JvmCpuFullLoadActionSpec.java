@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
@@ -29,7 +30,7 @@ public class JvmCpuFullLoadActionSpec extends BaseActionSpec implements Directly
 
     @Override
     public String[] getAliases() {
-        return new String[]{JvmConstant.ACTION_CPU_FULL_LOAD_ALIAS};
+        return new String[] {JvmConstant.ACTION_CPU_FULL_LOAD_ALIAS};
     }
 
     @Override
@@ -65,16 +66,20 @@ public class JvmCpuFullLoadActionSpec extends BaseActionSpec implements Directly
     public void destroyInjection(String uid, Model model) throws Exception {
         EnhancerModel enhancerModel = new EnhancerModel(EnhancerModel.class.getClassLoader(), model.getMatcher());
         enhancerModel.merge(model);
-        ((StoppableActionExecutor) getActionExecutor()).stop(enhancerModel);
+        ((StoppableActionExecutor)getActionExecutor()).stop(enhancerModel);
     }
 
     @Override
     public String getExample() {
         return "# Specifies full load of all kernel\n" +
-                "blade c jvm cfl --process tomcat\n\n" +
+            "blade c jvm cfl --process tomcat\n\n" +
 
-                "# Specifies full load of two kernel\n" +
-                "blade c jvm cfl --cpu-count 2 --process tomcat";
+            "# Specifies full load of two kernel\n" +
+            "blade c jvm cfl --cpu-count 2 --process tomcat";
     }
 
+    @Override
+    public String[] getCategories() {
+        return new String[] {CategoryConstants.JAVA_RESOURCE_CPU};
+    }
 }
