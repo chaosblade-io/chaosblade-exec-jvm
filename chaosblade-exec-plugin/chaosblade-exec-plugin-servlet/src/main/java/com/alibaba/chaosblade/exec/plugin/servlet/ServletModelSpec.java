@@ -24,6 +24,7 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.chaosblade.exec.plugin.servlet.code.ModifyHttpCodeActionSpec;
 
 /**
  * @author Changjun Xiao
@@ -31,7 +32,19 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 public class ServletModelSpec extends FrameworkModelSpec {
 
     public ServletModelSpec() {
+        addModifyHttpAction();
         addActionExample();
+    }
+
+    private void addModifyHttpAction() {
+        ModifyHttpCodeActionSpec modifyHttpCodeActionSpec = new ModifyHttpCodeActionSpec();
+        modifyHttpCodeActionSpec.addMatcherDesc(new ServletQueryStringMatcherSpec());
+        modifyHttpCodeActionSpec.addMatcherDesc(new ServletMethodMatcherSpec());
+        modifyHttpCodeActionSpec.addMatcherDesc(new ServletRequestPathMatcherSpec());
+        modifyHttpCodeActionSpec.setLongDesc("Servlet return custom status code(4xx,5xx)");
+        modifyHttpCodeActionSpec.setExample("# Request to http://localhost:8080/dubbodemo/servlet/path?name=bob return 404\n" +
+                "blade c servlet mc --requestpath /dubbodemo/servlet/path --code=404\n\n");
+        addActionSpec(modifyHttpCodeActionSpec);
     }
 
     private void addActionExample() {
