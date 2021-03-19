@@ -2,7 +2,6 @@ package com.alibaba.chaosblade.exec.plugin.elasticsearch.index.impl;
 
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.elasticsearch.index.AbstractRequestIndex;
-import org.elasticsearch.action.termvectors.MultiTermVectorsRequest;
 
 import java.util.List;
 
