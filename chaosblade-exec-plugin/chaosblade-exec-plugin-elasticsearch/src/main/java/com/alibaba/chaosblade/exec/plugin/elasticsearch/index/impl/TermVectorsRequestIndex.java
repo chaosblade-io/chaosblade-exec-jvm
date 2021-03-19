@@ -1,7 +1,6 @@
 package com.alibaba.chaosblade.exec.plugin.elasticsearch.index.impl;
 
 import com.alibaba.chaosblade.exec.plugin.elasticsearch.index.AbstractRequestIndex;
-import org.elasticsearch.action.termvectors.TermVectorsRequest;
 
 import java.util.Arrays;
 import java.util.List;
