@@ -16,15 +16,17 @@
 
 package com.alibaba.chaosblade.exec.plugin.http;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Method;
+import java.net.SocketTimeoutException;
 
 /**
  * @Author yuhan
@@ -38,26 +40,55 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
                                         Method method, Object[]
-                                            methodArguments)
-        throws Exception {
+                                                methodArguments)
+            throws Exception {
         MatcherModel matcherModel = new MatcherModel();
-        matcherModel.add(HttpConstant.URI_KEY, getUrl(methodArguments));
+        matcherModel.add(HttpConstant.URI_KEY, getUrl(object, methodArguments));
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("http matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
+        int timeout = getTimeout(object, methodArguments);
         postDoBeforeAdvice(enhancerModel);
-        return new EnhancerModel(classLoader, matcherModel);
+        enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout, className));
+        return enhancerModel;
     }
+
+    /**
+     * Get service timeout
+     *
+     * @param instance
+     * @return
+     */
+    protected abstract int getTimeout(Object instance, Object[] methodArguments);
+
+    /**
+     * Create timeout executor
+     *
+     * @param classLoader
+     * @param timeout
+     * @param className
+     * @return
+     */
+    protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout, String className) {
+        return new BaseTimeoutExecutor(classLoader, timeout) {
+            @Override
+            public Exception generateTimeoutException(ClassLoader classLoader) {
+                return new SocketTimeoutException("Read timed out");
+            }
+        };
+    }
+
 
     protected abstract void postDoBeforeAdvice(EnhancerModel enhancerModel);
 
     /**
      * 获取Http Url
      *
+     * @param instance
      * @param object
      * @return
      */
-    protected abstract String getUrl(Object[] object) throws Exception;
+    protected abstract String getUrl(Object instance, Object[] object) throws Exception;
 
 }
