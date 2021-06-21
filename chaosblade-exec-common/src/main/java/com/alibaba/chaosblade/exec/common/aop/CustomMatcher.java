@@ -29,4 +29,13 @@ public interface CustomMatcher {
      * @return
      */
     boolean match(String commandValue, Object originValue);
+
+    /**
+     * regex match
+     *
+     * @param commandValue
+     * @param originValue
+     * @return
+     */
+    boolean regexMatch(String commandValue, Object originValue);
 }
