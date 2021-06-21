@@ -1,8 +1,11 @@
 package com.alibaba.chaosblade.exec.plugin.http.httpclient3;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
@@ -14,7 +17,11 @@ import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
  * @Date 2019-05-08 20:23
  */
 public class HttpClient3Enhancer extends HttpEnhancer {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClient3Enhancer.class);
+    private static final String GET_HTTP_CONNECTION_MANAGER = "getHttpConnectionManager";
+    private static final String GET_PARAMS = "getParams";
+    private static final String GET_SOCKET_TIMEOUT = "getSoTimeout";
+    private static final String GET_CONNECTION_TIMEOUT = "getConnectionTimeout";
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
@@ -22,7 +29,30 @@ public class HttpClient3Enhancer extends HttpEnhancer {
     }
 
     @Override
-    protected String getUrl(Object[] object) throws Exception {
+    protected int getTimeout(Object instance, Object[] methodArguments) {
+        try {
+            Object manager = ReflectUtil.invokeMethod(instance, GET_HTTP_CONNECTION_MANAGER, new Object[0], false);
+            if (manager == null) {
+                LOGGER.warn("HttpConnectionManager from HttpClient not found. return default value {}", DEFAULT_TIMEOUT);
+                return DEFAULT_TIMEOUT;
+            }
+
+            Object params = ReflectUtil.invokeMethod(manager, GET_PARAMS, new Object[0], false);
+            if (params == null) {
+                LOGGER.warn("HttpConnectionManagerParams from HttpConnectionManager not found. return default value {}", DEFAULT_TIMEOUT);
+                return DEFAULT_TIMEOUT;
+            }
+            int connectionTimeout = ReflectUtil.invokeMethod(params, GET_CONNECTION_TIMEOUT, new Object[0], false);
+            int socketTimeout = ReflectUtil.invokeMethod(params, GET_SOCKET_TIMEOUT, new Object[0], false);
+            return connectionTimeout + socketTimeout;
+        } catch (Exception e) {
+            LOGGER.warn("Getting timeout from url occurs exception. return default value " + DEFAULT_TIMEOUT, e);
+        }
+        return DEFAULT_TIMEOUT;
+    }
+
+    @Override
+    protected String getUrl(Object instance, Object[] object) throws Exception {
         Object httpMethod = object[1];
         Method method = methodMap.get(getMethodName());
         if (null == method) {
