@@ -16,11 +16,6 @@
 
 package com.alibaba.chaosblade.exec.common.injection;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
 import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
@@ -34,9 +29,14 @@ import com.alibaba.chaosblade.exec.common.model.action.returnv.UnsupportedReturn
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * @author Changjun Xiao
@@ -53,7 +53,7 @@ public class Injector {
     public static void inject(EnhancerModel enhancerModel) throws InterruptProcessException {
         String target = enhancerModel.getTarget();
         List<StatusMetric> statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(
-            target);
+                target);
         for (StatusMetric statusMetric : statusMetrics) {
             Model model = statusMetric.getModel();
             if (!compare(model, enhancerModel)) {
@@ -131,27 +131,39 @@ public class Injector {
         }
         Map<String, Object> matchers = matcher.getMatchers();
         for (Entry<String, Object> entry : matchers.entrySet()) {
+            String keyName = entry.getKey();
             // filter effect count and effect percent
-            if (entry.getKey().equalsIgnoreCase(ModelConstant.EFFECT_COUNT_MATCHER_NAME) ||
-                entry.getKey().equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)) {
+            if (keyName.equalsIgnoreCase(ModelConstant.EFFECT_COUNT_MATCHER_NAME) ||
+                    keyName.equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)) {
                 continue;
             }
 
-            Object value = enhancerMatcherModel.get(entry.getKey());
+            Object value = enhancerMatcherModel.get(keyName);
             if (value == null) {
                 return false;
             }
 
-            CustomMatcher customMatcher = enhancerModel.getMatcher(entry.getKey());
+            CustomMatcher customMatcher = enhancerModel.getMatcher(keyName);
             if (customMatcher == null) {
                 // default match
                 if (String.valueOf(value).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
                     continue;
                 }
+
+                // regex match
+                if (keyName.endsWith(ModelConstant.REGEX_PATTERN_FLAG)) {
+                    LOGGER.info("regex pattern: {}", keyName);
+                    boolean isMatch = Pattern.matches(String.valueOf(entry.getValue()), String.valueOf(value));
+                    if (isMatch) {
+                        LOGGER.info("value: {} match regex pattern: {}", value, entry.getValue());
+                        continue;
+                    }
+                }
+
                 return false;
             }
             // custom match
-            if (customMatcher.match(String.valueOf(entry.getValue()), value)) {
+            if (keyName.endsWith(ModelConstant.REGEX_PATTERN_FLAG) ? customMatcher.regexMatch(String.valueOf(entry.getValue()), value) : customMatcher.match(String.valueOf(entry.getValue()), value)) {
                 continue;
             }
             return false;
