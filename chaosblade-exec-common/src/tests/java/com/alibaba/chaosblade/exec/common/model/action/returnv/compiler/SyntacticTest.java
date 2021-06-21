@@ -147,5 +147,6 @@ public class SyntacticTest {
         //System.out.println(syntactic.getFormulaValue("random()"));
         System.out.println(syntactic.getFormulaValue("(random()-0.5)*2"));
 
+
     }
 }
