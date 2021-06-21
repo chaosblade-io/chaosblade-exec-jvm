@@ -16,7 +16,10 @@ public class HttpConstant {
     public static final String HTTPCLIENT4 = "httpclient4";
     public static final String HTTPCLIENT3 = "httpclient3";
     public static final String OKHTTP3 = "okhttp3";
+    public static final String ASYNC_HTTP_CLIENT = "asyncHttpClient";
     public static final String getURI = "getURI";
 
     public static final Map<String, Method> methodMap = new HashMap<String, Method>();
+
+    public static final int DEFAULT_TIMEOUT = 60000;
 }
