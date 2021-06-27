@@ -82,4 +82,10 @@ public interface JvmConstant {
 
     String ACTION_THREAD_WAIT = "wait";
     String ACTION_THREAD_RUNNING = "running";
+
+
+    String FLAG_FULL_GC_INTERVAL = "interval";
+    String FLAG_FULL_GC_TOTAL_COUNT = "effect-count";
+    String ACTION_FULL_GC_NAME = "full-gc";
+    String ACTION_FULL_GC_ALIAS = "fgc";
 }
