@@ -57,8 +57,14 @@ public class FullGCActionSpec extends BaseActionSpec implements DirectlyInjectio
     }
 
     @Override
+    public String getExample() {
+        return "# Specifies full gc\n" +
+                "blade c jvm fgc --effect-count 100 --interval 1000\n\n";
+    }
+
+    @Override
     public String[] getCategories() {
-        return new String[]{CategoryConstants.JAVA_RESOURCE_MEMORY, CategoryConstants.JAVA_RESOURCE_CPU};
+        return new String[]{CategoryConstants.JAVA_RESOURCE_MEMORY};
     }
 
     @Override
