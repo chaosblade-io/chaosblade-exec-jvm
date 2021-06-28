@@ -127,11 +127,13 @@ public class Injector {
         }
         MatcherModel enhancerMatcherModel = enhancerModel.getMatcherModel();
         if (enhancerMatcherModel == null) {
+            LOGGER.debug("enhancerMatcherModel is null, match fail");
             return false;
         }
         Map<String, Object> matchers = matcher.getMatchers();
         for (Entry<String, Object> entry : matchers.entrySet()) {
             String keyName = entry.getKey();
+            LOGGER.debug("match key:{} beginning...", keyName);
             // filter effect count and effect percent
             if (keyName.equalsIgnoreCase(ModelConstant.EFFECT_COUNT_MATCHER_NAME) ||
                     keyName.equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)) {
@@ -140,6 +142,7 @@ public class Injector {
 
             Object value = enhancerMatcherModel.get(keyName);
             if (value == null) {
+                LOGGER.debug("match key:{}, value is null, match fail", keyName);
                 return false;
             }
 
@@ -147,6 +150,7 @@ public class Injector {
             if (customMatcher == null) {
                 // default match
                 if (String.valueOf(value).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+                    LOGGER.debug("custom match key:{}, value equals, continue", keyName);
                     continue;
                 }
 
@@ -166,6 +170,7 @@ public class Injector {
             if (keyName.endsWith(ModelConstant.REGEX_PATTERN_FLAG) ? customMatcher.regexMatch(String.valueOf(entry.getValue()), value) : customMatcher.match(String.valueOf(entry.getValue()), value)) {
                 continue;
             }
+            LOGGER.debug("match key:{} fail", keyName);
             return false;
         }
         return true;
