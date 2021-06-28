@@ -19,7 +19,7 @@ public class LogbackModelSpec extends BasePredicateMatcherSpec {
 
     @Override
     public boolean noArgs() {
-        return false;
+        return true;
     }
 
     @Override
