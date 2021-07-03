@@ -37,4 +37,6 @@ public interface DubboConstant {
     String CONSUMER_KEY = "consumer";
     String PROVIDER_KEY = "provider";
 
+    String CALL_POINT_KEY = "call-point";
+
 }
