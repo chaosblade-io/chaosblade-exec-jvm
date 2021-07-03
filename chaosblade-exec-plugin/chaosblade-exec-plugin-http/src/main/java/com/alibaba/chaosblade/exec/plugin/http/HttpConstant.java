@@ -18,6 +18,7 @@ public class HttpConstant {
     public static final String OKHTTP3 = "okhttp3";
     public static final String ASYNC_HTTP_CLIENT = "asyncHttpClient";
     public static final String getURI = "getURI";
+    public static final String CALL_POINT_KEY = "call-point";
 
     public static final Map<String, Method> methodMap = new HashMap<String, Method>();
 
