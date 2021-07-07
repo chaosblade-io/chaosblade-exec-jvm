@@ -47,6 +47,7 @@ public class ActionSpecBean {
         // add jvm process flag to identify the experiment java process
         this.flags.add(new FlagSpecBean(new ProcessFlagBean()));
         this.flags.add(new FlagSpecBean(new ProcessIdBean()));
+        this.flags.add(new FlagSpecBean(new RefreshFlagBean()));
         this.example = spec.getExample();
         this.programs = new String[] {"java"};
         this.categories = spec.getCategories();
