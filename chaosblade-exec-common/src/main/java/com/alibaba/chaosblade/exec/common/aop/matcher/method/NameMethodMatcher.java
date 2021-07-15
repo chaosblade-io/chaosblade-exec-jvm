@@ -19,6 +19,8 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.method;
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 
 /**
+ * Match by method name
+ *
  * @author Changjun Xiao
  */
 public class NameMethodMatcher implements MethodMatcher {

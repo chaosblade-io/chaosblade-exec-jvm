@@ -19,6 +19,8 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
 import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 
 /**
+ * Charge whether there is matched super class for different classes
+ *
  * @author Changjun Xiao
  */
 public class SuperClassMatcher implements ClassMatcher {

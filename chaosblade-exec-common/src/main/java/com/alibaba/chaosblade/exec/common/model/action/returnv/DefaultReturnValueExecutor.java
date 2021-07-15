@@ -31,6 +31,16 @@ public class DefaultReturnValueExecutor extends BaseReturnValueExecutor {
         super(valueFlagSpec);
     }
 
+
+    /**
+     * Only support primitive type
+     * Returns a value of the same type as the method's return value
+     *
+     * @param classLoader
+     * @param method
+     * @param value
+     * @return
+     */
     @Override
     public Object generateReturnValue(ClassLoader classLoader, Method method, String value) {
         if (StringUtil.isBlank(value) || value.equalsIgnoreCase(NULL)) {

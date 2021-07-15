@@ -94,6 +94,7 @@ public abstract class BaseModelSpec implements ModelSpec {
             // check matcher
             result = preMatcherPredicate(model);
             if (!result.isSuccess()) {
+                LOGGER.error("the model pre-matcher predicate failed. target: {}", this.getTarget());
                 return PredicateResult.fail(result.getErr());
             }
             Collection<MatcherSpec> matcherSpecs = actionSpec.getMatcherSpecs().values();
@@ -103,6 +104,7 @@ public abstract class BaseModelSpec implements ModelSpec {
             for (MatcherSpec matcherSpec : matcherSpecs) {
                 result = matcherSpec.predicate(model.getMatcher());
                 if (!result.isSuccess()) {
+                    LOGGER.error("the model matcher predicate failed. target: {}", this.getTarget());
                     return PredicateResult.fail(result.getErr());
                 }
             }

@@ -22,6 +22,9 @@ import java.util.List;
 import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 
 /**
+ * Charge whether there is one class matcher getting matched
+ * Use or logic
+ *
  * @author Changjun Xiao
  */
 public class OrClassMatcher implements ClassMatcher {
