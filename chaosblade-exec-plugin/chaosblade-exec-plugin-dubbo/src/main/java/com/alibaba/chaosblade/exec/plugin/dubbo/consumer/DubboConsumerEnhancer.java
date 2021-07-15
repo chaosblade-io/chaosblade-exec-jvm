@@ -99,6 +99,7 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
                         return providerUrl;
                     }
                 }
+                LOGGER.warn("Can not get the non-null url of provider from all gotten invokers.");
             }
         }
         return ReflectUtil.invokeMethod(instance, GET_URL, new Object[0], false);
