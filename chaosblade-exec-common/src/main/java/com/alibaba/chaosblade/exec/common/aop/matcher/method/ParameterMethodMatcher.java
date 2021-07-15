@@ -24,6 +24,9 @@ import java.util.Set;
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 
 /**
+ * Charge whether two methods are matched by parameter types
+ * Same parameters means matched
+ *
  * @author Changjun Xiao
  */
 public class ParameterMethodMatcher implements MethodMatcher {

@@ -17,6 +17,9 @@
 package com.alibaba.chaosblade.exec.common.aop.matcher;
 
 /**
+ * Class information to describe class
+ * which includes access, name, superName, implementing interfaces, annotations and classLoader
+ *
  * @author Changjun Xiao
  */
 public class ClassInfo {

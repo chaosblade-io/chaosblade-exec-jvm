@@ -76,6 +76,7 @@ public abstract class AbstractConnPoolFullExecutor implements ConnectionPoolFull
     @Override
     public void revoke() {
         if (connectionHolder.size() == 0) {
+            LOGGER.info("No database connection need to be revoked");
             return;
         }
         executorService.shutdownNow();
@@ -88,6 +89,7 @@ public abstract class AbstractConnPoolFullExecutor implements ConnectionPoolFull
         }
         connectionHolder.clear();
         isRunning = false;
+        LOGGER.info("All database connections are revoked successfully");
     }
 
     public boolean isRunning() {

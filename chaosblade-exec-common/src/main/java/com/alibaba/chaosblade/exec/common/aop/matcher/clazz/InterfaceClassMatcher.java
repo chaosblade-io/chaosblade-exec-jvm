@@ -19,6 +19,8 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
 import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 
 /**
+ * Charge whether there is matched interfaces for this class
+ *
  * @author shizhi.zhu@qunar.com
  */
 public class InterfaceClassMatcher implements ClassMatcher {

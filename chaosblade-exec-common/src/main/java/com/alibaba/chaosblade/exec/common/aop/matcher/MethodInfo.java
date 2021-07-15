@@ -17,6 +17,9 @@
 package com.alibaba.chaosblade.exec.common.aop.matcher;
 
 /**
+ * Method information to describe method
+ * which includes access, method name, parameter types, throwing exception types, annotations and method description
+ *
  * @author Changjun Xiao
  */
 public class MethodInfo {

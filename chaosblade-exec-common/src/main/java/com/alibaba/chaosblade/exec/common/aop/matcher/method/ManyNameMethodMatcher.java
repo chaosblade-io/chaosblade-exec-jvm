@@ -21,6 +21,8 @@ import java.util.Set;
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 
 /**
+ * Charge whether the method name matches one of these methods
+ *
  * @author Changjun Xiao
  */
 public class ManyNameMethodMatcher implements MethodMatcher {

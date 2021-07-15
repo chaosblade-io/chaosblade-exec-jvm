@@ -22,6 +22,9 @@ import java.util.List;
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 
 /**
+ * Charge whether all method matchers are matched
+ * Use and logic
+ *
  * @author Changjun Xiao
  */
 public class AndMethodMatcher implements MethodMatcher {
