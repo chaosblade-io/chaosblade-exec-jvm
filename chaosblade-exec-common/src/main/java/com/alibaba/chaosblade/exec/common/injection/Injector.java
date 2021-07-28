@@ -156,10 +156,10 @@ public class Injector {
 
                 // regex match
                 if (keyName.endsWith(ModelConstant.REGEX_PATTERN_FLAG)) {
-                    LOGGER.info("regex pattern: {}", keyName);
+                    LOGGER.debug("regex pattern: {}", keyName);
                     boolean isMatch = Pattern.matches(String.valueOf(entry.getValue()), String.valueOf(value));
                     if (isMatch) {
-                        LOGGER.info("value: {} match regex pattern: {}", value, entry.getValue());
+                        LOGGER.debug("value: {} match regex pattern: {}", value, entry.getValue());
                         continue;
                     }
                 }
