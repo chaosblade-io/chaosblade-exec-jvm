@@ -45,6 +45,7 @@
         <module>chaosblade-exec-plugin-redisson</module>
         <module>chaosblade-exec-plugin-lettuce</module>
         <module>chaosblade-exec-plugin-kafka</module>
+        <module>chaosblade-exec-plugin-gateway</module>
     </modules>
 
     <dependencies>
