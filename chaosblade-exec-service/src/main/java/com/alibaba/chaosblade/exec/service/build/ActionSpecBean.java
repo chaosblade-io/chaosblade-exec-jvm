@@ -48,6 +48,7 @@ public class ActionSpecBean {
         this.flags.add(new FlagSpecBean(new ProcessFlagBean()));
         this.flags.add(new FlagSpecBean(new ProcessIdBean()));
         this.flags.add(new FlagSpecBean(new RefreshFlagBean()));
+        this.flags.add(new FlagSpecBean(new JavaHomeFlagBean()));
         this.example = spec.getExample();
         this.programs = new String[] {"java"};
         this.categories = spec.getCategories();
