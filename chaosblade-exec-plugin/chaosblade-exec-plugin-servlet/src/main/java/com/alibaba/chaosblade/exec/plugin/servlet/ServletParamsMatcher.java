@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author yefei
@@ -55,6 +56,29 @@ public class ServletParamsMatcher implements CustomMatcher {
                 return false;
             }
             if (!expectValue.equals(actualValue.toString())) {
+                logger.debug("query string mather fail, actualValue: {}, expectValue:{}", actualValue, expectValue);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean regexMatch(String queryString, Object originValue) {
+        Map<String, Object> value = (Map<String, Object>) originValue;
+        String[] paramsStr = queryString.split(ServletConstant.AND_SYMBOL);
+        for (String s : paramsStr) {
+            int i = s.indexOf(ServletConstant.EQUALS_SYMBOL);
+            if (i == -1) {
+                return false;
+            }
+            Object actualValue = value.get(s.substring(0, i));
+            String expectValue = s.substring(i + 1);
+            if (actualValue == null) {
+                logger.debug("query string mather fail, actualValue is null, expectValue:{}", expectValue);
+                return false;
+            }
+            if (!Pattern.matches(expectValue, String.valueOf(actualValue))) {
                 logger.debug("query string mather fail, actualValue: {}, expectValue:{}", actualValue, expectValue);
                 return false;
             }

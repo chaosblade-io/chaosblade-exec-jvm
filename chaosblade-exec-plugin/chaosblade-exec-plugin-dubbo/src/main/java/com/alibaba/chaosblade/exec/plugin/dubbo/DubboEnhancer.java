@@ -72,14 +72,17 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         }
         String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {APPLICATION_KEY}, false);
         String methodName = null;
-        String generic = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {GENERIC}, false);
-        if (Boolean.valueOf(generic)) {
+        String provideGeneric = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {GENERIC}, false);
+        boolean consumerGeneric = isConsumerGeneric(object, invocation);
+        if (Boolean.valueOf(provideGeneric) || consumerGeneric) {
             Object[] arguments = ReflectUtil.invokeMethod(invocation, GET_ARGUMENTS, new Object[0], false);
             if (arguments.length > 1 && arguments[0] instanceof String) {
                 methodName = (String)arguments[0];
             }
+            LOGGER.debug("generic is true, methodName:{}", methodName);
         } else {
             methodName = ReflectUtil.invokeMethod(invocation, GET_METHOD_NAME, new Object[0], false);
+            LOGGER.debug("generic is false, methodName:{}", methodName);
         }
         if (methodName == null) {
             LOGGER.warn("methodName is null, can not get necessary values.");
@@ -109,6 +112,14 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
 
         postDoBeforeAdvice(enhancerModel);
         return enhancerModel;
+    }
+
+    protected boolean isConsumerGeneric(Object object, Object invocation) throws Exception {
+        String methodName = ReflectUtil.invokeMethod(invocation, GET_METHOD_NAME, new Object[0], false);
+        Class type = ReflectUtil.getSuperclassFieldValue(object, "type", false);
+        String clazz = type.getName();
+        return methodName.contains("$invoke") && (clazz.equalsIgnoreCase("org.apache.dubbo.rpc.service.GenericService")
+            || clazz.equalsIgnoreCase("com.alibaba.dubbo.rpc.service.GenericService"));
     }
 
     protected abstract void postDoBeforeAdvice(EnhancerModel enhancerModel);

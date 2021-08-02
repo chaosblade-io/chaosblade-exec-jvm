@@ -27,6 +27,7 @@ import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModel
 import com.alibaba.chaosblade.exec.common.plugin.MethodModelSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.codecache.CodeCacheFillingActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.cpu.JvmCpuFullLoadActionSpec;
+import com.alibaba.chaosblade.exec.plugin.jvm.gc.FullGCActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
@@ -48,7 +49,7 @@ import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSp
  * @date 2019-04-19
  */
 public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionModelHandler,
-    PreDestroyInjectionModelHandler {
+        PreDestroyInjectionModelHandler {
 
     public JvmModelSpec() {
         super();
@@ -57,6 +58,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
         addActionSpec(new JvmDynamicActionSpec());
         addActionSpec(new CodeCacheFillingActionSpec());
         addActionSpec(new JvmThreadFullActionSpec());
+        addActionSpec(new FullGCActionSpec());
     }
 
     @Override
@@ -64,7 +66,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
         ActionSpec actionSpec = getActionSpec(model.getActionName());
         if (actionSpec instanceof DirectlyInjectionAction) {
             try {
-                ((DirectlyInjectionAction)actionSpec).destroyInjection(uid, model);
+                ((DirectlyInjectionAction) actionSpec).destroyInjection(uid, model);
             } catch (Exception e) {
                 throw new ExperimentException("destroy injection failed:" + e.getMessage());
             }
@@ -74,7 +76,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
             if (actionExecutor instanceof StoppableActionExecutor) {
                 EnhancerModel enhancerModel = new EnhancerModel(null, model.getMatcher());
                 try {
-                    ((StoppableActionExecutor)actionExecutor).stop(enhancerModel);
+                    ((StoppableActionExecutor) actionExecutor).stop(enhancerModel);
                 } catch (Exception e) {
                     throw new ExperimentException("stop experiment exception", e);
                 }
@@ -88,7 +90,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
         ActionSpec actionSpec = getActionSpec(model.getActionName());
         if (actionSpec instanceof DirectlyInjectionAction) {
             try {
-                ((DirectlyInjectionAction)actionSpec).createInjection(uid, model);
+                ((DirectlyInjectionAction) actionSpec).createInjection(uid, model);
             } catch (Exception e) {
                 throw new ExperimentException("create injection failed:" + e.getMessage());
             }

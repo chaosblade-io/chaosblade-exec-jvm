@@ -14,26 +14,33 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.constant;
+package com.alibaba.chaosblade.exec.plugin.servlet;
+
+import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
- * @author Changjun Xiao
+ * @author xulingjian
  */
-public interface ModelConstant {
-    String JVM_TARGET = "jvm";
+public class ServletRequestPathRegexPatternMatcherSpec extends BasePredicateMatcherSpec {
 
-    /**
-     * The name of effect percent matcher
-     */
-    String EFFECT_PERCENT_MATCHER_NAME = "effect-percent";
+    @Override
+    public String getName() {
+        return ServletConstant.REQUEST_PATH_REGEX_PATTERN_KEY;
+    }
 
-    /**
-     * The name of effect count matcher
-     */
-    String EFFECT_COUNT_MATCHER_NAME = "effect-count";
+    @Override
+    public String getDesc() {
+        return "regex match RequestUri without ContextPath";
+    }
 
-    /**
-     * The flag of regex pattern
-     */
-    String REGEX_PATTERN_FLAG = "regex-pattern";
+    @Override
+    public boolean noArgs() {
+        return false;
+    }
+
+    @Override
+    public boolean required() {
+        return false;
+    }
+
 }

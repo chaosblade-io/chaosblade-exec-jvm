@@ -26,7 +26,7 @@ import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
-
+import com.alibaba.chaosblade.exec.plugin.dubbo.model.CallPointMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +107,8 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
         enhancerModel.addMatcher(DubboConstant.CONSUMER_KEY, "true");
+        StackTraceElement[] stackTrace = new NullPointerException().getStackTrace();
+        enhancerModel.addCustomMatcher(DubboConstant.CALL_POINT_KEY, stackTrace, CallPointMatcher.getInstance());
     }
 
     @Override

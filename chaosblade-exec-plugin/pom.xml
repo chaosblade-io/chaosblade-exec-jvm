@@ -46,6 +46,7 @@
         <module>chaosblade-exec-plugin-lettuce</module>
         <module>chaosblade-exec-plugin-kafka</module>
         <module>chaosblade-exec-plugin-gateway</module>
+        <module>chaosblade-exec-plugin-log</module>
     </modules>
 
     <dependencies>

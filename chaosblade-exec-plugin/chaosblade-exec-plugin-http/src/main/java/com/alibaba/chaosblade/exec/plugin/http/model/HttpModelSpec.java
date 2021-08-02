@@ -64,6 +64,7 @@ public class HttpModelSpec extends FrameworkModelSpec {
         matcherSpecs.add(new Okhttp3MatcherSpec());
         matcherSpecs.add(new AsyncHttpClientMatcherSpec());
         matcherSpecs.add(new UriMatcherDefSpec());
+        matcherSpecs.add(new CallPointMatcherSpec());
         return matcherSpecs;
     }
 

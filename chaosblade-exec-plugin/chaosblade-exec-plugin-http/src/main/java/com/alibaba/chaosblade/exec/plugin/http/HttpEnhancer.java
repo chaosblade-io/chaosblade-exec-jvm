@@ -22,6 +22,7 @@ import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
+import com.alibaba.chaosblade.exec.plugin.http.model.CallPointMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +51,8 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         int timeout = getTimeout(object, methodArguments);
         postDoBeforeAdvice(enhancerModel);
+        StackTraceElement[] stackTrace = new NullPointerException().getStackTrace();
+        enhancerModel.addCustomMatcher(HttpConstant.CALL_POINT_KEY, stackTrace, CallPointMatcher.getInstance());
         enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout, className));
         return enhancerModel;
     }

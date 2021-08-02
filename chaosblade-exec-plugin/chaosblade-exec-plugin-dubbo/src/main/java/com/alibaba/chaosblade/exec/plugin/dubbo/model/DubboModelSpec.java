@@ -88,6 +88,7 @@ public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjec
         matcherSpecs.add(new VersionMatcherSpec());
         matcherSpecs.add(new MethodNameMatcherSpec());
         matcherSpecs.add(new GroupMatcherSpec());
+        matcherSpecs.add(new CallPointMatcherSpec());
         return matcherSpecs;
     }
 

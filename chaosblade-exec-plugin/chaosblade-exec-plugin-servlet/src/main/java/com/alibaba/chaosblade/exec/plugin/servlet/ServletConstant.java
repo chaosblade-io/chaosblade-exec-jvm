@@ -23,9 +23,13 @@ public interface ServletConstant {
 
     String QUERY_STRING_KEY = "querystring";
 
+    String QUERY_STRING_REGEX_PATTERN_KEY = "querystring-regex-pattern";
+
     String METHOD_KEY = "method";
 
     String REQUEST_PATH_KEY = "requestpath";
+
+    String REQUEST_PATH_REGEX_PATTERN_KEY = "requestpath-regex-pattern";
 
     String TARGET_NAME = "servlet";
 
@@ -35,7 +39,9 @@ public interface ServletConstant {
 
     String CONTENT_TYPE_JSON = "application/json";
 
-    /**----------- servlet request method --------**/
+    /**
+     * ----------- servlet request method --------*
+     */
     String GET_REQUEST_URI = "getRequestURI";
 
     String GET_METHOD = "getMethod";
@@ -43,6 +49,5 @@ public interface ServletConstant {
     String GET_PARAMETER_MAP = "getParameterMap";
 
     String GET_QUERY_STRING = "getQueryString";
-    /**----------- servlet request method --------**/
-
+    /** ----------- servlet request method --------* */
 }

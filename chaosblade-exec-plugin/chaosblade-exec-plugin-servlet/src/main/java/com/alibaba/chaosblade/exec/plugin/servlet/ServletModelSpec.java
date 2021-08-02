@@ -16,15 +16,15 @@
 
 package com.alibaba.chaosblade.exec.plugin.servlet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.servlet.code.ModifyHttpCodeActionSpec;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Changjun Xiao
@@ -39,8 +39,10 @@ public class ServletModelSpec extends FrameworkModelSpec {
     private void addModifyHttpAction() {
         ModifyHttpCodeActionSpec modifyHttpCodeActionSpec = new ModifyHttpCodeActionSpec();
         modifyHttpCodeActionSpec.addMatcherDesc(new ServletQueryStringMatcherSpec());
+        modifyHttpCodeActionSpec.addMatcherDesc(new ServletQueryStringRegexPatternMatcherSpec());
         modifyHttpCodeActionSpec.addMatcherDesc(new ServletMethodMatcherSpec());
         modifyHttpCodeActionSpec.addMatcherDesc(new ServletRequestPathMatcherSpec());
+        modifyHttpCodeActionSpec.addMatcherDesc(new ServletRequestPathRegexPatternMatcherSpec());
         modifyHttpCodeActionSpec.setLongDesc("Servlet return custom status code(4xx,5xx)");
         modifyHttpCodeActionSpec.setExample("# Request to http://localhost:8080/dubbodemo/servlet/path?name=bob return 404\n" +
                 "blade c servlet mc --requestpath /dubbodemo/servlet/path --code=404\n\n");
@@ -84,8 +86,10 @@ public class ServletModelSpec extends FrameworkModelSpec {
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
         matcherSpecs.add(new ServletQueryStringMatcherSpec());
+        matcherSpecs.add(new ServletQueryStringRegexPatternMatcherSpec());
         matcherSpecs.add(new ServletMethodMatcherSpec());
         matcherSpecs.add(new ServletRequestPathMatcherSpec());
+        matcherSpecs.add(new ServletRequestPathRegexPatternMatcherSpec());
         return matcherSpecs;
     }
 }
