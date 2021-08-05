@@ -36,7 +36,7 @@ public class ModelParser {
 
     public final static Set<String> assistantFlag = new HashSet<String>(Arrays.asList(
         "target", "action", "process", "pid", "debug", "suid", "help", "pod", "uid", "refresh", "blade-override",
-        "javaHome"
+        "chaosblade-override", "javaHome"
     ));
 
     public static Model parseRequest(String target, Request request, ActionSpec actionSpec) {
