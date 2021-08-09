@@ -31,7 +31,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>6.8.15</version>
+            <version>6.8.17</version>
 <!--            <scope>provided</scope>-->
         </dependency>
 
