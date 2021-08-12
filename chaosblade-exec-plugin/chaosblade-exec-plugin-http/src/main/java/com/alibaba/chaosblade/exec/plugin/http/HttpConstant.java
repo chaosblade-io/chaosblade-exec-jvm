@@ -23,4 +23,6 @@ public class HttpConstant {
     public static final Map<String, Method> methodMap = new HashMap<String, Method>();
 
     public static final int DEFAULT_TIMEOUT = 60000;
+
+    public static final String REQUEST_ID = "c_request_id";
 }

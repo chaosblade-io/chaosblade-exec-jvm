@@ -1,24 +1,30 @@
 package com.alibaba.chaosblade.exec.plugin.http.asynchttpclient;
 
+import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEOUT;
+
+import java.net.SocketTimeoutException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.context.ThreadLocalContext;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.util.FlagUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.net.SocketTimeoutException;
-
-import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEOUT;
+import com.alibaba.chaosblade.exec.plugin.http.enhancer.InternalPointCut;
+import com.alibaba.chaosblade.exec.plugin.http.model.CallPointMatcher;
 
 /**
  * @author shizhi.zhu@qunar.com
  */
-public class AsyncHttpClientEnhancer extends HttpEnhancer {
+@InternalPointCut(className = "com.ning.http.client.AsyncCompletionHandler", methodName = "onStatusReceived")
+public class AsyncHttpClientHandlerEnhancer extends HttpEnhancer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncHttpClientEnhancer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncHttpClientHandlerEnhancer.class);
     private static final String GET_CONFIG = "getConfig";
     private static final String GET_CONNECTION_TIMEOUT = "getConnectTimeout";
     private static final String GET_READ_TIMEOUT = "getReadTimeout";
@@ -26,6 +32,17 @@ public class AsyncHttpClientEnhancer extends HttpEnhancer {
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
         enhancerModel.addMatcher(HttpConstant.ASYNC_HTTP_CLIENT, "true");
+        if (FlagUtil.hasFlag("http", HttpConstant.CALL_POINT_KEY)) {
+            Object value = ThreadLocalContext.getInstance().get();
+            if (value != null) {
+                enhancerModel.addCustomMatcher(HttpConstant.CALL_POINT_KEY, value, CallPointMatcher.getInstance());
+            }
+        }
+    }
+
+    @Override
+    protected boolean shouldAddCallPoint() {
+        return false;
     }
 
     @Override

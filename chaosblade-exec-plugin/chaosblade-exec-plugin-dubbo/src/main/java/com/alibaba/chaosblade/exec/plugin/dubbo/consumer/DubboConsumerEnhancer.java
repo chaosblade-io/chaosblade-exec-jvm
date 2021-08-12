@@ -19,16 +19,18 @@ package com.alibaba.chaosblade.exec.plugin.dubbo.consumer;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.util.FlagUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
 import com.alibaba.chaosblade.exec.plugin.dubbo.model.CallPointMatcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Changjun Xiao
@@ -107,8 +109,14 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
         enhancerModel.addMatcher(DubboConstant.CONSUMER_KEY, "true");
-        StackTraceElement[] stackTrace = new NullPointerException().getStackTrace();
-        enhancerModel.addCustomMatcher(DubboConstant.CALL_POINT_KEY, stackTrace, CallPointMatcher.getInstance());
+        if (hasCallPoint()) {
+            StackTraceElement[] stackTrace = new NullPointerException().getStackTrace();
+            enhancerModel.addCustomMatcher(DubboConstant.CALL_POINT_KEY, stackTrace, CallPointMatcher.getInstance());
+        }
+    }
+
+    private boolean hasCallPoint() {
+        return FlagUtil.hasFlag("dubbo", DubboConstant.CALL_POINT_KEY);
     }
 
     @Override

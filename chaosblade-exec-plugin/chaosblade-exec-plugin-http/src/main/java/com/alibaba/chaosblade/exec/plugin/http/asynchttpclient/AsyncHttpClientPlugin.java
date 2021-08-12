@@ -21,6 +21,6 @@ public class AsyncHttpClientPlugin extends HttpPlugin {
 
     @Override
     public Enhancer getEnhancer() {
-        return new AsyncHttpClientEnhancer();
+        return new AsyncHttpClientEnhancerWrapper();
     }
 }
