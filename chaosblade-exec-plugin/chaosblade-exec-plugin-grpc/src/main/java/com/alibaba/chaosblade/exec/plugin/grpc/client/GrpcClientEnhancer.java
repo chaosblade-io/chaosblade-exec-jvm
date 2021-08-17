@@ -23,24 +23,25 @@ public class GrpcClientEnhancer extends BeforeEnhancer {
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
                                         Method method, Object[]
-                                            methodArguments)
-        throws Exception {
+                                                methodArguments)
+            throws Exception {
         if (methodArguments == null || object == null) {
             LOGGER.warn("The necessary parameters is null");
             return null;
         }
+
         Object cmd = methodArguments[1];
-        Object stream = ReflectUtil.invokeMethod(cmd, "stream", new Object[] {}, false);
+        Object stream = ReflectUtil.getFieldValue(cmd, "stream", false);
         MatcherModel matcherModel = new MatcherModel();
         if(stream != null){
-            Object requestMethod = ReflectUtil.invokeMethod(stream, "method", new Object[] {}, false);
+            Object requestMethod = ReflectUtil.getSuperclassFieldValue(stream, "method",false);
             if(requestMethod != null){
                 String fullMethod = ReflectUtil.invokeMethod(requestMethod, "getFullMethodName", new Object[] {}, false).toString();
                 matcherModel.add(GrpcConstant.GET_METHOD, fullMethod);
             }
-            Object channel = ReflectUtil.invokeMethod(stream, "channel", new Object[] {}, false);
+            Object channel = ReflectUtil.getSuperclassFieldValue(stream, "channel",false);
             if(channel != null){
-                String remoteAddress = ReflectUtil.invokeMethod(channel, "remoteAddress", new Object[] {}, false).toString();
+                String remoteAddress = ReflectUtil.getSuperclassFieldValue(channel, "remoteAddress",false).toString();
                 matcherModel.add(GrpcConstant.GET_REMOTE_ADDRESS, remoteAddress);
             }
         }

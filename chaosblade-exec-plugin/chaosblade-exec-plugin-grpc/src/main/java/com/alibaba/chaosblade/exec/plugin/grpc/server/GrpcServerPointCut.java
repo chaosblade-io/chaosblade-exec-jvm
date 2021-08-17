@@ -14,8 +14,9 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
  */
 public class GrpcServerPointCut implements PointCut {
 
-    private static final String GRPC_SERVER_REST_CLASS = "io.grpc.stub.ServerCalls.UnaryRequestMethod";
-    private static final String GRPC_SERVER_REST_METHOD = "invoke";
+    private static final String GRPC_SERVER_REST_CLASS = "io.grpc.netty.NettyServerHandler";
+    private static final String GRPC_SERVER_REST_METHOD = "onHeadersRead";
+
 
     @Override
     public ClassMatcher getClassMatcher() {

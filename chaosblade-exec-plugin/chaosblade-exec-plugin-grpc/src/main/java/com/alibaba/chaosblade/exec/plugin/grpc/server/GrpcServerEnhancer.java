@@ -23,38 +23,23 @@ public class GrpcServerEnhancer extends BeforeEnhancer {
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
                                         Method method, Object[]
-                                            methodArguments)
-        throws Exception {
+                                                methodArguments)
+            throws Exception {
         if (methodArguments == null || object == null) {
             LOGGER.warn("The necessary parameters is null");
             return null;
         }
-//        MatcherModel matcherModel = new MatcherModel();
-//        Object obPort = methodArguments[0];
-//        int port = (int)obPort;
-//        matcherModel.add(GrpcConstant.PORT, port);
 
-
-        Object responseObserver = methodArguments[1];
-        Object call = ReflectUtil.invokeMethod(responseObserver, "call", new Object[] {}, false);
+        Object ctx = methodArguments[0];
+        Object pipeline = ReflectUtil.getSuperclassFieldValue(ctx, "pipeline", false);
         MatcherModel matcherModel = new MatcherModel();
-        if(call != null) {
-            Object requestMethod = ReflectUtil.invokeMethod(call, "method", new Object[] {}, false);
-            if(requestMethod != null){
-                String fullMethod = ReflectUtil.invokeMethod(requestMethod, "getFullMethodName", new Object[] {}, false).toString();
-                matcherModel.add(GrpcConstant.GET_METHOD, fullMethod);
-            }
-            Object stream = ReflectUtil.invokeMethod(call, "stream", new Object[] {}, false);
-            if(stream != null){
-                Object channel = ReflectUtil.invokeMethod(stream, "channel", new Object[] {}, false).toString();
-                if(channel != null){
-                    String remoteAddress = ReflectUtil.invokeMethod(channel, "remoteAddress", new Object[] {}, false).toString();
-                    matcherModel.add(GrpcConstant.GET_REMOTE_ADDRESS, remoteAddress);
-                }
+        if(pipeline != null){
+            Object channel = ReflectUtil.getSuperclassFieldValue(pipeline, "channel",false);
+            if(channel != null){
+                String remoteAddress = ReflectUtil.getSuperclassFieldValue(channel, "localAddress",false).toString();
+                matcherModel.add(GrpcConstant.GET_REMOTE_ADDRESS, remoteAddress);
             }
         }
-
-
         LOGGER.debug("Grpc Server matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.addMatcher(GrpcConstant.SERVER_KEY, "true");
