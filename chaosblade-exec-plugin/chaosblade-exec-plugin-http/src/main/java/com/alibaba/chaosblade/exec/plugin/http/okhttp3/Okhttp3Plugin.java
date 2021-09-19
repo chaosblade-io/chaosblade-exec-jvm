@@ -2,6 +2,7 @@ package com.alibaba.chaosblade.exec.plugin.http.okhttp3;
 
 import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
 
 /**
@@ -14,7 +15,7 @@ public class Okhttp3Plugin extends HttpPlugin {
 
     @Override
     public String getName() {
-        return "okhttp3";
+        return HttpConstant.OKHTTP3_TARGET_NAME;
     }
 
     @Override

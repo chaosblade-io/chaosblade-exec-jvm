@@ -1,13 +1,17 @@
 package com.alibaba.chaosblade.exec.plugin.http.httpclient3;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
 
@@ -22,10 +26,24 @@ public class HttpClient3Enhancer extends HttpEnhancer {
     private static final String GET_PARAMS = "getParams";
     private static final String GET_SOCKET_TIMEOUT = "getSoTimeout";
     private static final String GET_CONNECTION_TIMEOUT = "getConnectionTimeout";
+    private static final String GET_REQUEST_HEADER = "getRequestHeader";
+    private static final String GET_VALUE = "getValue";
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
         enhancerModel.addMatcher(HTTPCLIENT3, "true");
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(String className, Object instance, Method method, final Object[] methodArguments) throws Exception {
+        return BusinessParamUtil.getAndParse(HTTPCLIENT3_TARGET_NAME, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Object httpMethod = methodArguments[1];
+                Object header = ReflectUtil.invokeMethod(httpMethod, GET_REQUEST_HEADER, new Object[]{key}, false);
+                return (String) ReflectUtil.invokeMethod(header, GET_VALUE, new Object[0], false);
+            }
+        });
     }
 
     @Override

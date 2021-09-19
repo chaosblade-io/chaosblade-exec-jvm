@@ -24,7 +24,7 @@ public interface MysqlConstant {
     String TARGET_NAME = "mysql";
 
     String HOST_MATCHER_NAME = "host";
-    String TABLE_MATCHER_NAME = "table";
+    String TABLE_MATCHER_NAME = "select";
     String DATABASE_MATCHER_NAME = "database";
     String SQL_TYPE_MATCHER_NAME = "sqltype";
     String PORT_MATCHER_NAME = "port";

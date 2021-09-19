@@ -26,7 +26,7 @@ public class AsyncHttpClientMatcherSpec extends BasePredicateMatcherSpec {
 
     @Override
     public String getName() {
-        return HttpConstant.ASYNC_HTTP_CLIENT;
+        return HttpConstant.ASYNC_HTTP_TARGET_NAME;
     }
 
     @Override

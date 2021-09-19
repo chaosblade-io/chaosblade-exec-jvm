@@ -1,11 +1,17 @@
 package com.alibaba.chaosblade.exec.plugin.http.okhttp3;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Method;
+import java.util.Map;
 
 import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEOUT;
 import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.OKHTTP3;
@@ -31,6 +37,18 @@ public class Okhttp3Enhancer extends HttpEnhancer {
         enhancerModel.addMatcher(OKHTTP3, "true");
     }
 
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(String className, final Object instance, Method method, final Object[] methodArguments) throws Exception {
+        return BusinessParamUtil.getAndParse(OKHTTP3, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Object request = ReflectUtil.invokeMethod(instance, "request", new Object[0], false);
+                return (String) ReflectUtil.invokeMethod(request, "header", new Object[]{key}, false);
+            }
+        });
+    }
+
+    @Override
     protected int getTimeout(Object instance, Object[] methodArguments) {
         try {
             Object client = ReflectUtil.getFieldValue(instance, "client", false);

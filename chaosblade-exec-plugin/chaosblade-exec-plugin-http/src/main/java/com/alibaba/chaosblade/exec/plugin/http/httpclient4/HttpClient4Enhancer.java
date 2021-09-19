@@ -1,13 +1,17 @@
 package com.alibaba.chaosblade.exec.plugin.http.httpclient4;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
 
@@ -25,15 +29,29 @@ public class HttpClient4Enhancer extends HttpEnhancer {
     private static final String REQUEST_GET_CONNECT_TIMEOUT = "getConnectTimeout";
     private static final String REQUEST_GET_SOCKET_TIMEOUT = "getSocketTimeout";
     private static final String GET_CONFIG = "getConfig";
+    private static final String GET_FIRST_HEADER = "getFirstHeader";
 
     private static final String CLIENT_GET_CONNECTION_TIMEOUT = "getConnectionTimeout";
     private static final String CLIENT_GET_SOCKET_TIMEOUT = "getSoTimeout";
+    private static final String HTTP_HEADER_GET_VALUE = "getValue";
     private static final String HTTP_CONNECTION_PARAMS = "org.apache.http.params.HttpConnectionParams";
 
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
         enhancerModel.addMatcher(HTTPCLIENT4, "true");
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(String className, Object instance, Method method, final Object[] methodArguments) throws Exception {
+        return BusinessParamUtil.getAndParse(HTTPCLIENT4_TARGET_NAME, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Object request = methodArguments[1];
+                Object header = ReflectUtil.invokeMethod(request, GET_FIRST_HEADER, new Object[]{key}, false);
+                return (String) ReflectUtil.invokeMethod(header, HTTP_HEADER_GET_VALUE, new Object[0], false);
+            }
+        });
     }
 
     @Override

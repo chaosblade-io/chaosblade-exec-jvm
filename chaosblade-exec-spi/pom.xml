@@ -19,13 +19,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>chaosblade-exec-plugin</artifactId>
+        <artifactId>chaosblade-exec-jvm</artifactId>
         <groupId>com.alibaba.chaosblade</groupId>
         <version>1.4.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chaosblade-exec-plugin-dubbo</artifactId>
+    <artifactId>chaosblade-exec-spi</artifactId>
+
     <build>
         <plugins>
             <plugin>
@@ -38,14 +39,6 @@
             </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>com.alibaba.chaosblade</groupId>
-            <artifactId>chaosblade-exec-spi</artifactId>
-            <version>1.4.0</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
 
 </project>
