@@ -132,7 +132,7 @@ public void beforeAdvice(String targetName,
 ./blade create servlet --requestpath=/topic delay --time=3000
 ````
 该命令下发后，触发SandboxModule @Http("/create")注解标记的方法，将事件分发给com.alibaba.chaosblade.exec.service.handler.CreateHandler处理
-在判断必要的uid、target、action、model参数后调用handleInjection，handleInjection通过状态管理器注册本次实验，如果插件类型是PreCreateInjectionModelHandler的类型，将预处理一些东西。同是如果Action类型是DirectlyInjectionAction，那么将直接进行故障能力注入，如jvm oom等，如果不是那么将加载插件。
+在判断必要的uid、target、action、model参数后调用handleInjection，handleInjection通过状态管理器注册本次实验，如果插件类型是PreCreateInjectionModelHandler的类型，将预处理一些东西。同时如果Action类型是DirectlyInjectionAction，那么将直接进行故障能力注入，如jvm oom等，如果不是那么将加载插件。
 
 #### ModelSpec
 - PreCreateInjectionModelHandler	预创建
@@ -188,7 +188,7 @@ public class ServletEnhancer extends BeforeEnhancer {
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
-                                        Method method, Object[] methodArguments)
+                                        Method method, Object[] methodArguments,String targetName)
         throws Exception {
       	// 获取原方法的一些参数
         Object request = methodArguments[0];
@@ -323,7 +323,7 @@ public Response handle(Request request) {
 ````shell
 ./blade revoke 98e792c9a9a5dfea
 ````
-该命令下发后，触发SandboxModule unload()事件，同是插件卸载。
+该命令下发后，触发SandboxModule unload()事件，同时插件卸载。
 
 ```java
 public void onUnload() throws Throwable {

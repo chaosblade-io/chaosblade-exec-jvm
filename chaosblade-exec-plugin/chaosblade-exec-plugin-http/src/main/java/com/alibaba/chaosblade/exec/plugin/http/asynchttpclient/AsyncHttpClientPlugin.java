@@ -11,7 +11,7 @@ import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
 public class AsyncHttpClientPlugin extends HttpPlugin {
     @Override
     public String getName() {
-        return HttpConstant.ASYNC_HTTP_CLIENT;
+        return HttpConstant.ASYNC_HTTP_TARGET_NAME;
     }
 
     @Override

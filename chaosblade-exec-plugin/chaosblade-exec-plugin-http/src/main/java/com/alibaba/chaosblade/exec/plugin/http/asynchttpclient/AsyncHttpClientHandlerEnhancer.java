@@ -2,7 +2,9 @@ package com.alibaba.chaosblade.exec.plugin.http.asynchttpclient;
 
 import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEOUT;
 
+import java.lang.reflect.Method;
 import java.net.SocketTimeoutException;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +33,19 @@ public class AsyncHttpClientHandlerEnhancer extends HttpEnhancer {
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
-        enhancerModel.addMatcher(HttpConstant.ASYNC_HTTP_CLIENT, "true");
+        ThreadLocalContext.Content content = ThreadLocalContext.getInstance().get();
+        enhancerModel.addMatcher(HttpConstant.ASYNC_HTTP_TARGET_NAME, "true");
         if (FlagUtil.hasFlag("http", HttpConstant.CALL_POINT_KEY)) {
-            Object value = ThreadLocalContext.getInstance().get();
-            if (value != null) {
-                enhancerModel.addCustomMatcher(HttpConstant.CALL_POINT_KEY, value, CallPointMatcher.getInstance());
-            }
+            enhancerModel.addCustomMatcher(HttpConstant.CALL_POINT_KEY, content.getStackTraceElements(), CallPointMatcher.getInstance()); }
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(String className, Object instance, Method method, Object[] methodArguments) throws Exception {
+        ThreadLocalContext.Content content = ThreadLocalContext.getInstance().get();
+        if (content == null) {
+            return null;
         }
+        return content.getBusinessData();
     }
 
     @Override
@@ -66,7 +74,7 @@ public class AsyncHttpClientHandlerEnhancer extends HttpEnhancer {
         }
         return DEFAULT_TIMEOUT;
     }
-
+    @Override
     protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, final long timeout, String className) {
         return new TimeoutExecutor() {
             @Override

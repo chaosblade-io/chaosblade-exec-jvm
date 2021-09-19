@@ -54,4 +54,8 @@ public class GlobalContext {
     public Object remove(String key) {
         return contextMap.remove(key);
     }
+
+    public boolean containsKey(String key){
+        return contextMap.containsKey(key);
+    }
 }

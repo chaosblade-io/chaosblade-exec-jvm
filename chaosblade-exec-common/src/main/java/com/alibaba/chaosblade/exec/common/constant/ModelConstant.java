@@ -22,6 +22,10 @@ package com.alibaba.chaosblade.exec.common.constant;
 public interface ModelConstant {
     String JVM_TARGET = "jvm";
 
+    String HTTP_TARGET = "http";
+
+    String HTTP_URL_MATCHER_NAME = "uri";
+
     /**
      * The name of effect percent matcher
      */
@@ -36,4 +40,9 @@ public interface ModelConstant {
      * The flag of regex pattern
      */
     String REGEX_PATTERN_FLAG = "regex-pattern";
+
+    /**
+     * the flag of buisness params
+     */
+    String BUSINESS_PARAMS = "b-params";
 }

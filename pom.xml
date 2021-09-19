@@ -25,6 +25,7 @@
     <packaging>pom</packaging>
     <version>1.4.0</version>
     <modules>
+        <module>chaosblade-exec-spi</module>
         <module>chaosblade-exec-bootstrap</module>
         <module>chaosblade-exec-common</module>
         <module>chaosblade-exec-plugin</module>
