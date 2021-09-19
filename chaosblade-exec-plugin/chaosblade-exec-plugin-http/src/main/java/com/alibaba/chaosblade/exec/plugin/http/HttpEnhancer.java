@@ -18,7 +18,10 @@ package com.alibaba.chaosblade.exec.plugin.http;
 
 import java.lang.reflect.Method;
 import java.net.SocketTimeoutException;
+import java.util.Map;
 
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
+import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +65,21 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
         return enhancerModel;
     }
 
+    @Override
+    public EnhancerModel addModelMatchers(ClassLoader classLoader, String className, Object object, Method method, Object[] methodArguments, EnhancerModel model, String targetName) {
+        try {
+            Map<String, Map<String, String>> businessParams = getBusinessParams(object, methodArguments, targetName);
+            if (businessParams != null) {
+                model.addCustomMatcher(ModelConstant.BUSINESS_PARAMS, businessParams, BusinessParamMatcher.getInstance());
+            }
+        } catch (Exception e) {
+            LOGGER.warn("Getting business params  occurs exception,return null", e);
+        }
+        return model;
+    }
+
+    protected abstract Map<String, Map<String, String>> getBusinessParams(Object instance, Object[] methodArguments, String tagetName) throws Exception;
+
     protected boolean shouldAddCallPoint() {
         return FlagUtil.hasFlag("http", HttpConstant.CALL_POINT_KEY);
     }
@@ -72,6 +90,7 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
      * @param instance
      * @return
      */
+
     protected abstract int getTimeout(Object instance, Object[] methodArguments);
 
     /**

@@ -17,20 +17,26 @@
 package com.alibaba.chaosblade.exec.plugin.dubbo.consumer;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
+import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.FlagUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
 import com.alibaba.chaosblade.exec.plugin.dubbo.model.CallPointMatcher;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 
 /**
  * @author Changjun Xiao
@@ -104,6 +110,30 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
             }
         }
         return ReflectUtil.invokeMethod(instance, GET_URL, new Object[0], false);
+    }
+
+    @Override
+    public EnhancerModel addModelMatchers(ClassLoader classLoader, String className, Object object, Method method, Object[] methodArguments, EnhancerModel model, String targetName) {
+        try {
+            Object invocation = methodArguments[0];
+            Map<String, Map<String, String>> businessParams = getBusinessParams(invocation, targetName);
+            if (businessParams != null) {
+                model.addCustomMatcher(ModelConstant.BUSINESS_PARAMS, businessParams, BusinessParamMatcher.getInstance());
+            }
+        } catch (Exception e) {
+            LOGGER.warn("Getting business params occurs exception,return null", e);
+        }
+        return model;
+    }
+
+    protected Map<String, Map<String, String>> getBusinessParams(final Object invocation, String targetName) throws Exception {
+        return BusinessParamUtil.getAndParse(targetName, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Map<String, String> attachments = ReflectUtil.invokeMethod(invocation, GET_ATTACHMENTS, new Object[0], false);
+                return attachments.get(key);
+            }
+        });
     }
 
     @Override

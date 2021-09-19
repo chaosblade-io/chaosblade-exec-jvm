@@ -25,12 +25,25 @@ public class AsyncHttpClientEnhancerWrapper extends BeforeEnhancer {
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
-        Object[] methodArguments) throws Exception {
+                                        Object[] methodArguments) throws Exception {
         Enhancer enhancer = container.get(className, method.getName());
         if (enhancer != null) {
             if (enhancer instanceof BeforeEnhancer) {
-                BeforeEnhancer beforeEnhancer = (BeforeEnhancer)enhancer;
+                BeforeEnhancer beforeEnhancer = (BeforeEnhancer) enhancer;
                 return beforeEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
+            }
+        }
+        LOGGER.debug("Can't find enhancer for:{}#{}", className, method.getName());
+        return null;
+    }
+
+    @Override
+    public EnhancerModel addModelMatchers(ClassLoader classLoader, String className, Object object, Method method, Object[] methodArguments, EnhancerModel model, String targetName) throws Exception {
+        Enhancer enhancer = container.get(className, method.getName());
+        if (enhancer != null) {
+            if (enhancer instanceof BeforeEnhancer) {
+                BeforeEnhancer beforeEnhancer = (BeforeEnhancer) enhancer;
+                return beforeEnhancer.addModelMatchers(classLoader, className, object, method, methodArguments, model, targetName);
             }
         }
         LOGGER.debug("Can't find enhancer for:{}#{}", className, method.getName());

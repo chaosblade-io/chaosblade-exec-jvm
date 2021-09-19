@@ -31,6 +31,7 @@ import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExce
 import com.alibaba.chaosblade.exec.common.model.action.threadpool.ThreadPoolFullActionSpec;
 import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
+import com.alibaba.chaosblade.exec.common.model.matcher.BusinessParamsMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.common.plugin.MethodNameMatcherSpec;
@@ -89,6 +90,7 @@ public class DubboModelSpec extends FrameworkModelSpec implements PreCreateInjec
         matcherSpecs.add(new MethodNameMatcherSpec());
         matcherSpecs.add(new GroupMatcherSpec());
         matcherSpecs.add(new CallPointMatcherSpec());
+        matcherSpecs.add(new BusinessParamsMatcherSpec());
         return matcherSpecs;
     }
 

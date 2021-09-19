@@ -44,11 +44,16 @@ public abstract class BeforeEnhancer implements Enhancer {
             return;
         }
         EnhancerModel model = doBeforeAdvice(classLoader, className, object, method, methodArguments);
+        model = addModelMatchers(classLoader, className, object, method, methodArguments, model, targetName);
         if (model == null) {
             return;
         }
         model.setTarget(targetName).setMethod(method).setObject(object).setMethodArguments(methodArguments);
         Injector.inject(model);
+    }
+
+    public EnhancerModel addModelMatchers(ClassLoader classLoader, String className, Object object, Method method, Object[] methodArguments, EnhancerModel model, String targetName) throws Exception {
+        return model;
     }
 
     /**

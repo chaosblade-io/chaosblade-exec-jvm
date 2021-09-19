@@ -6,10 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * @Author yuhan
@@ -26,6 +32,23 @@ public class RestTemplateEnhancer extends HttpEnhancer {
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
         enhancerModel.addMatcher(HttpConstant.REST_KEY, "true");
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(Object instance, final Object[] methodArguments, String targetName) throws Exception {
+        return BusinessParamUtil.getAndParse(targetName, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Object requestCallback = methodArguments[2];
+                Object requestEntity = ReflectUtil.getFieldValue(requestCallback, "requestEntity", false);
+                Object requestHeaders = ReflectUtil.invokeMethod(requestEntity, "getHeaders", new Object[0], false);
+                List<String> header = (List<String>) ReflectUtil.invokeMethod(requestHeaders, "get", new Object[]{key}, false);
+                if (header != null && !header.isEmpty()) {
+                    return header.get(0);
+                }
+                return null;
+            }
+        });
     }
 
     @Override
