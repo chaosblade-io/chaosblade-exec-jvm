@@ -2,6 +2,7 @@ package com.alibaba.chaosblade.exec.plugin.http.httpclient4;
 
 import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
 
 /**
@@ -13,7 +14,7 @@ public class HttpClient4Plugin extends HttpPlugin {
 
     @Override
     public String getName() {
-        return "httpclient4";
+        return HttpConstant.HTTPCLIENT4_TARGET_NAME;
     }
 
     @Override

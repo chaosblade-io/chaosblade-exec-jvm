@@ -2,6 +2,7 @@ package com.alibaba.chaosblade.exec.plugin.http.httpclient3;
 
 import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
 
 /**
@@ -13,7 +14,7 @@ public class HttpClient3Plugin extends HttpPlugin {
 
     @Override
     public String getName() {
-        return "httpclient3";
+        return HttpConstant.HTTPCLIENT3_TARGET_NAME;
     }
 
     @Override

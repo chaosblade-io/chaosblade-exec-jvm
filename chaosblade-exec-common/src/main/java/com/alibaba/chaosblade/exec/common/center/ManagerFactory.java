@@ -34,6 +34,8 @@ public class ManagerFactory {
      */
     private static ListenerManager listenerManager = new DefaultListenerManager();
 
+    private static SPIServiceManager spiServiceManager = new DefaultSPIServiceManager();
+
     public static StatusManager getStatusManager() {
         return statusManager;
     }
@@ -46,10 +48,15 @@ public class ManagerFactory {
         return listenerManager;
     }
 
+    public static SPIServiceManager spiServiceManager() {
+        return spiServiceManager;
+    }
+
     public static void load() {
         modelSpecManager.load();
         listenerManager.load();
         statusManager.load();
+        spiServiceManager.load();
     }
 
     /**
@@ -59,5 +66,6 @@ public class ManagerFactory {
         statusManager.unload();
         modelSpecManager.unload();
         listenerManager.unload();
+        spiServiceManager.unload();
     }
 }

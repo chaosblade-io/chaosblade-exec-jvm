@@ -22,6 +22,8 @@ import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
 
+import java.util.Map;
+
 /**
  * @author Changjun Xiao
  */
@@ -35,6 +37,11 @@ public class DubboProviderEnhancer extends DubboEnhancer {
 
     @Override
     protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout, String className) {
+        return null;
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(Object invocation) throws Exception {
         return null;
     }
 

@@ -17,13 +17,15 @@
 package com.alibaba.chaosblade.exec.plugin.dubbo;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
+import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.common.util.*;
 import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboThreadPoolFullExecutor;
 
 import org.slf4j.Logger;
@@ -41,19 +43,22 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
     public static final String GET_SERVICE_KEY = "getServiceKey";
     public static final String GET_METHOD_NAME = "getMethodName";
     public static final String GET_ARGUMENTS = "getArguments";
+    public static final String GET_ATTACHMENTS = "getAttachments";
     public static final String GENERIC = "generic";
     public static final String SPLIT_TOKEN = ":";
     public static final String GROUP_SEP = "/";
     public static final String GET_INVOKER = "getInvoker";
     public static final String RECEIVED_METHOD = "received";
+
+
     public static final int INVALID_POS = -1;
     private static final Logger LOGGER = LoggerFactory.getLogger(DubboEnhancer.class);
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
                                         Method method, Object[]
-                                            methodArguments)
-        throws Exception {
+                                                methodArguments)
+            throws Exception {
         if (method.getName().equals(RECEIVED_METHOD)) {
             // received method for thread pool experiment
             DubboThreadPoolFullExecutor.INSTANCE.setWrappedChannelHandler(object);
@@ -70,14 +75,13 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
             LOGGER.warn("Url is null, can not get necessary values.");
             return null;
         }
-        String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {APPLICATION_KEY}, false);
         String methodName = null;
-        String provideGeneric = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {GENERIC}, false);
+        String provideGeneric = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[]{GENERIC}, false);
         boolean consumerGeneric = isConsumerGeneric(object, invocation);
         if (Boolean.valueOf(provideGeneric) || consumerGeneric) {
             Object[] arguments = ReflectUtil.invokeMethod(invocation, GET_ARGUMENTS, new Object[0], false);
             if (arguments.length > 1 && arguments[0] instanceof String) {
-                methodName = (String)arguments[0];
+                methodName = (String) arguments[0];
             }
             LOGGER.debug("generic is true, methodName:{}", methodName);
         } else {
@@ -88,28 +92,33 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
             LOGGER.warn("methodName is null, can not get necessary values.");
             return null;
         }
-
         String[] serviceAndVersionGroup = getServiceNameWithVersionGroup(invocation, url);
 
         MatcherModel matcherModel = new MatcherModel();
+        String appName = ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[]{APPLICATION_KEY}, false);
         matcherModel.add(DubboConstant.APP_KEY, appName);
         matcherModel.add(DubboConstant.SERVICE_KEY, serviceAndVersionGroup[0]);
         matcherModel.add(DubboConstant.VERSION_KEY, serviceAndVersionGroup[1]);
         if (2 < serviceAndVersionGroup.length &&
-            null != serviceAndVersionGroup[2]) {
+                null != serviceAndVersionGroup[2]) {
             matcherModel.add(DubboConstant.GROUP_KEY, serviceAndVersionGroup[2]);
         }
         matcherModel.add(DubboConstant.METHOD_KEY, methodName);
         int timeout = getTimeout(methodName, object, invocation);
         matcherModel.add(DubboConstant.TIMEOUT_KEY, timeout + "");
-
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("dubbo matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
-
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout, className));
-
+        try {
+            Map<String, Map<String, String>> businessParams = getBusinessParams(invocation);
+            if (businessParams != null) {
+                enhancerModel.addCustomMatcher(ModelConstant.BUSINESS_PARAMS, businessParams, BusinessParamMatcher.getInstance());
+            }
+        } catch (Exception e) {
+            LOGGER.warn("Getting business params occurs exception,return null", e);
+        }
         postDoBeforeAdvice(enhancerModel);
         return enhancerModel;
     }
@@ -119,7 +128,7 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
         Class type = ReflectUtil.getSuperclassFieldValue(object, "type", false);
         String clazz = type.getName();
         return methodName.contains("$invoke") && (clazz.equalsIgnoreCase("org.apache.dubbo.rpc.service.GenericService")
-            || clazz.equalsIgnoreCase("com.alibaba.dubbo.rpc.service.GenericService"));
+                || clazz.equalsIgnoreCase("com.alibaba.dubbo.rpc.service.GenericService"));
     }
 
     protected abstract void postDoBeforeAdvice(EnhancerModel enhancerModel);
@@ -148,9 +157,9 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
 
             String[] serviceAndVersion = serviceKey.split(SPLIT_TOKEN);
             if (serviceAndVersion.length == 1) {
-                return new String[] {serviceAndVersion[0], DEFAULT_VERSION, group};
+                return new String[]{serviceAndVersion[0], DEFAULT_VERSION, group};
             }
-            return new String[] {serviceAndVersion[0], serviceAndVersion[1], group};
+            return new String[]{serviceAndVersion[0], serviceAndVersion[1], group};
         }
     }
 
@@ -194,4 +203,14 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
     protected boolean isThan2700Version(String className) {
         return className.startsWith("org.apache");
     }
+
+    /**
+     * Get b-params
+     *
+     * @param invocation
+     * @return
+     * @throws Exception
+     */
+    protected abstract Map<String, Map<String, String>> getBusinessParams(Object invocation) throws Exception;
+
 }

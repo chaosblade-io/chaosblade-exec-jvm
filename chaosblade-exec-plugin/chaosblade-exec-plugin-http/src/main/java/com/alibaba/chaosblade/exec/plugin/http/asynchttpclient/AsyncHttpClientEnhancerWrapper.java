@@ -25,11 +25,11 @@ public class AsyncHttpClientEnhancerWrapper extends BeforeEnhancer {
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
-        Object[] methodArguments) throws Exception {
+                                        Object[] methodArguments) throws Exception {
         Enhancer enhancer = container.get(className, method.getName());
         if (enhancer != null) {
             if (enhancer instanceof BeforeEnhancer) {
-                BeforeEnhancer beforeEnhancer = (BeforeEnhancer)enhancer;
+                BeforeEnhancer beforeEnhancer = (BeforeEnhancer) enhancer;
                 return beforeEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
             }
         }

@@ -4,6 +4,7 @@ import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.chaosblade.exec.common.model.matcher.BusinessParamsMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class HttpModelSpec extends FrameworkModelSpec {
         matcherSpecs.add(new AsyncHttpClientMatcherSpec());
         matcherSpecs.add(new UriMatcherDefSpec());
         matcherSpecs.add(new CallPointMatcherSpec());
+        matcherSpecs.add(new BusinessParamsMatcherSpec());
         return matcherSpecs;
     }
 

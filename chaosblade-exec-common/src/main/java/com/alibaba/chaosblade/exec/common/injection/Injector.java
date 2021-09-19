@@ -28,6 +28,7 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.returnv.UnsupportedReturnTypeException;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
+import com.alibaba.chaosblade.exec.common.util.ModelUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,8 +164,12 @@ public class Injector {
                         continue;
                     }
                 }
-
                 return false;
+            }
+            // business param match
+            if (keyName.equals(ModelConstant.BUSINESS_PARAMS)) {
+                Map<String, Map<String, String>> expMap = (Map<String, Map<String, String>>) value;
+                value = expMap.get(ModelUtil.getIdentifier(model));
             }
             // custom match
             if (keyName.endsWith(ModelConstant.REGEX_PATTERN_FLAG) ? customMatcher.regexMatch(String.valueOf(entry.getValue()), value) : customMatcher.match(String.valueOf(entry.getValue()), value)) {
