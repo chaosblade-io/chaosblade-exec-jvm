@@ -121,6 +121,12 @@ public class CreateHandler implements RequestHandler {
             } catch (Exception e) {
                 LOGGER.warn("set log level to debug failed", e);
             }
+        } else {
+            try {
+                LogUtil.setInfo();
+            } catch (Exception e) {
+                LOGGER.warn("set log level to INFO failed", e);
+            }
         }
     }
 
@@ -156,9 +162,9 @@ public class CreateHandler implements RequestHandler {
      * @throws ExperimentException
      */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
-        throws ExperimentException {
+            throws ExperimentException {
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
-            ((PreCreateInjectionModelHandler)modelSpec).preCreate(suid, model);
+            ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
         }
     }
 }
