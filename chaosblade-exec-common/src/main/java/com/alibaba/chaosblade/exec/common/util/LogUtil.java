@@ -42,11 +42,19 @@ public class LogUtil {
     public static void setLogLevel(String level) {
         ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
         if (loggerFactory instanceof LoggerContext) {
-            LoggerContext loggerContext = (LoggerContext)loggerFactory;
+            LoggerContext loggerContext = (LoggerContext) loggerFactory;
             Logger logger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
-            ((ch.qos.logback.classic.Logger)logger).setLevel(Level.toLevel(level));
+            ((ch.qos.logback.classic.Logger) logger).setLevel(Level.toLevel(level));
             return;
         }
         throw new IllegalStateException("not support the log context object");
+    }
+
+
+    /**
+     * Set log level to info
+     */
+    public static void setInfo() {
+        setLogLevel("INFO");
     }
 }
