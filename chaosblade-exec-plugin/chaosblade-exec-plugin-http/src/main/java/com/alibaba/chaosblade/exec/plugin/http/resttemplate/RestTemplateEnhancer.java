@@ -1,14 +1,11 @@
 package com.alibaba.chaosblade.exec.plugin.http.resttemplate;
 
-import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEOUT;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
 import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
 import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
@@ -16,6 +13,8 @@ import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+
+import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
 
 
 /**
@@ -32,12 +31,12 @@ public class RestTemplateEnhancer extends HttpEnhancer {
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
-        enhancerModel.addMatcher(HttpConstant.REST_KEY, "true");
+        enhancerModel.addMatcher(REST_KEY, "true");
     }
 
     @Override
     protected Map<String, Map<String, String>> getBusinessParams(String className, Object instance, Method method, final Object[] methodArguments) throws Exception {
-        return BusinessParamUtil.getAndParse(HttpConstant.REST_TARGET_NAME, new BusinessDataGetter() {
+        return BusinessParamUtil.getAndParse(TARGET_NAME, new BusinessDataGetter() {
             @Override
             public String get(String key) throws Exception {
                 Object requestCallback = methodArguments[2];
