@@ -6,6 +6,7 @@ import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.BusinessParamsMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,6 @@ public class HttpModelSpec extends FrameworkModelSpec {
 
     @Override
     public String getTarget() {
-        return "http";
+        return HttpConstant.TARGET_NAME;
     }
 }

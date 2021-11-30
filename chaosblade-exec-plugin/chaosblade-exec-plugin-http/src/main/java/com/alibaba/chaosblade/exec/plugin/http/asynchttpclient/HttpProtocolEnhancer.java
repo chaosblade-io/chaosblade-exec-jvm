@@ -11,7 +11,6 @@ import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.context.GlobalContext;
 import com.alibaba.chaosblade.exec.common.context.ThreadLocalContext;
@@ -19,6 +18,8 @@ import com.alibaba.chaosblade.exec.common.util.FlagUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.enhancer.InternalPointCut;
+
+import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.TARGET_NAME;
 
 /**
  * @author shizhi.zhu@qunar.com
@@ -30,7 +31,7 @@ public class HttpProtocolEnhancer extends HttpEnhancer {
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object, Method method,
                                         Object[] methodArguments) throws Exception {
-        super.doBeforeAdvice(classLoader,className,object,method,methodArguments);
+        super.doBeforeAdvice(classLoader, className, object, method, methodArguments);
         if (!shouldAddCallPoint()) {
             return null;
         }
@@ -71,7 +72,7 @@ public class HttpProtocolEnhancer extends HttpEnhancer {
         } else {
             content = ThreadLocalContext.getInstance().get();
         }
-        content.settValue(BusinessParamUtil.getAndParse(HttpConstant.ASYNC_HTTP_TARGET_NAME, new BusinessDataGetter() {
+        content.settValue(BusinessParamUtil.getAndParse(TARGET_NAME, new BusinessDataGetter() {
             @Override
             public String get(String key) throws Exception {
                 List<String> values = (List<String>) ReflectUtil.invokeMethod(headers, "get", new Object[]{key}, false);
