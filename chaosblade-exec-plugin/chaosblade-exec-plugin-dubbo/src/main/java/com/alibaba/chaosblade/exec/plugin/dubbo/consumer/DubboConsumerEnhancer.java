@@ -111,12 +111,16 @@ public class DubboConsumerEnhancer extends DubboEnhancer {
         }
         return ReflectUtil.invokeMethod(instance, GET_URL, new Object[0], false);
     }
+
     @Override
     protected Map<String, Map<String, String>> getBusinessParams(final Object invocation) throws Exception {
         return BusinessParamUtil.getAndParse(DubboConstant.TARGET_NAME, new BusinessDataGetter() {
             @Override
             public String get(String key) throws Exception {
                 Map<String, String> attachments = ReflectUtil.invokeMethod(invocation, GET_ATTACHMENTS, new Object[0], false);
+                if (attachments == null || attachments.isEmpty()) {
+                    return null;
+                }
                 return attachments.get(key);
             }
         });
