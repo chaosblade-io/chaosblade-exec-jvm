@@ -30,7 +30,7 @@ public abstract class WaitingTriggerThreadPoolFullExecutor extends AbstractThrea
     /**
      * Is triggered when a fetch condition is met.
      */
-    protected synchronized void triggerThreadPoolFull() {
+    protected synchronized void triggerThreadPoolFull() throws Exception {
         if (isRunning()) {
             return;
         }
