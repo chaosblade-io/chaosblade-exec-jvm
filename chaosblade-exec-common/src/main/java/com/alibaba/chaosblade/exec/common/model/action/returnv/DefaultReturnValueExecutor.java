@@ -19,6 +19,8 @@ package com.alibaba.chaosblade.exec.common.model.action.returnv;
 import java.lang.reflect.Method;
 
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Changjun Xiao
@@ -64,7 +66,11 @@ public class DefaultReturnValueExecutor extends BaseReturnValueExecutor {
         if (boolean.class == clazz || Boolean.class == clazz) {
             return Boolean.valueOf(value);
         }
-        throw new UnsupportedOperationException("only support primitive return type. the return type is " +
-            clazz.getName());
+        try {
+            return new ObjectMapper().readValue(value, clazz);
+        } catch (JsonProcessingException e) {
+            throw new UnsupportedOperationException("return value conversion failed. the return type is " +
+                    clazz.getName() + " the value is " + value);
+        }
     }
 }
