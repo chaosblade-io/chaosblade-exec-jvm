@@ -5,6 +5,7 @@ import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,19 +27,14 @@ public class BusinessParamMatcher implements CustomMatcher {
     @Override
     public boolean match(String commandValue, Object originValue) {
         Map<String, String> businessData = (Map<String, String>) originValue;
-        List<BusinessParamUtil.BusinessParam> businessParams = BusinessParamUtil.parseFromJsonStr(commandValue);
-        for (BusinessParamUtil.BusinessParam businessParam : businessParams) {
-            if (!businessData.containsKey(businessParam.getKey())) {
-                LOGGER.debug("b-params match fail,command value does not contains key:{}", businessParam.getKey());
-                return false;
-            }
-            String requestValue = businessData.get(businessParam.getKey());
-            if (!requestValue.equals(businessParam.getValue())) {
-                LOGGER.debug("b-params match fail,origin value:{},command value:{}", requestValue, businessParam.getValue());
-                return false;
-            }
+        BusinessParamUtil.BusinessParamWrapper businessParamWrapper = BusinessParamUtil.parseFromJsonStr(commandValue);
+        List<BusinessParamUtil.BusinessParam> businessParams = businessParamWrapper.getParams();
+        BusinessParamPatternMatcher matcher = BusinessParamPatternEnum.getPatternMatcher(businessParamWrapper.getPattern());
+        if (matcher == null) {
+            LOGGER.debug("b-params match fail,unsupported matching pattern, pattern:{}", businessParamWrapper.getPattern());
+            return false;
         }
-        return true;
+        return matcher.match(businessData, businessParams);
     }
 
     @Override
