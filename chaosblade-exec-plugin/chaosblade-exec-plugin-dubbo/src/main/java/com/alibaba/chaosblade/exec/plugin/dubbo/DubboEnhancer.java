@@ -43,7 +43,7 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
     public static final String GET_SERVICE_KEY = "getServiceKey";
     public static final String GET_METHOD_NAME = "getMethodName";
     public static final String GET_ARGUMENTS = "getArguments";
-    public static final String GET_ATTACHMENTS = "getAttachments";
+    public static final String GET_OBJECT_ATTACHMENTS = "getObjectAttachments";
     public static final String GENERIC = "generic";
     public static final String SPLIT_TOKEN = ":";
     public static final String GROUP_SEP = "/";
