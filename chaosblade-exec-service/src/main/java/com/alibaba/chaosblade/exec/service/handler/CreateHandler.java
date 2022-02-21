@@ -16,6 +16,9 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import com.alibaba.chaosblade.exec.common.aop.PluginBean;
+import com.alibaba.chaosblade.exec.common.aop.PluginBeans;
+import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
@@ -163,8 +166,28 @@ public class CreateHandler implements RequestHandler {
      */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
             throws ExperimentException {
+        lazyLoadPlugin(modelSpec);
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
             ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
         }
+    }
+
+    private void lazyLoadPlugin(ModelSpec modelSpec) throws ExperimentException {
+        PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
+        if (listener == null) {
+            throw new ExperimentException("can get plugin listener");
+        }
+        PluginBeans pluginBeans = ManagerFactory.getPluginManager().getPlugins(modelSpec.getTarget());
+
+        if (pluginBeans == null) {
+            throw new ExperimentException("can get plugin bean");
+        }
+        if (pluginBeans.isLoad()) {
+            return;
+        }
+        for (PluginBean pluginBean : pluginBeans.getPluginBeans()) {
+            listener.add(pluginBean);
+        }
+        ManagerFactory.getPluginManager().setLoad(pluginBeans, modelSpec.getTarget());
     }
 }
