@@ -30,6 +30,10 @@ public class ManagerFactory {
      */
     private static ModelSpecManager modelSpecManager = new DefaultModelSpecManager();
     /**
+     * Plugin model manager
+     */
+    private static PluginBeanManager pluginManager = new DefaultPluginBeanManager();
+    /**
      * Listener manager manages the plugin listener
      */
     private static ListenerManager listenerManager = new DefaultListenerManager();
@@ -42,6 +46,10 @@ public class ManagerFactory {
 
     public static ModelSpecManager getModelSpecManager() {
         return modelSpecManager;
+    }
+
+    public static PluginBeanManager getPluginManager() {
+        return pluginManager;
     }
 
     public static ListenerManager getListenerManager() {

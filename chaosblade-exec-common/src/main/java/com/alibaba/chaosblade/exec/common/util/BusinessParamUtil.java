@@ -53,6 +53,9 @@ public class BusinessParamUtil {
         Map<String, BusinessParamWrapper> businessParams = getAndParse(target);
         Map<String, Map<String, String>> result = new HashMap<String, Map<String, String>>();
         for (Map.Entry<String, BusinessParamWrapper> entry : businessParams.entrySet()) {
+            if (entry.getValue() == null || entry.getValue().getParams() == null) {
+                continue;
+            }
             result.put(entry.getKey(), new HashMap<String, String>());
             for (BusinessParam businessParam : entry.getValue().getParams()) {
                 String value = "";
