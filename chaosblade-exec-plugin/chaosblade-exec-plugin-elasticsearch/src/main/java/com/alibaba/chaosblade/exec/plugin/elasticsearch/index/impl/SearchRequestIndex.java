@@ -18,6 +18,6 @@ public class SearchRequestIndex extends AbstractRequestIndex {
 
     @Override
     public List<String> getIndex0(Object target) throws Exception {
-        return Arrays.asList(index(target, "indices"));
+        return indexs(target, "indices");
     }
 }
