@@ -26,7 +26,7 @@ public class KafkaProducerPointCut implements PointCut, KafkaConstant {
         return new MethodMatcher() {
             @Override
             public boolean isMatched(String methodName, MethodInfo methodInfo) {
-                return methodName.equals(SEND) && methodInfo.getParameterTypes().length == 1;
+                return methodName.equals(SEND) && methodInfo.getParameterTypes().length == 2;
             }
         };
     }
