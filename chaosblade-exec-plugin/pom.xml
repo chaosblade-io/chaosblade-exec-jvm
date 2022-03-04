@@ -48,6 +48,7 @@
         <module>chaosblade-exec-plugin-gateway</module>
         <module>chaosblade-exec-plugin-log</module>
         <module>chaosblade-exec-plugin-zookeeper</module>
+        <module>chaosblade-exec-plugin-clickhosue</module>
     </modules>
 
     <dependencies>
