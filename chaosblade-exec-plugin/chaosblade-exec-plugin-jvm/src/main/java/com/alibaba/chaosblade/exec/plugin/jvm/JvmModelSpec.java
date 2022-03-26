@@ -94,7 +94,6 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
             try {
                 ((DirectlyInjectionAction) actionSpec).createInjection(uid, model);
             } catch (Exception e) {
-                e.printStackTrace();
                 throw new ExperimentException("create injection failed: " + Arrays.toString(e.getStackTrace()) + ", " + e, e);
             }
         } else {
