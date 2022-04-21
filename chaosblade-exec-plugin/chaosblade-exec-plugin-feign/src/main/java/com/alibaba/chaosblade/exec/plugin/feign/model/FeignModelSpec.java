@@ -33,7 +33,7 @@ public class FeignModelSpec extends FrameworkModelSpec implements FeignConstant 
             } else if (action instanceof ThrowCustomExceptionActionSpec) {
                 action.setLongDesc("Feign throws custom exception experiment");
                 action.setExample("# Throw exception when service call api \n" +
-                    "blade create feign throwCustomException --exception java.lang.Exception --exception-message "
+                    "blade create feign throwCustomException --exception java.lang.RuntimeException --exception-message "
                     + "mock-beans-exception --service-name test-service --url /example/feign/api");
             }
         }
