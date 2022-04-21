@@ -25,8 +25,11 @@ public class FeignProducerEnhancer extends BeforeEnhancer implements FeignConsta
             LOGGER.warn("The necessary parameter is null.");
             return null;
         }
-        String serviceName = getServiceName(methodArguments);
+        String serviceName = getServiceName(object);
         String template = getTemplate(methodArguments);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.info("feign :  serviceName:{},template:{}", serviceName, template);
+        }
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(SERVICE_NAME, serviceName);
         matcherModel.add(TEMPLATE_URL, template);
@@ -36,9 +39,9 @@ public class FeignProducerEnhancer extends BeforeEnhancer implements FeignConsta
         return new EnhancerModel(classLoader, matcherModel);
     }
 
-    private String getServiceName(Object[] methodArguments) throws Exception {
-        Object requestTemplateObj = methodArguments[0];
-        Object feignTargetObject = ReflectUtil.getFieldValue(requestTemplateObj, "feignTarget", false);
+    private String getServiceName(Object curObject) throws Exception {
+        // test in open-feign 3.1.1,2.1.1.RELEASE
+        Object feignTargetObject = ReflectUtil.getFieldValue(curObject, "target", false);
         return ReflectUtil.invokeMethod(feignTargetObject, "name");
     }
 

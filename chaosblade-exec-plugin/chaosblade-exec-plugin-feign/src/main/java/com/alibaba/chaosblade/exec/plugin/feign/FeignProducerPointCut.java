@@ -6,10 +6,15 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author guoyu486@gmail.com
  */
 public class FeignProducerPointCut implements PointCut, FeignConstant {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FeignProducerPointCut.class);
 
     @Override
     public ClassMatcher getClassMatcher() {
@@ -21,7 +26,7 @@ public class FeignProducerPointCut implements PointCut, FeignConstant {
         return new MethodMatcher() {
             @Override
             public boolean isMatched(String methodName, MethodInfo methodInfo) {
-                return methodName.equals(METHOD) && methodInfo.getParameterTypes().length == 2;
+                return methodName.equals(METHOD);
             }
         };
     }
