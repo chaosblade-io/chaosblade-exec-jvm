@@ -29,6 +29,12 @@ public class ManagerFactory {
      * Experiment model manager
      */
     private static ModelSpecManager modelSpecManager = new DefaultModelSpecManager();
+
+    /**
+     *
+     */
+    private static PluginManager pluginManager = new DefaultPluginManager();
+
     /**
      * Listener manager manages the plugin listener
      */
@@ -42,6 +48,10 @@ public class ManagerFactory {
 
     public static ModelSpecManager getModelSpecManager() {
         return modelSpecManager;
+    }
+
+    public static PluginManager getPluginManager() {
+        return pluginManager;
     }
 
     public static ListenerManager getListenerManager() {

@@ -119,7 +119,8 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
                 final ModelSpec modelSpec = pluginBean.getModelSpec();
                 // register model
                 ManagerFactory.getModelSpecManager().registerModelSpec(modelSpec);
-                //add(pluginBean);
+                // register plugin
+                ManagerFactory.getPluginManager().registerPlugins(pluginBean);
             } catch (Throwable e) {
                 LOGGER.warn("Load " + plugin.getClass().getName() + " occurs exception", e);
             }
@@ -142,7 +143,7 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
     }
 
     private void service(String command, HttpServletRequest httpServletRequest,
-                         HttpServletResponse httpServletResponse) {
+        HttpServletResponse httpServletResponse) {
         Request request;
         if ("POST".equalsIgnoreCase(httpServletRequest.getMethod())) {
             try {
@@ -213,8 +214,8 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
                 Type.BEFORE, Type.RETURN);
             watchIds.put(PluginUtil.getIdentifierForAfterEvent(plugin), watcherId);
         } else {
-            int watcherId = moduleEventWatcher.watch(
-                filter, SandboxEnhancerFactory.createBeforeEventListener(plugin), Event.Type.BEFORE);
+            int watcherId = moduleEventWatcher.watch(filter, SandboxEnhancerFactory.createBeforeEventListener(plugin),
+                Event.Type.BEFORE);
             watchIds.put(PluginUtil.getIdentifier(plugin), watcherId);
         }
     }

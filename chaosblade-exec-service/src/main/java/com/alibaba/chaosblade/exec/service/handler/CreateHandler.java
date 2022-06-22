@@ -25,6 +25,7 @@ import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
+import com.alibaba.chaosblade.exec.common.center.PluginManager;
 import com.alibaba.chaosblade.exec.common.center.RegisterResult;
 import com.alibaba.chaosblade.exec.common.center.StatusManager;
 import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
@@ -149,10 +150,10 @@ public class CreateHandler implements RequestHandler {
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
 
-            //TODO: 加载插件(走到这里，证明实验没被创建过，不用考虑幂等性问题)
+            //load plugins by request
             Response response = loadNecessaryPlugins(model);
-
             if (!response.isSuccess()) {
+                //fail to load plugins, then return
                 return response;
             }
 
@@ -169,28 +170,25 @@ public class CreateHandler implements RequestHandler {
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
     }
 
+    /**
+     * load plugins by model
+     *
+     * @param model
+     * @return
+     */
     private Response loadNecessaryPlugins(Model model) {
-        List<Plugin> plugins = null;
-        try {
-            plugins = PluginLoader.load(Plugin.class, PluginJarUtil.getPluginFiles(getClass()));
-        } catch (Exception e) {
-            LOGGER.error("Load plugins occurs exception", e);
-            //TODO 没加载到理论上应该结束，但是这种case其实不存在
-            return Response.ofFailure(Response.Code.ILLEGAL_STATE, "spi load plugins occurs exception");
-        }
+        PluginManager pluginManager = ManagerFactory.getPluginManager();
 
-        for (Plugin plugin : plugins) {
+        //get plugins of the target
+        Set<PluginBean> pluginBeanSet = pluginManager.getPlugins(model.getTarget());
+
+        for (PluginBean pluginBean : pluginBeanSet) {
             try {
-                PluginBean pluginBean = new PluginBean(plugin);
-                final ModelSpec theModelSpec = pluginBean.getModelSpec();
-                //TODO 插件匹配
-                //step1: target级别的匹配
-                if (!model.getTarget().equals(theModelSpec.getTarget())) {
-                    continue;
-                }
-                //step2: matcher级别的匹配(插件名称，例如dubbo的consumer、provider等)
-                Set<String> waitingForLoadPluginNames = model.getMatcher().getMatchers().keySet();
-                if (!waitingForLoadPluginNames.isEmpty() && !waitingForLoadPluginNames.contains(plugin.getName())) {
+                ModelSpec theModelSpec = pluginBean.getModelSpec();
+
+                //notification: name级别的匹配(插件名称，例如dubbo/kafka的consumer、provider等)
+                Set<String> waitingToLoadPluginNames = model.getMatcher().getMatchers().keySet();
+                if (!waitingToLoadPluginNames.isEmpty() && !waitingToLoadPluginNames.contains(pluginBean.getName())) {
                     continue;
                 }
                 // register model
@@ -198,7 +196,7 @@ public class CreateHandler implements RequestHandler {
                 PluginLifecycleListener listener = getPluginLifecycleListener();
                 listener.add(pluginBean);
             } catch (Throwable e) {
-                LOGGER.warn("Load " + plugin.getClass().getName() + " occurs exception", e);
+                LOGGER.warn("Load " + pluginBean.getClass().getName() + " occurs exception", e);
             }
         }
         return Response.ofSuccess("load plugins success");
