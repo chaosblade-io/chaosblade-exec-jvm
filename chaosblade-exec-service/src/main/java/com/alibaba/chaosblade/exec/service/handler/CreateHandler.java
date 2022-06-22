@@ -16,6 +16,12 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import java.util.List;
+import java.util.Set;
+
+import com.alibaba.chaosblade.exec.common.aop.Plugin;
+import com.alibaba.chaosblade.exec.common.aop.PluginBean;
+import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
@@ -30,6 +36,8 @@ import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
 import com.alibaba.chaosblade.exec.common.util.LogUtil;
+import com.alibaba.chaosblade.exec.common.util.PluginJarUtil;
+import com.alibaba.chaosblade.exec.common.util.PluginLoader;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
 import org.slf4j.Logger;
@@ -140,6 +148,14 @@ public class CreateHandler implements RequestHandler {
     private Response handleInjection(String suid, Model model, ModelSpec modelSpec) {
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
+
+            //TODO: 加载插件(走到这里，证明实验没被创建过，不用考虑幂等性问题)
+            Response response = loadNecessaryPlugins(model);
+
+            if (!response.isSuccess()) {
+                return response;
+            }
+
             // handle injection
             try {
                 applyPreInjectionModelHandler(suid, modelSpec, model);
@@ -153,6 +169,49 @@ public class CreateHandler implements RequestHandler {
         return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
     }
 
+    private Response loadNecessaryPlugins(Model model) {
+        List<Plugin> plugins = null;
+        try {
+            plugins = PluginLoader.load(Plugin.class, PluginJarUtil.getPluginFiles(getClass()));
+        } catch (Exception e) {
+            LOGGER.error("Load plugins occurs exception", e);
+            //TODO 没加载到理论上应该结束，但是这种case其实不存在
+            return Response.ofFailure(Response.Code.ILLEGAL_STATE, "spi load plugins occurs exception");
+        }
+
+        for (Plugin plugin : plugins) {
+            try {
+                PluginBean pluginBean = new PluginBean(plugin);
+                final ModelSpec theModelSpec = pluginBean.getModelSpec();
+                //TODO 插件匹配
+                //step1: target级别的匹配
+                if (!model.getTarget().equals(theModelSpec.getTarget())) {
+                    continue;
+                }
+                //step2: matcher级别的匹配(插件名称，例如dubbo的consumer、provider等)
+                Set<String> waitingForLoadPluginNames = model.getMatcher().getMatchers().keySet();
+                if (!waitingForLoadPluginNames.isEmpty() && !waitingForLoadPluginNames.contains(plugin.getName())) {
+                    continue;
+                }
+                // register model
+                ManagerFactory.getModelSpecManager().registerModelSpec(theModelSpec);
+                PluginLifecycleListener listener = getPluginLifecycleListener();
+                listener.add(pluginBean);
+            } catch (Throwable e) {
+                LOGGER.warn("Load " + plugin.getClass().getName() + " occurs exception", e);
+            }
+        }
+        return Response.ofSuccess("load plugins success");
+    }
+
+    private PluginLifecycleListener getPluginLifecycleListener() throws ExperimentException {
+        PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
+        if (listener == null) {
+            throw new ExperimentException("can get plugin listener");
+        }
+        return listener;
+    }
+
     /**
      * Pre-handle for injection
      *
@@ -162,9 +221,9 @@ public class CreateHandler implements RequestHandler {
      * @throws ExperimentException
      */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
-            throws ExperimentException {
+        throws ExperimentException {
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
-            ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
+            ((PreCreateInjectionModelHandler)modelSpec).preCreate(suid, model);
         }
     }
 }

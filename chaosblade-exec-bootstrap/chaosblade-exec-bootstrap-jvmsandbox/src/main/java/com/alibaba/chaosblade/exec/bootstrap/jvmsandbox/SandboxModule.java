@@ -119,7 +119,7 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
                 final ModelSpec modelSpec = pluginBean.getModelSpec();
                 // register model
                 ManagerFactory.getModelSpecManager().registerModelSpec(modelSpec);
-                add(pluginBean);
+                //add(pluginBean);
             } catch (Throwable e) {
                 LOGGER.warn("Load " + plugin.getClass().getName() + " occurs exception", e);
             }
