@@ -16,9 +16,16 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import java.util.List;
+import java.util.Set;
+
+import com.alibaba.chaosblade.exec.common.aop.Plugin;
+import com.alibaba.chaosblade.exec.common.aop.PluginBean;
+import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
+import com.alibaba.chaosblade.exec.common.center.PluginManager;
 import com.alibaba.chaosblade.exec.common.center.RegisterResult;
 import com.alibaba.chaosblade.exec.common.center.StatusManager;
 import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
@@ -30,6 +37,8 @@ import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
 import com.alibaba.chaosblade.exec.common.util.LogUtil;
+import com.alibaba.chaosblade.exec.common.util.PluginJarUtil;
+import com.alibaba.chaosblade.exec.common.util.PluginLoader;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
 import org.slf4j.Logger;
@@ -140,6 +149,14 @@ public class CreateHandler implements RequestHandler {
     private Response handleInjection(String suid, Model model, ModelSpec modelSpec) {
         RegisterResult result = this.statusManager.registerExp(suid, model);
         if (result.isSuccess()) {
+
+            //load plugins by request
+            Response response = loadNecessaryPlugins(model);
+            if (!response.isSuccess()) {
+                //fail to load plugins, then return
+                return response;
+            }
+
             // handle injection
             try {
                 applyPreInjectionModelHandler(suid, modelSpec, model);
@@ -154,6 +171,46 @@ public class CreateHandler implements RequestHandler {
     }
 
     /**
+     * load plugins by model
+     *
+     * @param model
+     * @return
+     */
+    private Response loadNecessaryPlugins(Model model) {
+        PluginManager pluginManager = ManagerFactory.getPluginManager();
+
+        //get plugins of the target
+        Set<PluginBean> pluginBeanSet = pluginManager.getPlugins(model.getTarget());
+
+        for (PluginBean pluginBean : pluginBeanSet) {
+            try {
+                ModelSpec theModelSpec = pluginBean.getModelSpec();
+
+                //notification: name级别的匹配(插件名称，例如dubbo/kafka的consumer、provider等)
+                Set<String> waitingToLoadPluginNames = model.getMatcher().getMatchers().keySet();
+                if (!waitingToLoadPluginNames.isEmpty() && !waitingToLoadPluginNames.contains(pluginBean.getName())) {
+                    continue;
+                }
+                // register model
+                ManagerFactory.getModelSpecManager().registerModelSpec(theModelSpec);
+                PluginLifecycleListener listener = getPluginLifecycleListener();
+                listener.add(pluginBean);
+            } catch (Throwable e) {
+                LOGGER.warn("Load " + pluginBean.getClass().getName() + " occurs exception", e);
+            }
+        }
+        return Response.ofSuccess("load plugins success");
+    }
+
+    private PluginLifecycleListener getPluginLifecycleListener() throws ExperimentException {
+        PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
+        if (listener == null) {
+            throw new ExperimentException("can get plugin listener");
+        }
+        return listener;
+    }
+
+    /**
      * Pre-handle for injection
      *
      * @param suid
@@ -162,9 +219,9 @@ public class CreateHandler implements RequestHandler {
      * @throws ExperimentException
      */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
-            throws ExperimentException {
+        throws ExperimentException {
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
-            ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
+            ((PreCreateInjectionModelHandler)modelSpec).preCreate(suid, model);
         }
     }
 }

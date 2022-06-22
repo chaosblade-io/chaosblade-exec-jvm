@@ -65,6 +65,7 @@ build_java:
 	mvn clean package -Dmaven.test.skip=true -U
 	cp $(BLADE_SRC_ROOT)/chaosblade-exec-plugin/chaosblade-exec-plugin-*/target/chaosblade-exec-plugin-*.jar $(PLUGINS_PATH)
 	mvn clean assembly:assembly -Dmaven.test.skip=true -U
+	cp target/chaosblade-java-agent-1.6.0.jar /Users/timge/chaosblade-1.3.0/lib/sandbox/module/
 
 # test
 test:
