@@ -12,6 +12,8 @@ public class Syntactic {
 
     private static Map<Constant, Integer> SYMBOL_CONSTANTS = new HashMap<Constant, Integer>();
 
+    private final static String PREFIX_FLAG = "expr:";
+
     static {
         SYMBOL_CONSTANTS.put(POW_CONSTANT, 0);
         SYMBOL_CONSTANTS.put(MODULO_CONSTANT, 1);
@@ -34,6 +36,7 @@ public class Syntactic {
 
     /**
      * <p> compare symbol prior </p>
+     *
      * @param a symbol a
      * @param b symbol b
      * @return true if a > b, then false
@@ -50,7 +53,6 @@ public class Syntactic {
 
     private final Calculator calculator;
 
-
     public Syntactic(final Calculator calculator) {
         this.calculator = calculator;
     }
@@ -59,14 +61,25 @@ public class Syntactic {
      * <p>calculate expr value</p>
      *
      * @param formula formula
-     * @throws CompilerException formula error
      * @return Constant
+     * @throws CompilerException formula error
      */
-    public Constant getFormulaValue(final String formula) throws CompilerException {
+    public Constant getFormulaValue(String formula) throws CompilerException {
 
         if (formula == null) {
             return Constant.build(ConstantType.NULL, null);
         }
+
+        /**
+         * check expr exists
+         */
+        if (!formula.startsWith(PREFIX_FLAG)) {
+            // return origin body
+            return Constant.build(ConstantType.STRING, formula);
+        }
+
+        //case1, expr:a+b->a+b
+        formula = formula.substring(PREFIX_FLAG.length());
 
         final Stack<Constant> operators = new Stack<Constant>();
         final Stack<Constant> numbers = new Stack<Constant>();
@@ -78,7 +91,7 @@ public class Syntactic {
         for (Constant word : words) {
             if (word.isSYMBOL()) {
                 List<Constant> constants = new ArrayList<Constant>();
-                while(!operators.isEmpty() && isCalculated(word, operators.peek())) {
+                while (!operators.isEmpty() && isCalculated(word, operators.peek())) {
                     if (operators.peek().equals(LEFT_PARENTHESIS_CONSTANT)) {
                         if (!RIGHT_PARENTHESIS_CONSTANT.equals(word)) {
                             throw new CompilerException("formula parenthesis error: " + formula);
@@ -136,8 +149,7 @@ public class Syntactic {
                         operators.pop();
                         constant = calculator.or(numbers.pop(), constant);
                     } else {
-                        throw new CompilerException(
-                                "operators error " + operators.peek());
+                        throw new CompilerException("operators error " + operators.peek());
                     }
                 }
                 if (!word.equals(RIGHT_PARENTHESIS_CONSTANT)) {
@@ -166,7 +178,7 @@ public class Syntactic {
             }
         }
 
-        if (operators.size() == 1 && numbers.size() == 1 ) {
+        if (operators.size() == 1 && numbers.size() == 1) {
             return numbers.pop();
         }
 
