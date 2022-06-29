@@ -23,7 +23,7 @@
     <groupId>com.alibaba.chaosblade</groupId>
     <artifactId>chaosblade-exec-jvm</artifactId>
     <packaging>pom</packaging>
-    <version>1.6.0</version>
+    <version>1.6.1</version>
     <modules>
         <module>chaosblade-exec-spi</module>
         <module>chaosblade-exec-bootstrap</module>
