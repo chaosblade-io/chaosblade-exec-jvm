@@ -4,7 +4,7 @@ BLADE_SRC_ROOT=`pwd`
 UNAME := $(shell uname)
 
 ifeq ($(BLADE_VERSION), )
-	BLADE_VERSION=1.6.0
+	BLADE_VERSION=1.6.1
 endif
 
 PLUGINS_PATH=plugins
