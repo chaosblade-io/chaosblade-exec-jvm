@@ -63,10 +63,10 @@ public class Injector {
             try {
                 boolean pass = limitAndIncrease(statusMetric);
                 if (!pass) {
-                    LOGGER.info("Limited by: {}", JsonUtil.writer().writeValueAsString(model));
+                    LOGGER.info("Limited by: {}", model);
                     break;
                 }
-                LOGGER.info("Match rule: {}", JsonUtil.writer().writeValueAsString(model));
+                LOGGER.info("Match rule: {}", model);
                 enhancerModel.merge(model);
                 ModelSpec modelSpec = ManagerFactory.getModelSpecManager().getModelSpec(target);
                 ActionSpec actionSpec = modelSpec.getActionSpec(model.getActionName());
