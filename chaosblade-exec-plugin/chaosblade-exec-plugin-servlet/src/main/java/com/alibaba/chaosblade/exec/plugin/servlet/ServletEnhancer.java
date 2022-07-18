@@ -18,10 +18,14 @@ package com.alibaba.chaosblade.exec.plugin.servlet;
 
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
+import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +40,7 @@ import java.util.Set;
  */
 public class ServletEnhancer extends BeforeEnhancer {
 
-    private static final Logger LOOGER = LoggerFactory.getLogger(ServletEnhancer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServletEnhancer.class);
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
@@ -50,16 +54,22 @@ public class ServletEnhancer extends BeforeEnhancer {
         matcherModel.add(ServletConstant.METHOD_KEY, requestMethod);
         matcherModel.add(ServletConstant.REQUEST_PATH_KEY, requestURI);
         matcherModel.add(ServletConstant.REQUEST_PATH_REGEX_PATTERN_KEY, requestURI);
-        LOOGER.debug("servlet matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
+        LOGGER.debug("servlet matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
 
         Map<String, Object> queryString = getQueryString(requestMethod, request);
-        LOOGER.debug("origin params: {}", JsonUtil.writer().writeValueAsString(queryString));
+        LOGGER.debug("origin params: {}", JsonUtil.writer().writeValueAsString(queryString));
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.addCustomMatcher(ServletConstant.QUERY_STRING_KEY, queryString,
                 ServletParamsMatcher.getInstance());
         enhancerModel.addCustomMatcher(ServletConstant.QUERY_STRING_REGEX_PATTERN_KEY, queryString,
                 ServletParamsMatcher.getInstance());
+        try {
+            Map<String, Map<String, String>> businessParams = getBusinessParams(request);
+            enhancerModel.addCustomMatcher(ModelConstant.BUSINESS_PARAMS, businessParams, BusinessParamMatcher.getInstance());
+        } catch (Exception e) {
+            LOGGER.warn("Getting business params occurs exception,return null", e);
+        }
         return enhancerModel;
     }
 
@@ -92,5 +102,14 @@ public class ServletEnhancer extends BeforeEnhancer {
             }
         }
         return params;
+    }
+
+    private Map<String, Map<String, String>> getBusinessParams(final Object invocation) throws Exception {
+        return BusinessParamUtil.getAndParse(ServletConstant.TARGET_NAME, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                return ReflectUtil.invokeMethod(invocation, ServletConstant.GET_HEADER, new String[]{key}, false);
+            }
+        });
     }
 }

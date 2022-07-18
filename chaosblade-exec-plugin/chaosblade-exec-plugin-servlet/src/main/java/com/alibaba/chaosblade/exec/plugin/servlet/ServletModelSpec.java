@@ -20,6 +20,7 @@ import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.chaosblade.exec.common.model.matcher.BusinessParamsMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.servlet.code.ModifyHttpCodeActionSpec;
 
@@ -90,6 +91,7 @@ public class ServletModelSpec extends FrameworkModelSpec {
         matcherSpecs.add(new ServletMethodMatcherSpec());
         matcherSpecs.add(new ServletRequestPathMatcherSpec());
         matcherSpecs.add(new ServletRequestPathRegexPatternMatcherSpec());
+        matcherSpecs.add(new BusinessParamsMatcherSpec());
         return matcherSpecs;
     }
 }
