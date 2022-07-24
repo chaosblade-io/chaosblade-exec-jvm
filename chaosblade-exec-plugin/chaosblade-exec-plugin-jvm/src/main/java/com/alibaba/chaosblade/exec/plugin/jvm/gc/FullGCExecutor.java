@@ -142,9 +142,10 @@ public class FullGCExecutor implements StoppableActionExecutor {
     private boolean jvmBefore8() {
         String javaVersion = System.getProperty("java.version");
         String[] versions = javaVersion.split("\\.");
-        if (Integer.parseInt(versions[1]) >= 8) {
-            return false;
+        if (Integer.parseInt(versions[1]) < 8 && Integer.parseInt(versions[0]) == 1) {
+            return true;
         }
-        return true;
+        return false;
     }
+
 }
