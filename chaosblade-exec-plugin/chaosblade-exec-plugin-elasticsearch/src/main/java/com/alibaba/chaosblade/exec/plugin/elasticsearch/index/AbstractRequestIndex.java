@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractRequestIndex implements RequestIndex {
@@ -63,5 +64,10 @@ public abstract class AbstractRequestIndex implements RequestIndex {
 
     public String index(Object target, String methodName) throws Exception{
         return ReflectUtil.invokeMethod(target, methodName);
+    }
+
+    public List<String> indexs(Object target, String methodName) throws Exception{
+        String[] strings = ReflectUtil.invokeMethod(target, methodName);
+        return Arrays.asList(strings);
     }
 }
