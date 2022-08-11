@@ -23,22 +23,28 @@ public class DubboThreadPoolFullExecutor extends WaitingTriggerThreadPoolFullExe
     private static final String CONSUMER_SIDE = "consumer";
 
     @Override
-    public ThreadPoolExecutor getThreadPoolExecutor() {
+    public ThreadPoolExecutor getThreadPoolExecutor() throws Exception {
         if (wrappedChannelHandler == null) {
             return null;
         }
         try {
             Object executorService = ReflectUtil.invokeMethod(wrappedChannelHandler, "getExecutorService",
-                new Object[0], true);
+                    new Object[0], false);
             if (executorService == null) {
-                LOGGER.warn("can't get executor service by getExecutorService method");
+                executorService = ReflectUtil.invokeMethod(wrappedChannelHandler, "getExecutor",
+                        new Object[0], true);
+            }
+            if (executorService == null) {
+                LOGGER.warn("can't get executor service by getExecutor method");
                 return null;
             }
             if (ThreadPoolExecutor.class.isInstance(executorService)) {
-                return (ThreadPoolExecutor)executorService;
+                return (ThreadPoolExecutor) executorService;
             }
         } catch (Exception e) {
-            LOGGER.warn("invoke getExecutorService method of WrappedChannelHandler exception", e);
+            LOGGER.warn("invoke getExecutorService method of WrappedChannelHandler exception, wrappedChannelHandler class is {}",
+                    wrappedChannelHandler.getClass().getName(), e);
+            throw e;
         }
         return null;
     }
@@ -64,6 +70,7 @@ public class DubboThreadPoolFullExecutor extends WaitingTriggerThreadPoolFullExe
                     triggerThreadPoolFull();
                 }
             } catch (Exception e) {
+                this.wrappedChannelHandler = null;
                 LOGGER.warn("set WrappedChannelHandler exception", e);
             }
         }

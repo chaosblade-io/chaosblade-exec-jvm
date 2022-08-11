@@ -1,8 +1,10 @@
 package com.alibaba.chaosblade.exec.common.model.matcher;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamPatternEnum;
 import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
 
 import java.util.List;
@@ -37,9 +39,13 @@ public class BusinessParamsMatcherSpec extends BasePredicateMatcherSpec {
         if (StringUtils.isEmpty(bParam)) {
             return PredicateResult.success();
         }
-        List<BusinessParamUtil.BusinessParam> params = BusinessParamUtil.parseFromJsonStr(bParam);
+        BusinessParamUtil.BusinessParamWrapper businessParamWrapper = BusinessParamUtil.parseFromJsonStr(bParam);
+        List<BusinessParamUtil.BusinessParam> params = businessParamWrapper.getParams();
         if (params == null || params.isEmpty()) {
             return PredicateResult.fail(getName() + " illegal json");
+        }
+        if (BusinessParamPatternEnum.getPatternMatcher(businessParamWrapper.getPattern()) == null) {
+            return PredicateResult.fail(getName() + " unsupported matching pattern");
         }
         return PredicateResult.success();
     }

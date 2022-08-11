@@ -25,7 +25,7 @@ public interface ThreadPoolFullExecutor extends ActionExecutor {
      * Get thread pool executor
      *
      * @return
+     * @throws Exception
      */
-    ThreadPoolExecutor getThreadPoolExecutor();
-
+    ThreadPoolExecutor getThreadPoolExecutor() throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.alibaba.chaosblade.exec.common.util;
 
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamPatternMatcher;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.StatusMetric;
 import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
@@ -19,41 +20,41 @@ public class BusinessParamUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessParamUtil.class);
     private static GlobalContext businessParamContent = new GlobalContext(3600, 100000);
 
-    private static Map<String, List<BusinessParam>> getAndParse(String target) throws Exception {
-        Map<String, List<BusinessParam>> paramsMap = new HashMap<String, List<BusinessParam>>();
+    private static Map<String, BusinessParamWrapper> getAndParse(String target) throws Exception {
+        Map<String, BusinessParamWrapper> paramsMap = new HashMap<String, BusinessParamWrapper>();
         List<StatusMetric> statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(
                 target);
         for (StatusMetric statusMetric : statusMetrics) {
             Model model = statusMetric.getModel();
             String flag = model.getMatcher().get(ModelConstant.BUSINESS_PARAMS);
-            List<BusinessParam> businessParams = parseFromJsonStr(flag);
-            paramsMap.put(ModelUtil.getIdentifier(model), businessParams);
+            BusinessParamWrapper businessParamWrapper = parseFromJsonStr(flag);
+            paramsMap.put(ModelUtil.getIdentifier(model), businessParamWrapper);
         }
         return paramsMap;
     }
 
-    public static List<BusinessParam> parseFromJsonStr(String str) {
+    public static BusinessParamWrapper parseFromJsonStr(String str) {
         try {
             if (!StringUtil.isBlank(str)) {
                 if (businessParamContent.containsKey(str)) {
-                    return (List<BusinessParam>) businessParamContent.get(str);
+                    return (BusinessParamWrapper) businessParamContent.get(str);
                 }
-                List<BusinessParam> businessParams = Arrays.asList(JsonUtil.reader().readValue(str, BusinessParam[].class));
-                businessParamContent.put(str, businessParams);
-                return businessParams;
+                BusinessParamWrapper businessParamWrapper = JsonUtil.reader().readValue(str, BusinessParamWrapper.class);
+                businessParamContent.put(str, businessParamWrapper);
+                return businessParamWrapper;
             }
         } catch (Exception exp) {
             LOGGER.warn("{} is not illegal json ", ModelConstant.BUSINESS_PARAMS);
         }
-        return Collections.EMPTY_LIST;
+        return new BusinessParamWrapper();
     }
 
     public static Map<String, Map<String, String>> getAndParse(String target, BusinessDataGetter dataGetter) throws Exception {
-        Map<String, List<BusinessParam>> businessParams = getAndParse(target);
+        Map<String, BusinessParamWrapper> businessParams = getAndParse(target);
         Map<String, Map<String, String>> result = new HashMap<String, Map<String, String>>();
-        for (Map.Entry<String, List<BusinessParam>> entry : businessParams.entrySet()) {
+        for (Map.Entry<String, BusinessParamWrapper> entry : businessParams.entrySet()) {
             result.put(entry.getKey(), new HashMap<String, String>());
-            for (BusinessParam businessParam : entry.getValue()) {
+            for (BusinessParam businessParam : entry.getValue().getParams()) {
                 String value = "";
                 if (businessParam.getMode().equals(mode.rpc.getValue())) {
                     value = getValueFromRpc(businessParam, dataGetter);
@@ -107,6 +108,27 @@ public class BusinessParamUtil {
             LOGGER.warn("get business data from rpc error", e);
         }
         return value;
+    }
+
+    public static class BusinessParamWrapper {
+        private String pattern;
+        private List<BusinessParamUtil.BusinessParam> params;
+
+        public String getPattern() {
+            return pattern;
+        }
+
+        public void setPattern(String pattern) {
+            this.pattern = pattern;
+        }
+
+        public List<BusinessParam> getParams() {
+            return params;
+        }
+
+        public void setParams(List<BusinessParam> params) {
+            this.params = params;
+        }
     }
 
     public static class BusinessParam {
