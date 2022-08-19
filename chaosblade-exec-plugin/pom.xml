@@ -47,7 +47,7 @@
         <module>chaosblade-exec-plugin-kafka</module>
         <module>chaosblade-exec-plugin-gateway</module>
         <module>chaosblade-exec-plugin-log</module>
-<!--        <module>chaosblade-exec-plugin-clickhouse</module>-->
+        <module>chaosblade-exec-plugin-clickhouse</module>
         <module>chaosblade-exec-plugin-zookeeper</module>
         <module>chaosblade-exec-plugin-feign</module>
     </modules>
