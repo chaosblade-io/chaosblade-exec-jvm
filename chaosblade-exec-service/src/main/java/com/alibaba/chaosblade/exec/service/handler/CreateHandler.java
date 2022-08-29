@@ -145,6 +145,7 @@ public class CreateHandler implements RequestHandler {
         if (result.isSuccess()) {
             // handle injection
             try {
+                lazyLoadPlugin(modelSpec, model);
                 applyPreInjectionModelHandler(suid, modelSpec, model);
             } catch (ExperimentException ex) {
                 this.statusManager.removeExp(suid);
@@ -166,13 +167,12 @@ public class CreateHandler implements RequestHandler {
      */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
             throws ExperimentException {
-        lazyLoadPlugin(modelSpec);
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
             ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
         }
     }
 
-    private void lazyLoadPlugin(ModelSpec modelSpec) throws ExperimentException {
+    private void lazyLoadPlugin(ModelSpec modelSpec, Model model) throws ExperimentException {
         PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
         if (listener == null) {
             throw new ExperimentException("can get plugin listener");
@@ -186,6 +186,11 @@ public class CreateHandler implements RequestHandler {
             return;
         }
         for (PluginBean pluginBean : pluginBeans.getPluginBeans()) {
+            String flag = model.getMatcher().get(pluginBean.getName());
+            if ("true".equalsIgnoreCase(flag)) {
+                listener.add(pluginBean);
+                break;
+            }
             listener.add(pluginBean);
         }
         ManagerFactory.getPluginManager().setLoad(pluginBeans, modelSpec.getTarget());
