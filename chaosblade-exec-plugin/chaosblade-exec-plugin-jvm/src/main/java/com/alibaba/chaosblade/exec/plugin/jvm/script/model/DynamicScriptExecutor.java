@@ -16,6 +16,20 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
+import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.chaosblade.exec.common.model.action.PreActionExecutor;
+import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
+import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import com.alibaba.chaosblade.exec.plugin.jvm.Base64Util;
+import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.chaosblade.exec.plugin.jvm.script.base.*;
+
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -25,31 +39,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
-import com.alibaba.chaosblade.exec.plugin.jvm.Base64Util;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.DefaultScriptEngineService;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
-
 /**
  * @author Changjun Xiao
  */
-public class DynamicScriptExecutor implements ActionExecutor, StoppableActionExecutor {
+public class DynamicScriptExecutor implements PreActionExecutor, ActionExecutor, StoppableActionExecutor {
 
     private static DefaultScriptEngineService engineService = new DefaultScriptEngineService();
 
     static {
         engineService.initialize();
+    }
+
+    public void preRun(EnhancerModel enhancerModel) throws ExperimentException {
+        String scriptId = createScriptId(enhancerModel.getMatcherModel());
+        if (scriptId == null) {
+            throw new IllegalArgumentException("can not get script id from matcher model");
+        }
+        ScriptTypeEnum scriptType = getScriptType(enhancerModel);
+        String scriptContent = getScriptContent(enhancerModel);
+        String scriptName = getScriptName(scriptId, enhancerModel);
+        // create script object
+        Script script = new Script(scriptId, "", scriptName, scriptContent, scriptType.getName());
+        ClassLoader classLoader = null;
+        try {
+            classLoader = getClassLoader(scriptType, enhancerModel);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        // compile script content
+        engineService.compile(classLoader.getParent(), script, null);
     }
 
     /**
