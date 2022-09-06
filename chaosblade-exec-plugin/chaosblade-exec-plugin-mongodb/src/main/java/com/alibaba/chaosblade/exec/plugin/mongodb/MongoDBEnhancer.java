@@ -108,8 +108,14 @@ public class MongoDBEnhancer extends BeforeEnhancer {
                 case ("createListIndexesIterable"):
                     matcherModel.add(MongoDBConstant.SQL_TYPE_MATCHER_NAME, "create");
                     break;
+                case ("doCount"):
+                case ("doEstimatedCount"):
+                case ("executeCount"):
+                case ("estimatedDocumentCount"):
+                    matcherModel.add(MongoDBConstant.SQL_TYPE_MATCHER_NAME, "count");
+                    break;
                 default:
-                    LOGGER.debug("unkown mongo operations: {}", sqlType);
+                    LOGGER.debug("unknown mongo operations: {}", sqlType);
             }
         }
 

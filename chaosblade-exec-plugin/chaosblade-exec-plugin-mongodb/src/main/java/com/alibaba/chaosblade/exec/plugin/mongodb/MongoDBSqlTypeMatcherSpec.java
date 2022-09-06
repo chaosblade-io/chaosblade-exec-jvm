@@ -29,7 +29,7 @@ public class MongoDBSqlTypeMatcherSpec extends BasePredicateMatcherSpec {
 
     @Override
     public String getDesc() {
-        return "The sql type, for example, insert, update and so on.";
+        return "The sql type, for example, find, drop, insert, delete, update, create, count and so on.";
     }
 
     @Override
