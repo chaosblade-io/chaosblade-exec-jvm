@@ -74,6 +74,11 @@ public class MongoDBPointCut implements PointCut {
         enhanceMethodSet.add("createChangeStreamIterable");
         enhanceMethodSet.add("createMapReduceIterable");
         enhanceMethodSet.add("createListIndexesIterable");
+
+        enhanceMethodSet.add("doCount");
+        enhanceMethodSet.add("doEstimatedCount");
+        enhanceMethodSet.add("executeCount");
+        enhanceMethodSet.add("estimatedDocumentCount");
     }
 
     @Override
