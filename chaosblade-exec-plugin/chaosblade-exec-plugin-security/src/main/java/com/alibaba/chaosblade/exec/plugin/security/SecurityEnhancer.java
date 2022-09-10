@@ -22,25 +22,11 @@ public class SecurityEnhancer extends BeforeEnhancer {
                                         Object object,
                                         Method method,
                                         Object[] methodArguments) throws Exception {
-        if (methodArguments == null || methodArguments.length == 0) {
-            log.warn("The necessary parameters is null or length is not equal 1, {}",
-                    methodArguments != null ? methodArguments.length : null);
-            return null;
-        }
-
-        Object username = null;
-
-        if (method.getName().equals(SecurityConstant.METHOD_UserDetailsService$loadUserByUsername)) {
-            username = methodArguments[0];
-        }
-
-        if (username == null) {
-            return null;
-        }
+        Object username = methodArguments[0];
+        log.info("[SecurityEnhancer] username: {}", username);
 
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add("username", username);
-        log.info("[SecurityEnhancer] username: {}", username);
         return new EnhancerModel(classLoader, matcherModel);
     }
 }
