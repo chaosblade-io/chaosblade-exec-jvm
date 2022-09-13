@@ -12,7 +12,7 @@ public class SecurityPlugin implements Plugin {
 
     @Override
     public String getName() {
-        return "security";
+        return SecurityConstant.PLUGIN_NAME;
     }
 
     @Override

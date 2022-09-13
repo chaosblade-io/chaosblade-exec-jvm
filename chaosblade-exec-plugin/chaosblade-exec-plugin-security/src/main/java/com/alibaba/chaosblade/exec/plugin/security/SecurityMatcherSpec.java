@@ -9,12 +9,12 @@ public class SecurityMatcherSpec extends BasePredicateMatcherSpec {
 
     @Override
     public String getName() {
-        return "username";
+        return SecurityConstant.PARAM_USERNAME;
     }
 
     @Override
     public String getDesc() {
-        return "SecurityMatcherSpec";
+        return "login username";
     }
 
     @Override

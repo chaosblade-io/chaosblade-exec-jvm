@@ -23,12 +23,12 @@ public class SecurityModelSpec extends FrameworkModelSpec {
         for (ActionSpec action : actions) {
             if (action instanceof DelayActionSpec) {
                 action.setLongDesc("SpringSecurity delay experiment");
-                action.setExample("# Do a delay 2s experiment for SpringSecurity forward operations\n"
+                action.setExample("# Do a delay 2s experiment for SpringSecurity login operation\n"
                         + "blade create security delay --username admin --time 2000\n\n");
             }
             if (action instanceof ThrowCustomExceptionActionSpec) {
                 action.setLongDesc("SpringSecurity throws customer exception experiment");
-                action.setExample("# Do a throws customer exception experiment for SpringSecurity operations\n" +
+                action.setExample("# Do a throws customer exception experiment for SpringSecurity login\n" +
                         "blade create security throwCustomException --exception java.lang.Exception --username admin");
             }
         }
@@ -43,16 +43,16 @@ public class SecurityModelSpec extends FrameworkModelSpec {
 
     @Override
     public String getTarget() {
-        return "security";
+        return SecurityConstant.PLUGIN_NAME;
     }
 
     @Override
     public String getShortDesc() {
-        return "security short desc";
+        return "SpringSecurity login experiment";
     }
 
     @Override
     public String getLongDesc() {
-        return "security long desc";
+        return "SpringSecurity login experiment contains delay and exception by command and so on";
     }
 }
