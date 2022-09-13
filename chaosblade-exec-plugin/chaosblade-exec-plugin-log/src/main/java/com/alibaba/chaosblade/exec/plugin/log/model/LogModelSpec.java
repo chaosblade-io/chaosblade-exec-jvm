@@ -1,13 +1,17 @@
 package com.alibaba.chaosblade.exec.plugin.log.model;
 
+import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.log.LogConstant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author shizhi.zhu@qunar.com
@@ -43,11 +47,27 @@ public class LogModelSpec extends FrameworkModelSpec {
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
         matcherSpecs.add(new LogbackModelSpec());
+        matcherSpecs.add(new Log4j2ModelSpec());
         return matcherSpecs;
     }
 
     @Override
     public String getTarget() {
         return LogConstant.TARGET;
+    }
+
+    @Override
+    protected PredicateResult preMatcherPredicate(Model model) {
+        if (model == null) {
+            return PredicateResult.fail("matcher not found for log");
+        }
+        MatcherModel matcher = model.getMatcher();
+        Set<String> keySet = matcher.getMatchers().keySet();
+        for (String key : keySet) {
+            if (key.equals(LogConstant.LOG4J2_KEY) || key.equals(LogConstant.LOGBACK_KEY)) {
+                return PredicateResult.success();
+            }
+        }
+        return PredicateResult.fail("less necessary matcher is log4j2 or logback for log");
     }
 }
