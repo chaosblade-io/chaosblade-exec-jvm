@@ -27,7 +27,8 @@ public class SecurityEnhancer extends BeforeEnhancer {
             return null;
         }
         Object authentication = methodArguments[0];
-        if (!authentication.getClass().getName().equals(SecurityConstant.CLASS_Authentication)) {
+
+        if (!ReflectUtil.isAssignableFrom(classLoader, authentication.getClass(), SecurityConstant.CLASS_Authentication)) {
             LOGGER.warn("argument is not AuthenticationImpl, className:{}, methodName:{}", className, method.getName());
             return null;
         }
