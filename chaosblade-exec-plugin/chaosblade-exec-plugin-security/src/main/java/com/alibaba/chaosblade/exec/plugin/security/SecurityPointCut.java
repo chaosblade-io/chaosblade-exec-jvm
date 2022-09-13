@@ -13,11 +13,11 @@ public class SecurityPointCut implements PointCut {
 
     @Override
     public ClassMatcher getClassMatcher() {
-        return new InterfaceClassMatcher(SecurityConstant.CLASS_UserDetailsService);
+        return new InterfaceClassMatcher(SecurityConstant.CLASS_AuthenticationManager);
     }
 
     @Override
     public MethodMatcher getMethodMatcher() {
-        return new NameMethodMatcher(SecurityConstant.METHOD_UserDetailsService$loadUserByUsername);
+        return new NameMethodMatcher(SecurityConstant.METHOD_AuthenticationManager$authenticate);
     }
 }

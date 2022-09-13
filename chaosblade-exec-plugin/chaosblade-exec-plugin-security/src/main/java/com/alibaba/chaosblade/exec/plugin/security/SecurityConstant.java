@@ -9,6 +9,8 @@ public class SecurityConstant {
 
     public static final String PARAM_USERNAME = "username";
 
-    public static final String CLASS_UserDetailsService = "org.springframework.security.core.userdetails.UserDetailsService";
-    public static final String METHOD_UserDetailsService$loadUserByUsername = "loadUserByUsername";
+    public static final String CLASS_AuthenticationManager = "org.springframework.security.authentication.AuthenticationManager";
+    public static final String CLASS_Authentication = "org.springframework.security.core.Authentication";
+    public static final String METHOD_Authentication$getName = "getName";
+    public static final String METHOD_AuthenticationManager$authenticate = "authenticate";
 }

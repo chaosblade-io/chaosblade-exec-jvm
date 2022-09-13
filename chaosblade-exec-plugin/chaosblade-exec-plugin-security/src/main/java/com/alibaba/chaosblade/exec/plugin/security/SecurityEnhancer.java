@@ -3,6 +3,7 @@ package com.alibaba.chaosblade.exec.plugin.security;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,12 @@ public class SecurityEnhancer extends BeforeEnhancer {
             LOGGER.warn("argument's length less than 1, className:{}, methodName:{}", className, method.getName());
             return null;
         }
-        Object username = methodArguments[0];
+        Object authentication = methodArguments[0];
+        if (!authentication.getClass().getName().equals(SecurityConstant.CLASS_Authentication)) {
+            LOGGER.warn("argument is not AuthenticationImpl, className:{}, methodName:{}", className, method.getName());
+            return null;
+        }
+        Object username = ReflectUtil.invokeMethod(authentication, SecurityConstant.METHOD_Authentication$getName);
 
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(SecurityConstant.PARAM_USERNAME, username);
