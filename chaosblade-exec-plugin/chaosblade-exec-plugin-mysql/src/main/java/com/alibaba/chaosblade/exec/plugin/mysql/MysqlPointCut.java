@@ -37,7 +37,9 @@ public class MysqlPointCut implements PointCut {
 
         return orClassMatcher
                 .or(new NameClassMatcher(MYSQL_IO_CLASS))
-                .or(new NameClassMatcher(MYSQL8_NATIVE_SESSION_CLASS));
+                .or(new NameClassMatcher(MYSQL8_NATIVE_SESSION_CLASS))
+                .or(new NameClassMatcher(IO_SHARDING_STATEMENT_EXECUTOR_CLASS))
+                .or(new NameClassMatcher(APACHE_SHARDING_EXECUTOR_ENGINE_CLASS));
     }
 
     @Override
@@ -45,6 +47,8 @@ public class MysqlPointCut implements PointCut {
         OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
         return orMethodMatcher
                 .or(new NameMethodMatcher(INTERCEPTOR_PRE_METHOD))
-                .or(new NameMethodMatcher(MYSQL8_NATIVE_SESSION_METHOD));
+                .or(new NameMethodMatcher(MYSQL8_NATIVE_SESSION_METHOD))
+                .or(new NameMethodMatcher(IO_SHARDING_STATEMENT_EXECUTOR_METHOD))
+                .or(new NameMethodMatcher(APACHE_SHARDING_EXECUTOR_ENGINE_METHOD));
     }
 }
