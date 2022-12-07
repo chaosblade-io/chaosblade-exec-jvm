@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 
 /**
  * @Author yuhan
- * @package: com.alibaba.chaosblade.exec.plugin.http
+ * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch
  * @Date 2019-05-22 20:35
  */
 public class ElasticSearchEnhancer extends BeforeEnhancer {
