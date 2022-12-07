@@ -11,7 +11,7 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 
 /**
  * @Author Yuhan Tang
- * @package: com.alibaba.chaosblade.exec.plugin.hbase
+ * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch
  * @Date 2020-10-30 14:42
  */
 public class ElasticSearchPointCut implements PointCut {
