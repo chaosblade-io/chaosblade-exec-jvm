@@ -1,5 +1,8 @@
 package com.alibaba.chaosblade.exec.plugin.jvm.oom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * oom object
  *
@@ -9,7 +12,7 @@ package com.alibaba.chaosblade.exec.plugin.jvm.oom;
  */
 public class OomObject {
 
-    String[] strings;
+   List<byte[]> list;
 
     public OomObject() {
         this(1);
@@ -22,9 +25,9 @@ public class OomObject {
         if (size <= 0) {
             size = 1;
         }
-        strings = new String[size];
+        list = new ArrayList<byte[]>();
         for (int i = 0; i < size; i++) {
-            strings[i] = new String(createObject());
+            list.add(createObject());
         }
     }
 
@@ -34,6 +37,6 @@ public class OomObject {
      * @return
      */
     private byte[] createObject() {
-        return new byte[1024 * 300];
+        return new byte[1024 * 1024];
     }
 }
