@@ -366,7 +366,9 @@ public class JavaCodeScriptEngine implements ScriptEngine {
         @Override
         public Iterable<JavaFileObject> list(Location location, String packageName, Set<Kind> kinds, boolean recurse)
             throws IOException {
-            if (location == StandardLocation.PLATFORM_CLASS_PATH) {
+            if (location.getName().contains("SYSTEM_MODULES") && location.getName().contains("java.base")){
+                return super.list(location, packageName, kinds, recurse);
+            } else if (location == StandardLocation.PLATFORM_CLASS_PATH) {
                 return super.list(location, packageName, kinds, recurse);
             } else if (location == StandardLocation.CLASS_PATH && kinds.contains(JavaFileObject.Kind.CLASS)) {
                 if (packageName.startsWith("java")) {
