@@ -30,7 +30,7 @@ Sandbox内置jetty容器，访问api回调到注解为@Http("/xx")的方法，�
 |  ----  | ----  |
 |blade create| CreateHandler创建一个实验，StatusManager注册状态，满足一定条件的插件加载。 |
 |blade status|StatusHandler去StatusManager查询实验状态。|
-|blade destroy|DestroyHandlerr销毁实验，满足一定条件的插件卸载。|
+|blade destroy|DestroyHandler销毁实验，满足一定条件的插件卸载。|
 ## 实现原理
 
 以servlet，api的接口延迟为例，实现原理如下图。
