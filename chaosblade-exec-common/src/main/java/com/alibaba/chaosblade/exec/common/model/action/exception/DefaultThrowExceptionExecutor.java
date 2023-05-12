@@ -16,22 +16,21 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.exception;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.chaosblade.exec.common.model.action.PreActionExecutor;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author Changjun Xiao
  */
-public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
-    private static final String DEFAULT_EXCEPTION_MESSAGE = "chaosblade-mock-exception";
-
+public class DefaultThrowExceptionExecutor implements PreActionExecutor, ThrowExceptionExecutor {
     private FlagSpec exceptionFlag;
     private FlagSpec exceptionMessageFlag;
 
@@ -51,14 +50,17 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
             exceptionMessage = enhancerModel.getActionFlag(exceptionMessageFlag.getName());
         }
         if (StringUtil.isBlank(exceptionMessage)) {
-            exceptionMessage = DEFAULT_EXCEPTION_MESSAGE;
+            exceptionMessage = CommThrowException.DEFAULT_EXCEPTION_MESSAGE;
         }
         if (enhancerModel.getAction().equals(THROW_CUSTOM_EXCEPTION)) {
-            exception = throwCustomException(enhancerModel.getClassLoader(), enhancerModel.getActionFlag(exceptionFlag
-                .getName()), exceptionMessage);
+            exception = CommThrowException.getException(exceptionMessage);
+            if (exception == null) {
+                exception = throwCustomException(enhancerModel.getClassLoader(), enhancerModel.getActionFlag(exceptionFlag
+                        .getName()), exceptionMessage);
+            }
         } else if (enhancerModel.getAction().equals(THROW_DECLARED_EXCEPTION)) {
             exception = throwDeclaredException(enhancerModel.getClassLoader(), enhancerModel.getMethod(),
-                exceptionMessage);
+                    exceptionMessage);
         }
         if (exception != null) {
             InterruptProcessException.throwThrowsImmediately(exception);
@@ -79,7 +81,7 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
             return instantiateException(clazz, exceptionMessage);
         } catch (Throwable e) {
             return new RuntimeException(
-                "mock custom exception: " + exception + " occurs error", e);
+                    "mock custom exception: " + exception + " occurs error", e);
         }
     }
 
@@ -114,7 +116,7 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
      * @throws InvocationTargetException
      * @throws InstantiationException
      */
-    private Exception instantiateException (Class exceptionClass, String exceptionMessage) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    private Exception instantiateException(Class exceptionClass, String exceptionMessage) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         if (Exception.class.isAssignableFrom(exceptionClass)) {
             Constructor<?>[] constructors = exceptionClass.getConstructors();
             //cache default constructor, if any
@@ -134,5 +136,16 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
                     + ", no default or single-string-param constructor found.");
         }
         return new RuntimeException("the " + exceptionClass.getName() + " not assign from java.lang.Exception");
+    }
+
+    @Override
+    public void preRun(EnhancerModel enhancerModel) throws ExperimentException {
+        String exception = enhancerModel.getActionFlag(new ExceptionFlagSpec().getName());
+        String exceptionMessage = enhancerModel.getActionFlag(new ExceptionMessageFlagSpec().getName());
+        if (StringUtil.isBlank(exceptionMessage)) {
+            exceptionMessage = CommThrowException.DEFAULT_EXCEPTION_MESSAGE;
+        }
+        Exception e = throwCustomException(this.getClass().getClassLoader(), exception, exceptionMessage);
+        CommThrowException.putException(exceptionMessage, e);
     }
 }

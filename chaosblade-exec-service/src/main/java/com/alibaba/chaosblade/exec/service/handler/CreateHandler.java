@@ -16,10 +16,7 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
-import com.alibaba.chaosblade.exec.common.aop.PluginBean;
-import com.alibaba.chaosblade.exec.common.aop.PluginBeans;
-import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
+import com.alibaba.chaosblade.exec.common.aop.*;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
 import com.alibaba.chaosblade.exec.common.center.RegisterResult;
@@ -27,7 +24,9 @@ import com.alibaba.chaosblade.exec.common.center.StatusManager;
 import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.model.action.PreActionExecutor;
 import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
@@ -145,6 +144,7 @@ public class CreateHandler implements RequestHandler {
         if (result.isSuccess()) {
             // handle injection
             try {
+                applyPreActionExecutorHandler(modelSpec, model);
                 applyPreInjectionModelHandler(suid, modelSpec, model);
             } catch (ExperimentException ex) {
                 this.statusManager.removeExp(suid);
@@ -169,6 +169,23 @@ public class CreateHandler implements RequestHandler {
         lazyLoadPlugin(modelSpec);
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
             ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
+        }
+    }
+
+    /**
+     * Pre-handle for injection
+     *
+     * @param modelSpec
+     * @param model
+     * @throws ExperimentException
+     */
+    private void applyPreActionExecutorHandler(ModelSpec modelSpec, Model model)
+            throws ExperimentException {
+        ActionExecutor actionExecutor = modelSpec.getActionSpec(model.getActionName()).getActionExecutor();
+        if (actionExecutor instanceof PreActionExecutor) {
+            EnhancerModel enhancerModel = new EnhancerModel(EnhancerModel.class.getClassLoader(), model.getMatcher());
+            enhancerModel.merge(model);
+            ((PreActionExecutor) actionExecutor).preRun(enhancerModel);
         }
     }
 
