@@ -64,14 +64,11 @@ public class Model {
 
     @Override
     public String toString() {
-        try {
-            return JsonUtil.writer().writeValueAsString(this);
-        } catch (Throwable e) {
-        }
         return "Model{" +
-            "target='" + target + '\'' +
-            ", matcher=" + matcher +
-            ", action=" + action +
-            '}';
+                "target='" + target + '\'' +
+                ", matchers=" + matcher.getMatchers().toString() +
+                ", action=" + action.getName() +
+                ", flags=" + action.getFlags().toString() +
+                '}';
     }
 }

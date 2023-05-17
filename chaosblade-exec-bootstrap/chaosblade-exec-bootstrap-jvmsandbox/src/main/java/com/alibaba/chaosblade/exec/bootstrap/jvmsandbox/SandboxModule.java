@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Changjun Xiao
  * @author hzyangshurui
  */
-@Information(id = "chaosblade", version = "1.3.0", author = "Changjun Xiao", isActiveOnLoad = false)
+@Information(id = "chaosblade", version = "1.7.1", author = "Changjun Xiao", isActiveOnLoad = false)
 public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleListener {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SandboxModule.class);
@@ -119,7 +119,7 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
                 final ModelSpec modelSpec = pluginBean.getModelSpec();
                 // register model
                 ManagerFactory.getModelSpecManager().registerModelSpec(modelSpec);
-                add(pluginBean);
+                ManagerFactory.getPluginManager().registerPlugin(pluginBean);
             } catch (Throwable e) {
                 LOGGER.warn("Load " + plugin.getClass().getName() + " occurs exception", e);
             }
@@ -210,11 +210,11 @@ public class SandboxModule implements Module, ModuleLifecycle, PluginLifecycleLi
         // necessary parameters.
         if (plugin.isAfterEvent()) {
             int watcherId = moduleEventWatcher.watch(filter, SandboxEnhancerFactory.createAfterEventListener(plugin),
-                Type.BEFORE, Type.RETURN);
+                    Type.BEFORE, Type.RETURN);
             watchIds.put(PluginUtil.getIdentifierForAfterEvent(plugin), watcherId);
         } else {
             int watcherId = moduleEventWatcher.watch(
-                filter, SandboxEnhancerFactory.createBeforeEventListener(plugin), Event.Type.BEFORE);
+                    filter, SandboxEnhancerFactory.createBeforeEventListener(plugin), Event.Type.BEFORE);
             watchIds.put(PluginUtil.getIdentifier(plugin), watcherId);
         }
     }

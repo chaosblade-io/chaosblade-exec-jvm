@@ -32,6 +32,8 @@ import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
 
+import java.util.Arrays;
+
 /**
  * Jvm model spec
  * <p>
@@ -92,7 +94,7 @@ public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionM
             try {
                 ((DirectlyInjectionAction) actionSpec).createInjection(uid, model);
             } catch (Exception e) {
-                throw new ExperimentException("create injection failed:" + e.getMessage());
+                throw new ExperimentException("create injection failed: " + Arrays.toString(e.getStackTrace()) + ", " + e, e);
             }
         } else {
             MethodPreInjectHandler.preHandleInjection(model);

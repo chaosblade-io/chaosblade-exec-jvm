@@ -48,7 +48,7 @@ public class ConfigUtil {
         String value = getActionFlag(enhancerModel, flagKey);
         if (value == null) { return defaultValue; }
         try {
-            return Boolean.parseBoolean(flagKey);
+            return Boolean.parseBoolean(value);
         } catch (Exception ex) {
             return defaultValue;
         }

@@ -53,6 +53,13 @@
                 <include>**/**</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>chaosblade-exec-spi/target/classes</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>**/**</include>
+            </includes>
+        </fileSet>
 
         <!-- plugins -->
         <fileSet>

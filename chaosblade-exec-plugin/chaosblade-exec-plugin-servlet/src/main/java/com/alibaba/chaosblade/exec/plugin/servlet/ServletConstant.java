@@ -49,5 +49,7 @@ public interface ServletConstant {
     String GET_PARAMETER_MAP = "getParameterMap";
 
     String GET_QUERY_STRING = "getQueryString";
+
+    String GET_HEADER = "getHeader";
     /** ----------- servlet request method --------* */
 }

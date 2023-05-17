@@ -4,7 +4,7 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
 
 /**
  * @Author <a href="tangyuhan@shulie.io">yuhan.tang</a>
- * @package: com.alibaba.chaosblade.exec.plugin.hbase
+ * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch
  * @Date 2020-10-30 14:21
  */
 public class ElasticSearchIndexMatcherSpec extends BasePredicateMatcherSpec {

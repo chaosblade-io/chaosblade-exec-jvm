@@ -2,6 +2,7 @@ package com.alibaba.chaosblade.exec.plugin.http.resttemplate;
 
 import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
+import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
 
 /**
@@ -13,7 +14,7 @@ public class RestTemplatePlugin extends HttpPlugin {
 
     @Override
     public String getName() {
-        return "rest";
+        return HttpConstant.REST_TARGET_NAME;
     }
 
     @Override

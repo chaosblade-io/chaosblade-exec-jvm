@@ -24,7 +24,7 @@ public interface MysqlConstant {
     String TARGET_NAME = "mysql";
 
     String HOST_MATCHER_NAME = "host";
-    String TABLE_MATCHER_NAME = "table";
+    String TABLE_MATCHER_NAME = "select";
     String DATABASE_MATCHER_NAME = "database";
     String SQL_TYPE_MATCHER_NAME = "sqltype";
     String PORT_MATCHER_NAME = "port";
@@ -34,4 +34,12 @@ public interface MysqlConstant {
 
     String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
     String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
+
+
+    String IO_SHARDING_STATEMENT_EXECUTOR_CLASS = "io.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
+    String IO_SHARDING_STATEMENT_EXECUTOR_METHOD = "executeCallback";
+
+    String APACHE_SHARDING_EXECUTOR_ENGINE_CLASS = "org.apache.shardingsphere.infra.executor.kernel.ExecutorEngine";
+    String APACHE_SHARDING_EXECUTOR_ENGINE_METHOD = "syncExecute";
+
 }

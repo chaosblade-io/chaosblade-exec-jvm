@@ -21,7 +21,7 @@
     <parent>
         <artifactId>chaosblade-exec-jvm</artifactId>
         <groupId>com.alibaba.chaosblade</groupId>
-        <version>1.3.0</version>
+        <version>1.7.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -48,12 +48,21 @@
         <module>chaosblade-exec-plugin-gateway</module>
         <module>chaosblade-exec-plugin-log</module>
         <module>chaosblade-exec-plugin-grpc</module>
+        <module>chaosblade-exec-plugin-clickhouse</module>
+        <module>chaosblade-exec-plugin-zookeeper</module>
+        <module>chaosblade-exec-plugin-feign</module>
+        <module>chaosblade-exec-plugin-security</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>com.alibaba.chaosblade</groupId>
             <artifactId>chaosblade-exec-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.chaosblade</groupId>
+            <artifactId>chaosblade-exec-spi</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -26,7 +26,7 @@ public class ServletEnhancer extends BeforeEnhancer {
                                         Object object,
                                         Method method, 
                                         Object[] methodArguments
-                                        ) throws Exception {
+                                        ,String targetName) throws Exception {
         Object request = methodArguments[0];
         // 执行被增强类的方法，获取一些需要的值
         String queryString = ReflectUtil.invokeMethod(request, "getQueryString", new Object[] {}, false);

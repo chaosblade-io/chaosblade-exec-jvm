@@ -30,9 +30,15 @@ public class ManagerFactory {
      */
     private static ModelSpecManager modelSpecManager = new DefaultModelSpecManager();
     /**
+     * Plugin model manager
+     */
+    private static PluginBeanManager pluginManager = new DefaultPluginBeanManager();
+    /**
      * Listener manager manages the plugin listener
      */
     private static ListenerManager listenerManager = new DefaultListenerManager();
+
+    private static SPIServiceManager spiServiceManager = new DefaultSPIServiceManager();
 
     public static StatusManager getStatusManager() {
         return statusManager;
@@ -42,14 +48,23 @@ public class ManagerFactory {
         return modelSpecManager;
     }
 
+    public static PluginBeanManager getPluginManager() {
+        return pluginManager;
+    }
+
     public static ListenerManager getListenerManager() {
         return listenerManager;
+    }
+
+    public static SPIServiceManager spiServiceManager() {
+        return spiServiceManager;
     }
 
     public static void load() {
         modelSpecManager.load();
         listenerManager.load();
         statusManager.load();
+        spiServiceManager.load();
     }
 
     /**
@@ -59,5 +74,6 @@ public class ManagerFactory {
         statusManager.unload();
         modelSpecManager.unload();
         listenerManager.unload();
+        spiServiceManager.unload();
     }
 }

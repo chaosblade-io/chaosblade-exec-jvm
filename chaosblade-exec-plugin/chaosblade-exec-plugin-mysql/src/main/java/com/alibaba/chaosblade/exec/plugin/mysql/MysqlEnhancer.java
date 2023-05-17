@@ -24,7 +24,7 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.alibaba.chaosblade.exec.plugin.mysql.MysqlConstant.MYSQL_IO_CLASS;
+import static com.alibaba.chaosblade.exec.plugin.mysql.MysqlConstant.*;
 
 /**
  * @author Changjun Xiao
@@ -37,6 +37,10 @@ public class MysqlEnhancer extends BeforeEnhancer {
 
     private final Mysql8Enhancer mysql8Enhancer = new Mysql8Enhancer();
 
+    private final IoShardingJdbcEnhancer ioShardingJdbcEnhancer = new IoShardingJdbcEnhancer();
+
+    private final ApacheShardingJdbcEnhancer apacheShardingJdbcEnhancer = new ApacheShardingJdbcEnhancer();
+
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
                                         Method method, Object[] methodArguments)
@@ -44,7 +48,11 @@ public class MysqlEnhancer extends BeforeEnhancer {
 
         if (MYSQL_IO_CLASS.equals(className)) {
             return mysql5Enhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
-        } else {
+        }else if(IO_SHARDING_STATEMENT_EXECUTOR_CLASS.equals(className)) {
+            return ioShardingJdbcEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
+        }else if(APACHE_SHARDING_EXECUTOR_ENGINE_CLASS.equals(className)) {
+            return apacheShardingJdbcEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
+        }else{
             return mysql8Enhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
         }
     }

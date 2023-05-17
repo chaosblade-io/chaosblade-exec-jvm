@@ -2,7 +2,7 @@ package com.alibaba.chaosblade.exec.plugin.elasticsearch;
 
 /**
  * @Author yuhan
- * @package: com.alibaba.chaosblade.exec.plugin.http
+ * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch
  * @Date 2019-05-22 16:28
  */
 public class ElasticSearchConstant {

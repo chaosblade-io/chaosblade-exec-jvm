@@ -46,4 +46,8 @@ public class ActionModel {
     public String getFlag(String key) {
         return flags.get(key);
     }
+
+    public Map<String, String> getFlags() {
+        return flags;
+    }
 }

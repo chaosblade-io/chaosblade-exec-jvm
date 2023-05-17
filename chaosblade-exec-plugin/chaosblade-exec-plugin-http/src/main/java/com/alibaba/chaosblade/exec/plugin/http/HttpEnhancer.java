@@ -16,18 +16,23 @@
 
 package com.alibaba.chaosblade.exec.plugin.http;
 
+import java.lang.reflect.Method;
+import java.net.SocketTimeoutException;
+import java.util.Map;
+
+import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
+import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.chaosblade.exec.common.util.FlagUtil;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.plugin.http.model.CallPointMatcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
-import java.net.SocketTimeoutException;
 
 /**
  * @Author yuhan
@@ -50,11 +55,36 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
         }
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         int timeout = getTimeout(object, methodArguments);
+        enhancerModel.setMethod(method).setObject(object).setMethodArguments(methodArguments);
         postDoBeforeAdvice(enhancerModel);
-        StackTraceElement[] stackTrace = new NullPointerException().getStackTrace();
-        enhancerModel.addCustomMatcher(HttpConstant.CALL_POINT_KEY, stackTrace, CallPointMatcher.getInstance());
+        if (shouldAddCallPoint()) {
+            StackTraceElement[] stackTrace = new NullPointerException().getStackTrace();
+            enhancerModel.addCustomMatcher(HttpConstant.CALL_POINT_KEY, stackTrace, CallPointMatcher.getInstance());
+        }
         enhancerModel.setTimeoutExecutor(createTimeoutExecutor(classLoader, timeout, className));
+        try {
+            Map<String, Map<String, String>> businessParams = getBusinessParams(className, object, method, methodArguments);
+            if (businessParams != null) {
+                enhancerModel.addCustomMatcher(ModelConstant.BUSINESS_PARAMS, businessParams, BusinessParamMatcher.getInstance());
+            }
+        } catch (Exception e) {
+            LOGGER.warn("Getting business params  occurs exception", e);
+        }
         return enhancerModel;
+    }
+
+    /**
+     * Get b-params
+     *
+     * @param instance
+     * @param methodArguments
+     * @return
+     * @throws Exception
+     */
+    protected abstract Map<String, Map<String, String>> getBusinessParams(String className, Object instance, Method method, Object[] methodArguments) throws Exception;
+
+    protected boolean shouldAddCallPoint() {
+        return FlagUtil.hasFlag("http", HttpConstant.CALL_POINT_KEY);
     }
 
     /**
@@ -63,6 +93,7 @@ public abstract class HttpEnhancer extends BeforeEnhancer {
      * @param instance
      * @return
      */
+
     protected abstract int getTimeout(Object instance, Object[] methodArguments);
 
     /**

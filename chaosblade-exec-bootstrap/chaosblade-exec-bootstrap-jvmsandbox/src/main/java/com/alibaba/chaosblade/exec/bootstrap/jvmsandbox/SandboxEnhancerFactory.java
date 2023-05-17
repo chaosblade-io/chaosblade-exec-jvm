@@ -33,6 +33,7 @@ public class SandboxEnhancerFactory {
 
     public static final String JAVA = "java.";
     public static final String SUN = "sun.";
+    public static final String CHAOSBLADE = "com.alibaba.chaosblade";
 
     /**
      * Create class and method filter to match the pointcut
@@ -48,7 +49,8 @@ public class SandboxEnhancerFactory {
                                          String[] interfaceTypeJavaClassNameArray,
                                          String[] annotationTypeJavaClassNameArray
             ) {
-                if (javaClassName.startsWith(JAVA) || javaClassName.startsWith(SUN) || javaClassName.startsWith("[")) {
+                if (javaClassName.startsWith(JAVA) || javaClassName.startsWith(SUN) || javaClassName.startsWith("[")
+                    || javaClassName.startsWith(CHAOSBLADE)) {
                     return false;
                 }
                 if (pointCut == null) {

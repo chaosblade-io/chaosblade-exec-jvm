@@ -33,7 +33,7 @@ public class FullGCExecutor implements StoppableActionExecutor {
     @Override
     public synchronized void run(EnhancerModel enhancerModel) throws Exception {
         if (started.compareAndSet(false, true)) {
-            final int interval = ConfigUtil.getActionFlag(enhancerModel, JvmConstant.FLAG_FULL_GC_INTERVAL, 0);
+            final int interval = ConfigUtil.getActionFlag(enhancerModel, JvmConstant.FLAG_FULL_GC_INTERVAL, 1);
             final int totalCount = ConfigUtil.getActionFlag(enhancerModel, JvmConstant.FLAG_FULL_GC_TOTAL_COUNT, 0);
             scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
                 @Override
@@ -54,7 +54,7 @@ public class FullGCExecutor implements StoppableActionExecutor {
                         LOGGER.error("do gcClassHistogram error", e);
                     }
                 }
-            }, 0, interval, TimeUnit.MILLISECONDS);
+            }, 0, interval <= 0 ? 1 : interval, TimeUnit.MILLISECONDS);
         } else {
             LOGGER.warn("another executor is running now");
         }
@@ -142,9 +142,10 @@ public class FullGCExecutor implements StoppableActionExecutor {
     private boolean jvmBefore8() {
         String javaVersion = System.getProperty("java.version");
         String[] versions = javaVersion.split("\\.");
-        if (Integer.parseInt(versions[1]) >= 8) {
-            return false;
+        if (Integer.parseInt(versions[1]) < 8 && Integer.parseInt(versions[0]) == 1) {
+            return true;
         }
-        return true;
+        return false;
     }
+
 }

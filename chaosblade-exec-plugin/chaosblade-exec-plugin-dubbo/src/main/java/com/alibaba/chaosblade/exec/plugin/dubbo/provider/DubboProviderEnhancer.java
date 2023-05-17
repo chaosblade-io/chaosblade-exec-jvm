@@ -18,9 +18,13 @@ package com.alibaba.chaosblade.exec.plugin.dubbo.provider;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+
+import java.util.Map;
 
 /**
  * @author Changjun Xiao
@@ -36,6 +40,20 @@ public class DubboProviderEnhancer extends DubboEnhancer {
     @Override
     protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout, String className) {
         return null;
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(final Object invocation) throws Exception {
+        return BusinessParamUtil.getAndParse(DubboConstant.TARGET_NAME, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Map<String, String> attachments = ReflectUtil.invokeMethod(invocation, GET_ATTACHMENTS, new Object[0], false);
+                if (attachments == null || attachments.isEmpty()) {
+                    return null;
+                }
+                return attachments.get(key);
+            }
+        });
     }
 
     @Override

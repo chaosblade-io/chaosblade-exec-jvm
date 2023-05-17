@@ -4,7 +4,7 @@ BLADE_SRC_ROOT=`pwd`
 UNAME := $(shell uname)
 
 ifeq ($(BLADE_VERSION), )
-	BLADE_VERSION=1.3.0
+	BLADE_VERSION=1.7.1
 endif
 
 PLUGINS_PATH=plugins
@@ -25,9 +25,9 @@ JVM_AGENT_FILE_NAME=chaosblade-java-agent-$(BLADE_VERSION).jar
 # oss url
 BLADE_OSS_URL=https://chaosblade.oss-cn-hangzhou.aliyuncs.com/agent/release
 # sandbox
-JVM_SANDBOX_VERSION=1.3.1
+JVM_SANDBOX_VERSION=1.3.3
 JVM_SANDBOX_NAME=sandbox-$(JVM_SANDBOX_VERSION)-bin.zip
-JVM_SANDBOX_OSS_URL=https://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/$(JVM_SANDBOX_NAME)
+JVM_SANDBOX_OSS_URL=https://chaosblade.oss-cn-hangzhou.aliyuncs.com/agent/github/sandbox/$(JVM_SANDBOX_NAME)
 JVM_SANDBOX_DEST_PATH=$(BUILD_TARGET_CACHE)/$(JVM_SANDBOX_NAME)
 JVM_SANDBOX_TARGET_PATH=$(BUILD_TARGET_LIB)/sandbox
 # used to java agent attachp

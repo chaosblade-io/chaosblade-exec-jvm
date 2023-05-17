@@ -16,6 +16,9 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import com.alibaba.chaosblade.exec.common.aop.PluginBean;
+import com.alibaba.chaosblade.exec.common.aop.PluginBeans;
+import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.center.ModelSpecManager;
@@ -121,6 +124,12 @@ public class CreateHandler implements RequestHandler {
             } catch (Exception e) {
                 LOGGER.warn("set log level to debug failed", e);
             }
+        } else {
+            try {
+                LogUtil.setInfo();
+            } catch (Exception e) {
+                LOGGER.warn("set log level to INFO failed", e);
+            }
         }
     }
 
@@ -136,6 +145,7 @@ public class CreateHandler implements RequestHandler {
         if (result.isSuccess()) {
             // handle injection
             try {
+                lazyLoadPlugin(modelSpec, model);
                 applyPreInjectionModelHandler(suid, modelSpec, model);
             } catch (ExperimentException ex) {
                 this.statusManager.removeExp(suid);
@@ -156,9 +166,33 @@ public class CreateHandler implements RequestHandler {
      * @throws ExperimentException
      */
     private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
-        throws ExperimentException {
+            throws ExperimentException {
         if (modelSpec instanceof PreCreateInjectionModelHandler) {
-            ((PreCreateInjectionModelHandler)modelSpec).preCreate(suid, model);
+            ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
         }
+    }
+
+    private void lazyLoadPlugin(ModelSpec modelSpec, Model model) throws ExperimentException {
+        PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
+        if (listener == null) {
+            throw new ExperimentException("can get plugin listener");
+        }
+        PluginBeans pluginBeans = ManagerFactory.getPluginManager().getPlugins(modelSpec.getTarget());
+
+        if (pluginBeans == null) {
+            throw new ExperimentException("can get plugin bean");
+        }
+        if (pluginBeans.isLoad()) {
+            return;
+        }
+        for (PluginBean pluginBean : pluginBeans.getPluginBeans()) {
+            String flag = model.getMatcher().get(pluginBean.getName());
+            if ("true".equalsIgnoreCase(flag)) {
+                listener.add(pluginBean);
+                break;
+            }
+            listener.add(pluginBean);
+        }
+        ManagerFactory.getPluginManager().setLoad(pluginBeans, modelSpec.getTarget());
     }
 }

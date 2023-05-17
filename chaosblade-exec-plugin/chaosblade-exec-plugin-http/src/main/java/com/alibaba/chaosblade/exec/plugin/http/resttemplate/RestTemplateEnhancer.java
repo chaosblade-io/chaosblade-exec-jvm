@@ -1,14 +1,21 @@
 package com.alibaba.chaosblade.exec.plugin.http.resttemplate;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
-import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
-import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEOUT;
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
+import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
+import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+
+import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
+
 
 /**
  * @Author yuhan
@@ -17,10 +24,31 @@ import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.DEFAULT_TIMEO
  */
 public class RestTemplateEnhancer extends HttpEnhancer {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestTemplateEnhancer.class);
+    public static final String COMPONENTS_CLIENT_HTTP_REQUEST_FACTORY =
+            "org.springframework.http.client.HttpComponentsClientHttpRequestFactory";
+    public static final String OK_HTTP_3_CLIENT_HTTP_REQUEST_FACTORY =
+            "org.springframework.http.client.OkHttp3ClientHttpRequestFactory";
 
     @Override
     protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
-        enhancerModel.addMatcher(HttpConstant.REST_KEY, "true");
+        enhancerModel.addMatcher(REST_KEY, "true");
+    }
+
+    @Override
+    protected Map<String, Map<String, String>> getBusinessParams(String className, Object instance, Method method, final Object[] methodArguments) throws Exception {
+        return BusinessParamUtil.getAndParse(TARGET_NAME, new BusinessDataGetter() {
+            @Override
+            public String get(String key) throws Exception {
+                Object requestCallback = methodArguments[2];
+                Object requestEntity = ReflectUtil.getFieldValue(requestCallback, "requestEntity", false);
+                Object requestHeaders = ReflectUtil.invokeMethod(requestEntity, "getHeaders", new Object[0], false);
+                List<String> header = (List<String>) ReflectUtil.invokeMethod(requestHeaders, "get", new Object[]{key}, false);
+                if (header != null && !header.isEmpty()) {
+                    return header.get(0);
+                }
+                return null;
+            }
+        });
     }
 
     @Override
@@ -31,8 +59,28 @@ public class RestTemplateEnhancer extends HttpEnhancer {
                 LOGGER.warn("requestFactory from RestTemplate not found. return default value {}", DEFAULT_TIMEOUT);
                 return DEFAULT_TIMEOUT;
             }
-            int connectionTimeout = ReflectUtil.getFieldValue(requestFactory, "connectTimeout", false);
-            int readTimeout = ReflectUtil.getFieldValue(requestFactory, "readTimeout", false);
+            int connectionTimeout = 0;
+            int readTimeout = 0;
+            if (requestFactory.getClass().getName().equalsIgnoreCase(COMPONENTS_CLIENT_HTTP_REQUEST_FACTORY)) {
+                Object requestConfig = ReflectUtil.getFieldValue(requestFactory, "requestConfig", false);
+                if (requestConfig == null) {
+                    LOGGER.warn("config from RequestFactory not found. return default value {}", DEFAULT_TIMEOUT);
+                    return DEFAULT_TIMEOUT;
+                }
+                connectionTimeout = ReflectUtil.getFieldValue(requestConfig, "connectTimeout", false);
+                readTimeout = ReflectUtil.getFieldValue(requestConfig, "socketTimeout", false);
+            } else if (requestFactory.getClass().getName().equalsIgnoreCase(OK_HTTP_3_CLIENT_HTTP_REQUEST_FACTORY)) {
+                Object client = ReflectUtil.getFieldValue(requestFactory, "client", false);
+                if (client == null) {
+                    LOGGER.warn("client from RequestFactory not found. return default value {}", DEFAULT_TIMEOUT);
+                    return DEFAULT_TIMEOUT;
+                }
+                connectionTimeout = ReflectUtil.getFieldValue(client, "connectTimeout", false);
+                readTimeout = ReflectUtil.getFieldValue(client, "readTimeout", false);
+            } else {
+                connectionTimeout = ReflectUtil.getFieldValue(requestFactory, "connectTimeout", false);
+                readTimeout = ReflectUtil.getFieldValue(requestFactory, "readTimeout", false);
+            }
             return connectionTimeout + readTimeout;
         } catch (Exception e) {
             LOGGER.warn("Getting timeout from url occurs exception. return default value {}", DEFAULT_TIMEOUT, e);
