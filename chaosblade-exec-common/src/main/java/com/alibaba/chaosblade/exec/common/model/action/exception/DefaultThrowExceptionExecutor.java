@@ -54,6 +54,10 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
             exceptionMessage = DEFAULT_EXCEPTION_MESSAGE;
         }
         if (enhancerModel.getAction().equals(THROW_CUSTOM_EXCEPTION)) {
+            Package[] definedPackages = enhancerModel.getClassLoader().getDefinedPackages();
+            Package definedPackage = enhancerModel.getClassLoader().getDefinedPackage("ljtest");
+            Package definedPackage1 = enhancerModel.getClassLoader().getDefinedPackage("com.aliyun.oss.OSSException");
+            Package definedPackage2 = enhancerModel.getClassLoader().getDefinedPackage("com.springboot.restful.demo.exception.CustomException");
             exception = throwCustomException(enhancerModel.getClassLoader(), enhancerModel.getActionFlag(exceptionFlag
                 .getName()), exceptionMessage);
         } else if (enhancerModel.getAction().equals(THROW_DECLARED_EXCEPTION)) {
