@@ -39,7 +39,8 @@ public class MysqlPointCut implements PointCut {
                 .or(new NameClassMatcher(MYSQL_IO_CLASS))
                 .or(new NameClassMatcher(MYSQL8_NATIVE_SESSION_CLASS))
                 .or(new NameClassMatcher(IO_SHARDING_STATEMENT_EXECUTOR_CLASS))
-                .or(new NameClassMatcher(APACHE_SHARDING_EXECUTOR_ENGINE_CLASS));
+                .or(new NameClassMatcher(APACHE_SHARDING_EXECUTOR_ENGINE_CLASS))
+                .or(new NameClassMatcher(APACHE_SHARDING_STATEMENT_EXECUTOR_CLASS));
     }
 
     @Override
