@@ -54,11 +54,20 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
             exceptionMessage = DEFAULT_EXCEPTION_MESSAGE;
         }
         if (enhancerModel.getAction().equals(THROW_CUSTOM_EXCEPTION)) {
+            Package[] definedPackages = enhancerModel.getClassLoader().getDefinedPackages();
+            for (Package definedPackage : definedPackages) {
+               String definedPackageName = definedPackage.getName();
+            }
+            Package definedPackage = enhancerModel.getClassLoader().getDefinedPackage("ljtest");
+            Package definedPackage1 = enhancerModel.getClassLoader().getDefinedPackage("com.aliyun.oss.OSSException");
+            Package definedPackage2 = enhancerModel.getClassLoader().getDefinedPackage("OSSException");
+            Package definedPackage3 = enhancerModel.getClassLoader().getDefinedPackage("com.springboot.restful.demo.exception.CustomException");
+            Package definedPackage4 = enhancerModel.getClassLoader().getDefinedPackage("CustomException");
             exception = throwCustomException(enhancerModel.getClassLoader(), enhancerModel.getActionFlag(exceptionFlag
-                .getName()), exceptionMessage);
+                    .getName()), exceptionMessage);
         } else if (enhancerModel.getAction().equals(THROW_DECLARED_EXCEPTION)) {
             exception = throwDeclaredException(enhancerModel.getClassLoader(), enhancerModel.getMethod(),
-                exceptionMessage);
+                    exceptionMessage);
         }
         if (exception != null) {
             InterruptProcessException.throwThrowsImmediately(exception);
@@ -79,7 +88,7 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
             return instantiateException(clazz, exceptionMessage);
         } catch (Throwable e) {
             return new RuntimeException(
-                "mock custom exception: " + exception + " occurs error", e);
+                    "mock custom exception: " + exception + " occurs error", e);
         }
     }
 
@@ -114,7 +123,7 @@ public class DefaultThrowExceptionExecutor implements ThrowExceptionExecutor {
      * @throws InvocationTargetException
      * @throws InstantiationException
      */
-    private Exception instantiateException (Class exceptionClass, String exceptionMessage) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    private Exception instantiateException(Class exceptionClass, String exceptionMessage) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         if (Exception.class.isAssignableFrom(exceptionClass)) {
             Constructor<?>[] constructors = exceptionClass.getConstructors();
             //cache default constructor, if any
