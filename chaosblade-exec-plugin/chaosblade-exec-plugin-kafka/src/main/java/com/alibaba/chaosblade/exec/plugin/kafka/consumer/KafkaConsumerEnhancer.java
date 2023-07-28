@@ -27,7 +27,9 @@ public class KafkaConsumerEnhancer extends BeforeEnhancer implements KafkaConsta
         }
 
         HashSet<String> topicKeySet = new HashSet<>();
+        String groupId = "";
         if (POLL.equals(method.getName())) {
+            groupId = ReflectUtil.getFieldValue(object, "groupId", false);
             Object metadata = ReflectUtil.getFieldValue(object, "metadata", false);
             Object subscription = ReflectUtil.getFieldValue(metadata, "subscription", false);
             if (subscription != null) {
@@ -55,6 +57,7 @@ public class KafkaConsumerEnhancer extends BeforeEnhancer implements KafkaConsta
 
         EnhancerModel enhancerModel = new EnhancerModel(classLoader, matcherModel);
         enhancerModel.addMatcher(CONSUMER_KEY, "true");
+        enhancerModel.addMatcher(GROUP_ID_KEY, groupId);
         return enhancerModel;
     }
 }
