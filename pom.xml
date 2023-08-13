@@ -52,6 +52,8 @@
                 <inherited>false</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <!-- assembly:assembly in Makefile is not supported since 2.6 -->
+                <version>2.5.5</version>
                 <configuration>
                     <finalName>chaosblade-java-agent</finalName>
                     <descriptors>
