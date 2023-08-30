@@ -30,7 +30,7 @@ public class HdfsModelSpec extends FrameworkModelSpec {
 
     @Override
     protected List<MatcherSpec> createNewMatcherSpecs() {
-        ArrayList<MatcherSpec> matcherSpecList = new ArrayList<MatcherSpec>();
+        ArrayList<MatcherSpec> matcherSpecList = new ArrayList<>();
         matcherSpecList.add(new HdfsFileMatcherSpec());
         matcherSpecList.add(new HdfsRestfulOperationMatcherSpec());
         return matcherSpecList;
