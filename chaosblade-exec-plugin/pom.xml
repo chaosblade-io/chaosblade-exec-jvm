@@ -51,6 +51,7 @@
         <module>chaosblade-exec-plugin-zookeeper</module>
         <module>chaosblade-exec-plugin-feign</module>
         <module>chaosblade-exec-plugin-security</module>
+        <module>chaosblade-exec-plugin-hdfs</module>
     </modules>
 
     <dependencies>
