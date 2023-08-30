@@ -33,14 +33,8 @@ public class HdfsWebHdfsPointCut implements PointCut {
 
     @Override
     public MethodMatcher getMethodMatcher() {
-        MethodMatcher methodMatcher = new MethodMatcher() {
-            @Override
-            public boolean isMatched(String methodName, MethodInfo methodInfo) {
-                return Arrays.stream(TARGET_METHODS).anyMatch(method -> method.equals(methodName))
-                        && (methodInfo.getAccess() & AccessFlag.PUBLIC) == AccessFlag.PUBLIC;
-            }
-        };
-
-        return methodMatcher;
+        return (String methodName, MethodInfo methodInfo) ->
+                Arrays.asList(TARGET_METHODS).contains(methodName)
+                && (methodInfo.getAccess() & AccessFlag.PUBLIC) == AccessFlag.PUBLIC;
     }
 }
