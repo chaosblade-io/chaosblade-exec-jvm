@@ -20,7 +20,7 @@ public class HdfsWebHdfsEnhancer extends BeforeEnhancer {
                                         Object[] methodArguments) throws Exception {
         MatcherModel matcherModel = new MatcherModel();
         if (methodArguments[4] != null) {
-            String filePath = ReflectUtil.invokeMethod(methodArguments[4], "getValue");
+            String filePath = ReflectUtil.invokeMethod(methodArguments[4], "getAbsolutePath");
             if (StringUtils.isNotBlank(filePath)) {
                 matcherModel.add(HdfsConstant.FLAG_COMMON_FILE, filePath.trim());
             }
