@@ -8,4 +8,6 @@ public class HdfsConstant {
 
     public static final String FLAG_COMMON_FILE = "file";
     public static final String FLAG_RESTFUL_OPERATION = "op";
+
+    public static final String HDFS_ROOT_PATH = "/";
 }
