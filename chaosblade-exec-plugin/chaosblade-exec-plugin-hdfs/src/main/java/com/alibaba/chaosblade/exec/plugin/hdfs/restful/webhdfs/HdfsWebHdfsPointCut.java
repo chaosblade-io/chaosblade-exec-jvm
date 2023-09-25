@@ -17,10 +17,14 @@
 package com.alibaba.chaosblade.exec.plugin.hdfs.restful.webhdfs;
 
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
+
 import java.util.Arrays;
 
 public class HdfsWebHdfsPointCut implements PointCut {
@@ -31,12 +35,6 @@ public class HdfsWebHdfsPointCut implements PointCut {
     private static final String METHOD_HDFS_WEBHDFS_PUT = "put";
     private static final String METHOD_HDFS_WEBHDFS_POST = "post";
     private static final String METHOD_HDFS_WEBHDFS_DELETE = "delete";
-    private static final String[] TARGET_METHODS = new String[] {
-            METHOD_HDFS_WEBHDFS_GET,
-            METHOD_HDFS_WEBHDFS_PUT,
-            METHOD_HDFS_WEBHDFS_POST,
-            METHOD_HDFS_WEBHDFS_DELETE
-    };
 
     @Override
     public ClassMatcher getClassMatcher() {
@@ -45,19 +43,20 @@ public class HdfsWebHdfsPointCut implements PointCut {
 
     @Override
     public MethodMatcher getMethodMatcher() {
-        MethodMatcher methodMatcher = new MethodMatcher() {
-            @Override
-            public boolean isMatched(String methodName, MethodInfo methodInfo) {
-                String[] parameterTypes = methodInfo.getParameterTypes();
-                if (parameterTypes == null || parameterTypes.length < 5) {
-                    return false;
-                }
+        OrMethodMatcher methodNameMatchers = new OrMethodMatcher();
+        methodNameMatchers.or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_GET))
+                .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_PUT))
+                .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_POST))
+                .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_DELETE));
 
-                return Arrays.asList(TARGET_METHODS).contains(methodName)
-                       && String.class.getTypeName().equals(methodInfo.getParameterTypes()[4]);
-            }
-        };
+        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[] {
+                "org.apache.hadoop.security.UserGroupInformation",
+                "org.apache.hadoop.hdfs.web.resources.DelegationParam",
+                "org.apache.hadoop.hdfs.web.resources.UserParam",
+                "org.apache.hadoop.hdfs.web.resources.DoAsParam",
+                "java.lang.String"
+        }, 5, ParameterMethodMatcher.GREAT_THAN);
 
-        return methodMatcher;
+        return new AndMethodMatcher().and(methodNameMatchers).and(parameterMethodMatcher);
     }
 }
