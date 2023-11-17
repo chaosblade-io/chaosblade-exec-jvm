@@ -2,21 +2,15 @@ package com.alibaba.chaosblade.exec.plugin.hbase;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @Author <a href="tangyuhan@shulie.io">yuhan.tang</a>
- * @package: com.alibaba.chaosblade.exec.plugin.hbase
- * @Date 2020-10-30 14:21
- */
-public class HbaseTableMatcherSpec extends BasePredicateMatcherSpec {
-
+public class HbaseColumnMatcherSpec extends BasePredicateMatcherSpec{
     @Override
     public String getName() {
-        return HbaseConstant.TABLE;
+        return HbaseConstant.Column;
     }
 
     @Override
     public String getDesc() {
-        return "The hbase table which used";
+        return "The hbase column which used";
     }
 
     @Override
@@ -28,4 +22,5 @@ public class HbaseTableMatcherSpec extends BasePredicateMatcherSpec {
     public boolean required() {
         return false;
     }
+    
 }
