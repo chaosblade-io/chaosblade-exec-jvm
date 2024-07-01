@@ -44,6 +44,7 @@ public class KafkaModelSpec extends FrameworkModelSpec implements KafkaConstant 
         arrayList.add(new ConsumerMatcherSpec());
         arrayList.add(new ProducerMatcherSpec());
         arrayList.add(new TopicMatcherSpec());
+        arrayList.add(new GroupIdMatcherSpec());
         return arrayList;
     }
 
