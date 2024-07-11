@@ -31,9 +31,13 @@ public interface MysqlConstant {
 
     String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
     String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
+    String MYSQL_SERVER_PREPARED_STMT_CLASS = "com.mysql.jdbc.ServerPreparedStatement";
+    String MYSQL_SERVER_PREPARED_STMT_METHOD = "serverExecute";
 
     String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
     String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
+    String MYSQL8_SERVER_PREPARED_STMT_CLASS = "com.mysql.cj.jdbc.ServerPreparedStatement";
+    String MYSQL8SERVER_PREPARED_STMT_METHOD = "serverExecute";
 
 
     String IO_SHARDING_STATEMENT_EXECUTOR_CLASS = "io.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
