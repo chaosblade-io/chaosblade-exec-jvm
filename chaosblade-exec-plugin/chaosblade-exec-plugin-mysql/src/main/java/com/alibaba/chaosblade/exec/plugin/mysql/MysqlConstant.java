@@ -36,6 +36,9 @@ public interface MysqlConstant {
     String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
 
 
+    String AWS_MYSQL_NATIVE_SESSION_CLASS = "software.aws.rds.jdbc.mysql.shading.com.mysql.cj.NativeSession";
+    String AWS_MYSQL_NATIVE_SESSION_METHOD = "execSQL";
+
     String IO_SHARDING_STATEMENT_EXECUTOR_CLASS = "io.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
     String APACHE_SHARDING_STATEMENT_EXECUTOR_CLASS = "org.apache.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
     String IO_SHARDING_STATEMENT_EXECUTOR_METHOD = "executeCallback";

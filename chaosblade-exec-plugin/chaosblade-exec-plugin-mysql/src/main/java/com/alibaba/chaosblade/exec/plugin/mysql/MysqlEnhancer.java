@@ -37,6 +37,8 @@ public class MysqlEnhancer extends BeforeEnhancer {
 
     private final Mysql8Enhancer mysql8Enhancer = new Mysql8Enhancer();
 
+    private final MysqlAwsEnhancer mysqlAwsEnhancer = new MysqlAwsEnhancer();
+
     private final IoShardingJdbcEnhancer ioShardingJdbcEnhancer = new IoShardingJdbcEnhancer();
 
     private final ApacheShardingJdbcEnhancer apacheShardingJdbcEnhancer = new ApacheShardingJdbcEnhancer();
@@ -48,6 +50,8 @@ public class MysqlEnhancer extends BeforeEnhancer {
 
         if (MYSQL_IO_CLASS.equals(className)) {
             return mysql5Enhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
+        }else if(AWS_MYSQL_NATIVE_SESSION_CLASS.equals(className)) {
+            return mysqlAwsEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
         }else if(IO_SHARDING_STATEMENT_EXECUTOR_CLASS.equals(className)
                 || APACHE_SHARDING_STATEMENT_EXECUTOR_CLASS.equals(className)) {
             return ioShardingJdbcEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
