@@ -42,11 +42,17 @@ public class HbaseEnhancer extends BeforeEnhancer {
 
     @Override
     public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
-                                        Method method, Object[]
-                                            methodArguments)
-        throws Exception {
+            Method method, Object[] methodArguments)
+            throws Exception {
+        if (methodArguments == null || methodArguments.length > 1) {
+            LOGGER.info("The necessary parameters is null or length is not equal 1,{}",
+                    methodArguments != null ? methodArguments.length : null);
+            return null;
+        }
+        LOGGER.info("method Arguments {}",methodArguments.toString());
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(HbaseConstant.TABLE, getTableName(methodArguments));
+        matcherModel.add(HbaseConstant.Column,getColumnName(methodArguments));
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("hbase matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
         }
@@ -81,6 +87,19 @@ public class HbaseEnhancer extends BeforeEnhancer {
             }
         }
         return tableName;
+    }
+
+    public String getColumnName(Object[] args) {
+        String columnName = null;
+        Object obj = args[0];
+        if (obj instanceof String) {
+            columnName = (String) obj;
+        } else if (obj instanceof byte[]) {
+            columnName = new String((byte[]) obj);
+        } else if (obj instanceof char[]) {
+            columnName = new String((char[]) obj);
+        }
+        return columnName;
     }
 
     private String toString(ByteBuffer buffer) {

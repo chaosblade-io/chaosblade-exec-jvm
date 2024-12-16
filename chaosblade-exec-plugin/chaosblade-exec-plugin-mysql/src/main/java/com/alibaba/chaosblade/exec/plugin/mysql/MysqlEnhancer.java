@@ -52,7 +52,8 @@ public class MysqlEnhancer extends BeforeEnhancer {
             return mysql5Enhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
         }else if(AWS_MYSQL_NATIVE_SESSION_CLASS.equals(className)) {
             return mysqlAwsEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
-        }else if(IO_SHARDING_STATEMENT_EXECUTOR_CLASS.equals(className)) {
+        }else if(IO_SHARDING_STATEMENT_EXECUTOR_CLASS.equals(className)
+                || APACHE_SHARDING_STATEMENT_EXECUTOR_CLASS.equals(className)) {
             return ioShardingJdbcEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
         }else if(APACHE_SHARDING_EXECUTOR_ENGINE_CLASS.equals(className)) {
             return apacheShardingJdbcEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
