@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
+import static com.alibaba.chaosblade.exec.plugin.mysql.MysqlConstant.MYSQL_IO_CLASS;
+import static com.alibaba.chaosblade.exec.plugin.mysql.MysqlConstant.MYSQL_SERVER_PREPARED_STMT_METHOD;
+
 /**
  * @author yefei
  * @create 2020-11-19 16:14
@@ -42,23 +45,36 @@ public class Mysql5Enhancer extends BeforeEnhancer {
             return null;
         }
 
-        Object statement = methodArguments[0];
-        Object query = methodArguments[1];
+        boolean isMysqlIOClass = MYSQL_IO_CLASS.equals(className);
+        Object statement;
+        Object query;
         Object catalog;
-        if (methodArguments.length == 10) {
-            // mysql 5.1.x
-            catalog = methodArguments[8];
-        } else if (methodArguments.length == 11) {
-            // mysql 5.0.x
-            catalog = methodArguments[9];
+        Object mysqlIO;
+        if (isMysqlIOClass) {
+            statement = methodArguments[0];
+            query = methodArguments[1];
+            if (methodArguments.length == 10) {
+                // mysql 5.1.x
+                catalog = methodArguments[8];
+            } else if (methodArguments.length == 11) {
+                // mysql 5.0.x
+                catalog = methodArguments[9];
+            } else {
+                logger.warn("The necessary parameters is null or length is not equal 10 or 11, {}",
+                        methodArguments != null ? methodArguments.length : null);
+                return null;
+            }
+            mysqlIO = object;
         } else {
-            logger.warn("The necessary parameters is null or length is not equal 10 or 11, {}",
-                    methodArguments != null ? methodArguments.length : null);
-            return null;
+            statement = object;
+            query = ReflectUtil.getSuperclassFieldValue(object, "originalSql", false);
+            catalog = ReflectUtil.getSuperclassFieldValue(object, "currentCatalog", false);
+            Object connection = ReflectUtil.getSuperclassFieldValue(object, "connection", false);
+            mysqlIO  = ReflectUtil.getSuperclassFieldValue(connection, "io", false);
         }
 
-        String host = ReflectUtil.getFieldValue(object, "host", false);
-        Integer port = ReflectUtil.getFieldValue(object, "port", false);
+        String host = ReflectUtil.getFieldValue(mysqlIO, "host", false);
+        Integer port = ReflectUtil.getFieldValue(mysqlIO, "port", false);
         String sql = (String) query;
         String database = null;
 

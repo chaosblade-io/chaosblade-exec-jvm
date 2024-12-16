@@ -42,14 +42,21 @@ public class Mysql8Enhancer extends BeforeEnhancer {
             return null;
         }
 
-        Object callingQuery =  methodArguments[0];
-        Object connection = ReflectUtil.getSuperclassFieldValue(callingQuery, "connection", false);
-        String sql = String.valueOf(methodArguments[1]);
+        Object callingQuery;
+        String sql;
+        if (MysqlConstant.MYSQL8_NATIVE_SESSION_CLASS.equals(className)) {
+            callingQuery = methodArguments[0];
+            sql = String.valueOf(methodArguments[1]);
+        } else {
+            callingQuery = object;
+            sql = null;
+        }
 
         if (ReflectUtil.isAssignableFrom(classLoader, callingQuery.getClass(), "com.mysql.cj.jdbc.JdbcPreparedStatement")) {
             sql = ReflectUtil.invokeMethod(callingQuery, "getPreparedSql", new Object[0], false);
         }
 
+        Object connection = ReflectUtil.getSuperclassFieldValue(callingQuery, "connection", false);
         String host = ReflectUtil.getFieldValue(connection, "origHostToConnectTo", false);
         Integer port = ReflectUtil.getFieldValue(connection, "origPortToConnectTo", false);
         String database = ReflectUtil.getFieldValue(connection, "database", false);;

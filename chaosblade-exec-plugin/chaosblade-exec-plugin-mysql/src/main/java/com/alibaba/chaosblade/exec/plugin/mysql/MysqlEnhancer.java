@@ -48,7 +48,7 @@ public class MysqlEnhancer extends BeforeEnhancer {
                                         Method method, Object[] methodArguments)
             throws Exception {
 
-        if (MYSQL_IO_CLASS.equals(className)) {
+        if (MYSQL_IO_CLASS.equals(className) || MYSQL_SERVER_PREPARED_STMT_CLASS.equals(className)) {
             return mysql5Enhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
         }else if(AWS_MYSQL_NATIVE_SESSION_CLASS.equals(className)) {
             return mysqlAwsEnhancer.doBeforeAdvice(classLoader, className, object, method, methodArguments);
