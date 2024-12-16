@@ -26,6 +26,6 @@ public class HbaseTableMatcherSpec extends BasePredicateMatcherSpec {
 
     @Override
     public boolean required() {
-        return true;
+        return false;
     }
 }

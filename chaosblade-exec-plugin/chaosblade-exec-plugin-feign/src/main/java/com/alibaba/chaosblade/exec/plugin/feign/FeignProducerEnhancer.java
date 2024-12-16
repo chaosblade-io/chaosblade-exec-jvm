@@ -7,6 +7,7 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 
+import com.alibaba.chaosblade.exec.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,12 +28,16 @@ public class FeignProducerEnhancer extends BeforeEnhancer implements FeignConsta
         }
         String serviceName = getServiceName(object);
         String template = getTemplate(methodArguments);
+        String url = getUrl(methodArguments);
+        String templateUrl= StringUtils.isNotEmpty(template)? template:url;
+        LOGGER.info("feign serviceName:{},template:{},url:{}", serviceName, template,url);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.info("feign :  serviceName:{},template:{}", serviceName, template);
         }
         MatcherModel matcherModel = new MatcherModel();
         matcherModel.add(SERVICE_NAME, serviceName);
-        matcherModel.add(TEMPLATE_URL, template);
+        matcherModel.add(TEMPLATE_URL, templateUrl);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("feign template url: {}", template);
         }
@@ -48,7 +53,19 @@ public class FeignProducerEnhancer extends BeforeEnhancer implements FeignConsta
     private String getTemplate(Object[] methodArguments) throws Exception {
         Object requestTemplateObj = methodArguments[0];
         Object urlBuilderObj = ReflectUtil.getFieldValue(requestTemplateObj, "url", false);
+        if (urlBuilderObj == null) {
+            // Compatible with RequestTemplate in feign-core version 10.2.0 and above
+            Object uriTemplate = ReflectUtil.getFieldValue(requestTemplateObj, "uriTemplate", false);
+            return uriTemplate != null ? uriTemplate.toString() : null;
+        }
         return ReflectUtil.invokeMethod(urlBuilderObj, "toString");
+    }
+    private String getUrl(Object[] methodArguments) throws Exception {
+        //spring-cloud-openfeign 3.0 ,feign-core 10.12
+        Object requestTemplateObj = methodArguments[0];
+        Object urlBuilderObj = ReflectUtil.getSuperclassFieldValue(requestTemplateObj, "uriTemplate", false);
+        String url = ReflectUtil.getSuperclassFieldValue(urlBuilderObj, "template", false);
+        return url;
     }
 
 }

@@ -13,6 +13,7 @@ public class HbaseConstant {
 
     public static final String TARGET_NAME = "hbase";
     public static final String TABLE = "table";
+    public static final String Column = "column";
 
     public static final Map<String, Method> methodMap = new HashMap<String, Method>();
 }

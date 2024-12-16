@@ -26,12 +26,18 @@ public class HbaseModelSpec extends FrameworkModelSpec {
             if (action instanceof DelayActionSpec) {
                 action.setLongDesc("hbase delay experiment");
                 action.setExample("# Do a delay 2s experiment for hbase client connection INSERT statement\n" +
-                        "blade create hbase delay --table table1");
+                        "blade create hbase delay --table table1\n\n"+
+
+                        "#Do a delay 2s experiment on hbase column\n"+
+                        "blade create hbase delay --column column1");
             }
             if (action instanceof ThrowCustomExceptionActionSpec) {
                 action.setLongDesc("hbase throws customer exception experiment");
                 action.setExample("# Do a throws customer exception experiment for mysql client connection port=3306 INSERT statement\n" +
-                        "blade create hbase throwCustomException --exception java.lang.Exception --table table2");
+                        "blade create hbase throwCustomException --exception java.lang.Exception --table table2\n\n"+
+
+                        "#Do a throws customer exception experiment on hbase column\n"+
+                        "blade create hbase throwCustomException --exception java.lang.Exception --column column2");
             }
         }
     }
@@ -40,6 +46,7 @@ public class HbaseModelSpec extends FrameworkModelSpec {
     protected List<MatcherSpec> createNewMatcherSpecs() {
         ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
         matcherSpecs.add(new HbaseTableMatcherSpec());
+        matcherSpecs.add(new HbaseColumnMatcherSpec());
         return matcherSpecs;
     }
 
