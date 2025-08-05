@@ -280,4 +280,13 @@ public class Constant {
     public String toString() {
         return String.format("type is %s -> value is %s", this.type, this.value);
     }
+
+
+    public ConstantType getType() {
+        return type;
+    }
+
+    public Object getValue() {
+        return value;
+    }
 }

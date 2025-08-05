@@ -1,11 +1,15 @@
-# ChaosBlade JVM Executor Makefile
-.PHONY: build clean test all help download-sandbox pre-build build-java
+# ChaosBlade JVM Executor Makefile for CI/CD
+.PHONY: build clean test all help download-sandbox pre-build build-java ci-build
 
 # =============================================================================
 # 配置变量
 # =============================================================================
 BLADE_VERSION ?= 1.7.4
 BLADE_SRC_ROOT := $(shell pwd)
+
+# CI/CD环境检测
+CI_ENV ?= false
+BUILD_TYPE ?= full
 
 # =============================================================================
 # 路径配置
@@ -46,8 +50,30 @@ BLADE_JAVA_TOOLS_JAR_DOWNLOAD_URL := $(BLADE_OSS_URL)/$(BLADE_JAVA_TOOLS_JAR_NAM
 # 主要目标
 # =============================================================================
 
-# 默认目标：构建完整项目
-all: build test
+# 默认目标：根据环境选择构建方式
+all: 
+ifeq ($(CI_ENV),true)
+	@echo "Running in CI environment..."
+	$(MAKE) ci-build
+else
+	@echo "Running in local environment..."
+	$(MAKE) build test
+endif
+
+# CI环境构建
+ci-build:
+	@echo "CI Build - Type: $(BUILD_TYPE)"
+ifeq ($(BUILD_TYPE),full)
+	$(MAKE) build
+else
+	$(MAKE) build-java-only
+endif
+
+# 仅构建Java项目（用于快速CI构建）
+build-java-only:
+	@echo "Building Java project only..."
+	mvn clean package -Dmaven.test.skip=true -U -q
+	@echo "Java build completed"
 
 # 构建项目
 build: pre-build build-java
@@ -69,17 +95,21 @@ clean:
 
 # 显示帮助信息
 help:
-	@echo "ChaosBlade JVM Executor 构建工具"
+	@echo "ChaosBlade JVM Executor 构建工具 (CI/CD版本)"
 	@echo ""
 	@echo "可用目标:"
-	@echo "  build        - 构建完整项目"
-	@echo "  test         - 运行测试"
-	@echo "  clean        - 清理构建产物"
-	@echo "  all          - 构建并测试 (默认)"
-	@echo "  help         - 显示此帮助信息"
+	@echo "  build          - 构建完整项目"
+	@echo "  build-java-only - 仅构建Java项目（快速构建）"
+	@echo "  ci-build       - CI环境构建"
+	@echo "  test           - 运行测试"
+	@echo "  clean          - 清理构建产物"
+	@echo "  all            - 根据环境自动选择构建方式"
+	@echo "  help           - 显示此帮助信息"
 	@echo ""
 	@echo "环境变量:"
-	@echo "  BLADE_VERSION - 版本号 (默认: $(BLADE_VERSION))"
+	@echo "  BLADE_VERSION  - 版本号 (默认: $(BLADE_VERSION))"
+	@echo "  CI_ENV         - CI环境标识 (默认: $(CI_ENV))"
+	@echo "  BUILD_TYPE     - 构建类型 (full/java-only, 默认: $(BUILD_TYPE))"
 
 # =============================================================================
 # 构建步骤
@@ -116,4 +146,4 @@ build-java:
 	mvn clean package -Dmaven.test.skip=true -U -q
 	cp $(BLADE_SRC_ROOT)/chaosblade-exec-plugin/chaosblade-exec-plugin-*/target/chaosblade-exec-plugin-*.jar $(PLUGINS_PATH)
 	@echo "打包最终产物..."
-	mvn clean assembly:assembly -Dmaven.test.skip=true -U -q
+	mvn clean assembly:assembly -Dmaven.test.skip=true -U -q 

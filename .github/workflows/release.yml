@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'maven'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl unzip
+
+      - name: Set version from tag
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "BLADE_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Building version: $VERSION"
+
+      - name: Build full product with Makefile
+        run: |
+          make clean
+          make build
+
+      - name: Create release packages
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          mkdir -p release
+          
+          # Copy Makefile build artifacts
+          if [ -d "build-target" ]; then
+            cp -r build-target/* release/
+          fi
+          
+          # Copy Maven build artifacts as backup
+          if [ -d "target" ]; then
+            cp target/*.jar release/ 2>/dev/null || true
+          fi
+          
+          # Create compressed packages
+          cd release
+          if [ "$(ls -A)" ]; then
+            tar -czf chaosblade-jvm-${VERSION}.tar.gz *
+            zip -r chaosblade-jvm-${VERSION}.zip *
+          else
+            echo "Warning: No build artifacts found"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
