@@ -66,19 +66,39 @@ public class BuildUtil {
             write(dump, file);
             return file.getPath();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Warning: Failed to generate plugin spec: " + e.getMessage());
+            // 在CI环境中，如果没有插件目录，我们仍然创建一个空的spec文件
+            try {
+                File file = getFile(pluginPath, specFileName);
+                String dump = new Yaml().dumpAs(pluginSpecBean, Tag.MAP, FlowStyle.BLOCK);
+                write(dump, file);
+                return file.getPath();
+            } catch (IOException ex) {
+                System.err.println("Error: Failed to create empty spec file: " + ex.getMessage());
+            }
         }
         return null;
     }
 
     private static ClassLoader createClassLoader(String pluginPath) throws IOException {
         File file = new File(pluginPath);
+        if (!file.exists() || !file.isDirectory()) {
+            // 如果目录不存在，返回当前线程的类加载器
+            return Thread.currentThread().getContextClassLoader();
+        }
+        
         String[] jarFiles = file.list(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 return name.endsWith(".jar");
             }
         });
+        
+        if (jarFiles == null || jarFiles.length == 0) {
+            // 如果没有jar文件，返回当前线程的类加载器
+            return Thread.currentThread().getContextClassLoader();
+        }
+        
         List<URL> urls = new ArrayList<URL>();
         for (String f : jarFiles) {
             urls.add(new URL("file:" + new File(pluginPath, f).getPath()));
@@ -88,6 +108,10 @@ public class BuildUtil {
     }
 
     private static File getFile(String path, String fileName) throws IOException {
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         File file = new File(path, fileName);
         System.out.println(file.getPath());
         if (!file.exists()) {
