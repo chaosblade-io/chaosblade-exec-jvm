@@ -1,14 +1,81 @@
 package com.alibaba.chaosblade.exec.plugin.feign;
 
-import junit.framework.TestCase;
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.lang.reflect.Method;
 
 /**
  * @author hengyu
  * @version 1.0.0
  * @className FeignProducerEnhancerTest
  * @createTime 2022/4/21 14:46:00
- * @description
+ * @description FeignProducerEnhancer测试类
  */
-public class FeignProducerEnhancerTest extends TestCase {
+public class FeignProducerEnhancerTest {
 
+    private FeignProducerEnhancer enhancer;
+    private Method testMethod;
+
+    @Before
+    public void setUp() throws NoSuchMethodException {
+        enhancer = new FeignProducerEnhancer();
+        // 使用一个真实的Method对象
+        testMethod = String.class.getMethod("toString");
+    }
+
+    @Test
+    public void testDoBeforeAdviceWithNullParameters() throws Exception {
+        // 测试空参数情况
+        EnhancerModel result = enhancer.doBeforeAdvice(
+            Thread.currentThread().getContextClassLoader(),
+            "com.example.TestClass",
+            null,
+            testMethod,
+            null
+        );
+        
+        Assert.assertNull("当参数为null时应该返回null", result);
+    }
+
+    @Test
+    public void testDoBeforeAdviceWithNullObject() throws Exception {
+        // 测试object为null的情况
+        Object[] methodArguments = new Object[]{new Object()};
+        
+        EnhancerModel result = enhancer.doBeforeAdvice(
+            Thread.currentThread().getContextClassLoader(),
+            "com.example.TestClass",
+            null,
+            testMethod,
+            methodArguments
+        );
+        
+        Assert.assertNull("当object为null时应该返回null", result);
+    }
+
+    @Test
+    public void testDoBeforeAdviceWithNullMethodArguments() throws Exception {
+        // 测试methodArguments为null的情况
+        Object mockObject = new Object();
+        
+        EnhancerModel result = enhancer.doBeforeAdvice(
+            Thread.currentThread().getContextClassLoader(),
+            "com.example.TestClass",
+            mockObject,
+            testMethod,
+            null
+        );
+        
+        Assert.assertNull("当methodArguments为null时应该返回null", result);
+    }
+
+    @Test
+    public void testEnhancerInstance() {
+        // 测试增强器实例化
+        Assert.assertNotNull("FeignProducerEnhancer实例应该不为null", enhancer);
+        Assert.assertTrue("应该继承自BeforeEnhancer", enhancer instanceof com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer);
+    }
 }
