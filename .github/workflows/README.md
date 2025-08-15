@@ -32,7 +32,7 @@ This project contains two GitHub Actions workflows for automated building, testi
 ### 2. Release Workflow (`release.yml`)
 
 **Triggers:**
-- Push version tags (format: `v*`, e.g., `v1.7.4`)
+- Push version tags (format: `v*`, e.g., `v1.7.5`)
 
 **Features:**
 - Full product build using Makefile
