@@ -16,6 +16,7 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.exception;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
@@ -29,8 +30,10 @@ import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
  */
 public class ThrowDeclaredExceptionActionSpec extends BaseActionSpec {
 
+    private static final FlagSpec exceptionMessageFlag = new ExceptionMessageFlagSpec();
+
     public ThrowDeclaredExceptionActionSpec() {
-        super(new DefaultThrowExceptionExecutor());
+        super(new DefaultThrowExceptionExecutor(null, exceptionMessageFlag));
     }
 
     @Override
@@ -55,7 +58,7 @@ public class ThrowDeclaredExceptionActionSpec extends BaseActionSpec {
 
     @Override
     public List<FlagSpec> getActionFlags() {
-        return null;
+        return Collections.singletonList(exceptionMessageFlag);
     }
 
     @Override
