@@ -38,6 +38,7 @@ target/*
 *.iml
 */*.iml
 build-target
+.vscode
 # Logs and databases #
 ######################
 *.log
