@@ -4,7 +4,8 @@
 # =============================================================================
 # 配置变量
 # =============================================================================
-BLADE_VERSION ?= 1.7.5
+DEFAULT_BLADE_VERSION := 1.7.5
+BLADE_VERSION ?= $(DEFAULT_BLADE_VERSION)
 BLADE_SRC_ROOT := $(shell pwd)
 
 # =============================================================================
@@ -52,7 +53,19 @@ all: build test
 # 构建项目
 build: pre-build build-java
 	@echo "复制构建产物..."
-	cp $(PLUGINS_PATH)/$(JVM_YAML_FILE_NAME) $(BUILD_TARGET_YAML)/
+	@if [ -f $(PLUGINS_PATH)/$(JVM_YAML_FILE_NAME) ]; then \
+		cp $(PLUGINS_PATH)/$(JVM_YAML_FILE_NAME) $(BUILD_TARGET_YAML)/; \
+	else \
+		echo "警告: $(JVM_YAML_FILE_NAME) 不存在，尝试使用 Maven 生成的版本..."; \
+		MAVEN_YAML_FILE=chaosblade-jvm-spec-$(DEFAULT_BLADE_VERSION).yaml; \
+		if [ -f $(PLUGINS_PATH)/$$MAVEN_YAML_FILE ]; then \
+			cp $(PLUGINS_PATH)/$$MAVEN_YAML_FILE $(BUILD_TARGET_YAML)/$(JVM_YAML_FILE_NAME); \
+			echo "已复制并重命名: $$MAVEN_YAML_FILE -> $(JVM_YAML_FILE_NAME)"; \
+		else \
+			echo "错误: 找不到任何 YAML 文件"; \
+			exit 1; \
+		fi; \
+	fi
 	cp $(TARGET_PATH)/$(JVM_AGENT_FILE_NAME) $(JVM_SANDBOX_TARGET_PATH)/module/
 	@echo "构建完成: $(BUILD_TARGET_PKG_DIR)"
 
@@ -113,7 +126,7 @@ build-java:
 	rm -rf $(PLUGINS_PATH)
 	mkdir -p $(PLUGINS_PATH)
 	@echo "编译插件..."
-	mvn clean package -Dmaven.test.skip=true -U -q
+	mvn clean package -Dmaven.test.skip=true -U -q -Dproject.version=$(BLADE_VERSION)
 	cp $(BLADE_SRC_ROOT)/chaosblade-exec-plugin/chaosblade-exec-plugin-*/target/chaosblade-exec-plugin-*.jar $(PLUGINS_PATH)
 	@echo "打包最终产物..."
-	mvn clean assembly:assembly -Dmaven.test.skip=true -U -q
+	mvn clean assembly:assembly -Dmaven.test.skip=true -U -q -Dproject.version=$(BLADE_VERSION)
