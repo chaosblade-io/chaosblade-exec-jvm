@@ -27,6 +27,8 @@ jobs:
       - name: Set version from tag
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
+          # Remove 'v' prefix if present
+          VERSION=${VERSION#v}
           echo "BLADE_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Building version: $VERSION"
 
