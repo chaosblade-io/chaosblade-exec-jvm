@@ -35,6 +35,77 @@ jobs:
           make clean
           make build
 
+      - name: Generate Changelog
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "Generating changelog for version: $VERSION"
+          
+          # Get the previous tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          
+          # Create changelog content
+          echo "# Changelog" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "## [${VERSION}] - $(date +'%Y-%m-%d')" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          
+          if [ -n "$PREVIOUS_TAG" ]; then
+            echo "### 🚀 New Features" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --grep="^feat\|^Feat" --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..HEAD >> CHANGELOG.md 2>/dev/null || echo "- No new features" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            
+            echo "### 🐛 Bug Fixes" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --grep="^fix\|^Bug\|^bug" --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..HEAD >> CHANGELOG.md 2>/dev/null || echo "- No bug fixes" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            
+            echo "### 🔧 Improvements" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --grep="^perf\|^refactor\|^style" --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..HEAD >> CHANGELOG.md 2>/dev/null || echo "- No improvements" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            
+            echo "### 📚 Documentation" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --grep="^docs" --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..HEAD >> CHANGELOG.md 2>/dev/null || echo "- No documentation changes" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            
+            echo "### 🔄 Other Changes" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --grep="^chore\|^Chore\|^test\|^ci\|^build" --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..HEAD >> CHANGELOG.md 2>/dev/null || echo "- No other changes" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            
+            # If no conventional commits found, show all commits
+            COMMIT_COUNT=$(git log --oneline ${PREVIOUS_TAG}..HEAD | wc -l)
+            if [ "$COMMIT_COUNT" -eq 0 ]; then
+              echo "### 📝 All Changes" >> CHANGELOG.md
+              echo "" >> CHANGELOG.md
+              git log --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..HEAD >> CHANGELOG.md
+              echo "" >> CHANGELOG.md
+            fi
+          else
+            echo "### 🎉 Initial Release" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --pretty=format:"- %s (%h)" --reverse >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+          fi
+          
+          echo "### 👥 Contributors" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          if [ -n "$PREVIOUS_TAG" ]; then
+            git log --pretty=format:"- %an <%ae>" ${PREVIOUS_TAG}..HEAD 2>/dev/null | sort -u >> CHANGELOG.md || echo "- ChaosBlade Team" >> CHANGELOG.md
+          else
+            git log --pretty=format:"- %an <%ae>" --reverse 2>/dev/null | sort -u >> CHANGELOG.md || echo "- ChaosBlade Team" >> CHANGELOG.md
+          fi
+          
+          echo "" >> CHANGELOG.md
+          echo "---" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "**Full Changelog**: https://github.com/chaosblade-io/chaosblade-exec-jvm/compare/${PREVIOUS_TAG}...${VERSION}" >> CHANGELOG.md
+          
+          echo "Changelog generated successfully"
+          cat CHANGELOG.md
+
       - name: Create release packages
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
@@ -50,6 +121,11 @@ jobs:
             cp target/*.jar release/ 2>/dev/null || true
           fi
           
+          # Copy changelog to release directory
+          if [ -f "CHANGELOG.md" ]; then
+            cp CHANGELOG.md release/
+          fi
+          
           # Create compressed packages
           cd release
           if [ "$(ls -A)" ]; then
@@ -63,6 +139,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: release/*
-          generate_release_notes: true
+          body_path: CHANGELOG.md
+          generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
