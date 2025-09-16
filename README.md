@@ -10,22 +10,21 @@ experiments on Java applications by enhancing classes. The drill can be implemen
 
 
 ## Compiling
-In the project root directory, execute the following command to compile
+You can view the help using the following command in the project root directory
 ```bash
-make
+make help
 ```
-
-The compilation result will be stored in the target directory.
-
 
 ## Contributing
 We welcome every contribution, even if it is just a punctuation. See details of [CONTRIBUTING](CONTRIBUTING.md)
 
 
 ## Bugs and Feedback
-For bug report, questions and discussions please submit [GitHub Issues](https://github.com/chaosblade-io/chaosblade-exec-jvm/issues).
+For bug report, questions and discussions please submit [GitHub Issues](https://github.com/chaosblade-io/chaosblade/issues).
 
-Contact us: chaosblade.io.01@gmail.com
+DingDing: 23177705
+
+Slack: https://chaosblade-io.slack.com/archives/CRTNFPWE8
 
 Gitter room: [chaosblade community](https://gitter.im/chaosblade-io/community)
 
