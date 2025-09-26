@@ -39,9 +39,6 @@ jobs:
       - name: Validate Maven configuration
         run: mvn -B validate
 
-      - name: Run code style verification
-        run: mvn spotless:check
-
       - name: Compile project
         run: mvn -B compile
 
@@ -53,6 +50,9 @@ jobs:
 
       - name: Install to local repository
         run: mvn -B install -Dmaven.test.skip=true
+
+      - name: Run code style verification
+        run: mvn -B com.diffplug.spotless:spotless-maven-plugin:2.30.0:check
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
