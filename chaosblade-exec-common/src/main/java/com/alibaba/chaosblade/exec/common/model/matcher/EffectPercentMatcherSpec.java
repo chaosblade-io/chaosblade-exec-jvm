@@ -20,42 +20,40 @@ import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class EffectPercentMatcherSpec implements MatcherSpec {
 
-    @Override
-    public String getName() {
-        return ModelConstant.EFFECT_PERCENT_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return ModelConstant.EFFECT_PERCENT_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The percent of chaos experiment in effect";
-    }
+  @Override
+  public String getDesc() {
+    return "The percent of chaos experiment in effect";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 
-    @Override
-    public PredicateResult predicate(MatcherModel matcherModel) {
-        String percent = matcherModel.get(ModelConstant.EFFECT_PERCENT_MATCHER_NAME);
-        if (!StringUtil.isBlank(percent)) {
-            try {
-                Integer.valueOf(percent);
-            } catch (NumberFormatException e) {
-                return PredicateResult.fail(
-                    ModelConstant.EFFECT_PERCENT_MATCHER_NAME + " value is illegal: " + percent);
-            }
-        }
-        return PredicateResult.success();
+  @Override
+  public PredicateResult predicate(MatcherModel matcherModel) {
+    String percent = matcherModel.get(ModelConstant.EFFECT_PERCENT_MATCHER_NAME);
+    if (!StringUtil.isBlank(percent)) {
+      try {
+        Integer.valueOf(percent);
+      } catch (NumberFormatException e) {
+        return PredicateResult.fail(
+            ModelConstant.EFFECT_PERCENT_MATCHER_NAME + " value is illegal: " + percent);
+      }
     }
+    return PredicateResult.success();
+  }
 }

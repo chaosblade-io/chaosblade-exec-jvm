@@ -16,33 +16,36 @@
 
 package com.alibaba.chaosblade.exec.common.plugin;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.aop.AfterEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import java.lang.reflect.Method;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MethodEnhancerForAfter extends AfterEnhancer {
 
-    @Override
-    public EnhancerModel doAfterAdvice(ClassLoader classLoader, String className, Object object,
-                                       Method method, Object[] methodArguments, Object returnObject)
-        throws Exception {
-        MatcherModel matcherModel = new MatcherModel();
-        matcherModel.add(MethodConstant.CLASS_MATCHER_NAME, className);
-        matcherModel.add(MethodConstant.METHOD_MATCHER_NAME, method.getName());
-        matcherModel.add(MethodConstant.AFTER_METHOD_FLAG, "true");
-        EnhancerModel model = new EnhancerModel(classLoader, matcherModel);
-        model.setTarget(ModelConstant.JVM_TARGET)
-            .setClassLoader(classLoader)
-            .setObject(object)
-            .setMethod(method)
-            .setMethodArguments(methodArguments)
-            .setReturnValue(returnObject);
-        return model;
-    }
+  @Override
+  public EnhancerModel doAfterAdvice(
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments,
+      Object returnObject)
+      throws Exception {
+    MatcherModel matcherModel = new MatcherModel();
+    matcherModel.add(MethodConstant.CLASS_MATCHER_NAME, className);
+    matcherModel.add(MethodConstant.METHOD_MATCHER_NAME, method.getName());
+    matcherModel.add(MethodConstant.AFTER_METHOD_FLAG, "true");
+    EnhancerModel model = new EnhancerModel(classLoader, matcherModel);
+    model
+        .setTarget(ModelConstant.JVM_TARGET)
+        .setClassLoader(classLoader)
+        .setObject(object)
+        .setMethod(method)
+        .setMethodArguments(methodArguments)
+        .setReturnValue(returnObject);
+    return model;
+  }
 }

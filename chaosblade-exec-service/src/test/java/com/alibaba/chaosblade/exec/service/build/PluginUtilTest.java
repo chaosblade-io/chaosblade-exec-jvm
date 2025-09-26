@@ -16,14 +16,12 @@
 
 package com.alibaba.chaosblade.exec.service.build;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PluginUtilTest {
-    //@Test
-    //public void dump() {
-    //    DubboConsumerPlugin dubboConsumerPlugin = new DubboConsumerPlugin();
-    //    String file = BuildUtil.generatePluginSpec(dubboConsumerPlugin);
-    //    System.out.println(file);
-    //}
+  // @Test
+  // public void dump() {
+  //    DubboConsumerPlugin dubboConsumerPlugin = new DubboConsumerPlugin();
+  //    String file = BuildUtil.generatePluginSpec(dubboConsumerPlugin);
+  //    System.out.println(file);
+  // }
 }

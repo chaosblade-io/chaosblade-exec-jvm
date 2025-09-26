@@ -16,35 +16,33 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.exception;
 
+import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import java.lang.reflect.Method;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ThrowExceptionExecutor extends ActionExecutor {
 
-    String THROW_CUSTOM_EXCEPTION = "throwCustomException";
-    String THROW_DECLARED_EXCEPTION = "throwDeclaredException";
+  String THROW_CUSTOM_EXCEPTION = "throwCustomException";
+  String THROW_DECLARED_EXCEPTION = "throwDeclaredException";
 
-    /**
-     * Throw custom exception
-     *
-     * @param classLoader
-     * @param exception
-     * @param exceptionMessage
-     * @return
-     */
-    Exception throwCustomException(ClassLoader classLoader, String exception, String exceptionMessage);
+  /**
+   * Throw custom exception
+   *
+   * @param classLoader
+   * @param exception
+   * @param exceptionMessage
+   * @return
+   */
+  Exception throwCustomException(
+      ClassLoader classLoader, String exception, String exceptionMessage);
 
-    /**
-     * Throw the first exception of the method declared
-     *
-     * @param classLoader
-     * @param method
-     * @param exceptionMessage
-     * @return
-     */
-    Exception throwDeclaredException(ClassLoader classLoader, Method method, String exceptionMessage);
+  /**
+   * Throw the first exception of the method declared
+   *
+   * @param classLoader
+   * @param method
+   * @param exceptionMessage
+   * @return
+   */
+  Exception throwDeclaredException(ClassLoader classLoader, Method method, String exceptionMessage);
 }

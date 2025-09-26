@@ -16,43 +16,41 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.java;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class JavaUtils {
 
-    public static String getClassName(String scriptContent) {
-        int index = scriptContent.indexOf("class");
-        if (index == -1) {
-            return "";
+  public static String getClassName(String scriptContent) {
+    int index = scriptContent.indexOf("class");
+    if (index == -1) {
+      return "";
+    }
+    char[] chars = scriptContent.toCharArray();
+    int startIndex = 0;
+    int endIndex = 0;
+    for (int i = index + 5; i < scriptContent.toCharArray().length; i++) {
+      if (startIndex == 0) {
+        if (!isAsciiAlpha(chars[i]) && chars[i] != ' ') {
+          break;
         }
-        char[] chars = scriptContent.toCharArray();
-        int startIndex = 0;
-        int endIndex = 0;
-        for (int i = index + 5; i < scriptContent.toCharArray().length; i++) {
-            if (startIndex == 0) {
-                if (!isAsciiAlpha(chars[i]) && chars[i] != ' ') {
-                    break;
-                }
-                if (isAsciiAlpha(chars[i])) {
-                    startIndex = i;
-                    endIndex = i;
-                }
-            } else {
-                if (!(isAsciiAlpha(chars[i]) || isDigital(chars[i]))) {
-                    endIndex = i;
-                    break;
-                }
-            }
+        if (isAsciiAlpha(chars[i])) {
+          startIndex = i;
+          endIndex = i;
         }
-        return scriptContent.substring(startIndex, endIndex);
+      } else {
+        if (!(isAsciiAlpha(chars[i]) || isDigital(chars[i]))) {
+          endIndex = i;
+          break;
+        }
+      }
     }
+    return scriptContent.substring(startIndex, endIndex);
+  }
 
-    public static boolean isAsciiAlpha(char ch) {
-        return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
-    }
+  public static boolean isAsciiAlpha(char ch) {
+    return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+  }
 
-    public static boolean isDigital(char ch) {
-        return ch >= '0' && ch <= '9';
-    }
+  public static boolean isDigital(char ch) {
+    return ch >= '0' && ch <= '9';
+  }
 }

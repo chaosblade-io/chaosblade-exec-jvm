@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.service.build;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class RefreshFlagBean implements FlagSpec {
 
-    @Override
-    public String getName() {
-        return "refresh";
-    }
+  @Override
+  public String getName() {
+    return "refresh";
+  }
 
-    @Override
-    public String getDesc() {
-        return "Uninstall java agent and reload it";
-    }
+  @Override
+  public String getDesc() {
+    return "Uninstall java agent and reload it";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return true;
-    }
+  @Override
+  public boolean noArgs() {
+    return true;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

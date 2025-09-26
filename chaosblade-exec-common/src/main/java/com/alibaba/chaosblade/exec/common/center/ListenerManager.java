@@ -18,22 +18,20 @@ package com.alibaba.chaosblade.exec.common.center;
 
 import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ListenerManager extends ManagerService {
 
-    /**
-     * Get plugin listener
-     *
-     * @return
-     */
-    PluginLifecycleListener getPluginLifecycleListener();
+  /**
+   * Get plugin listener
+   *
+   * @return
+   */
+  PluginLifecycleListener getPluginLifecycleListener();
 
-    /**
-     * Set plugin listener
-     *
-     * @param listener
-     */
-    void setPluginLifecycleListener(PluginLifecycleListener listener);
+  /**
+   * Set plugin listener
+   *
+   * @param listener
+   */
+  void setPluginLifecycleListener(PluginLifecycleListener listener);
 }

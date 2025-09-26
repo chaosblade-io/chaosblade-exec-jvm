@@ -18,29 +18,26 @@ package com.alibaba.chaosblade.exec.plugin.servlet;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author xulingjian
- */
+/** @author xulingjian */
 public class ServletRequestPathRegexPatternMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return ServletConstant.REQUEST_PATH_REGEX_PATTERN_KEY;
-    }
+  @Override
+  public String getName() {
+    return ServletConstant.REQUEST_PATH_REGEX_PATTERN_KEY;
+  }
 
-    @Override
-    public String getDesc() {
-        return "regex match RequestUri without ContextPath";
-    }
+  @Override
+  public String getDesc() {
+    return "regex match RequestUri without ContextPath";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
-
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.common.model.action.delay;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class TimeFlagSpec implements FlagSpec {
-    @Override
-    public String getName() {
-        return "time";
-    }
+  @Override
+  public String getName() {
+    return "time";
+  }
 
-    @Override
-    public String getDesc() {
-        return "delay time";
-    }
+  @Override
+  public String getDesc() {
+    return "delay time";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return true;
-    }
+  @Override
+  public boolean required() {
+    return true;
+  }
 }

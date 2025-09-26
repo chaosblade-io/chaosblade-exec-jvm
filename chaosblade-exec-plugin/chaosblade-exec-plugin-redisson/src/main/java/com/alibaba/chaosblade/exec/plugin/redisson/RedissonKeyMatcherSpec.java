@@ -18,28 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.redisson;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author xueshaoyi
- * @Date 2020/11/23 上午11:36
- **/
+/** @author xueshaoyi @Date 2020/11/23 上午11:36 */
 public class RedissonKeyMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return RedissonConstant.KEY_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return RedissonConstant.KEY_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The key which command used";
-    }
+  @Override
+  public String getDesc() {
+    return "The key which command used";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

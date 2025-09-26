@@ -21,28 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public class JedisPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return JedisConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return JedisConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new JedisModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new JedisModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new JedisPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new JedisPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new JedisEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new JedisEnhancer();
+  }
 }

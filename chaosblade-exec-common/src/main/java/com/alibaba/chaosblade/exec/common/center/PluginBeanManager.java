@@ -20,26 +20,26 @@ import com.alibaba.chaosblade.exec.common.aop.PluginBean;
 import com.alibaba.chaosblade.exec.common.aop.PluginBeans;
 
 public interface PluginBeanManager extends ManagerService {
-    /**
-     * Get experiment model specification
-     *
-     * @param target
-     * @return PluginBean
-     */
-    PluginBeans getPlugins(String target);
+  /**
+   * Get experiment model specification
+   *
+   * @param target
+   * @return PluginBean
+   */
+  PluginBeans getPlugins(String target);
 
-    /**
-     * Register plugin bean
-     *
-     * @param plugin
-     */
-    void registerPlugin(PluginBean plugin);
+  /**
+   * Register plugin bean
+   *
+   * @param plugin
+   */
+  void registerPlugin(PluginBean plugin);
 
-    /**
-     * Set the load
-     *
-     * @param plugins
-     * @param target
-     */
-    void setLoad(PluginBeans plugins, String target);
+  /**
+   * Set the load
+   *
+   * @param plugins
+   * @param target
+   */
+  void setLoad(PluginBeans plugins, String target);
 }

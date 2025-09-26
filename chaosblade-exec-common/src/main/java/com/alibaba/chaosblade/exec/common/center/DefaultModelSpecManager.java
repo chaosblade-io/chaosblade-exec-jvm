@@ -16,44 +16,39 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
+import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DefaultModelSpecManager implements ModelSpecManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultModelSpecManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DefaultModelSpecManager.class);
 
-    private Map<String, ModelSpec> modelSpecs = new HashMap<String, ModelSpec>();
+  private Map<String, ModelSpec> modelSpecs = new HashMap<String, ModelSpec>();
 
-    @Override
-    public ModelSpec getModelSpec(String target) {
-        return modelSpecs.get(target);
+  @Override
+  public ModelSpec getModelSpec(String target) {
+    return modelSpecs.get(target);
+  }
+
+  @Override
+  public void registerModelSpec(ModelSpec modelSpec) {
+    String target = modelSpec.getTarget();
+    if (modelSpecs.containsKey(target)) {
+      LOGGER.warn("{} target model has defined", target);
+      return;
     }
+    modelSpecs.put(target, modelSpec);
+  }
 
-    @Override
-    public void registerModelSpec(ModelSpec modelSpec) {
-        String target = modelSpec.getTarget();
-        if (modelSpecs.containsKey(target)) {
-            LOGGER.warn("{} target model has defined", target);
-            return;
-        }
-        modelSpecs.put(target, modelSpec);
-    }
+  @Override
+  public void load() {}
 
-    @Override
-    public void load() {
-    }
-
-    @Override
-    public void unload() {
-        modelSpecs.clear();
-    }
+  @Override
+  public void unload() {
+    modelSpecs.clear();
+  }
 }

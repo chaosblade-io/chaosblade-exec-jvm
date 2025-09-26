@@ -2,9 +2,6 @@ package com.alibaba.chaosblade.exec.common.util;
 
 /**
  * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- *
- *     redis protocol
- *
+ *     <p>redis protocol
  */
-public class RedisParserUtil {
-}
+public class RedisParserUtil {}

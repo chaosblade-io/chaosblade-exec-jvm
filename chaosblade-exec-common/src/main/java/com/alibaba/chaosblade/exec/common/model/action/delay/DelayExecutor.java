@@ -18,17 +18,14 @@ package com.alibaba.chaosblade.exec.common.model.action.delay;
 
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface DelayExecutor extends ActionExecutor {
 
-    /**
-     * Execute sleep
-     *
-     * @param timeInMillis   sleep time
-     * @param offsetInMillis sleep offset
-     */
-    void sleep(long timeInMillis, int offsetInMillis);
-
+  /**
+   * Execute sleep
+   *
+   * @param timeInMillis sleep time
+   * @param offsetInMillis sleep offset
+   */
+  void sleep(long timeInMillis, int offsetInMillis);
 }

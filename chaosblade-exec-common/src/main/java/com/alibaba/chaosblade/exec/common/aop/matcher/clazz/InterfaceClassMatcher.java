@@ -18,25 +18,23 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
 
 import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 
-/**
- * @author shizhi.zhu@qunar.com
- */
+/** @author shizhi.zhu@qunar.com */
 public class InterfaceClassMatcher implements ClassMatcher {
 
-    private final String classInterface;
+  private final String classInterface;
 
-    public InterfaceClassMatcher(String classInterface) {
-        this.classInterface = classInterface;
-    }
+  public InterfaceClassMatcher(String classInterface) {
+    this.classInterface = classInterface;
+  }
 
-    @Override
-    public boolean isMatched(String className, ClassInfo classInfo) {
-        String[] interfaces = classInfo.getInterfaces();
-        for (String itf : interfaces) {
-            if (classInterface.equals(itf)) {
-                return true;
-            }
-        }
-        return false;
+  @Override
+  public boolean isMatched(String className, ClassInfo classInfo) {
+    String[] interfaces = classInfo.getInterfaces();
+    for (String itf : interfaces) {
+      if (classInterface.equals(itf)) {
+        return true;
+      }
     }
+    return false;
+  }
 }

@@ -17,11 +17,10 @@
 package com.alibaba.chaosblade.exec.plugin.servlet;
 
 import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author yefei
@@ -29,60 +28,61 @@ import java.util.regex.Pattern;
  */
 public class ServletParamsMatcher implements CustomMatcher {
 
-    private static final Logger logger = LoggerFactory.getLogger(ServletParamsMatcher.class);
+  private static final Logger logger = LoggerFactory.getLogger(ServletParamsMatcher.class);
 
-    private static final ServletParamsMatcher CALL_BACK = new ServletParamsMatcher();
+  private static final ServletParamsMatcher CALL_BACK = new ServletParamsMatcher();
 
-    private ServletParamsMatcher() {
+  private ServletParamsMatcher() {}
+
+  public static ServletParamsMatcher getInstance() {
+    return CALL_BACK;
+  }
+
+  @Override
+  public boolean match(String queryString, Object originValue) {
+    Map<String, Object> value = (Map<String, Object>) originValue;
+    String[] paramsStr = queryString.split(ServletConstant.AND_SYMBOL);
+    for (String s : paramsStr) {
+      int i = s.indexOf(ServletConstant.EQUALS_SYMBOL);
+      if (i == -1) {
+        return false;
+      }
+      Object actualValue = value.get(s.substring(0, i));
+      String expectValue = s.substring(i + 1);
+      if (actualValue == null) {
+        logger.debug("query string mather fail, actualValue is null, expectValue:{}", expectValue);
+        return false;
+      }
+      if (!expectValue.equals(actualValue.toString())) {
+        logger.debug(
+            "query string mather fail, actualValue: {}, expectValue:{}", actualValue, expectValue);
+        return false;
+      }
     }
+    return true;
+  }
 
-    public static ServletParamsMatcher getInstance() {
-        return CALL_BACK;
+  @Override
+  public boolean regexMatch(String queryString, Object originValue) {
+    Map<String, Object> value = (Map<String, Object>) originValue;
+    String[] paramsStr = queryString.split(ServletConstant.AND_SYMBOL);
+    for (String s : paramsStr) {
+      int i = s.indexOf(ServletConstant.EQUALS_SYMBOL);
+      if (i == -1) {
+        return false;
+      }
+      Object actualValue = value.get(s.substring(0, i));
+      String expectValue = s.substring(i + 1);
+      if (actualValue == null) {
+        logger.debug("query string mather fail, actualValue is null, expectValue:{}", expectValue);
+        return false;
+      }
+      if (!Pattern.matches(expectValue, String.valueOf(actualValue))) {
+        logger.debug(
+            "query string mather fail, actualValue: {}, expectValue:{}", actualValue, expectValue);
+        return false;
+      }
     }
-
-    @Override
-    public boolean match(String queryString, Object originValue) {
-        Map<String, Object> value = (Map<String, Object>) originValue;
-        String[] paramsStr = queryString.split(ServletConstant.AND_SYMBOL);
-        for (String s : paramsStr) {
-            int i = s.indexOf(ServletConstant.EQUALS_SYMBOL);
-            if (i == -1) {
-                return false;
-            }
-            Object actualValue = value.get(s.substring(0, i));
-            String expectValue = s.substring(i + 1);
-            if (actualValue == null) {
-                logger.debug("query string mather fail, actualValue is null, expectValue:{}", expectValue);
-                return false;
-            }
-            if (!expectValue.equals(actualValue.toString())) {
-                logger.debug("query string mather fail, actualValue: {}, expectValue:{}", actualValue, expectValue);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean regexMatch(String queryString, Object originValue) {
-        Map<String, Object> value = (Map<String, Object>) originValue;
-        String[] paramsStr = queryString.split(ServletConstant.AND_SYMBOL);
-        for (String s : paramsStr) {
-            int i = s.indexOf(ServletConstant.EQUALS_SYMBOL);
-            if (i == -1) {
-                return false;
-            }
-            Object actualValue = value.get(s.substring(0, i));
-            String expectValue = s.substring(i + 1);
-            if (actualValue == null) {
-                logger.debug("query string mather fail, actualValue is null, expectValue:{}", expectValue);
-                return false;
-            }
-            if (!Pattern.matches(expectValue, String.valueOf(actualValue))) {
-                logger.debug("query string mather fail, actualValue: {}, expectValue:{}", actualValue, expectValue);
-                return false;
-            }
-        }
-        return true;
-    }
+    return true;
+  }
 }

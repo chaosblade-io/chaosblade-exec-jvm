@@ -11,23 +11,23 @@ import com.alibaba.chaosblade.exec.common.model.ModelSpec;
  * @email rinalhb@icloud.com
  */
 public class RocketMqPlugin implements Plugin, RocketMqConstant {
-    @Override
-    public String getName() {
-        return PLUGIN_NAME;
-    }
+  @Override
+  public String getName() {
+    return PLUGIN_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new RocketMqModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new RocketMqModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new RocketMqPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new RocketMqPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new RocketMqEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new RocketMqEnhancer();
+  }
 }

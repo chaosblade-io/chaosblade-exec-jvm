@@ -18,19 +18,17 @@ package com.alibaba.chaosblade.exec.common.model.matcher;
 
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class BasePredicateMatcherSpec implements MatcherSpec {
 
-    @Override
-    public PredicateResult predicate(MatcherModel matcherModel) {
-        String value = matcherModel.get(getName());
-        if (value == null) {
-            if (required()) {
-                return PredicateResult.fail("less necessary " + getName() + " value");
-            }
-        }
-        return PredicateResult.success();
+  @Override
+  public PredicateResult predicate(MatcherModel matcherModel) {
+    String value = matcherModel.get(getName());
+    if (value == null) {
+      if (required()) {
+        return PredicateResult.fail("less necessary " + getName() + " value");
+      }
     }
+    return PredicateResult.success();
+  }
 }

@@ -16,11 +16,9 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.returnv;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class UnsupportedReturnTypeException extends Exception {
-    public UnsupportedReturnTypeException(String message) {
-        super(message);
-    }
+  public UnsupportedReturnTypeException(String message) {
+    super(message);
+  }
 }

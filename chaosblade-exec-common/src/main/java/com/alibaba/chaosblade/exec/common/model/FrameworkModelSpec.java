@@ -16,63 +16,57 @@
 
 package com.alibaba.chaosblade.exec.common.model;
 
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import java.util.List;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class FrameworkModelSpec extends BaseModelSpec {
 
-    public FrameworkModelSpec() {
-        addDelayActionSpec();
-        addThrowExceptionActionSpec();
+  public FrameworkModelSpec() {
+    addDelayActionSpec();
+    addThrowExceptionActionSpec();
 
-        addChildNewMatchersToAllActions();
+    addChildNewMatchersToAllActions();
+  }
+
+  private void addThrowExceptionActionSpec() {
+    this.addActionSpec(new ThrowCustomExceptionActionSpec());
+  }
+
+  private void addDelayActionSpec() {
+    DelayActionSpec delayActionSpec = new DelayActionSpec();
+    this.addActionSpec(delayActionSpec);
+  }
+
+  private void addChildNewMatchersToAllActions() {
+    List<MatcherSpec> newMatcherSpecs = createNewMatcherSpecs();
+    if (newMatcherSpecs == null) {
+      return;
     }
-
-    private void addThrowExceptionActionSpec() {
-        this.addActionSpec(new ThrowCustomExceptionActionSpec());
+    for (MatcherSpec newMatcherSpec : newMatcherSpecs) {
+      addMatcherDefToAllActions(newMatcherSpec);
     }
+  }
 
-    private void addDelayActionSpec() {
-        DelayActionSpec delayActionSpec = new DelayActionSpec();
-        this.addActionSpec(delayActionSpec);
+  public void addAllMatchersToTheAction(ActionSpec actionSpec) {
+    List<MatcherSpec> newMatcherSpecs = createNewMatcherSpecs();
+    if (newMatcherSpecs == null) {
+      return;
     }
-
-    private void addChildNewMatchersToAllActions() {
-        List<MatcherSpec> newMatcherSpecs = createNewMatcherSpecs();
-        if (newMatcherSpecs == null) {
-            return;
-        }
-        for (MatcherSpec newMatcherSpec : newMatcherSpecs) {
-            addMatcherDefToAllActions(newMatcherSpec);
-        }
+    for (MatcherSpec matcherSpec : newMatcherSpecs) {
+      actionSpec.addMatcherDesc(matcherSpec);
     }
+  }
 
-    public void addAllMatchersToTheAction(ActionSpec actionSpec) {
-        List<MatcherSpec> newMatcherSpecs = createNewMatcherSpecs();
-        if (newMatcherSpecs == null) {
-            return;
-        }
-        for (MatcherSpec matcherSpec : newMatcherSpecs) {
-            actionSpec.addMatcherDesc(matcherSpec);
-        }
-    }
+  /** */
+  protected abstract List<MatcherSpec> createNewMatcherSpecs();
 
-    /**
-     *
-     */
-    protected abstract List<MatcherSpec> createNewMatcherSpecs();
-
-    @Override
-    protected PredicateResult preMatcherPredicate(Model matcherSpecs) {
-        return PredicateResult.success();
-    }
-
+  @Override
+  protected PredicateResult preMatcherPredicate(Model matcherSpecs) {
+    return PredicateResult.success();
+  }
 }

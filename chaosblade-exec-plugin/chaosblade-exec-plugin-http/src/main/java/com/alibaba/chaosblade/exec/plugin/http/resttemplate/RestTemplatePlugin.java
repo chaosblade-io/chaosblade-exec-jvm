@@ -7,23 +7,23 @@ import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
 
 /**
  * @Author yuhan
- * @package: com.alibaba.chaosblade.exec.plugin.restTemplate
- * @Date 2019-05-10 10:25
+ *
+ * @package: com.alibaba.chaosblade.exec.plugin.restTemplate @Date 2019-05-10 10:25
  */
 public class RestTemplatePlugin extends HttpPlugin {
 
-    @Override
-    public String getName() {
-        return HttpConstant.REST_TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return HttpConstant.REST_TARGET_NAME;
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new RestTemplatePointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new RestTemplatePointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new RestTemplateEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new RestTemplateEnhancer();
+  }
 }

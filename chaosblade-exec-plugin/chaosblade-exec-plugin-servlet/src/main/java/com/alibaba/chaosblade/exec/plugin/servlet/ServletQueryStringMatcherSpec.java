@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.plugin.servlet;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ServletQueryStringMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return ServletConstant.QUERY_STRING_KEY;
-    }
+  @Override
+  public String getName() {
+    return ServletConstant.QUERY_STRING_KEY;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The query string that is contained in the request URL after the path.";
-    }
+  @Override
+  public String getDesc() {
+    return "The query string that is contained in the request URL after the path.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

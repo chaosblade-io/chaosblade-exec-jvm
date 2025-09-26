@@ -16,104 +16,101 @@
 
 package com.alibaba.chaosblade.exec.common.model.prepare;
 
+import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class AgentPrepareSpec implements PrepareSpec {
 
-    @Override
-    public String getType() {
-        return "jvm";
-    }
+  @Override
+  public String getType() {
+    return "jvm";
+  }
 
-    @Override
-    public List<FlagSpec> getFlags() {
-        ArrayList<FlagSpec> flagSpecs = new ArrayList<FlagSpec>();
-        flagSpecs.add(createProcessNameFlag());
-        flagSpecs.add(createJavaHomeFlag());
-        flagSpecs.add(createProcessIdFlag());
-        return flagSpecs;
-    }
+  @Override
+  public List<FlagSpec> getFlags() {
+    ArrayList<FlagSpec> flagSpecs = new ArrayList<FlagSpec>();
+    flagSpecs.add(createProcessNameFlag());
+    flagSpecs.add(createJavaHomeFlag());
+    flagSpecs.add(createProcessIdFlag());
+    return flagSpecs;
+  }
 
-    private FlagSpec createJavaHomeFlag() {
-        return new FlagSpec() {
-            @Override
-            public String getName() {
-                return "javaHome";
-            }
+  private FlagSpec createJavaHomeFlag() {
+    return new FlagSpec() {
+      @Override
+      public String getName() {
+        return "javaHome";
+      }
 
-            @Override
-            public String getDesc() {
-                return "Java home path";
-            }
+      @Override
+      public String getDesc() {
+        return "Java home path";
+      }
 
-            @Override
-            public boolean noArgs() {
-                return false;
-            }
+      @Override
+      public boolean noArgs() {
+        return false;
+      }
 
-            @Override
-            public boolean required() {
-                return false;
-            }
-        };
-    }
+      @Override
+      public boolean required() {
+        return false;
+      }
+    };
+  }
 
-    private FlagSpec createProcessNameFlag() {
-        return new FlagSpec() {
-            @Override
-            public String getName() {
-                return "process";
-            }
+  private FlagSpec createProcessNameFlag() {
+    return new FlagSpec() {
+      @Override
+      public String getName() {
+        return "process";
+      }
 
-            @Override
-            public String getDesc() {
-                return "Java application process";
-            }
+      @Override
+      public String getDesc() {
+        return "Java application process";
+      }
 
-            @Override
-            public boolean noArgs() {
-                return false;
-            }
+      @Override
+      public boolean noArgs() {
+        return false;
+      }
 
-            @Override
-            public boolean required() {
-                return false;
-            }
-        };
-    }
+      @Override
+      public boolean required() {
+        return false;
+      }
+    };
+  }
 
-    private FlagSpec createProcessIdFlag() {
-        return new FlagSpec() {
-            @Override
-            public String getName() {
-                return "pid";
-            }
+  private FlagSpec createProcessIdFlag() {
+    return new FlagSpec() {
+      @Override
+      public String getName() {
+        return "pid";
+      }
 
-            @Override
-            public String getDesc() {
-                return "The process id of java application";
-            }
+      @Override
+      public String getDesc() {
+        return "The process id of java application";
+      }
 
-            @Override
-            public boolean noArgs() {
-                return false;
-            }
+      @Override
+      public boolean noArgs() {
+        return false;
+      }
 
-            @Override
-            public boolean required() {
-                return false;
-            }
-        };
-    }
+      @Override
+      public boolean required() {
+        return false;
+      }
+    };
+  }
 
-    @Override
-    public boolean required() {
-        return true;
-    }
+  @Override
+  public boolean required() {
+    return true;
+  }
 }

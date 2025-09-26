@@ -34,165 +34,163 @@ import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
 import com.alibaba.chaosblade.exec.common.util.LogUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author changjun.xcj
- */
+/** @author changjun.xcj */
 public class CreateHandler implements RequestHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreateHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(CreateHandler.class);
 
-    private ModelSpecManager modelSpecManager;
-    private StatusManager statusManager;
-    private volatile boolean unloaded;
+  private ModelSpecManager modelSpecManager;
+  private StatusManager statusManager;
+  private volatile boolean unloaded;
 
-    public CreateHandler() {
-        this.modelSpecManager = ManagerFactory.getModelSpecManager();
-        this.statusManager = ManagerFactory.getStatusManager();
+  public CreateHandler() {
+    this.modelSpecManager = ManagerFactory.getModelSpecManager();
+    this.statusManager = ManagerFactory.getStatusManager();
+  }
+
+  @Override
+  public String getHandlerName() {
+    return "create";
+  }
+
+  /**
+   * Handle request for creating chaos experiment
+   *
+   * @param request
+   * @return
+   */
+  @Override
+  public Response handle(Request request) {
+    if (unloaded) {
+      return Response.ofFailure(Code.ILLEGAL_STATE, "the agent is uninstalling");
+    }
+    // check necessary arguments
+    String suid = request.getParam("suid");
+    if (StringUtil.isBlank(suid)) {
+      return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less experiment argument");
+    }
+    String target = request.getParam("target");
+    if (StringUtil.isBlank(target)) {
+      return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less target argument");
+    }
+    String actionArg = request.getParam("action");
+    if (StringUtil.isBlank(actionArg)) {
+      return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less action argument");
+    }
+    // change level from info to debug if open debug mode
+    checkAndSetLogLevel(request);
+    // check the command supported or not
+    ModelSpec modelSpec = this.modelSpecManager.getModelSpec(target);
+    if (modelSpec == null) {
+      return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "the target not supported");
+    }
+    ActionSpec actionSpec = modelSpec.getActionSpec(actionArg);
+    if (actionSpec == null) {
+      return Response.ofFailure(Code.NOT_FOUND, "the action not supported");
+    }
+    // parse request to model
+    Model model = ModelParser.parseRequest(target, request, actionSpec);
+    // check command arguments
+    PredicateResult predicate = modelSpec.predicate(model);
+    if (!predicate.isSuccess()) {
+      return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, predicate.getErr());
     }
 
-    @Override
-    public String getHandlerName() {
-        return "create";
+    return handleInjection(suid, model, modelSpec);
+  }
+
+  @Override
+  public void unload() {
+    unloaded = true;
+  }
+
+  /**
+   * Set log level to debug if debug parameter is true
+   *
+   * @param request
+   */
+  private void checkAndSetLogLevel(Request request) {
+    String debug = request.getParam("debug");
+    if (Boolean.TRUE.toString().equalsIgnoreCase(debug)) {
+      try {
+        LogUtil.setDebug();
+        LOGGER.info("change log level to debug");
+      } catch (Exception e) {
+        LOGGER.warn("set log level to debug failed", e);
+      }
+    } else {
+      try {
+        LogUtil.setInfo();
+      } catch (Exception e) {
+        LOGGER.warn("set log level to INFO failed", e);
+      }
     }
+  }
 
-    /**
-     * Handle request for creating chaos experiment
-     *
-     * @param request
-     * @return
-     */
-    @Override
-    public Response handle(Request request) {
-        if (unloaded) {
-            return Response.ofFailure(Code.ILLEGAL_STATE, "the agent is uninstalling");
-        }
-        // check necessary arguments
-        String suid = request.getParam("suid");
-        if (StringUtil.isBlank(suid)) {
-            return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less experiment argument");
-        }
-        String target = request.getParam("target");
-        if (StringUtil.isBlank(target)) {
-            return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less target argument");
-        }
-        String actionArg = request.getParam("action");
-        if (StringUtil.isBlank(actionArg)) {
-            return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "less action argument");
-        }
-        // change level from info to debug if open debug mode
-        checkAndSetLogLevel(request);
-        // check the command supported or not
-        ModelSpec modelSpec = this.modelSpecManager.getModelSpec(target);
-        if (modelSpec == null) {
-            return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, "the target not supported");
-        }
-        ActionSpec actionSpec = modelSpec.getActionSpec(actionArg);
-        if (actionSpec == null) {
-            return Response.ofFailure(Code.NOT_FOUND, "the action not supported");
-        }
-        // parse request to model
-        Model model = ModelParser.parseRequest(target, request, actionSpec);
-        // check command arguments
-        PredicateResult predicate = modelSpec.predicate(model);
-        if (!predicate.isSuccess()) {
-            return Response.ofFailure(Response.Code.ILLEGAL_PARAMETER, predicate.getErr());
-        }
+  /**
+   * Handle injection
+   *
+   * @param suid
+   * @param model
+   * @return
+   */
+  private Response handleInjection(String suid, Model model, ModelSpec modelSpec) {
+    RegisterResult result = this.statusManager.registerExp(suid, model);
+    if (result.isSuccess()) {
+      // handle injection
+      try {
+        lazyLoadPlugin(modelSpec, model);
+        applyPreInjectionModelHandler(suid, modelSpec, model);
+      } catch (ExperimentException ex) {
+        this.statusManager.removeExp(suid);
+        return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
+      }
 
-        return handleInjection(suid, model, modelSpec);
+      return Response.ofSuccess(model.toString());
     }
+    return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
+  }
 
-    @Override
-    public void unload() {
-        unloaded = true;
+  /**
+   * Pre-handle for injection
+   *
+   * @param suid
+   * @param modelSpec
+   * @param model
+   * @throws ExperimentException
+   */
+  private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
+      throws ExperimentException {
+    if (modelSpec instanceof PreCreateInjectionModelHandler) {
+      ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
     }
+  }
 
-    /**
-     * Set log level to debug if debug parameter is true
-     *
-     * @param request
-     */
-    private void checkAndSetLogLevel(Request request) {
-        String debug = request.getParam("debug");
-        if (Boolean.TRUE.toString().equalsIgnoreCase(debug)) {
-            try {
-                LogUtil.setDebug();
-                LOGGER.info("change log level to debug");
-            } catch (Exception e) {
-                LOGGER.warn("set log level to debug failed", e);
-            }
-        } else {
-            try {
-                LogUtil.setInfo();
-            } catch (Exception e) {
-                LOGGER.warn("set log level to INFO failed", e);
-            }
-        }
+  private void lazyLoadPlugin(ModelSpec modelSpec, Model model) throws ExperimentException {
+    PluginLifecycleListener listener =
+        ManagerFactory.getListenerManager().getPluginLifecycleListener();
+    if (listener == null) {
+      throw new ExperimentException("can get plugin listener");
     }
+    PluginBeans pluginBeans = ManagerFactory.getPluginManager().getPlugins(modelSpec.getTarget());
 
-    /**
-     * Handle injection
-     *
-     * @param suid
-     * @param model
-     * @return
-     */
-    private Response handleInjection(String suid, Model model, ModelSpec modelSpec) {
-        RegisterResult result = this.statusManager.registerExp(suid, model);
-        if (result.isSuccess()) {
-            // handle injection
-            try {
-                lazyLoadPlugin(modelSpec, model);
-                applyPreInjectionModelHandler(suid, modelSpec, model);
-            } catch (ExperimentException ex) {
-                this.statusManager.removeExp(suid);
-                return Response.ofFailure(Response.Code.SERVER_ERROR, ex.getMessage());
-            }
-
-            return Response.ofSuccess(model.toString());
-        }
-        return Response.ofFailure(Response.Code.DUPLICATE_INJECTION, "the experiment exists");
+    if (pluginBeans == null) {
+      throw new ExperimentException("can get plugin bean");
     }
-
-    /**
-     * Pre-handle for injection
-     *
-     * @param suid
-     * @param modelSpec
-     * @param model
-     * @throws ExperimentException
-     */
-    private void applyPreInjectionModelHandler(String suid, ModelSpec modelSpec, Model model)
-            throws ExperimentException {
-        if (modelSpec instanceof PreCreateInjectionModelHandler) {
-            ((PreCreateInjectionModelHandler) modelSpec).preCreate(suid, model);
-        }
+    if (pluginBeans.isLoad()) {
+      return;
     }
-
-    private void lazyLoadPlugin(ModelSpec modelSpec, Model model) throws ExperimentException {
-        PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
-        if (listener == null) {
-            throw new ExperimentException("can get plugin listener");
-        }
-        PluginBeans pluginBeans = ManagerFactory.getPluginManager().getPlugins(modelSpec.getTarget());
-
-        if (pluginBeans == null) {
-            throw new ExperimentException("can get plugin bean");
-        }
-        if (pluginBeans.isLoad()) {
-            return;
-        }
-        for (PluginBean pluginBean : pluginBeans.getPluginBeans()) {
-            String flag = model.getMatcher().get(pluginBean.getName());
-            if ("true".equalsIgnoreCase(flag)) {
-                listener.add(pluginBean);
-                break;
-            }
-            listener.add(pluginBean);
-        }
-        ManagerFactory.getPluginManager().setLoad(pluginBeans, modelSpec.getTarget());
+    for (PluginBean pluginBean : pluginBeans.getPluginBeans()) {
+      String flag = model.getMatcher().get(pluginBean.getName());
+      if ("true".equalsIgnoreCase(flag)) {
+        listener.add(pluginBean);
+        break;
+      }
+      listener.add(pluginBean);
     }
+    ManagerFactory.getPluginManager().setLoad(pluginBeans, modelSpec.getTarget());
+  }
 }

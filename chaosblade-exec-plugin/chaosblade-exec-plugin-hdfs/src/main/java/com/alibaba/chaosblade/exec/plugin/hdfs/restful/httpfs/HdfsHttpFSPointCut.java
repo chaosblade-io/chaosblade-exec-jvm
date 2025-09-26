@@ -24,24 +24,26 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 
 public class HdfsHttpFSPointCut implements PointCut {
-    private static final String CLASS_HDFS_HTTPFS_SERVER = "org.apache.hadoop.fs.http.server.HttpFSServer";
-    public static final String METHOD_HDFS_HTTPFS_GET = "get";
-    public static final String METHOD_HDFS_HTTPFS_PUT = "put";
-    public static final String METHOD_HDFS_HTTPFS_POST = "post";
-    public static final String METHOD_HDFS_HTTPFS_DELETE = "delete";
+  private static final String CLASS_HDFS_HTTPFS_SERVER =
+      "org.apache.hadoop.fs.http.server.HttpFSServer";
+  public static final String METHOD_HDFS_HTTPFS_GET = "get";
+  public static final String METHOD_HDFS_HTTPFS_PUT = "put";
+  public static final String METHOD_HDFS_HTTPFS_POST = "post";
+  public static final String METHOD_HDFS_HTTPFS_DELETE = "delete";
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(CLASS_HDFS_HTTPFS_SERVER);
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher(CLASS_HDFS_HTTPFS_SERVER);
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
-        orMethodMatcher.or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_GET))
-                .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_PUT))
-                .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_POST))
-                .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_DELETE));
-        return orMethodMatcher;
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
+    orMethodMatcher
+        .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_GET))
+        .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_PUT))
+        .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_POST))
+        .or(new NameMethodMatcher(METHOD_HDFS_HTTPFS_DELETE));
+    return orMethodMatcher;
+  }
 }

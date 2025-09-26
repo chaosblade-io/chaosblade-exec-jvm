@@ -19,29 +19,25 @@ package com.alibaba.chaosblade.exec.common.transport;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class Context {
-    private Map<String, String> ctx;
+  private Map<String, String> ctx;
 
-    public Context() {
-        this.ctx = new HashMap<String, String>();
-    }
+  public Context() {
+    this.ctx = new HashMap<String, String>();
+  }
 
-    public String get(String key) {
-        return ctx.get(key);
-    }
+  public String get(String key) {
+    return ctx.get(key);
+  }
 
-    public Context set(String key, String value) {
-        ctx.put(key, value);
-        return this;
-    }
+  public Context set(String key, String value) {
+    ctx.put(key, value);
+    return this;
+  }
 
-    @Override
-    public String toString() {
-        return "Context{" +
-            "ctx=" + ctx +
-            '}';
-    }
+  @Override
+  public String toString() {
+    return "Context{" + "ctx=" + ctx + '}';
+  }
 }

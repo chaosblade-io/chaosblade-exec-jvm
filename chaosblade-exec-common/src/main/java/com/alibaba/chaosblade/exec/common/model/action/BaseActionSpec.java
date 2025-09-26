@@ -17,66 +17,64 @@
 package com.alibaba.chaosblade.exec.common.model.action;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class BaseActionSpec implements ActionSpec {
 
-    private ConcurrentHashMap<String, MatcherSpec> matcherSpecs = new ConcurrentHashMap<String, MatcherSpec>();
+  private ConcurrentHashMap<String, MatcherSpec> matcherSpecs =
+      new ConcurrentHashMap<String, MatcherSpec>();
 
-    private ActionExecutor actionExecutor;
+  private ActionExecutor actionExecutor;
 
-    private String LongDesc;
+  private String LongDesc;
 
-    private String example;
+  private String example;
 
-    public BaseActionSpec(ActionExecutor actionExecutor) {
-        this.actionExecutor = actionExecutor;
-    }
+  public BaseActionSpec(ActionExecutor actionExecutor) {
+    this.actionExecutor = actionExecutor;
+  }
 
-    @Override
-    public List<MatcherSpec> getMatchers() {
-        return new ArrayList<MatcherSpec>(matcherSpecs.values());
-    }
+  @Override
+  public List<MatcherSpec> getMatchers() {
+    return new ArrayList<MatcherSpec>(matcherSpecs.values());
+  }
 
-    @Override
-    public Map<String, MatcherSpec> getMatcherSpecs() {
-        return matcherSpecs;
-    }
+  @Override
+  public Map<String, MatcherSpec> getMatcherSpecs() {
+    return matcherSpecs;
+  }
 
-    @Override
-    public void addMatcherDesc(MatcherSpec matcherSpec) {
-        matcherSpecs.putIfAbsent(matcherSpec.getName(), matcherSpec);
-    }
+  @Override
+  public void addMatcherDesc(MatcherSpec matcherSpec) {
+    matcherSpecs.putIfAbsent(matcherSpec.getName(), matcherSpec);
+  }
 
-    @Override
-    public ActionExecutor getActionExecutor() {
-        return actionExecutor;
-    }
+  @Override
+  public ActionExecutor getActionExecutor() {
+    return actionExecutor;
+  }
 
-    @Override
-    public void setExample(String example) {
-        this.example = example;
-    }
+  @Override
+  public void setExample(String example) {
+    this.example = example;
+  }
 
-    @Override
-    public String getExample() {
-        return example;
-    }
+  @Override
+  public String getExample() {
+    return example;
+  }
 
-    @Override
-    public String getLongDesc() {
-        return LongDesc;
-    }
+  @Override
+  public String getLongDesc() {
+    return LongDesc;
+  }
 
-    @Override
-    public void setLongDesc(String longDesc) {
-        LongDesc = longDesc;
-    }
+  @Override
+  public void setLongDesc(String longDesc) {
+    LongDesc = longDesc;
+  }
 }

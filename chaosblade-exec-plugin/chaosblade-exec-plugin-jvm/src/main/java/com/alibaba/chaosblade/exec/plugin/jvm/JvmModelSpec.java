@@ -31,73 +31,72 @@ import com.alibaba.chaosblade.exec.plugin.jvm.gc.FullGCActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
-
 import java.util.Arrays;
 
 /**
  * Jvm model spec
- * <p>
- * The jvm model plugin is used  for creating common java fault injections.
- * </p>
- * <p>
- * For example
+ *
+ * <p>The jvm model plugin is used for creating common java fault injections.
+ *
+ * <p>For example
+ *
  * <ul>
- * <li>inject any java methods</li>
- * <li>cause jvm oom</li>
+ *   <li>inject any java methods
+ *   <li>cause jvm oom
  * </ul>
- * </p>
  *
  * @author RinaisSuper
  * @date 2019-04-19
  */
-public class JvmModelSpec extends MethodModelSpec implements PreCreateInjectionModelHandler,
-        PreDestroyInjectionModelHandler {
+public class JvmModelSpec extends MethodModelSpec
+    implements PreCreateInjectionModelHandler, PreDestroyInjectionModelHandler {
 
-    public JvmModelSpec() {
-        super();
-        addActionSpec(new JvmOomActionSpec());
-        addActionSpec(new JvmCpuFullLoadActionSpec());
-        addActionSpec(new JvmDynamicActionSpec());
-        addActionSpec(new CodeCacheFillingActionSpec());
-        addActionSpec(new JvmThreadFullActionSpec());
-        addActionSpec(new FullGCActionSpec());
-    }
+  public JvmModelSpec() {
+    super();
+    addActionSpec(new JvmOomActionSpec());
+    addActionSpec(new JvmCpuFullLoadActionSpec());
+    addActionSpec(new JvmDynamicActionSpec());
+    addActionSpec(new CodeCacheFillingActionSpec());
+    addActionSpec(new JvmThreadFullActionSpec());
+    addActionSpec(new FullGCActionSpec());
+  }
 
-    @Override
-    public void preDestroy(String uid, Model model) throws ExperimentException {
-        ActionSpec actionSpec = getActionSpec(model.getActionName());
-        if (actionSpec instanceof DirectlyInjectionAction) {
-            try {
-                ((DirectlyInjectionAction) actionSpec).destroyInjection(uid, model);
-            } catch (Exception e) {
-                throw new ExperimentException("destroy injection failed:" + e.getMessage());
-            }
-        } else {
-            // invoke action executor stop method if the executor extends StoppableActionExecutor class
-            ActionExecutor actionExecutor = actionSpec.getActionExecutor();
-            if (actionExecutor instanceof StoppableActionExecutor) {
-                EnhancerModel enhancerModel = new EnhancerModel(null, model.getMatcher());
-                try {
-                    ((StoppableActionExecutor) actionExecutor).stop(enhancerModel);
-                } catch (Exception e) {
-                    throw new ExperimentException("stop experiment exception", e);
-                }
-            }
-            MethodPreInjectHandler.preHandleRecovery(model);
+  @Override
+  public void preDestroy(String uid, Model model) throws ExperimentException {
+    ActionSpec actionSpec = getActionSpec(model.getActionName());
+    if (actionSpec instanceof DirectlyInjectionAction) {
+      try {
+        ((DirectlyInjectionAction) actionSpec).destroyInjection(uid, model);
+      } catch (Exception e) {
+        throw new ExperimentException("destroy injection failed:" + e.getMessage());
+      }
+    } else {
+      // invoke action executor stop method if the executor extends StoppableActionExecutor class
+      ActionExecutor actionExecutor = actionSpec.getActionExecutor();
+      if (actionExecutor instanceof StoppableActionExecutor) {
+        EnhancerModel enhancerModel = new EnhancerModel(null, model.getMatcher());
+        try {
+          ((StoppableActionExecutor) actionExecutor).stop(enhancerModel);
+        } catch (Exception e) {
+          throw new ExperimentException("stop experiment exception", e);
         }
+      }
+      MethodPreInjectHandler.preHandleRecovery(model);
     }
+  }
 
-    @Override
-    public void preCreate(String uid, Model model) throws ExperimentException {
-        ActionSpec actionSpec = getActionSpec(model.getActionName());
-        if (actionSpec instanceof DirectlyInjectionAction) {
-            try {
-                ((DirectlyInjectionAction) actionSpec).createInjection(uid, model);
-            } catch (Exception e) {
-                throw new ExperimentException("create injection failed: " + Arrays.toString(e.getStackTrace()) + ", " + e, e);
-            }
-        } else {
-            MethodPreInjectHandler.preHandleInjection(model);
-        }
+  @Override
+  public void preCreate(String uid, Model model) throws ExperimentException {
+    ActionSpec actionSpec = getActionSpec(model.getActionName());
+    if (actionSpec instanceof DirectlyInjectionAction) {
+      try {
+        ((DirectlyInjectionAction) actionSpec).createInjection(uid, model);
+      } catch (Exception e) {
+        throw new ExperimentException(
+            "create injection failed: " + Arrays.toString(e.getStackTrace()) + ", " + e, e);
+      }
+    } else {
+      MethodPreInjectHandler.preHandleInjection(model);
     }
+  }
 }

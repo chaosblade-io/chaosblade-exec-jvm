@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.plugin.servlet;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ServletMethodMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return ServletConstant.METHOD_KEY;
-    }
+  @Override
+  public String getName() {
+    return ServletConstant.METHOD_KEY;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The name of the HTTP method with which this request was made, for example, GET, POST, or PUT.";
-    }
+  @Override
+  public String getDesc() {
+    return "The name of the HTTP method with which this request was made, for example, GET, POST, or PUT.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

@@ -24,37 +24,42 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
  */
 public class ConfigUtil {
 
-    public static String getActionFlag(EnhancerModel enhancerModel, String flagKey, String defaultFlagValue) {
-        String value = enhancerModel.getActionFlag(flagKey);
-        if (value == null) {
-            return defaultFlagValue;
-        }
-        return value;
+  public static String getActionFlag(
+      EnhancerModel enhancerModel, String flagKey, String defaultFlagValue) {
+    String value = enhancerModel.getActionFlag(flagKey);
+    if (value == null) {
+      return defaultFlagValue;
     }
+    return value;
+  }
 
-    public static Integer getActionFlag(EnhancerModel enhancerModel, String flagKey, Integer defaultFlagValue) {
-        String value = getActionFlag(enhancerModel, flagKey);
-        if (value == null) {
-            return defaultFlagValue;
-        }
-        try {
-            return Integer.valueOf(value);
-        } catch (Exception ex) {
-            return defaultFlagValue;
-        }
+  public static Integer getActionFlag(
+      EnhancerModel enhancerModel, String flagKey, Integer defaultFlagValue) {
+    String value = getActionFlag(enhancerModel, flagKey);
+    if (value == null) {
+      return defaultFlagValue;
     }
+    try {
+      return Integer.valueOf(value);
+    } catch (Exception ex) {
+      return defaultFlagValue;
+    }
+  }
 
-    public static Boolean getActionFlag(EnhancerModel enhancerModel, String flagKey, Boolean defaultValue) {
-        String value = getActionFlag(enhancerModel, flagKey);
-        if (value == null) { return defaultValue; }
-        try {
-            return Boolean.parseBoolean(value);
-        } catch (Exception ex) {
-            return defaultValue;
-        }
+  public static Boolean getActionFlag(
+      EnhancerModel enhancerModel, String flagKey, Boolean defaultValue) {
+    String value = getActionFlag(enhancerModel, flagKey);
+    if (value == null) {
+      return defaultValue;
     }
+    try {
+      return Boolean.parseBoolean(value);
+    } catch (Exception ex) {
+      return defaultValue;
+    }
+  }
 
-    public static String getActionFlag(EnhancerModel enhancerModel, String flagKey) {
-        return enhancerModel.getActionFlag(flagKey);
-    }
+  public static String getActionFlag(EnhancerModel enhancerModel, String flagKey) {
+    return enhancerModel.getActionFlag(flagKey);
+  }
 }

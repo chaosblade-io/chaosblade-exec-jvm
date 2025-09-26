@@ -16,37 +16,57 @@
 
 package com.alibaba.chaosblade.exec.common.aop;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.injection.Injector;
+import java.lang.reflect.Method;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class AfterEnhancer implements Enhancer {
 
-    @Override
-    public void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object, Method method,
-                             Object[] methodArguments) throws Exception {
-        return;
-    }
+  @Override
+  public void beforeAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception {
+    return;
+  }
 
-    @Override
-    public void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                            Method method, Object[] methodArguments, Object returnObject) throws Exception {
-        if (!ManagerFactory.getStatusManager().expExists(targetName)) {
-            return;
-        }
-        EnhancerModel model = doAfterAdvice(classLoader, className, object, method, methodArguments, returnObject);
-        if (model == null) {
-            return;
-        }
-        model.setTarget(targetName).setMethod(method).setObject(object).setMethodArguments(methodArguments);
-        Injector.inject(model);
+  @Override
+  public void afterAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments,
+      Object returnObject)
+      throws Exception {
+    if (!ManagerFactory.getStatusManager().expExists(targetName)) {
+      return;
     }
+    EnhancerModel model =
+        doAfterAdvice(classLoader, className, object, method, methodArguments, returnObject);
+    if (model == null) {
+      return;
+    }
+    model
+        .setTarget(targetName)
+        .setMethod(method)
+        .setObject(object)
+        .setMethodArguments(methodArguments);
+    Injector.inject(model);
+  }
 
-    public abstract EnhancerModel doAfterAdvice(ClassLoader classLoader, String className,
-                                                Object object, Method method, Object[] methodArguments,
-                                                Object returnObject) throws Exception;
+  public abstract EnhancerModel doAfterAdvice(
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments,
+      Object returnObject)
+      throws Exception;
 }

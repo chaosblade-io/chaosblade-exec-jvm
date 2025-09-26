@@ -16,61 +16,61 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.returnv;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.lang.reflect.Method;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DefaultReturnValueExecutor extends BaseReturnValueExecutor {
 
-    public static final String NULL = "null";
+  public static final String NULL = "null";
 
-    public DefaultReturnValueExecutor(ValueFlagSpec valueFlagSpec) {
-        super(valueFlagSpec);
-    }
+  public DefaultReturnValueExecutor(ValueFlagSpec valueFlagSpec) {
+    super(valueFlagSpec);
+  }
 
-    @Override
-    public Object generateReturnValue(ClassLoader classLoader, Method method, String value) {
-        if (StringUtil.isBlank(value) || value.equalsIgnoreCase(NULL)) {
-            return null;
-        }
-        Class clazz = method.getReturnType();
-        if (String.class == clazz) {
-            return value;
-        }
-        if (byte.class == clazz || Byte.class == clazz) {
-            return Byte.valueOf(value);
-        }
-        if (char.class == clazz || Character.class == clazz) {
-            return value.charAt(0);
-        }
-        if (short.class == clazz || Short.class == clazz) {
-            return Short.valueOf(value);
-        }
-        if (int.class == clazz || Integer.class == clazz) {
-            return Integer.valueOf(value);
-        }
-        if (long.class == clazz || Long.class == clazz) {
-            return Long.valueOf(value);
-        }
-        if (float.class == clazz || Float.class == clazz) {
-            return Float.valueOf(value);
-        }
-        if (double.class == clazz || Double.class == clazz) {
-            return Double.valueOf(value);
-        }
-        if (boolean.class == clazz || Boolean.class == clazz) {
-            return Boolean.valueOf(value);
-        }
-        try {
-            return new ObjectMapper().readValue(value, clazz);
-        } catch (JsonProcessingException e) {
-            throw new UnsupportedOperationException("return value conversion failed. the return type is " +
-                    clazz.getName() + " the value is " + value);
-        }
+  @Override
+  public Object generateReturnValue(ClassLoader classLoader, Method method, String value) {
+    if (StringUtil.isBlank(value) || value.equalsIgnoreCase(NULL)) {
+      return null;
     }
+    Class clazz = method.getReturnType();
+    if (String.class == clazz) {
+      return value;
+    }
+    if (byte.class == clazz || Byte.class == clazz) {
+      return Byte.valueOf(value);
+    }
+    if (char.class == clazz || Character.class == clazz) {
+      return value.charAt(0);
+    }
+    if (short.class == clazz || Short.class == clazz) {
+      return Short.valueOf(value);
+    }
+    if (int.class == clazz || Integer.class == clazz) {
+      return Integer.valueOf(value);
+    }
+    if (long.class == clazz || Long.class == clazz) {
+      return Long.valueOf(value);
+    }
+    if (float.class == clazz || Float.class == clazz) {
+      return Float.valueOf(value);
+    }
+    if (double.class == clazz || Double.class == clazz) {
+      return Double.valueOf(value);
+    }
+    if (boolean.class == clazz || Boolean.class == clazz) {
+      return Boolean.valueOf(value);
+    }
+    try {
+      return new ObjectMapper().readValue(value, clazz);
+    } catch (JsonProcessingException e) {
+      throw new UnsupportedOperationException(
+          "return value conversion failed. the return type is "
+              + clazz.getName()
+              + " the value is "
+              + value);
+    }
+  }
 }

@@ -18,24 +18,21 @@ package com.alibaba.chaosblade.exec.common.center;
 
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ModelSpecManager extends ManagerService {
 
-    /**
-     * Get experiment model specification
-     *
-     * @param target
-     * @return
-     */
-    ModelSpec getModelSpec(String target);
+  /**
+   * Get experiment model specification
+   *
+   * @param target
+   * @return
+   */
+  ModelSpec getModelSpec(String target);
 
-    /**
-     * Register experiment model
-     *
-     * @param modelSpec
-     */
-    void registerModelSpec(ModelSpec modelSpec);
-
+  /**
+   * Register experiment model
+   *
+   * @param modelSpec
+   */
+  void registerModelSpec(ModelSpec modelSpec);
 }

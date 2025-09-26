@@ -16,38 +16,35 @@
 
 package com.alibaba.chaosblade.exec.common.aop.matcher.method;
 
+import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class OrMethodMatcher implements MethodMatcher {
 
-    private List<MethodMatcher> matchers = new ArrayList<MethodMatcher>(2);
+  private List<MethodMatcher> matchers = new ArrayList<MethodMatcher>(2);
 
-    /**
-     * 添加或组合的方法匹配器
-     *
-     * @param methodMatcher
-     * @return this
-     */
-    public OrMethodMatcher or(MethodMatcher methodMatcher) {
-        if (methodMatcher != null) {
-            matchers.add(methodMatcher);
-        }
-        return this;
+  /**
+   * 添加或组合的方法匹配器
+   *
+   * @param methodMatcher
+   * @return this
+   */
+  public OrMethodMatcher or(MethodMatcher methodMatcher) {
+    if (methodMatcher != null) {
+      matchers.add(methodMatcher);
     }
+    return this;
+  }
 
-    @Override
-    public boolean isMatched(String methodName, MethodInfo methodInfo) {
-        for (MethodMatcher matcher : matchers) {
-            if (matcher.isMatched(methodName, methodInfo)) {
-                return true;
-            }
-        }
-        return false;
+  @Override
+  public boolean isMatched(String methodName, MethodInfo methodInfo) {
+    for (MethodMatcher matcher : matchers) {
+      if (matcher.isMatched(methodName, methodInfo)) {
+        return true;
+      }
     }
+    return false;
+  }
 }

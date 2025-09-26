@@ -26,82 +26,99 @@ import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.jvm.sandbox.api.filter.Filter;
 import com.alibaba.jvm.sandbox.api.listener.EventListener;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class SandboxEnhancerFactory {
 
-    public static final String JAVA = "java.";
-    public static final String SUN = "sun.";
-    public static final String CHAOSBLADE = "com.alibaba.chaosblade";
+  public static final String JAVA = "java.";
+  public static final String SUN = "sun.";
+  public static final String CHAOSBLADE = "com.alibaba.chaosblade";
 
-    /**
-     * Create class and method filter to match the pointcut
-     *
-     * @param enhancerClassName
-     * @param pointCut
-     * @return
-     */
-    public static Filter createFilter(final String enhancerClassName, final PointCut pointCut) {
-        return new Filter() {
-            @Override
-            public boolean doClassFilter(int access, String javaClassName, String superClassTypeJavaClassName,
-                                         String[] interfaceTypeJavaClassNameArray,
-                                         String[] annotationTypeJavaClassNameArray
-            ) {
-                if (javaClassName.startsWith(JAVA) || javaClassName.startsWith(SUN) || javaClassName.startsWith("[")
-                    || javaClassName.startsWith(CHAOSBLADE)) {
-                    return false;
-                }
-                if (pointCut == null) {
-                    return false;
-                }
-                ClassMatcher classMatcher = pointCut.getClassMatcher();
-                if (classMatcher == null) {
-                    return false;
-                }
-                return classMatcher.isMatched(javaClassName,
-                    new ClassInfo(access, javaClassName, superClassTypeJavaClassName,
-                        interfaceTypeJavaClassNameArray, annotationTypeJavaClassNameArray, null));
-            }
+  /**
+   * Create class and method filter to match the pointcut
+   *
+   * @param enhancerClassName
+   * @param pointCut
+   * @return
+   */
+  public static Filter createFilter(final String enhancerClassName, final PointCut pointCut) {
+    return new Filter() {
+      @Override
+      public boolean doClassFilter(
+          int access,
+          String javaClassName,
+          String superClassTypeJavaClassName,
+          String[] interfaceTypeJavaClassNameArray,
+          String[] annotationTypeJavaClassNameArray) {
+        if (javaClassName.startsWith(JAVA)
+            || javaClassName.startsWith(SUN)
+            || javaClassName.startsWith("[")
+            || javaClassName.startsWith(CHAOSBLADE)) {
+          return false;
+        }
+        if (pointCut == null) {
+          return false;
+        }
+        ClassMatcher classMatcher = pointCut.getClassMatcher();
+        if (classMatcher == null) {
+          return false;
+        }
+        return classMatcher.isMatched(
+            javaClassName,
+            new ClassInfo(
+                access,
+                javaClassName,
+                superClassTypeJavaClassName,
+                interfaceTypeJavaClassNameArray,
+                annotationTypeJavaClassNameArray,
+                null));
+      }
 
-            @Override
-            public boolean doMethodFilter(int access, String javaMethodName,
-                                          String[] parameterTypeJavaClassNameArray,
-                                          String[] throwsTypeJavaClassNameArray,
-                                          String[] annotationTypeJavaClassNameArray) {
-                MethodMatcher methodMatcher = pointCut.getMethodMatcher();
-                if (methodMatcher == null) {
-                    return false;
-                }
-                boolean match = methodMatcher.isMatched(javaMethodName,
-                    new MethodInfo(access, javaMethodName, parameterTypeJavaClassNameArray,
-                        throwsTypeJavaClassNameArray, annotationTypeJavaClassNameArray, null));
-                if (match) {
-                    ManagerFactory.getStatusManager().registerEnhancer(enhancerClassName);
-                }
-                return match;
-            }
-        };
-    }
+      @Override
+      public boolean doMethodFilter(
+          int access,
+          String javaMethodName,
+          String[] parameterTypeJavaClassNameArray,
+          String[] throwsTypeJavaClassNameArray,
+          String[] annotationTypeJavaClassNameArray) {
+        MethodMatcher methodMatcher = pointCut.getMethodMatcher();
+        if (methodMatcher == null) {
+          return false;
+        }
+        boolean match =
+            methodMatcher.isMatched(
+                javaMethodName,
+                new MethodInfo(
+                    access,
+                    javaMethodName,
+                    parameterTypeJavaClassNameArray,
+                    throwsTypeJavaClassNameArray,
+                    annotationTypeJavaClassNameArray,
+                    null));
+        if (match) {
+          ManagerFactory.getStatusManager().registerEnhancer(enhancerClassName);
+        }
+        return match;
+      }
+    };
+  }
 
-    /**
-     * Create the before event listener for handing the method enhancer
-     *
-     * @param plugin
-     * @return
-     */
-    public static EventListener createBeforeEventListener(Plugin plugin) {
-        return new BeforeEventListener(plugin);
-    }
+  /**
+   * Create the before event listener for handing the method enhancer
+   *
+   * @param plugin
+   * @return
+   */
+  public static EventListener createBeforeEventListener(Plugin plugin) {
+    return new BeforeEventListener(plugin);
+  }
 
-    /**
-     * Create the after event listener for handing the method result
-     *
-     * @param plugin
-     * @return
-     */
-    public static EventListener createAfterEventListener(Plugin plugin) {
-        return new AfterEventListener(plugin);
-    }
+  /**
+   * Create the after event listener for handing the method result
+   *
+   * @param plugin
+   * @return
+   */
+  public static EventListener createAfterEventListener(Plugin plugin) {
+    return new AfterEventListener(plugin);
+  }
 }

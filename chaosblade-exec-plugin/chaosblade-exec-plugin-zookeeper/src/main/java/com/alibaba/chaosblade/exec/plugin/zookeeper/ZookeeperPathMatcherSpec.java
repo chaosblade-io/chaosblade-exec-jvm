@@ -18,28 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.zookeeper;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author liuhq
- * @Date 2020/11/23 上午11:36
- **/
+/** @author liuhq @Date 2020/11/23 上午11:36 */
 public class ZookeeperPathMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return ZookeeperConstant.PATH_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return ZookeeperConstant.PATH_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The path which command used";
-    }
+  @Override
+  public String getDesc() {
+    return "The path which command used";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

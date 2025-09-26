@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.mysql;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MysqlSqlTypeMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return MysqlConstant.SQL_TYPE_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MysqlConstant.SQL_TYPE_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The sql type, for example, select, update and so on.";
-    }
+  @Override
+  public String getDesc() {
+    return "The sql type, for example, select, update and so on.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

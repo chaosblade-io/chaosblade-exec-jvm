@@ -16,58 +16,55 @@
 
 package com.alibaba.chaosblade.exec.service.build;
 
+import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PrepareSpecBean {
-    private String type;
-    private List<FlagSpecBean> flags;
-    private boolean required;
+  private String type;
+  private List<FlagSpecBean> flags;
+  private boolean required;
 
-    public PrepareSpecBean(PrepareSpec spec) {
-        this.type = spec.getType();
-        this.flags = createFlags(spec.getFlags());
-        this.required = spec.required();
-    }
+  public PrepareSpecBean(PrepareSpec spec) {
+    this.type = spec.getType();
+    this.flags = createFlags(spec.getFlags());
+    this.required = spec.required();
+  }
 
-    private List<FlagSpecBean> createFlags(List<FlagSpec> actionFlags) {
-        ArrayList<FlagSpecBean> beans = new ArrayList<FlagSpecBean>();
-        if (actionFlags == null) {
-            return beans;
-        }
-        for (FlagSpec actionFlag : actionFlags) {
-            beans.add(new FlagSpecBean(actionFlag));
-        }
-        return beans;
+  private List<FlagSpecBean> createFlags(List<FlagSpec> actionFlags) {
+    ArrayList<FlagSpecBean> beans = new ArrayList<FlagSpecBean>();
+    if (actionFlags == null) {
+      return beans;
     }
+    for (FlagSpec actionFlag : actionFlags) {
+      beans.add(new FlagSpecBean(actionFlag));
+    }
+    return beans;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+  public void setType(String type) {
+    this.type = type;
+  }
 
-    public List<FlagSpecBean> getFlags() {
-        return flags;
-    }
+  public List<FlagSpecBean> getFlags() {
+    return flags;
+  }
 
-    public void setFlags(List<FlagSpecBean> flags) {
-        this.flags = flags;
-    }
+  public void setFlags(List<FlagSpecBean> flags) {
+    this.flags = flags;
+  }
 
-    public boolean isRequired() {
-        return required;
-    }
+  public boolean isRequired() {
+    return required;
+  }
 
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
+  public void setRequired(boolean required) {
+    this.required = required;
+  }
 }

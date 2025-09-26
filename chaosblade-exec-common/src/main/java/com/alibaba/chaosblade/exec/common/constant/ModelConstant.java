@@ -16,33 +16,23 @@
 
 package com.alibaba.chaosblade.exec.common.constant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ModelConstant {
-    String JVM_TARGET = "jvm";
+  String JVM_TARGET = "jvm";
 
-    String HTTP_TARGET = "http";
+  String HTTP_TARGET = "http";
 
-    String HTTP_URL_MATCHER_NAME = "uri";
+  String HTTP_URL_MATCHER_NAME = "uri";
 
-    /**
-     * The name of effect percent matcher
-     */
-    String EFFECT_PERCENT_MATCHER_NAME = "effect-percent";
+  /** The name of effect percent matcher */
+  String EFFECT_PERCENT_MATCHER_NAME = "effect-percent";
 
-    /**
-     * The name of effect count matcher
-     */
-    String EFFECT_COUNT_MATCHER_NAME = "effect-count";
+  /** The name of effect count matcher */
+  String EFFECT_COUNT_MATCHER_NAME = "effect-count";
 
-    /**
-     * The flag of regex pattern
-     */
-    String REGEX_PATTERN_FLAG = "regex-pattern";
+  /** The flag of regex pattern */
+  String REGEX_PATTERN_FLAG = "regex-pattern";
 
-    /**
-     * the flag of buisness params
-     */
-    String BUSINESS_PARAMS = "b-params";
+  /** the flag of buisness params */
+  String BUSINESS_PARAMS = "b-params";
 }

@@ -16,20 +16,18 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public enum ScriptTypeEnum {
-    JAVA("java"),
-    GROOVY("groovy");
+  JAVA("java"),
+  GROOVY("groovy");
 
-    private String name;
+  private String name;
 
-    ScriptTypeEnum(String name) {
-        this.name = name;
-    }
+  ScriptTypeEnum(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 }

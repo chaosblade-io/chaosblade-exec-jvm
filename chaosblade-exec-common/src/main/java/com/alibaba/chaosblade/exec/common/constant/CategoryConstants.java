@@ -16,17 +16,15 @@
 
 package com.alibaba.chaosblade.exec.common.constant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface CategoryConstants {
 
-    String JAVA = "java";
-    String JAVA_DELAY = "java_delay";
-    String JAVA_EXCEPTION = "java_exception";
-    String JAVA_CUSTOM = "java_custom";
-    String JAVA_DATA_TAMPER = "java_data_tamper";
-    String JAVA_RESOURCE = "java_resource";
-    String JAVA_RESOURCE_CPU = "java_resource_cpu";
-    String JAVA_RESOURCE_MEMORY = "java_resource_mem";
+  String JAVA = "java";
+  String JAVA_DELAY = "java_delay";
+  String JAVA_EXCEPTION = "java_exception";
+  String JAVA_CUSTOM = "java_custom";
+  String JAVA_DATA_TAMPER = "java_data_tamper";
+  String JAVA_RESOURCE = "java_resource";
+  String JAVA_RESOURCE_CPU = "java_resource_cpu";
+  String JAVA_RESOURCE_MEMORY = "java_resource_mem";
 }

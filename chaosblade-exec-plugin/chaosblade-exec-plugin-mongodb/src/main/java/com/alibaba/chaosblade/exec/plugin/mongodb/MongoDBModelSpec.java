@@ -21,58 +21,55 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Lingjian Xu
- */
+/** @author Lingjian Xu */
 public class MongoDBModelSpec extends FrameworkModelSpec {
 
-    public MongoDBModelSpec() {
-        addActionExample();
-    }
+  public MongoDBModelSpec() {
+    addActionExample();
+  }
 
-    private void addActionExample() {
-        List<ActionSpec> actions = getActions();
-        for (ActionSpec action : actions) {
-            if (action instanceof DelayActionSpec) {
-                action.setLongDesc("MongoDB delay experiment");
-                action.setExample(
-                        "# Do a delay 2s experiment for mongodb client insert operations\n"
-                                + "blade create mongodb delay --time 2000 --sqltype insert");
-            }
-            if (action instanceof ThrowCustomExceptionActionSpec) {
-                action.setLongDesc("MongoDB throws customer exception experiment");
-                action.setExample(
-                        "# Do a throws customer exception experiment for mongodb client insert operations\n"
-                                + "blade create mongodb throwCustomException --exception java.lang.Exception --sqltype insert");
-            }
-        }
+  private void addActionExample() {
+    List<ActionSpec> actions = getActions();
+    for (ActionSpec action : actions) {
+      if (action instanceof DelayActionSpec) {
+        action.setLongDesc("MongoDB delay experiment");
+        action.setExample(
+            "# Do a delay 2s experiment for mongodb client insert operations\n"
+                + "blade create mongodb delay --time 2000 --sqltype insert");
+      }
+      if (action instanceof ThrowCustomExceptionActionSpec) {
+        action.setLongDesc("MongoDB throws customer exception experiment");
+        action.setExample(
+            "# Do a throws customer exception experiment for mongodb client insert operations\n"
+                + "blade create mongodb throwCustomException --exception java.lang.Exception --sqltype insert");
+      }
     }
+  }
 
-    @Override
-    protected List<MatcherSpec> createNewMatcherSpecs() {
-        ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
-        matcherSpecs.add(new MongoDBCollectionMatcherSpec());
-        matcherSpecs.add(new MongoDBDatabaseMatcherSpec());
-        matcherSpecs.add(new MongoDBSqlTypeMatcherSpec());
-        return matcherSpecs;
-    }
+  @Override
+  protected List<MatcherSpec> createNewMatcherSpecs() {
+    ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
+    matcherSpecs.add(new MongoDBCollectionMatcherSpec());
+    matcherSpecs.add(new MongoDBDatabaseMatcherSpec());
+    matcherSpecs.add(new MongoDBSqlTypeMatcherSpec());
+    return matcherSpecs;
+  }
 
-    @Override
-    public String getTarget() {
-        return MongoDBConstant.TARGET_NAME;
-    }
+  @Override
+  public String getTarget() {
+    return MongoDBConstant.TARGET_NAME;
+  }
 
-    @Override
-    public String getShortDesc() {
-        return "MongoDB experiment";
-    }
+  @Override
+  public String getShortDesc() {
+    return "MongoDB experiment";
+  }
 
-    @Override
-    public String getLongDesc() {
-        return "MongoDB experiment contains delay and exception by Collection name and so on.";
-    }
+  @Override
+  public String getLongDesc() {
+    return "MongoDB experiment contains delay and exception by Collection name and so on.";
+  }
 }

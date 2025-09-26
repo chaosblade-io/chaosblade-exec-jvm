@@ -16,9 +16,8 @@
 
 package com.alibaba.chaosblade.exec.common.model.prepare;
 
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import java.util.List;
 
 /**
  * Prepare for creating experiment
@@ -26,24 +25,24 @@ import com.alibaba.chaosblade.exec.common.model.FlagSpec;
  * @author Changjun Xiao
  */
 public interface PrepareSpec {
-    /**
-     * The prepare type, for example, jvm
-     *
-     * @return
-     */
-    String getType();
+  /**
+   * The prepare type, for example, jvm
+   *
+   * @return
+   */
+  String getType();
 
-    /**
-     * Get the prepare flags
-     *
-     * @return
-     */
-    List<FlagSpec> getFlags();
+  /**
+   * Get the prepare flags
+   *
+   * @return
+   */
+  List<FlagSpec> getFlags();
 
-    /**
-     * If necessary or not
-     *
-     * @return
-     */
-    boolean required();
+  /**
+   * If necessary or not
+   *
+   * @return
+   */
+  boolean required();
 }

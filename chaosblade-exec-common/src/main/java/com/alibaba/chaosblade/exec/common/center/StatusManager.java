@@ -16,82 +16,77 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
+import com.alibaba.chaosblade.exec.common.model.Model;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.alibaba.chaosblade.exec.common.model.Model;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface StatusManager extends ManagerService {
 
-    /**
-     * Register method enhancer name
-     *
-     * @param enhancerName
-     */
-    void registerEnhancer(String enhancerName);
+  /**
+   * Register method enhancer name
+   *
+   * @param enhancerName
+   */
+  void registerEnhancer(String enhancerName);
 
-    /**
-     * Register the experiment rule
-     *
-     * @param model
-     * @return
-     */
-    RegisterResult registerExp(String uid, Model model);
+  /**
+   * Register the experiment rule
+   *
+   * @param model
+   * @return
+   */
+  RegisterResult registerExp(String uid, Model model);
 
-    /**
-     * Remove the experiment by exp uid
-     *
-     * @param uid
-     * @return
-     */
-    Model removeExp(String uid);
+  /**
+   * Remove the experiment by exp uid
+   *
+   * @param uid
+   * @return
+   */
+  Model removeExp(String uid);
 
-    /**
-     * List all experiments
-     *
-     * @return
-     */
-    Map<String, List<StatusMetric>> listExps();
+  /**
+   * List all experiments
+   *
+   * @return
+   */
+  Map<String, List<StatusMetric>> listExps();
 
-    /**
-     * List experiments by the exp target
-     *
-     * @param targetName
-     * @return
-     */
-    List<StatusMetric> getExpByTarget(String targetName);
+  /**
+   * List experiments by the exp target
+   *
+   * @param targetName
+   * @return
+   */
+  List<StatusMetric> getExpByTarget(String targetName);
 
-    /**
-     * Assert the target experiment exist or not
-     *
-     * @param targetName
-     * @return
-     */
-    boolean expExists(String targetName);
+  /**
+   * Assert the target experiment exist or not
+   *
+   * @param targetName
+   * @return
+   */
+  boolean expExists(String targetName);
 
-    /**
-     * Get status metric by uid
-     *
-     * @param uid
-     * @return
-     */
-    StatusMetric getStatusMetricByUid(String uid);
+  /**
+   * Get status metric by uid
+   *
+   * @param uid
+   * @return
+   */
+  StatusMetric getStatusMetricByUid(String uid);
 
-    /**
-     * @return all running experiment uids
-     */
-    Set<String> getAllUids();
+  /** @return all running experiment uids */
+  Set<String> getAllUids();
 
-    /**
-     * Search uids by target and action
-     *
-     * @param target
-     * @param action
-     * @return
-     */
-    Set<String> listUids(String target, String action);
+  /**
+   * Search uids by target and action
+   *
+   * @param target
+   * @param action
+   * @return
+   */
+  Set<String> listUids(String target, String action);
 }

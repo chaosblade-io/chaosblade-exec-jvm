@@ -18,28 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.redisson;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author xueshaoyi
- * @Date 2020/11/23 上午11:36
- **/
+/** @author xueshaoyi @Date 2020/11/23 上午11:36 */
 public class RedissonCmdTypeMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return RedissonConstant.COMMAND_TYPE_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return RedissonConstant.COMMAND_TYPE_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The cmd type, for example, set, hget,zadd and so on.";
-    }
+  @Override
+  public String getDesc() {
+    return "The cmd type, for example, set, hget,zadd and so on.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

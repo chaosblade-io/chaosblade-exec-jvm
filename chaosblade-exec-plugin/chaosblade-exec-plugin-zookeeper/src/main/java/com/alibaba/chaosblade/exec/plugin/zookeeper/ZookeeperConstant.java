@@ -16,15 +16,12 @@
 
 package com.alibaba.chaosblade.exec.plugin.zookeeper;
 
-/**
- * @author liuhq
- * @Date 2020/11/23 上午11:36
- **/
+/** @author liuhq @Date 2020/11/23 上午11:36 */
 public interface ZookeeperConstant {
-	String TARGET_NAME = "zk";
-	String PATH_MATCHER_NAME = "path";
-	String PARAM_CLASS_NAME = "org.apache.jute.Record";
-	String ZK_CLASS = "org.apache.zookeeper.ClientCnxn";
-	String ZK_SEND_METHOD = "sendPacket";
-	String ZK_SUBMIT_METHOD = "submitRequest";
+  String TARGET_NAME = "zk";
+  String PATH_MATCHER_NAME = "path";
+  String PARAM_CLASS_NAME = "org.apache.jute.Record";
+  String ZK_CLASS = "org.apache.zookeeper.ClientCnxn";
+  String ZK_SEND_METHOD = "sendPacket";
+  String ZK_SUBMIT_METHOD = "submitRequest";
 }

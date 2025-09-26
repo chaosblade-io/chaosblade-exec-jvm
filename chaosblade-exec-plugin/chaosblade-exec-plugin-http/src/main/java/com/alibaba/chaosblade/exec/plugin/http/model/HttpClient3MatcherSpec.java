@@ -19,28 +19,26 @@ package com.alibaba.chaosblade.exec.plugin.http.model;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class HttpClient3MatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return HttpConstant.HTTPCLIENT3;
-    }
+  @Override
+  public String getName() {
+    return HttpConstant.HTTPCLIENT3;
+  }
 
-    @Override
-    public String getDesc() {
-        return "To tag httpclient3 experiment.";
-    }
+  @Override
+  public String getDesc() {
+    return "To tag httpclient3 experiment.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return true;
-    }
+  @Override
+  public boolean noArgs() {
+    return true;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

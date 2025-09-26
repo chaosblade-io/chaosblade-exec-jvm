@@ -25,38 +25,42 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
-import java.util.Arrays;
-
 public class HdfsWebHdfsPointCut implements PointCut {
-    // NameNode handler
-    private static final String CLASS_HDFS_WEBHDFS_METHODS = "org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods";
+  // NameNode handler
+  private static final String CLASS_HDFS_WEBHDFS_METHODS =
+      "org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods";
 
-    private static final String METHOD_HDFS_WEBHDFS_GET = "get";
-    private static final String METHOD_HDFS_WEBHDFS_PUT = "put";
-    private static final String METHOD_HDFS_WEBHDFS_POST = "post";
-    private static final String METHOD_HDFS_WEBHDFS_DELETE = "delete";
+  private static final String METHOD_HDFS_WEBHDFS_GET = "get";
+  private static final String METHOD_HDFS_WEBHDFS_PUT = "put";
+  private static final String METHOD_HDFS_WEBHDFS_POST = "post";
+  private static final String METHOD_HDFS_WEBHDFS_DELETE = "delete";
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(CLASS_HDFS_WEBHDFS_METHODS);
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher(CLASS_HDFS_WEBHDFS_METHODS);
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        OrMethodMatcher methodNameMatchers = new OrMethodMatcher();
-        methodNameMatchers.or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_GET))
-                .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_PUT))
-                .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_POST))
-                .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_DELETE));
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    OrMethodMatcher methodNameMatchers = new OrMethodMatcher();
+    methodNameMatchers
+        .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_GET))
+        .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_PUT))
+        .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_POST))
+        .or(new NameMethodMatcher(METHOD_HDFS_WEBHDFS_DELETE));
 
-        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[] {
-                "org.apache.hadoop.security.UserGroupInformation",
-                "org.apache.hadoop.hdfs.web.resources.DelegationParam",
-                "org.apache.hadoop.hdfs.web.resources.UserParam",
-                "org.apache.hadoop.hdfs.web.resources.DoAsParam",
-                "java.lang.String"
-        }, 5, ParameterMethodMatcher.GREAT_THAN);
+    ParameterMethodMatcher parameterMethodMatcher =
+        new ParameterMethodMatcher(
+            new String[] {
+              "org.apache.hadoop.security.UserGroupInformation",
+              "org.apache.hadoop.hdfs.web.resources.DelegationParam",
+              "org.apache.hadoop.hdfs.web.resources.UserParam",
+              "org.apache.hadoop.hdfs.web.resources.DoAsParam",
+              "java.lang.String"
+            },
+            5,
+            ParameterMethodMatcher.GREAT_THAN);
 
-        return new AndMethodMatcher().and(methodNameMatchers).and(parameterMethodMatcher);
-    }
+    return new AndMethodMatcher().and(methodNameMatchers).and(parameterMethodMatcher);
+  }
 }

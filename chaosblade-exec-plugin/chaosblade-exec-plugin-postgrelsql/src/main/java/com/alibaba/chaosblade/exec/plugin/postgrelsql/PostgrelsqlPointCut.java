@@ -22,22 +22,20 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public class PostgrelsqlPointCut implements PointCut {
 
-    private static final String POSTGELSQL_IO_CLASS = "org.postgresql.core.v3.QueryExecutorImpl";
+  private static final String POSTGELSQL_IO_CLASS = "org.postgresql.core.v3.QueryExecutorImpl";
 
-    private static final String INTERCEPTOR_PRE_METHOD = "execute";
+  private static final String INTERCEPTOR_PRE_METHOD = "execute";
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(POSTGELSQL_IO_CLASS);
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher(POSTGELSQL_IO_CLASS);
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
+  }
 }

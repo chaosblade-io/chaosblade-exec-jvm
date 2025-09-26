@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.mysql;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MysqlTableMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return MysqlConstant.TABLE_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MysqlConstant.TABLE_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The first table name in sql.";
-    }
+  @Override
+  public String getDesc() {
+    return "The first table name in sql.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

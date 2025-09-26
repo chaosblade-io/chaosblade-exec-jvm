@@ -24,35 +24,32 @@ import com.alibaba.chaosblade.exec.common.transport.Response;
 import com.alibaba.chaosblade.exec.common.transport.Response.Code;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class StatusHandler implements RequestHandler {
-    private StatusManager statusManager;
+  private StatusManager statusManager;
 
-    public StatusHandler() {
-        this.statusManager = ManagerFactory.getStatusManager();
-    }
+  public StatusHandler() {
+    this.statusManager = ManagerFactory.getStatusManager();
+  }
 
-    @Override
-    public String getHandlerName() {
-        return "status";
-    }
+  @Override
+  public String getHandlerName() {
+    return "status";
+  }
 
-    @Override
-    public Response handle(Request request) {
-        String suid = request.getParam("suid");
-        if (StringUtil.isBlank(suid)) {
-            return Response.ofFailure(Code.ILLEGAL_PARAMETER, "suid must not be empty");
-        }
-        StatusMetric statusMetric = statusManager.getStatusMetricByUid(suid);
-        if (statusMetric == null) {
-            return Response.ofFailure(Code.NOT_FOUND, "data not found");
-        }
-        return Response.ofSuccess(String.valueOf(statusMetric.getCount()));
+  @Override
+  public Response handle(Request request) {
+    String suid = request.getParam("suid");
+    if (StringUtil.isBlank(suid)) {
+      return Response.ofFailure(Code.ILLEGAL_PARAMETER, "suid must not be empty");
     }
+    StatusMetric statusMetric = statusManager.getStatusMetricByUid(suid);
+    if (statusMetric == null) {
+      return Response.ofFailure(Code.NOT_FOUND, "data not found");
+    }
+    return Response.ofSuccess(String.valueOf(statusMetric.getCount()));
+  }
 
-    @Override
-    public void unload() {
-    }
+  @Override
+  public void unload() {}
 }

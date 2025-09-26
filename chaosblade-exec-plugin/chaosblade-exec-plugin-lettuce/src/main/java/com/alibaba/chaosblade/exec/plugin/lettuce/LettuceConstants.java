@@ -6,11 +6,10 @@ package com.alibaba.chaosblade.exec.plugin.lettuce;
  */
 public class LettuceConstants {
 
-    public final static String KEY = "key";
-    public final static String VALUE = "value";
-    public final static String CMD = "cmd";
+  public static final String KEY = "key";
+  public static final String VALUE = "value";
+  public static final String CMD = "cmd";
 
-    public final static String CLASS = "io.lettuce.core.protocol.CommandHandler";
-    public final static String METHOD = "write";
-
+  public static final String CLASS = "io.lettuce.core.protocol.CommandHandler";
+  public static final String METHOD = "write";
 }

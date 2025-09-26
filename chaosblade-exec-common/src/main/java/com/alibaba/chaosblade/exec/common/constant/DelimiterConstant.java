@@ -16,10 +16,8 @@
 
 package com.alibaba.chaosblade.exec.common.constant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface DelimiterConstant {
 
-    String BETWEEN_TARGET_PLUGIN_NAME = "-";
+  String BETWEEN_TARGET_PLUGIN_NAME = "-";
 }

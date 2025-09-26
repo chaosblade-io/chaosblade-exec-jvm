@@ -16,64 +16,52 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ManagerFactory {
 
-    /**
-     * Experiment status manager
-     */
-    private static StatusManager statusManager = new DefaultStatusManager();
-    /**
-     * Experiment model manager
-     */
-    private static ModelSpecManager modelSpecManager = new DefaultModelSpecManager();
-    /**
-     * Plugin model manager
-     */
-    private static PluginBeanManager pluginManager = new DefaultPluginBeanManager();
-    /**
-     * Listener manager manages the plugin listener
-     */
-    private static ListenerManager listenerManager = new DefaultListenerManager();
+  /** Experiment status manager */
+  private static StatusManager statusManager = new DefaultStatusManager();
+  /** Experiment model manager */
+  private static ModelSpecManager modelSpecManager = new DefaultModelSpecManager();
+  /** Plugin model manager */
+  private static PluginBeanManager pluginManager = new DefaultPluginBeanManager();
+  /** Listener manager manages the plugin listener */
+  private static ListenerManager listenerManager = new DefaultListenerManager();
 
-    private static SPIServiceManager spiServiceManager = new DefaultSPIServiceManager();
+  private static SPIServiceManager spiServiceManager = new DefaultSPIServiceManager();
 
-    public static StatusManager getStatusManager() {
-        return statusManager;
-    }
+  public static StatusManager getStatusManager() {
+    return statusManager;
+  }
 
-    public static ModelSpecManager getModelSpecManager() {
-        return modelSpecManager;
-    }
+  public static ModelSpecManager getModelSpecManager() {
+    return modelSpecManager;
+  }
 
-    public static PluginBeanManager getPluginManager() {
-        return pluginManager;
-    }
+  public static PluginBeanManager getPluginManager() {
+    return pluginManager;
+  }
 
-    public static ListenerManager getListenerManager() {
-        return listenerManager;
-    }
+  public static ListenerManager getListenerManager() {
+    return listenerManager;
+  }
 
-    public static SPIServiceManager spiServiceManager() {
-        return spiServiceManager;
-    }
+  public static SPIServiceManager spiServiceManager() {
+    return spiServiceManager;
+  }
 
-    public static void load() {
-        modelSpecManager.load();
-        listenerManager.load();
-        statusManager.load();
-        spiServiceManager.load();
-    }
+  public static void load() {
+    modelSpecManager.load();
+    listenerManager.load();
+    statusManager.load();
+    spiServiceManager.load();
+  }
 
-    /**
-     * Close manager service
-     */
-    public static void unload() {
-        statusManager.unload();
-        modelSpecManager.unload();
-        listenerManager.unload();
-        spiServiceManager.unload();
-    }
+  /** Close manager service */
+  public static void unload() {
+    statusManager.unload();
+    modelSpecManager.unload();
+    listenerManager.unload();
+    spiServiceManager.unload();
+  }
 }

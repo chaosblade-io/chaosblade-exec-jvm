@@ -25,24 +25,24 @@ import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
  * @email haibin.lhb@alibaba-inc.com
  */
 public class OOMMemeoryErrorIntervalFlagSpec implements FlagSpec {
-    @Override
-    public String getName() {
-        return JvmConstant.FLAG_OOM_ERROR_INTERVAL;
-    }
+  @Override
+  public String getName() {
+    return JvmConstant.FLAG_OOM_ERROR_INTERVAL;
+  }
 
-    @Override
-    public String getDesc() {
-        return "Time between to oom error,the time unit is millis,default is 500 ms,only used when wilde-mode not "
-            + "true";
-    }
+  @Override
+  public String getDesc() {
+    return "Time between to oom error,the time unit is millis,default is 500 ms,only used when wilde-mode not "
+        + "true";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

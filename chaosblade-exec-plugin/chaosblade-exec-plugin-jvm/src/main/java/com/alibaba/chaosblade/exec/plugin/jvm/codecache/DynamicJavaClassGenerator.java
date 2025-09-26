@@ -16,12 +16,11 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.codecache;
 
-import java.util.UUID;
-
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.DefaultScriptEngineService;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.model.ScriptTypeEnum;
+import java.util.UUID;
 
 /**
  * @author Jinglei Li
@@ -30,54 +29,51 @@ import com.alibaba.chaosblade.exec.plugin.jvm.script.model.ScriptTypeEnum;
  */
 public class DynamicJavaClassGenerator {
 
-    private static final int METHOD_COUNT_IN_CLASS = 16000;
+  private static final int METHOD_COUNT_IN_CLASS = 16000;
 
-    private static final String CLASS_NAME_PREFIX = "CodeCacheFillingObject";
+  private static final String CLASS_NAME_PREFIX = "CodeCacheFillingObject";
 
-    private static final DefaultScriptEngineService engineService = new DefaultScriptEngineService();
+  private static final DefaultScriptEngineService engineService = new DefaultScriptEngineService();
 
-    static {
-        engineService.initialize();
+  static {
+    engineService.initialize();
+  }
+
+  public Object generateObject() throws IllegalAccessException, InstantiationException {
+    String suffix = UUID.randomUUID().toString().replaceAll("-", "");
+    String className = CLASS_NAME_PREFIX + suffix;
+    String content = generateJavaClassSourceCode(className);
+
+    Script script = new Script(className, "", className, content, ScriptTypeEnum.JAVA.getName());
+    CompiledScript compiledScript =
+        engineService.compile(Thread.currentThread().getContextClassLoader(), script, null);
+
+    Object compiled = compiledScript.getCompiled();
+    if (null != compiled) {
+      return ((Class<?>) compiled).newInstance();
     }
 
-    public Object generateObject() throws IllegalAccessException, InstantiationException {
-        String suffix = UUID.randomUUID().toString().replaceAll("-", "");
-        String className = CLASS_NAME_PREFIX + suffix;
-        String content = generateJavaClassSourceCode(className);
+    return null;
+  }
 
-        Script script = new Script(className, "", className, content, ScriptTypeEnum.JAVA.getName());
-        CompiledScript compiledScript = engineService.compile(Thread.currentThread().getContextClassLoader(), script, null);
+  private String generateJavaClassSourceCode(String className) {
+    return "public class " + className + "{\n" + generateMethods() + "}";
+  }
 
-        Object compiled = compiledScript.getCompiled();
-        if (null != compiled) {
-            return ((Class<?>) compiled).newInstance();
-        }
+  private String generateMethods() {
+    StringBuilder rootMethod = new StringBuilder("public void method() {\n");
+    StringBuilder methods = new StringBuilder();
 
-        return null;
+    for (int i = 0; i < METHOD_COUNT_IN_CLASS; i++) {
+      String methodName = "method" + i;
+
+      methods.append("public void ").append(methodName).append("() {}\n");
+
+      rootMethod.append(methodName).append("();\n");
     }
 
-    private String generateJavaClassSourceCode(String className) {
-        return "public class " + className + "{\n" + generateMethods() + "}";
-    }
+    rootMethod.append("}\n");
 
-    private String generateMethods() {
-        StringBuilder rootMethod = new StringBuilder("public void method() {\n");
-        StringBuilder methods = new StringBuilder();
-
-        for (int i = 0; i < METHOD_COUNT_IN_CLASS; i++) {
-            String methodName = "method" + i;
-
-            methods.append("public void ")
-                .append(methodName)
-                .append("() {}\n");
-
-            rootMethod.append(methodName)
-                .append("();\n");
-        }
-
-        rootMethod.append("}\n");
-
-        return methods.append(rootMethod).toString();
-    }
-
+    return methods.append(rootMethod).toString();
+  }
 }

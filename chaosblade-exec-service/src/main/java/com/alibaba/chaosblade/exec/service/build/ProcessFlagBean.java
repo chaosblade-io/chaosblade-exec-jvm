@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.service.build;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ProcessFlagBean implements FlagSpec {
 
-    @Override
-    public String getName() {
-        return "process";
-    }
+  @Override
+  public String getName() {
+    return "process";
+  }
 
-    @Override
-    public String getDesc() {
-        return "Application process name";
-    }
+  @Override
+  public String getDesc() {
+    return "Application process name";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

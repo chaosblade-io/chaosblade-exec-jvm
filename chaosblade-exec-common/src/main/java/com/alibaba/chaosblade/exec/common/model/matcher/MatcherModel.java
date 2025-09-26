@@ -19,30 +19,28 @@ package com.alibaba.chaosblade.exec.common.model.matcher;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MatcherModel {
 
-    private Map<String, Object> matchers;
+  private Map<String, Object> matchers;
 
-    public MatcherModel() {
-        this.matchers = new LinkedHashMap<String, Object>();
-    }
+  public MatcherModel() {
+    this.matchers = new LinkedHashMap<String, Object>();
+  }
 
-    public MatcherModel(Map<String, Object> matchers) {
-        this.matchers = matchers;
-    }
+  public MatcherModel(Map<String, Object> matchers) {
+    this.matchers = matchers;
+  }
 
-    public void add(String name, Object value) {
-        this.matchers.put(name, value);
-    }
+  public void add(String name, Object value) {
+    this.matchers.put(name, value);
+  }
 
-    public <T> T get(String name) {
-        return (T) matchers.get(name);
-    }
+  public <T> T get(String name) {
+    return (T) matchers.get(name);
+  }
 
-    public Map<String, Object> getMatchers() {
-        return matchers;
-    }
+  public Map<String, Object> getMatchers() {
+    return matchers;
+  }
 }

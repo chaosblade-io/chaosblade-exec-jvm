@@ -9,25 +9,23 @@ import com.alibaba.chaosblade.exec.plugin.kafka.KafkaConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author ljzhxx@gmail.com
- */
+/** @author ljzhxx@gmail.com */
 public class KafkaProducerPointCut implements PointCut, KafkaConstant {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerPointCut.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerPointCut.class);
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(PRODUCER_CLASS);
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher(PRODUCER_CLASS);
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        return new MethodMatcher() {
-            @Override
-            public boolean isMatched(String methodName, MethodInfo methodInfo) {
-                return methodName.equals(SEND) && methodInfo.getParameterTypes().length == 2;
-            }
-        };
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return new MethodMatcher() {
+      @Override
+      public boolean isMatched(String methodName, MethodInfo methodInfo) {
+        return methodName.equals(SEND) && methodInfo.getParameterTypes().length == 2;
+      }
+    };
+  }
 }

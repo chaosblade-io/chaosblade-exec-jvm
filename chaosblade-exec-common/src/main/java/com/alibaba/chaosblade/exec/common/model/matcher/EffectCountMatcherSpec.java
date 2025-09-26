@@ -20,42 +20,40 @@ import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class EffectCountMatcherSpec implements MatcherSpec {
 
-    @Override
-    public String getName() {
-        return ModelConstant.EFFECT_COUNT_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return ModelConstant.EFFECT_COUNT_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The count of chaos experiment in effect";
-    }
+  @Override
+  public String getDesc() {
+    return "The count of chaos experiment in effect";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 
-    @Override
-    public PredicateResult predicate(MatcherModel matcherModel) {
-        String count = matcherModel.get(ModelConstant.EFFECT_COUNT_MATCHER_NAME);
-        if (!StringUtil.isBlank(count)) {
-            try {
-                Long.valueOf(count);
-            } catch (NumberFormatException e) {
-                return PredicateResult.fail(
-                    ModelConstant.EFFECT_COUNT_MATCHER_NAME + " value is illegal: " + count);
-            }
-        }
-        return PredicateResult.success();
+  @Override
+  public PredicateResult predicate(MatcherModel matcherModel) {
+    String count = matcherModel.get(ModelConstant.EFFECT_COUNT_MATCHER_NAME);
+    if (!StringUtil.isBlank(count)) {
+      try {
+        Long.valueOf(count);
+      } catch (NumberFormatException e) {
+        return PredicateResult.fail(
+            ModelConstant.EFFECT_COUNT_MATCHER_NAME + " value is illegal: " + count);
+      }
     }
+    return PredicateResult.success();
+  }
 }

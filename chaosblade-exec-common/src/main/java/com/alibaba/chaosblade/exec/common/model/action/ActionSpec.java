@@ -16,114 +16,111 @@
 
 package com.alibaba.chaosblade.exec.common.model.action;
 
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import java.util.List;
+import java.util.Map;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ActionSpec {
 
-    /**
-     * Get action name
-     *
-     * @return
-     */
-    String getName();
+  /**
+   * Get action name
+   *
+   * @return
+   */
+  String getName();
 
-    /**
-     * Get action aliases
-     *
-     * @return
-     */
-    String[] getAliases();
+  /**
+   * Get action aliases
+   *
+   * @return
+   */
+  String[] getAliases();
 
-    /**
-     * Get short description
-     *
-     * @return
-     */
-    String getShortDesc();
+  /**
+   * Get short description
+   *
+   * @return
+   */
+  String getShortDesc();
 
-    /**
-     * Get long description
-     *
-     * @return
-     */
-    String getLongDesc();
+  /**
+   * Get long description
+   *
+   * @return
+   */
+  String getLongDesc();
 
-    /**
-     * Get long description
-     *
-     * @return
-     */
-    void setLongDesc(String longDesc);
+  /**
+   * Get long description
+   *
+   * @return
+   */
+  void setLongDesc(String longDesc);
 
-    /**
-     * Get experiment matcher specification
-     *
-     * @return
-     */
-    List<MatcherSpec> getMatchers();
+  /**
+   * Get experiment matcher specification
+   *
+   * @return
+   */
+  List<MatcherSpec> getMatchers();
 
-    /**
-     * Get action flags
-     *
-     * @return
-     */
-    List<FlagSpec> getActionFlags();
+  /**
+   * Get action flags
+   *
+   * @return
+   */
+  List<FlagSpec> getActionFlags();
 
-    /**
-     * Predicate the model arguments
-     *
-     * @param actionModel @return
-     */
-    PredicateResult predicate(ActionModel actionModel);
+  /**
+   * Predicate the model arguments
+   *
+   * @param actionModel @return
+   */
+  PredicateResult predicate(ActionModel actionModel);
 
-    /**
-     * Get the matcher specs
-     *
-     * @return
-     */
-    Map<String, MatcherSpec> getMatcherSpecs();
+  /**
+   * Get the matcher specs
+   *
+   * @return
+   */
+  Map<String, MatcherSpec> getMatcherSpecs();
 
-    /**
-     * Add matcher spec
-     *
-     * @param matcherSpec
-     */
-    void addMatcherDesc(MatcherSpec matcherSpec);
+  /**
+   * Add matcher spec
+   *
+   * @param matcherSpec
+   */
+  void addMatcherDesc(MatcherSpec matcherSpec);
 
-    /**
-     * Get the action executor
-     *
-     * @return
-     */
-    ActionExecutor getActionExecutor();
+  /**
+   * Get the action executor
+   *
+   * @return
+   */
+  ActionExecutor getActionExecutor();
 
-    /**
-     * Get the experiment example
-     *
-     * @return
-     */
-    String getExample();
+  /**
+   * Get the experiment example
+   *
+   * @return
+   */
+  String getExample();
 
-    /**
-     * Set the experiment example
-     *
-     * @param example
-     * @return
-     */
-    void setExample(String example);
+  /**
+   * Set the experiment example
+   *
+   * @param example
+   * @return
+   */
+  void setExample(String example);
 
-    /**
-     * Get the scenario categories
-     *
-     * @return
-     */
-    String[] getCategories();
+  /**
+   * Get the scenario categories
+   *
+   * @return
+   */
+  String[] getCategories();
 }

@@ -9,23 +9,23 @@ import com.alibaba.chaosblade.exec.plugin.tars.TarsConstant;
  */
 public class ClientMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return TarsConstant.CLIENT;
-    }
+  @Override
+  public String getName() {
+    return TarsConstant.CLIENT;
+  }
 
-    @Override
-    public String getDesc() {
-        return "to tag the client role experiment";
-    }
+  @Override
+  public String getDesc() {
+    return "to tag the client role experiment";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return true;
-    }
+  @Override
+  public boolean noArgs() {
+    return true;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

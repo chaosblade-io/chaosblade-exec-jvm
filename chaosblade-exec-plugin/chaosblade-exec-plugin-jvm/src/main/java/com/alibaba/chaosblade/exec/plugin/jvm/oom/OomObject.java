@@ -12,31 +12,29 @@ import java.util.List;
  */
 public class OomObject {
 
-   List<byte[]> list;
+  List<byte[]> list;
 
-    public OomObject() {
-        this(1);
-    }
+  public OomObject() {
+    this(1);
+  }
 
-    /**
-     * size,unit mb
-     */
-    public OomObject(int size) {
-        if (size <= 0) {
-            size = 1;
-        }
-        list = new ArrayList<byte[]>();
-        for (int i = 0; i < size; i++) {
-            list.add(createObject());
-        }
+  /** size,unit mb */
+  public OomObject(int size) {
+    if (size <= 0) {
+      size = 1;
     }
+    list = new ArrayList<byte[]>();
+    for (int i = 0; i < size; i++) {
+      list.add(createObject());
+    }
+  }
 
-    /**
-     * create 1mb object
-     *
-     * @return
-     */
-    private byte[] createObject() {
-        return new byte[1024 * 1024];
-    }
+  /**
+   * create 1mb object
+   *
+   * @return
+   */
+  private byte[] createObject() {
+    return new byte[1024 * 1024];
+  }
 }

@@ -16,34 +16,46 @@
 
 package com.alibaba.chaosblade.exec.common.plugin;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.aop.AfterEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
 import com.alibaba.chaosblade.exec.common.aop.Enhancer;
+import java.lang.reflect.Method;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MethodEnhancer implements Enhancer {
 
-    private BeforeEnhancer beforeEnhancer;
-    private AfterEnhancer afterEnhancer;
+  private BeforeEnhancer beforeEnhancer;
+  private AfterEnhancer afterEnhancer;
 
-    public MethodEnhancer() {
-        beforeEnhancer = new MethodEnhancerForBefore();
-        afterEnhancer = new MethodEnhancerForAfter();
-    }
+  public MethodEnhancer() {
+    beforeEnhancer = new MethodEnhancerForBefore();
+    afterEnhancer = new MethodEnhancerForAfter();
+  }
 
-    @Override
-    public void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object, Method method,
-                             Object[] methodArguments) throws Exception {
-        beforeEnhancer.beforeAdvice(targetName, classLoader, className, object, method, methodArguments);
-    }
+  @Override
+  public void beforeAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception {
+    beforeEnhancer.beforeAdvice(
+        targetName, classLoader, className, object, method, methodArguments);
+  }
 
-    @Override
-    public void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object, Method method,
-                            Object[] methodArguments, Object returnObject) throws Exception {
-        afterEnhancer.afterAdvice(targetName, classLoader, className, object, method, methodArguments, returnObject);
-    }
+  @Override
+  public void afterAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments,
+      Object returnObject)
+      throws Exception {
+    afterEnhancer.afterAdvice(
+        targetName, classLoader, className, object, method, methodArguments, returnObject);
+  }
 }

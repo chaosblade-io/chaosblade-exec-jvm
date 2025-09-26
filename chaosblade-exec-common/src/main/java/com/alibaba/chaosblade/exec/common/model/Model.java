@@ -18,57 +18,59 @@ package com.alibaba.chaosblade.exec.common.model;
 
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class Model {
-    private String target;
-    private MatcherModel matcher;
-    private ActionModel action;
+  private String target;
+  private MatcherModel matcher;
+  private ActionModel action;
 
-    public Model(String target, String actionName) {
-        this.target = target;
-        this.matcher = new MatcherModel();
-        this.action = new ActionModel(actionName);
-    }
+  public Model(String target, String actionName) {
+    this.target = target;
+    this.matcher = new MatcherModel();
+    this.action = new ActionModel(actionName);
+  }
 
-    public String getTarget() {
-        return target;
-    }
+  public String getTarget() {
+    return target;
+  }
 
-    public void setTarget(String target) {
-        this.target = target;
-    }
+  public void setTarget(String target) {
+    this.target = target;
+  }
 
-    public String getActionName() {
-        return action.getName();
-    }
+  public String getActionName() {
+    return action.getName();
+  }
 
-    public ActionModel getAction() {
-        return action;
-    }
+  public ActionModel getAction() {
+    return action;
+  }
 
-    public void setAction(ActionModel action) {
-        this.action = action;
-    }
+  public void setAction(ActionModel action) {
+    this.action = action;
+  }
 
-    public MatcherModel getMatcher() {
-        return matcher;
-    }
+  public MatcherModel getMatcher() {
+    return matcher;
+  }
 
-    public void setMatcher(MatcherModel matcher) {
-        this.matcher = matcher;
-    }
+  public void setMatcher(MatcherModel matcher) {
+    this.matcher = matcher;
+  }
 
-    @Override
-    public String toString() {
-        return "Model{" +
-                "target='" + target + '\'' +
-                ", matchers=" + matcher.getMatchers().toString() +
-                ", action=" + action.getName() +
-                ", flags=" + action.getFlags().toString() +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Model{"
+        + "target='"
+        + target
+        + '\''
+        + ", matchers="
+        + matcher.getMatchers().toString()
+        + ", action="
+        + action.getName()
+        + ", flags="
+        + action.getFlags().toString()
+        + '}';
+  }
 }

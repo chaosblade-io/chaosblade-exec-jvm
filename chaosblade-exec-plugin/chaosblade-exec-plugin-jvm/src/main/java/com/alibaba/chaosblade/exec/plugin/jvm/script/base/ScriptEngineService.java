@@ -18,46 +18,39 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
 import java.util.Map;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public interface ScriptEngineService {
 
-    /**
-     * Initialization operation. Must invoke it before compile script.
-     */
-    void initialize();
+  /** Initialization operation. Must invoke it before compile script. */
+  void initialize();
 
-    /**
-     * Compile script
-     *
-     * @param classLoader
-     * @param script
-     * @param configs     for compile, can be null
-     * @return
-     */
-    CompiledScript compile(ClassLoader classLoader, Script script, Map<String, String> configs);
+  /**
+   * Compile script
+   *
+   * @param classLoader
+   * @param script
+   * @param configs for compile, can be null
+   * @return
+   */
+  CompiledScript compile(ClassLoader classLoader, Script script, Map<String, String> configs);
 
-    /**
-     * Execute script
-     *
-     * @param compiledScript
-     * @param params
-     * @return
-     */
-    ExecutableScript execute(CompiledScript compiledScript, Map<String, Object> params);
+  /**
+   * Execute script
+   *
+   * @param compiledScript
+   * @param params
+   * @return
+   */
+  ExecutableScript execute(CompiledScript compiledScript, Map<String, Object> params);
 
-    /**
-     * Clean compiled script by script id
-     *
-     * @param scriptId
-     * @return true if clean success
-     */
-    boolean cleanCompiledScript(String scriptId);
+  /**
+   * Clean compiled script by script id
+   *
+   * @param scriptId
+   * @return true if clean success
+   */
+  boolean cleanCompiledScript(String scriptId);
 
-    /**
-     * Clean all compiled scripts
-     */
-    void cleanAllCompiledScripts();
-
+  /** Clean all compiled scripts */
+  void cleanAllCompiledScripts();
 }

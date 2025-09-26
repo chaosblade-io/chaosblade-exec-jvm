@@ -18,23 +18,21 @@ package com.alibaba.chaosblade.exec.common.model.action.delay;
 
 import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface TimeoutExecutor extends ActionExecutor {
 
-    /**
-     * Get timeout
-     *
-     * @return
-     */
-    long getTimeoutInMillis();
+  /**
+   * Get timeout
+   *
+   * @return
+   */
+  long getTimeoutInMillis();
 
-    /**
-     * Create timeout exception
-     *
-     * @param classLoader
-     * @return
-     */
-    Exception generateTimeoutException(ClassLoader classLoader);
+  /**
+   * Create timeout exception
+   *
+   * @param classLoader
+   * @return
+   */
+  Exception generateTimeoutException(ClassLoader classLoader);
 }

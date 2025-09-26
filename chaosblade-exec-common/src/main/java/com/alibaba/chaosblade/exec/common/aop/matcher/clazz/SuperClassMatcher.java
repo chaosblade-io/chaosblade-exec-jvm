@@ -18,30 +18,28 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
 
 import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class SuperClassMatcher implements ClassMatcher {
 
-    private String className;
-    private String superClass;
+  private String className;
+  private String superClass;
 
-    public SuperClassMatcher(String className, String superClass) {
-        this.className = className;
-        this.superClass = superClass;
-    }
+  public SuperClassMatcher(String className, String superClass) {
+    this.className = className;
+    this.superClass = superClass;
+  }
 
-    public SuperClassMatcher(String superClass) {
-        this.superClass = superClass;
-    }
+  public SuperClassMatcher(String superClass) {
+    this.superClass = superClass;
+  }
 
-    /**
-     * @param className 类名，格式：xxx.xxx.xxx
-     * @param classInfo 类信息
-     * @return 父类匹配，但自身类名与给定的类名不相等，返回 true，否则返回 false
-     */
-    @Override
-    public boolean isMatched(String className, ClassInfo classInfo) {
-        return this.superClass.equals(classInfo.getSuperName()) && (!className.equals(this.className));
-    }
+  /**
+   * @param className 类名，格式：xxx.xxx.xxx
+   * @param classInfo 类信息
+   * @return 父类匹配，但自身类名与给定的类名不相等，返回 true，否则返回 false
+   */
+  @Override
+  public boolean isMatched(String className, ClassInfo classInfo) {
+    return this.superClass.equals(classInfo.getSuperName()) && (!className.equals(this.className));
+  }
 }

@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.jedis;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public class JedisPortMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return JedisConstant.PORT_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return JedisConstant.PORT_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The database port which used";
-    }
+  @Override
+  public String getDesc() {
+    return "The database port which used";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

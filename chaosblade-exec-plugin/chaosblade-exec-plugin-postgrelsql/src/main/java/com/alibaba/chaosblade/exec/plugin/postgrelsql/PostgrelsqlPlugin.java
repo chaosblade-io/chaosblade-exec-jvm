@@ -21,28 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public class PostgrelsqlPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return PostgrelsqlConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return PostgrelsqlConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new PostgrelsqlModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new PostgrelsqlModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new PostgrelsqlPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new PostgrelsqlPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new PostgrelsqlEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new PostgrelsqlEnhancer();
+  }
 }

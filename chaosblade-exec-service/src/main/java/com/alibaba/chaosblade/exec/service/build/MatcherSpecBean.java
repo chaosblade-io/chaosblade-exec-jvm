@@ -18,51 +18,49 @@ package com.alibaba.chaosblade.exec.service.build;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MatcherSpecBean {
-    private String name;
-    private String desc;
-    private boolean noArgs;
-    private boolean required;
+  private String name;
+  private String desc;
+  private boolean noArgs;
+  private boolean required;
 
-    public MatcherSpecBean(MatcherSpec spec) {
-        this.name = spec.getName();
-        this.desc = spec.getDesc();
-        this.noArgs = spec.noArgs();
-        this.required = spec.required();
-    }
+  public MatcherSpecBean(MatcherSpec spec) {
+    this.name = spec.getName();
+    this.desc = spec.getDesc();
+    this.noArgs = spec.noArgs();
+    this.required = spec.required();
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getDesc() {
-        return desc;
-    }
+  public String getDesc() {
+    return desc;
+  }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+  public void setDesc(String desc) {
+    this.desc = desc;
+  }
 
-    public boolean isNoArgs() {
-        return noArgs;
-    }
+  public boolean isNoArgs() {
+    return noArgs;
+  }
 
-    public void setNoArgs(boolean noArgs) {
-        this.noArgs = noArgs;
-    }
+  public void setNoArgs(boolean noArgs) {
+    this.noArgs = noArgs;
+  }
 
-    public boolean isRequired() {
-        return required;
-    }
+  public boolean isRequired() {
+    return required;
+  }
 
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
+  public void setRequired(boolean required) {
+    this.required = required;
+  }
 }

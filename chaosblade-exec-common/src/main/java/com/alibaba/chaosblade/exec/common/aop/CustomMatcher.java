@@ -16,26 +16,24 @@
 
 package com.alibaba.chaosblade.exec.common.aop;
 
-/**
- * @author yefei
- */
+/** @author yefei */
 public interface CustomMatcher {
 
-    /**
-     * match
-     *
-     * @param commandValue
-     * @param originValue
-     * @return
-     */
-    boolean match(String commandValue, Object originValue);
+  /**
+   * match
+   *
+   * @param commandValue
+   * @param originValue
+   * @return
+   */
+  boolean match(String commandValue, Object originValue);
 
-    /**
-     * regex match
-     *
-     * @param commandValue
-     * @param originValue
-     * @return
-     */
-    boolean regexMatch(String commandValue, Object originValue);
+  /**
+   * regex match
+   *
+   * @param commandValue
+   * @param originValue
+   * @return
+   */
+  boolean regexMatch(String commandValue, Object originValue);
 }

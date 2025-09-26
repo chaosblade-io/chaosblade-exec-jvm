@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.plugin.mysql;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MysqlHostMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return MysqlConstant.HOST_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MysqlConstant.HOST_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The database host";
-    }
+  @Override
+  public String getDesc() {
+    return "The database host";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

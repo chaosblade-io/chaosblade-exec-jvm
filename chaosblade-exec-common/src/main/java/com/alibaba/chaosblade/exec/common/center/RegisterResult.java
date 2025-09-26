@@ -18,31 +18,29 @@ package com.alibaba.chaosblade.exec.common.center;
 
 import com.alibaba.chaosblade.exec.common.model.Model;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class RegisterResult {
-    private Model model;
-    private boolean success;
+  private Model model;
+  private boolean success;
 
-    public RegisterResult(Model model, boolean success) {
-        this.model = model;
-        this.success = success;
-    }
+  public RegisterResult(Model model, boolean success) {
+    this.model = model;
+    this.success = success;
+  }
 
-    public static RegisterResult fail(Model model) {
-        return new RegisterResult(model, false);
-    }
+  public static RegisterResult fail(Model model) {
+    return new RegisterResult(model, false);
+  }
 
-    public static RegisterResult success() {
-        return new RegisterResult(null, true);
-    }
+  public static RegisterResult success() {
+    return new RegisterResult(null, true);
+  }
 
-    public Model getModel() {
-        return model;
-    }
+  public Model getModel() {
+    return model;
+  }
 
-    public boolean isSuccess() {
-        return success;
-    }
+  public boolean isSuccess() {
+    return success;
+  }
 }

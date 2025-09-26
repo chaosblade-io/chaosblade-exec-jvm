@@ -21,28 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author Lingjian Xu
- */
+/** @author Lingjian Xu */
 public class MongoDBPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return MongoDBConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return MongoDBConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new MongoDBModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new MongoDBModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new MongoDBPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new MongoDBPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new MongoDBEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new MongoDBEnhancer();
+  }
 }

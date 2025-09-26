@@ -16,64 +16,61 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.returnv;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ReturnValueActionSpec extends BaseActionSpec {
 
-    private static ValueFlagSpec valueFlagSpec = new ValueFlagSpec();
+  private static ValueFlagSpec valueFlagSpec = new ValueFlagSpec();
 
-    public ReturnValueActionSpec() {
-        super(new DefaultReturnValueExecutor(valueFlagSpec));
-    }
+  public ReturnValueActionSpec() {
+    super(new DefaultReturnValueExecutor(valueFlagSpec));
+  }
 
-    @Override
-    public String getName() {
-        return "return";
-    }
+  @Override
+  public String getName() {
+    return "return";
+  }
 
-    @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
+  @Override
+  public String[] getAliases() {
+    return new String[0];
+  }
 
-    @Override
-    public String getShortDesc() {
-        return "Return the specify value";
-    }
+  @Override
+  public String getShortDesc() {
+    return "Return the specify value";
+  }
 
-    @Override
-    public String getLongDesc() {
-        return "Return the specify value";
-    }
+  @Override
+  public String getLongDesc() {
+    return "Return the specify value";
+  }
 
-    public ValueFlagSpec getValueFlagSpec() {
-        return valueFlagSpec;
-    }
+  public ValueFlagSpec getValueFlagSpec() {
+    return valueFlagSpec;
+  }
 
-    @Override
-    public List<FlagSpec> getActionFlags() {
-        ArrayList<FlagSpec> flagSpecs = new ArrayList<FlagSpec>(1);
-        flagSpecs.add(new ValueFlagSpec());
-        return flagSpecs;
-    }
+  @Override
+  public List<FlagSpec> getActionFlags() {
+    ArrayList<FlagSpec> flagSpecs = new ArrayList<FlagSpec>(1);
+    flagSpecs.add(new ValueFlagSpec());
+    return flagSpecs;
+  }
 
-    @Override
-    public PredicateResult predicate(ActionModel actionModel) {
-        return PredicateResult.success();
-    }
+  @Override
+  public PredicateResult predicate(ActionModel actionModel) {
+    return PredicateResult.success();
+  }
 
-    @Override
-    public String[] getCategories() {
-        return new String[] {CategoryConstants.JAVA_DATA_TAMPER};
-    }
+  @Override
+  public String[] getCategories() {
+    return new String[] {CategoryConstants.JAVA_DATA_TAMPER};
+  }
 }

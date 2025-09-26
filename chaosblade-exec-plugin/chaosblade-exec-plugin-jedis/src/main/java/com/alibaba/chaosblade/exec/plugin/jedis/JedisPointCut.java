@@ -22,22 +22,20 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public class JedisPointCut implements PointCut {
 
-    private static final String JEDIS_CONNECTION = "redis.clients.jedis.Protocol";
+  private static final String JEDIS_CONNECTION = "redis.clients.jedis.Protocol";
 
-    private static final String INTERCEPTOR_PRE_METHOD = "sendCommand";
+  private static final String INTERCEPTOR_PRE_METHOD = "sendCommand";
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher(JEDIS_CONNECTION);
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher(JEDIS_CONNECTION);
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
+  }
 }

@@ -10,23 +10,23 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
  * @email rinalhb@icloud.com
  */
 public class ProducerGroupMatcherSpec extends BasePredicateMatcherSpec implements RocketMqConstant {
-    @Override
-    public String getName() {
-        return FLAG_PRODUCER_GROUP;
-    }
+  @Override
+  public String getName() {
+    return FLAG_PRODUCER_GROUP;
+  }
 
-    @Override
-    public String getDesc() {
-        return "Message producer group";
-    }
+  @Override
+  public String getDesc() {
+    return "Message producer group";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

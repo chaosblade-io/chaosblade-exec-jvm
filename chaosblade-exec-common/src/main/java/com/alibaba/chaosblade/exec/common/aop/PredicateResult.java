@@ -16,39 +16,37 @@
 
 package com.alibaba.chaosblade.exec.common.aop;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PredicateResult {
-    private boolean success;
-    private String err;
+  private boolean success;
+  private String err;
 
-    public PredicateResult(boolean success, String err) {
-        this.success = success;
-        this.err = err;
-    }
+  public PredicateResult(boolean success, String err) {
+    this.success = success;
+    this.err = err;
+  }
 
-    public static PredicateResult fail(String err) {
-        return new PredicateResult(false, err);
-    }
+  public static PredicateResult fail(String err) {
+    return new PredicateResult(false, err);
+  }
 
-    public static PredicateResult success() {
-        return new PredicateResult(true, null);
-    }
+  public static PredicateResult success() {
+    return new PredicateResult(true, null);
+  }
 
-    public boolean isSuccess() {
-        return success;
-    }
+  public boolean isSuccess() {
+    return success;
+  }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+  public void setSuccess(boolean success) {
+    this.success = success;
+  }
 
-    public String getErr() {
-        return err;
-    }
+  public String getErr() {
+    return err;
+  }
 
-    public void setErr(String err) {
-        this.err = err;
-    }
+  public void setErr(String err) {
+    this.err = err;
+  }
 }

@@ -19,35 +19,33 @@ package com.alibaba.chaosblade.exec.common.model.action;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ActionModel {
 
-    private String name;
-    private Map<String, String> flags = new HashMap<String, String>();
+  private String name;
+  private Map<String, String> flags = new HashMap<String, String>();
 
-    public ActionModel(String name) {
-        this.name = name;
-    }
+  public ActionModel(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void addFlag(String key, String value) {
-        flags.put(key, value);
-    }
+  public void addFlag(String key, String value) {
+    flags.put(key, value);
+  }
 
-    public String getFlag(String key) {
-        return flags.get(key);
-    }
+  public String getFlag(String key) {
+    return flags.get(key);
+  }
 
-    public Map<String, String> getFlags() {
-        return flags;
-    }
+  public Map<String, String> getFlags() {
+    return flags;
+  }
 }

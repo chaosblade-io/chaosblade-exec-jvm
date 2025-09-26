@@ -18,16 +18,15 @@ package com.alibaba.chaosblade.exec.plugin.jedis;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 
-/**
- * @author liuhq <a href="15669072513@163.com">
- */
+/** @author liuhq <a href="15669072513@163.com"> */
 public interface JedisMultiVersionStrategy {
-    /**
-     * jedis multi version strategy process
-     * @param classLoader classLoader
-     * @param methodArguments jedis method argument array
-     * @return EnhancerModel
-     * @throws Exception
-     */
-    EnhancerModel process(ClassLoader classLoader, Object[] methodArguments) throws Exception;
+  /**
+   * jedis multi version strategy process
+   *
+   * @param classLoader classLoader
+   * @param methodArguments jedis method argument array
+   * @return EnhancerModel
+   * @throws Exception
+   */
+  EnhancerModel process(ClassLoader classLoader, Object[] methodArguments) throws Exception;
 }

@@ -18,25 +18,22 @@ package com.alibaba.chaosblade.exec.plugin.dubbo;
 
 import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface DubboConstant {
 
-    String TIMEOUT_KEY = "timeout";
-    String TIMEOUT_EXCEPTION_MSG = "from chaosblade mock timeout";
+  String TIMEOUT_KEY = "timeout";
+  String TIMEOUT_EXCEPTION_MSG = "from chaosblade mock timeout";
 
-    String VERSION_KEY = "version";
-    String APP_KEY = "appname";
-    String SERVICE_KEY = "service";
-    String METHOD_KEY = MethodConstant.METHOD_MATCHER_NAME;
-    String GROUP_KEY = "group";
+  String VERSION_KEY = "version";
+  String APP_KEY = "appname";
+  String SERVICE_KEY = "service";
+  String METHOD_KEY = MethodConstant.METHOD_MATCHER_NAME;
+  String GROUP_KEY = "group";
 
-    String TARGET_NAME = "dubbo";
+  String TARGET_NAME = "dubbo";
 
-    String CONSUMER_KEY = "consumer";
-    String PROVIDER_KEY = "provider";
+  String CONSUMER_KEY = "consumer";
+  String PROVIDER_KEY = "provider";
 
-    String CALL_POINT_KEY = "call-point";
-
+  String CALL_POINT_KEY = "call-point";
 }

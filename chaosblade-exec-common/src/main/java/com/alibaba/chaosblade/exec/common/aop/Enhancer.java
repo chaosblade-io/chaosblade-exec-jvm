@@ -18,38 +18,47 @@ package com.alibaba.chaosblade.exec.common.aop;
 
 import java.lang.reflect.Method;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface Enhancer {
 
-    /**
-     * Enhanced processing before method execution
-     *
-     * @param targetName
-     * @param classLoader
-     * @param className
-     * @param object
-     * @param method
-     * @param methodArguments
-     * @throws Exception
-     */
-    void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                      Method method, Object[] methodArguments)
-        throws Exception;
+  /**
+   * Enhanced processing before method execution
+   *
+   * @param targetName
+   * @param classLoader
+   * @param className
+   * @param object
+   * @param method
+   * @param methodArguments
+   * @throws Exception
+   */
+  void beforeAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception;
 
-    /**
-     * Enhanced processing after method execution
-     *
-     * @param targetName
-     * @param classLoader
-     * @param className
-     * @param object
-     * @param method
-     * @param methodArguments
-     * @param returnObject
-     */
-    void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                     Method method, Object[] methodArguments, Object returnObject)
-        throws Exception;
+  /**
+   * Enhanced processing after method execution
+   *
+   * @param targetName
+   * @param classLoader
+   * @param className
+   * @param object
+   * @param method
+   * @param methodArguments
+   * @param returnObject
+   */
+  void afterAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments,
+      Object returnObject)
+      throws Exception;
 }

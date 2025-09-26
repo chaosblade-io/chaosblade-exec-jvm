@@ -21,29 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author liuhq
- * @Date 2020/11/23 上午11:36
- **/
+/** @author liuhq @Date 2020/11/23 上午11:36 */
 public class ZookeeperPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return ZookeeperConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return ZookeeperConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new ZookeeperModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new ZookeeperModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new ZookeeperPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new ZookeeperPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new ZookeeperEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new ZookeeperEnhancer();
+  }
 }

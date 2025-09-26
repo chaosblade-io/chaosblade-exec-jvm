@@ -16,9 +16,6 @@
 
 package com.alibaba.chaosblade.exec.plugin.servlet;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
@@ -29,44 +26,51 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.ManyNameMethodMatch
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ServletPointCut implements PointCut {
 
-    public static final String SPRING_FRAMEWORK_SERVLET = "org.springframework.web.servlet.FrameworkServlet";
-    public static final String ALIBABA_WEBX_FRAMEWORK_FILTER = "com.alibaba.citrus.webx.servlet.WebxFrameworkFilter";
-    public static final String SPRING_HTTP_SERVLET_BEAN = "org.springframework.web.servlet.HttpServletBean";
-    public static final String HTTP_SERVLET = "javax.servlet.http.HttpServlet";
+  public static final String SPRING_FRAMEWORK_SERVLET =
+      "org.springframework.web.servlet.FrameworkServlet";
+  public static final String ALIBABA_WEBX_FRAMEWORK_FILTER =
+      "com.alibaba.citrus.webx.servlet.WebxFrameworkFilter";
+  public static final String SPRING_HTTP_SERVLET_BEAN =
+      "org.springframework.web.servlet.HttpServletBean";
+  public static final String HTTP_SERVLET = "javax.servlet.http.HttpServlet";
 
-    public static Set<String> enhanceMethodSet = new HashSet<String>();
-    public static Set<String> enhanceMethodFilterSet = new HashSet<String>();
+  public static Set<String> enhanceMethodSet = new HashSet<String>();
+  public static Set<String> enhanceMethodFilterSet = new HashSet<String>();
 
-    static {
-        enhanceMethodSet.add("doGet");
-        enhanceMethodSet.add("doPost");
-        enhanceMethodSet.add("doDelete");
-        enhanceMethodSet.add("doPut");
-        enhanceMethodFilterSet.add("doFilter");
-    }
+  static {
+    enhanceMethodSet.add("doGet");
+    enhanceMethodSet.add("doPost");
+    enhanceMethodSet.add("doDelete");
+    enhanceMethodSet.add("doPut");
+    enhanceMethodFilterSet.add("doFilter");
+  }
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        OrClassMatcher orClassMatcher = new OrClassMatcher();
-        orClassMatcher.or(new NameClassMatcher(SPRING_FRAMEWORK_SERVLET)).or(
-            new NameClassMatcher(ALIBABA_WEBX_FRAMEWORK_FILTER)).or(
-            new SuperClassMatcher(SPRING_HTTP_SERVLET_BEAN, HTTP_SERVLET));
-        return orClassMatcher;
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    OrClassMatcher orClassMatcher = new OrClassMatcher();
+    orClassMatcher
+        .or(new NameClassMatcher(SPRING_FRAMEWORK_SERVLET))
+        .or(new NameClassMatcher(ALIBABA_WEBX_FRAMEWORK_FILTER))
+        .or(new SuperClassMatcher(SPRING_HTTP_SERVLET_BEAN, HTTP_SERVLET));
+    return orClassMatcher;
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        AndMethodMatcher andMethodMatcher = new AndMethodMatcher();
-        OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
-        orMethodMatcher.or(new ManyNameMethodMatcher(enhanceMethodSet)).or(new ManyNameMethodMatcher
-            (enhanceMethodFilterSet));
-        andMethodMatcher.and(orMethodMatcher).and(new ParameterMethodMatcher(1, ParameterMethodMatcher.GREAT_THAN));
-        return andMethodMatcher;
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    AndMethodMatcher andMethodMatcher = new AndMethodMatcher();
+    OrMethodMatcher orMethodMatcher = new OrMethodMatcher();
+    orMethodMatcher
+        .or(new ManyNameMethodMatcher(enhanceMethodSet))
+        .or(new ManyNameMethodMatcher(enhanceMethodFilterSet));
+    andMethodMatcher
+        .and(orMethodMatcher)
+        .and(new ParameterMethodMatcher(1, ParameterMethodMatcher.GREAT_THAN));
+    return andMethodMatcher;
+  }
 }

@@ -18,44 +18,42 @@ package com.alibaba.chaosblade.exec.plugin.jvm;
 
 import org.apache.commons.codec.binary.Base64;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class Base64Util {
 
-    private static final String CR_LF_UNIX = "\n";
-    private static final String CR_LF_WIN = "\r\n";
+  private static final String CR_LF_UNIX = "\n";
+  private static final String CR_LF_WIN = "\r\n";
 
-    /**
-     * Base64 encode
-     *
-     * @param bytes
-     * @param isChunked split string to lines length is 76
-     * @return
-     */
-    public static String encode(byte[] bytes, boolean isChunked) {
-        byte[] byte64 = Base64.encodeBase64(bytes, isChunked);
-        String result = new String(byte64);
-        String endChars;
-        if (result.endsWith((endChars = CR_LF_UNIX)) || result.endsWith((endChars = CR_LF_WIN))) {
-            result = result.substring(0, result.length() - endChars.length());
-        }
-        return result;
+  /**
+   * Base64 encode
+   *
+   * @param bytes
+   * @param isChunked split string to lines length is 76
+   * @return
+   */
+  public static String encode(byte[] bytes, boolean isChunked) {
+    byte[] byte64 = Base64.encodeBase64(bytes, isChunked);
+    String result = new String(byte64);
+    String endChars;
+    if (result.endsWith((endChars = CR_LF_UNIX)) || result.endsWith((endChars = CR_LF_WIN))) {
+      result = result.substring(0, result.length() - endChars.length());
     }
+    return result;
+  }
 
-    /**
-     * Base64 decode
-     *
-     * @param bytes
-     * @return
-     */
-    public static String decode(byte[] bytes) {
-        byte[] decodeBase64 = Base64.decodeBase64(bytes);
-        String result = new String(decodeBase64);
-        String endChars;
-        if (result.endsWith((endChars = CR_LF_UNIX)) || result.endsWith((endChars = CR_LF_WIN))) {
-            result = result.substring(0, result.length() - endChars.length());
-        }
-        return result;
+  /**
+   * Base64 decode
+   *
+   * @param bytes
+   * @return
+   */
+  public static String decode(byte[] bytes) {
+    byte[] decodeBase64 = Base64.decodeBase64(bytes);
+    String result = new String(decodeBase64);
+    String endChars;
+    if (result.endsWith((endChars = CR_LF_UNIX)) || result.endsWith((endChars = CR_LF_WIN))) {
+      result = result.substring(0, result.length() - endChars.length());
     }
+    return result;
+  }
 }

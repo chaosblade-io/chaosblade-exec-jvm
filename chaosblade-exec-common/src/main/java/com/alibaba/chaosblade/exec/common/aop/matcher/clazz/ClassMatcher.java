@@ -18,16 +18,14 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
 
 import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ClassMatcher {
-    /**
-     * 判断是否匹配
-     *
-     * @param className 类名，格式：xxx.xxx.xxx
-     * @param classInfo 类信息
-     * @return 匹配返回 true，否则返回 false
-     */
-    boolean isMatched(String className, ClassInfo classInfo);
+  /**
+   * 判断是否匹配
+   *
+   * @param className 类名，格式：xxx.xxx.xxx
+   * @param classInfo 类信息
+   * @return 匹配返回 true，否则返回 false
+   */
+  boolean isMatched(String className, ClassInfo classInfo);
 }

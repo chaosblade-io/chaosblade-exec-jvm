@@ -16,23 +16,20 @@
 
 package com.alibaba.chaosblade.exec.common.aop.matcher.method;
 
+import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 import java.util.Set;
 
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ManyNameMethodMatcher implements MethodMatcher {
 
-    private Set<String> methodNames;
+  private Set<String> methodNames;
 
-    public ManyNameMethodMatcher(Set<String> methodNames) {
-        this.methodNames = methodNames;
-    }
+  public ManyNameMethodMatcher(Set<String> methodNames) {
+    this.methodNames = methodNames;
+  }
 
-    @Override
-    public boolean isMatched(String methodName, MethodInfo methodInfo) {
-        return methodNames.contains(methodName);
-    }
+  @Override
+  public boolean isMatched(String methodName, MethodInfo methodInfo) {
+    return methodNames.contains(methodName);
+  }
 }

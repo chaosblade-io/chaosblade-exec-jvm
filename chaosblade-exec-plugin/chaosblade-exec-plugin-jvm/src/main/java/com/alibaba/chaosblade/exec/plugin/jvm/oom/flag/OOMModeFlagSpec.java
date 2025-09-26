@@ -24,28 +24,27 @@ import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
  * @date 2019-04-23
  */
 public class OOMModeFlagSpec implements FlagSpec {
-    @Override
-    public String getName() {
-        return JvmConstant.FLAG_NAME_OOM_HAPPEN_MODE;
-    }
+  @Override
+  public String getName() {
+    return JvmConstant.FLAG_NAME_OOM_HAPPEN_MODE;
+  }
 
-    @Override
-    public String getDesc() {
-        return
-            "Decide oom happen mode in wild-mode or not,default is false,if true,will quickly generate oom error,and "
-                + "the memory  "
-                + "will not "
-                + "release until stop,if false,the oom error will not generate at once,and if oom happens frequently,"
-                + "the  memory will release each once";
-    }
+  @Override
+  public String getDesc() {
+    return "Decide oom happen mode in wild-mode or not,default is false,if true,will quickly generate oom error,and "
+        + "the memory  "
+        + "will not "
+        + "release until stop,if false,the oom error will not generate at once,and if oom happens frequently,"
+        + "the  memory will release each once";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

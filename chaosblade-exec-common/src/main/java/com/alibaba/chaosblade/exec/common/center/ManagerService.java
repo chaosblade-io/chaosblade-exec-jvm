@@ -16,18 +16,12 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ManagerService {
 
-    /**
-     * Load service
-     */
-    void load();
+  /** Load service */
+  void load();
 
-    /**
-     * Close service, release resource
-     */
-    void unload();
+  /** Close service, release resource */
+  void unload();
 }

@@ -8,21 +8,21 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  */
 public interface DirectlyInjectionAction {
 
-    /**
-     * create injection
-     *
-     * @param uid   the injection uid
-     * @param model the injection model
-     * @throws Exception
-     */
-    void createInjection(String uid, Model model) throws Exception;
+  /**
+   * create injection
+   *
+   * @param uid the injection uid
+   * @param model the injection model
+   * @throws Exception
+   */
+  void createInjection(String uid, Model model) throws Exception;
 
-    /**
-     * destroy injection
-     *
-     * @param uid   the injection uid
-     * @param model the injection model
-     * @throws Exception
-     */
-    void destroyInjection(String uid, Model model) throws Exception;
+  /**
+   * destroy injection
+   *
+   * @param uid the injection uid
+   * @param model the injection model
+   * @throws Exception
+   */
+  void destroyInjection(String uid, Model model) throws Exception;
 }

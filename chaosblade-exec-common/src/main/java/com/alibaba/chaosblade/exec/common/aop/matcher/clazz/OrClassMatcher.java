@@ -16,38 +16,35 @@
 
 package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
 
+import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class OrClassMatcher implements ClassMatcher {
 
-    private List<ClassMatcher> matchers = new ArrayList<ClassMatcher>(2);
+  private List<ClassMatcher> matchers = new ArrayList<ClassMatcher>(2);
 
-    /**
-     * Add other class matcher with or relation
-     *
-     * @param matcher
-     * @return
-     */
-    public OrClassMatcher or(ClassMatcher matcher) {
-        if (matcher != null) {
-            matchers.add(matcher);
-        }
-        return this;
+  /**
+   * Add other class matcher with or relation
+   *
+   * @param matcher
+   * @return
+   */
+  public OrClassMatcher or(ClassMatcher matcher) {
+    if (matcher != null) {
+      matchers.add(matcher);
     }
+    return this;
+  }
 
-    @Override
-    public boolean isMatched(String className, ClassInfo classInfo) {
-        for (ClassMatcher matcher : matchers) {
-            if (matcher.isMatched(className, classInfo)) {
-                return true;
-            }
-        }
-        return false;
+  @Override
+  public boolean isMatched(String className, ClassInfo classInfo) {
+    for (ClassMatcher matcher : matchers) {
+      if (matcher.isMatched(className, classInfo)) {
+        return true;
+      }
     }
+    return false;
+  }
 }

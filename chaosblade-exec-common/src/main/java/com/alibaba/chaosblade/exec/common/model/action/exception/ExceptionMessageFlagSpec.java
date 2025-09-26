@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.common.model.action.exception;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ExceptionMessageFlagSpec implements FlagSpec {
 
-    @Override
-    public String getName() {
-        return "exception-message";
-    }
+  @Override
+  public String getName() {
+    return "exception-message";
+  }
 
-    @Override
-    public String getDesc() {
-        return "Specify exception message for exception experiment, default value is chaosblade-mock-exception";
-    }
+  @Override
+  public String getDesc() {
+    return "Specify exception message for exception experiment, default value is chaosblade-mock-exception";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

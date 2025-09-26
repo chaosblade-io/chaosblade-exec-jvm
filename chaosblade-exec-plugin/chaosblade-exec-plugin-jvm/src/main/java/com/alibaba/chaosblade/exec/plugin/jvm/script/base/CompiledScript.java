@@ -16,61 +16,50 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class CompiledScript {
 
-    /**
-     * Script type, such as Java, Groovy
-     */
-    private String language;
+  /** Script type, such as Java, Groovy */
+  private String language;
 
-    /**
-     * Script id
-     */
-    private String id;
+  /** Script id */
+  private String id;
 
-    /**
-     * Script name for label
-     */
-    private String name;
+  /** Script name for label */
+  private String name;
 
-    /**
-     * Script signature for checking the content modified or not
-     */
-    private String signature;
+  /** Script signature for checking the content modified or not */
+  private String signature;
 
-    /**
-     * Compiled object
-     */
-    private Object compiled;
+  /** Compiled object */
+  private Object compiled;
 
-    public CompiledScript(String id, String language, Object compiled, String name, String signature) {
-        this.language = language;
-        this.id = id;
-        this.compiled = compiled;
-        this.name = name;
-        this.signature = signature;
-    }
+  public CompiledScript(
+      String id, String language, Object compiled, String name, String signature) {
+    this.language = language;
+    this.id = id;
+    this.compiled = compiled;
+    this.name = name;
+    this.signature = signature;
+  }
 
-    public String getLanguage() {
-        return language;
-    }
+  public String getLanguage() {
+    return language;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getSignature() {
-        return signature;
-    }
+  public String getSignature() {
+    return signature;
+  }
 
-    public Object getCompiled() {
-        return compiled;
-    }
+  public Object getCompiled() {
+    return compiled;
+  }
 }
