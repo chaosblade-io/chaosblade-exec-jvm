@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [8, 11]
+        java-version: [ 8, 11 ]
     
     steps:
       - name: Checkout code
@@ -38,6 +38,9 @@ jobs:
 
       - name: Validate Maven configuration
         run: mvn -B validate
+
+      - name: Run code style verification
+        run: mvn spotless:check
 
       - name: Compile project
         run: mvn -B compile
