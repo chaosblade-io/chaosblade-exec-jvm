@@ -19,23 +19,20 @@ package com.alibaba.chaosblade.exec.common.aop;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface PointCut {
 
-    /**
-     * Class matcher
-     *
-     * @return
-     */
-    ClassMatcher getClassMatcher();
+  /**
+   * Class matcher
+   *
+   * @return
+   */
+  ClassMatcher getClassMatcher();
 
-    /**
-     * Method matcher
-     *
-     * @return
-     */
-    MethodMatcher getMethodMatcher();
-
+  /**
+   * Method matcher
+   *
+   * @return
+   */
+  MethodMatcher getMethodMatcher();
 }

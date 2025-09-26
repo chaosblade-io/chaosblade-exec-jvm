@@ -16,13 +16,9 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class DefaultScriptMetrics implements ScriptMetrics {
 
-    @Override
-    public void incrCompiledScript() {
-    }
-
+  @Override
+  public void incrCompiledScript() {}
 }

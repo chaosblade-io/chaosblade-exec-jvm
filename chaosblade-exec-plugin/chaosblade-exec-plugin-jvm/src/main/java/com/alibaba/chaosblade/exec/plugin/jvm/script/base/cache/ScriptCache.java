@@ -16,37 +16,32 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public interface ScriptCache<Key, Value> {
 
-    /**
-     * Put operation
-     *
-     * @param key
-     * @param value
-     */
-    void put(Key key, Value value);
+  /**
+   * Put operation
+   *
+   * @param key
+   * @param value
+   */
+  void put(Key key, Value value);
 
-    /**
-     * Get operation
-     *
-     * @param key
-     * @return
-     */
-    Value get(Key key);
+  /**
+   * Get operation
+   *
+   * @param key
+   * @return
+   */
+  Value get(Key key);
 
-    /**
-     * Evict(Delete) Operation
-     *
-     * @param key
-     */
-    boolean evict(Key key);
+  /**
+   * Evict(Delete) Operation
+   *
+   * @param key
+   */
+  boolean evict(Key key);
 
-    /**
-     * Delete all key
-     */
-    void clean();
-
+  /** Delete all key */
+  void clean();
 }

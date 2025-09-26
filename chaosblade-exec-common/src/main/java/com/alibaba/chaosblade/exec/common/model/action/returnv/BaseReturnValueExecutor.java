@@ -16,76 +16,75 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.returnv;
 
+import static com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.ConstantType.*;
+
+import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.Calculator;
+import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.CompilerException;
+import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.Constant;
+import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.Syntactic;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
-import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.CompilerException;
-import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.Calculator;
-import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.Constant;
-import com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.Syntactic;
-
-import static com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.ConstantType.*;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class BaseReturnValueExecutor implements ReturnValueExecutor {
-    private ValueFlagSpec valueFlagSpec;
+  private ValueFlagSpec valueFlagSpec;
 
-    public BaseReturnValueExecutor(ValueFlagSpec valueFlagSpec) {
-        this.valueFlagSpec = valueFlagSpec;
+  public BaseReturnValueExecutor(ValueFlagSpec valueFlagSpec) {
+    this.valueFlagSpec = valueFlagSpec;
+  }
+
+  @Override
+  public void run(EnhancerModel enhancerModel) throws Exception {
+    // get return value from model action
+    String value = enhancerModel.getActionFlag(valueFlagSpec.getName());
+    Method method = enhancerModel.getMethod();
+
+    if (method == null) {
+      return;
     }
 
-    @Override
-    public void run(EnhancerModel enhancerModel) throws Exception {
-        // get return value from model action
-        String value = enhancerModel.getActionFlag(valueFlagSpec.getName());
-        Method method = enhancerModel.getMethod();
+    final Map<String, Object> variates = new HashMap<String, Object>();
+    if (enhancerModel.getMethodArguments() != null) {
+      for (int i = 0; i < enhancerModel.getMethodArguments().length; i++) {
+        variates.put(String.format("p%d", i), enhancerModel.getMethodArguments()[i]);
+      }
+    }
+    if (enhancerModel.getReturnValue() != null) {
+      variates.put("r", enhancerModel.getReturnValue());
+    }
 
-        if (method == null) {
-            return;
-        }
-
-        final Map<String, Object> variates = new HashMap<String, Object>();
-        if (enhancerModel.getMethodArguments() != null) {
-            for (int i = 0; i < enhancerModel.getMethodArguments().length; i++) {
-                variates.put(String.format("p%d", i), enhancerModel.getMethodArguments()[i]);
+    final Calculator calculator =
+        new Calculator() {
+          @Override
+          public Constant getValue(String name) throws CompilerException {
+            if (name == null || name.equals("null")) {
+              return Constant.build(NULL, null);
+            } else if (!variates.containsKey(name)) {
+              return Constant.build(STRING, name);
+            } else if (variates.get(name) instanceof Number) {
+              return Constant.build(NUMERIC, ((Number) variates.get(name)).doubleValue());
+            } else if (variates.get(name) instanceof String) {
+              return Constant.build(STRING, variates.get(name).toString());
+            } else if (variates.get(name) instanceof Boolean) {
+              return Constant.build(BOOLEAN, Boolean.parseBoolean(variates.get(name).toString()));
             }
-        }
-        if (enhancerModel.getReturnValue() != null) {
-            variates.put("r", enhancerModel.getReturnValue());
-        }
+            return Constant.build(NULL, null);
+          }
 
-        final Calculator calculator = new Calculator() {
-            @Override
-            public Constant getValue(String name) throws CompilerException {
-                if (name==null || name.equals("null")) {
-                    return Constant.build(NULL, null);
-                } else if (!variates.containsKey(name)) {
-                    return Constant.build(STRING, name);
-                } else if (variates.get(name) instanceof Number) {
-                    return Constant.build(NUMERIC, ((Number) variates.get(name)).doubleValue());
-                } else if (variates.get(name) instanceof String) {
-                    return Constant.build(STRING, variates.get(name).toString());
-                } else if (variates.get(name) instanceof Boolean) {
-                    return Constant.build(BOOLEAN, Boolean.parseBoolean(variates.get(name).toString()));
-                }
-                return Constant.build(NULL, null);
-            }
-
-            @Override
-            public boolean isVariate(String name) {
-                return variates.containsKey(name);
-            }
+          @Override
+          public boolean isVariate(String name) {
+            return variates.containsKey(name);
+          }
         };
 
-        final Syntactic syntactic = new Syntactic(calculator);
-        final Constant constant = syntactic.getFormulaValue(value);
+    final Syntactic syntactic = new Syntactic(calculator);
+    final Constant constant = syntactic.getFormulaValue(value);
 
-        Object returnValue = generateReturnValue(enhancerModel.getClassLoader(), method, constant.getAsString());
-        InterruptProcessException.throwReturnImmediately(returnValue);
-    }
+    Object returnValue =
+        generateReturnValue(enhancerModel.getClassLoader(), method, constant.getAsString());
+    InterruptProcessException.throwReturnImmediately(returnValue);
+  }
 }

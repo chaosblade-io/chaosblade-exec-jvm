@@ -16,51 +16,47 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptFinder;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class CompoundScriptFinder implements ScriptFinder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CompoundScriptFinder.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(CompoundScriptFinder.class);
 
-    private List<ScriptFinder> scriptFinderList = new ArrayList<ScriptFinder>();
+  private List<ScriptFinder> scriptFinderList = new ArrayList<ScriptFinder>();
 
-    public CompoundScriptFinder add(ScriptFinder scriptFinder) {
-        if (scriptFinder == null) {
-            throw new IllegalArgumentException("scriptFinder not null");
-        }
-        scriptFinderList.add(scriptFinder);
-        return this;
+  public CompoundScriptFinder add(ScriptFinder scriptFinder) {
+    if (scriptFinder == null) {
+      throw new IllegalArgumentException("scriptFinder not null");
     }
+    scriptFinderList.add(scriptFinder);
+    return this;
+  }
 
-    @Override
-    public Script find(String scriptId) {
-        for (ScriptFinder scriptFinder : scriptFinderList) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("find script by finder:" + scriptFinder.getClass().getCanonicalName());
-            }
-            try {
-                Script script = scriptFinder.find(scriptId);
-                if (script != null) {
-                    return script;
-                }
-            } catch (Exception exception) {
-                if (scriptFinderList.indexOf(scriptFinder) == scriptFinderList.size() - 1) {
-                    LOGGER.error(exception.getMessage(), exception);
-                } else {
-                    LOGGER.info("Try to continue with next finder");
-                }
-            }
+  @Override
+  public Script find(String scriptId) {
+    for (ScriptFinder scriptFinder : scriptFinderList) {
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("find script by finder:" + scriptFinder.getClass().getCanonicalName());
+      }
+      try {
+        Script script = scriptFinder.find(scriptId);
+        if (script != null) {
+          return script;
         }
-        return null;
+      } catch (Exception exception) {
+        if (scriptFinderList.indexOf(scriptFinder) == scriptFinderList.size() - 1) {
+          LOGGER.error(exception.getMessage(), exception);
+        } else {
+          LOGGER.info("Try to continue with next finder");
+        }
+      }
     }
+    return null;
+  }
 }

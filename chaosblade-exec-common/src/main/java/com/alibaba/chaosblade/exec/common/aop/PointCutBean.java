@@ -19,27 +19,25 @@ package com.alibaba.chaosblade.exec.common.aop;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PointCutBean implements PointCut {
-    private ClassMatcher classMatcher;
-    private MethodMatcher methodMatcher;
+  private ClassMatcher classMatcher;
+  private MethodMatcher methodMatcher;
 
-    public PointCutBean(PointCut pointCut) {
-        if (pointCut != null) {
-            this.classMatcher = pointCut.getClassMatcher();
-            this.methodMatcher = pointCut.getMethodMatcher();
-        }
+  public PointCutBean(PointCut pointCut) {
+    if (pointCut != null) {
+      this.classMatcher = pointCut.getClassMatcher();
+      this.methodMatcher = pointCut.getMethodMatcher();
     }
+  }
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return this.classMatcher;
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return this.classMatcher;
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        return this.methodMatcher;
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return this.methodMatcher;
+  }
 }

@@ -33,91 +33,89 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ServiceLoader;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PluginLoader {
 
-    /**
-     * Get embed jar
-     *
-     * @param serviceType service interface type
-     * @param urlMap
-     * @param <T>
-     * @return
-     * @throws IOException
-     */
-    public static <T> List<T> load(Class<T> serviceType, Map<String, URL> urlMap) throws IOException {
-        URL[] urls = new URL[urlMap.size()];
-        int idx = 0;
-        Iterator<Entry<String, URL>> iterator = urlMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Entry<String, URL> entry = iterator.next();
-            File tempFile = createTempFile(entry.getKey(), entry.getValue());
-            urls[idx++] = tempFile.toURI().toURL();
-        }
-        URLClassLoader classLoader = createPluginClassLoader(urls, serviceType.getClassLoader());
-        return load(serviceType, classLoader);
+  /**
+   * Get embed jar
+   *
+   * @param serviceType service interface type
+   * @param urlMap
+   * @param <T>
+   * @return
+   * @throws IOException
+   */
+  public static <T> List<T> load(Class<T> serviceType, Map<String, URL> urlMap) throws IOException {
+    URL[] urls = new URL[urlMap.size()];
+    int idx = 0;
+    Iterator<Entry<String, URL>> iterator = urlMap.entrySet().iterator();
+    while (iterator.hasNext()) {
+      Entry<String, URL> entry = iterator.next();
+      File tempFile = createTempFile(entry.getKey(), entry.getValue());
+      urls[idx++] = tempFile.toURI().toURL();
     }
+    URLClassLoader classLoader = createPluginClassLoader(urls, serviceType.getClassLoader());
+    return load(serviceType, classLoader);
+  }
 
-    private static URLClassLoader createPluginClassLoader(final URL[] urls,
-                                                          final ClassLoader parent) {
-        if (System.getSecurityManager() != null) {
-            return AccessController.doPrivileged(new PrivilegedAction<URLClassLoader>() {
-                @Override
-                public URLClassLoader run() {
-                    return new URLClassLoader(urls, parent);
-                }
-            });
-        } else {
-            return new URLClassLoader(urls, parent);
-        }
-    }
-
-    public static <T> List<T> load(Class<T> serviceType, ClassLoader classLoader) {
-        ServiceLoader<T> serviceLoader = ServiceLoader.load(serviceType, classLoader);
-        List<T> plugins = new ArrayList<T>();
-        for (T plugin : serviceLoader) {
-            plugins.add(serviceType.cast(plugin));
-        }
-        return plugins;
-    }
-
-    public static File createTempFile(String jarName, URL url)
-        throws IOException {
-        InputStream jarStream = url.openStream();
-        if (jarStream == null) {
-            throw new FileNotFoundException(jarName + ".jar");
-        }
-        File file = File.createTempFile(jarName, ".jar", null);
-        file.deleteOnExit();
-
-        OutputStream out = new FileOutputStream(file);
-        try {
-            copy(jarStream, out, 8096, true);
-            return file;
-        } finally {
-            out.close();
-        }
-    }
-
-    private static int copy(InputStream input, OutputStream output, int bufferSize, boolean closeStreams)
-        throws IOException {
-        try {
-            byte[] buffer = new byte[bufferSize];
-            int count = 0;
-            int n = 0;
-            while (-1 != (n = input.read(buffer))) {
-                output.write(buffer, 0, n);
-                count += n;
+  private static URLClassLoader createPluginClassLoader(
+      final URL[] urls, final ClassLoader parent) {
+    if (System.getSecurityManager() != null) {
+      return AccessController.doPrivileged(
+          new PrivilegedAction<URLClassLoader>() {
+            @Override
+            public URLClassLoader run() {
+              return new URLClassLoader(urls, parent);
             }
-            return count;
-        } finally {
-            if (closeStreams) {
-                input.close();
-                output.close();
-            }
-        }
+          });
+    } else {
+      return new URLClassLoader(urls, parent);
     }
+  }
 
+  public static <T> List<T> load(Class<T> serviceType, ClassLoader classLoader) {
+    ServiceLoader<T> serviceLoader = ServiceLoader.load(serviceType, classLoader);
+    List<T> plugins = new ArrayList<T>();
+    for (T plugin : serviceLoader) {
+      plugins.add(serviceType.cast(plugin));
+    }
+    return plugins;
+  }
+
+  public static File createTempFile(String jarName, URL url) throws IOException {
+    InputStream jarStream = url.openStream();
+    if (jarStream == null) {
+      throw new FileNotFoundException(jarName + ".jar");
+    }
+    File file = File.createTempFile(jarName, ".jar", null);
+    file.deleteOnExit();
+
+    OutputStream out = new FileOutputStream(file);
+    try {
+      copy(jarStream, out, 8096, true);
+      return file;
+    } finally {
+      out.close();
+    }
+  }
+
+  private static int copy(
+      InputStream input, OutputStream output, int bufferSize, boolean closeStreams)
+      throws IOException {
+    try {
+      byte[] buffer = new byte[bufferSize];
+      int count = 0;
+      int n = 0;
+      while (-1 != (n = input.read(buffer))) {
+        output.write(buffer, 0, n);
+        count += n;
+      }
+      return count;
+    } finally {
+      if (closeStreams) {
+        input.close();
+        output.close();
+      }
+    }
+  }
 }

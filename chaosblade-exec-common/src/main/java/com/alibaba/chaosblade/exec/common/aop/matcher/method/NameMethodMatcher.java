@@ -18,19 +18,17 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.method;
 
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class NameMethodMatcher implements MethodMatcher {
 
-    private String methodName;
+  private String methodName;
 
-    public NameMethodMatcher(String methodName) {
-        this.methodName = methodName;
-    }
+  public NameMethodMatcher(String methodName) {
+    this.methodName = methodName;
+  }
 
-    @Override
-    public boolean isMatched(String methodName, MethodInfo methodInfo) {
-        return this.methodName.equals(methodName);
-    }
+  @Override
+  public boolean isMatched(String methodName, MethodInfo methodInfo) {
+    return this.methodName.equals(methodName);
+  }
 }

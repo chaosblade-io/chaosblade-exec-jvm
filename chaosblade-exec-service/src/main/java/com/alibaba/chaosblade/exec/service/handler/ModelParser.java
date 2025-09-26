@@ -16,6 +16,11 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
+import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
+import com.alibaba.chaosblade.exec.common.transport.Request;
+import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -23,45 +28,49 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.transport.Request;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ModelParser {
 
-    public final static Set<String> assistantFlag = new HashSet<String>(Arrays.asList(
-        "target", "action", "process", "pid", "debug", "suid", "help", "pod", "uid", "refresh", "blade-override",
-        "chaosblade-override", "javaHome"
-    ));
+  public static final Set<String> assistantFlag =
+      new HashSet<String>(
+          Arrays.asList(
+              "target",
+              "action",
+              "process",
+              "pid",
+              "debug",
+              "suid",
+              "help",
+              "pod",
+              "uid",
+              "refresh",
+              "blade-override",
+              "chaosblade-override",
+              "javaHome"));
 
-    public static Model parseRequest(String target, Request request, ActionSpec actionSpec) {
-        Model model = new Model(target, actionSpec.getName());
-        Map<String, String> params = request.getParams();
-        List<FlagSpec> actionFlags = actionSpec.getActionFlags();
-        if (actionFlags != null) {
-            for (FlagSpec actionFlag : actionFlags) {
-                String flagValue = request.getParam(actionFlag.getName());
-                if (StringUtil.isBlank(flagValue)) {
-                    continue;
-                }
-                model.getAction().addFlag(actionFlag.getName(), flagValue);
-                // delete itnot assign from
-                request.getParams().remove(actionFlag.getName());
-            }
+  public static Model parseRequest(String target, Request request, ActionSpec actionSpec) {
+    Model model = new Model(target, actionSpec.getName());
+    Map<String, String> params = request.getParams();
+    List<FlagSpec> actionFlags = actionSpec.getActionFlags();
+    if (actionFlags != null) {
+      for (FlagSpec actionFlag : actionFlags) {
+        String flagValue = request.getParam(actionFlag.getName());
+        if (StringUtil.isBlank(flagValue)) {
+          continue;
         }
-        for (Entry<String, String> entry : params.entrySet()) {
-            String key = entry.getKey();
-            if (assistantFlag.contains(key)) {
-                continue;
-            }
-            // add matcher flag
-            model.getMatcher().add(key, entry.getValue());
-        }
-        return model;
+        model.getAction().addFlag(actionFlag.getName(), flagValue);
+        // delete itnot assign from
+        request.getParams().remove(actionFlag.getName());
+      }
     }
+    for (Entry<String, String> entry : params.entrySet()) {
+      String key = entry.getKey();
+      if (assistantFlag.contains(key)) {
+        continue;
+      }
+      // add matcher flag
+      model.getMatcher().add(key, entry.getValue());
+    }
+    return model;
+  }
 }

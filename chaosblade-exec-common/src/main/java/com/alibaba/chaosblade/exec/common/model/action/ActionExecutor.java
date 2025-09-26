@@ -18,16 +18,14 @@ package com.alibaba.chaosblade.exec.common.model.action;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ActionExecutor {
 
-    /**
-     * Run executor
-     *
-     * @param enhancerModel
-     * @throws Exception
-     */
-    void run(EnhancerModel enhancerModel) throws Exception;
+  /**
+   * Run executor
+   *
+   * @param enhancerModel
+   * @throws Exception
+   */
+  void run(EnhancerModel enhancerModel) throws Exception;
 }

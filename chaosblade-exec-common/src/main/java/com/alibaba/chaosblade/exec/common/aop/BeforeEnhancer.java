@@ -16,58 +16,77 @@
 
 package com.alibaba.chaosblade.exec.common.aop;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
 import com.alibaba.chaosblade.exec.common.injection.Injector;
+import java.lang.reflect.Method;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class BeforeEnhancer implements Enhancer {
 
-    /**
-     * Do fault-inject
-     *
-     * @param targetName      the plugin target name
-     * @param classLoader     classloader for the class
-     * @param className       the class name
-     * @param object          the class instance. Value is null if the method is static
-     * @param method          the class method
-     * @param methodArguments the method arguments
-     * @throws Exception
-     */
-    @Override
-    public void beforeAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                             Method method, Object[] methodArguments) throws Exception {
-        if (!ManagerFactory.getStatusManager().expExists(targetName)) {
-            return;
-        }
-        EnhancerModel model = doBeforeAdvice(classLoader, className, object, method, methodArguments);
-        if (model == null) {
-            return;
-        }
-        model.setTarget(targetName).setMethod(method).setObject(object).setMethodArguments(methodArguments);
-        Injector.inject(model);
+  /**
+   * Do fault-inject
+   *
+   * @param targetName the plugin target name
+   * @param classLoader classloader for the class
+   * @param className the class name
+   * @param object the class instance. Value is null if the method is static
+   * @param method the class method
+   * @param methodArguments the method arguments
+   * @throws Exception
+   */
+  @Override
+  public void beforeAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception {
+    if (!ManagerFactory.getStatusManager().expExists(targetName)) {
+      return;
     }
-
-    /**
-     * Do handle enhancer
-     *
-     * @param classLoader
-     * @param className
-     * @param object
-     * @param method
-     * @param methodArguments
-     * @return enhancer model to match the experiment rule
-     * @throws Exception
-     */
-    public abstract EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
-                                                 Method method, Object[] methodArguments) throws Exception;
-
-    @Override
-    public void afterAdvice(String targetName, ClassLoader classLoader, String className, Object object,
-                            Method method, Object[] methodArguments, Object returnObject) throws Exception {
-        return;
+    EnhancerModel model = doBeforeAdvice(classLoader, className, object, method, methodArguments);
+    if (model == null) {
+      return;
     }
+    model
+        .setTarget(targetName)
+        .setMethod(method)
+        .setObject(object)
+        .setMethodArguments(methodArguments);
+    Injector.inject(model);
+  }
+
+  /**
+   * Do handle enhancer
+   *
+   * @param classLoader
+   * @param className
+   * @param object
+   * @param method
+   * @param methodArguments
+   * @return enhancer model to match the experiment rule
+   * @throws Exception
+   */
+  public abstract EnhancerModel doBeforeAdvice(
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception;
+
+  @Override
+  public void afterAdvice(
+      String targetName,
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments,
+      Object returnObject)
+      throws Exception {
+    return;
+  }
 }

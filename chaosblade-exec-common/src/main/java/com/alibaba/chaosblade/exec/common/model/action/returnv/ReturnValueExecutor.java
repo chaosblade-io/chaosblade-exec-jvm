@@ -16,23 +16,19 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.returnv;
 
+import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
 import java.lang.reflect.Method;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface ReturnValueExecutor extends ActionExecutor {
 
-    /**
-     * Only support primitive type
-     *
-     *
-     * @param classLoader
-     * @param method
-     * @param value
-     * @return
-     */
-    Object generateReturnValue(ClassLoader classLoader, Method method, String value);
+  /**
+   * Only support primitive type
+   *
+   * @param classLoader
+   * @param method
+   * @param value
+   * @return
+   */
+  Object generateReturnValue(ClassLoader classLoader, Method method, String value);
 }

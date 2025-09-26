@@ -14,13 +14,13 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
  */
 public class Okhttp3PointCut implements PointCut {
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher("okhttp3.RealCall");
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher("okhttp3.RealCall");
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        return new NameMethodMatcher("execute");
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return new NameMethodMatcher("execute");
+  }
 }

@@ -9,8 +9,8 @@ import com.alibaba.chaosblade.exec.plugin.tars.model.TarsModelSpec;
  * @email lishiji@huya.com
  */
 public abstract class TarsPlugin implements Plugin {
-    @Override
-    public ModelSpec getModelSpec() {
-        return new TarsModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new TarsModelSpec();
+  }
 }

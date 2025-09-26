@@ -16,16 +16,13 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public interface ExecutableScript {
 
-    /**
-     * Run script by invoking the run method in script.
-     *
-     * @return
-     */
-    Object run();
-
+  /**
+   * Run script by invoking the run method in script.
+   *
+   * @return
+   */
+  Object run();
 }

@@ -26,39 +26,38 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DubboConsumerPointCut implements PointCut {
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        OrClassMatcher classMatcher = new OrClassMatcher();
-        classMatcher
-            .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.DubboInvoker"))
-            .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.thrift.ThriftInvoker"))
-            .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"))
+  @Override
+  public ClassMatcher getClassMatcher() {
+    OrClassMatcher classMatcher = new OrClassMatcher();
+    classMatcher
+        .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.DubboInvoker"))
+        .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.thrift.ThriftInvoker"))
+        .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"))
+        .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker"))
+        .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.thrift.ThriftInvoker"))
+        .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"));
+    return classMatcher;
+  }
 
-            .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker"))
-            .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.thrift.ThriftInvoker"))
-            .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"));
-        return classMatcher;
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    AndMethodMatcher methodMatcher = new AndMethodMatcher();
+    ParameterMethodMatcher parameterMethodMatcher =
+        new ParameterMethodMatcher(
+            new String[] {"com.alibaba.dubbo.rpc.Invocation"}, 1, ParameterMethodMatcher.EQUAL);
+    methodMatcher.and(new NameMethodMatcher("doInvoke")).and(parameterMethodMatcher);
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        AndMethodMatcher methodMatcher = new AndMethodMatcher();
-        ParameterMethodMatcher parameterMethodMatcher = new ParameterMethodMatcher(new String[] {
-            "com.alibaba.dubbo.rpc.Invocation"}, 1,
-            ParameterMethodMatcher.EQUAL);
-        methodMatcher.and(new NameMethodMatcher("doInvoke")).and(parameterMethodMatcher);
+    AndMethodMatcher methodMatcherThan2700 = new AndMethodMatcher();
+    ParameterMethodMatcher parameterMethodMatcherThan2700 =
+        new ParameterMethodMatcher(
+            new String[] {"org.apache.dubbo.rpc.Invocation"}, 1, ParameterMethodMatcher.EQUAL);
+    methodMatcherThan2700
+        .and(new NameMethodMatcher("doInvoke"))
+        .and(parameterMethodMatcherThan2700);
 
-        AndMethodMatcher methodMatcherThan2700 = new AndMethodMatcher();
-        ParameterMethodMatcher parameterMethodMatcherThan2700 = new ParameterMethodMatcher(new String[] {
-            "org.apache.dubbo.rpc.Invocation"}, 1,
-            ParameterMethodMatcher.EQUAL);
-        methodMatcherThan2700.and(new NameMethodMatcher("doInvoke")).and(parameterMethodMatcherThan2700);
-
-        return new OrMethodMatcher().or(methodMatcher).or(methodMatcherThan2700);
-    }
+    return new OrMethodMatcher().or(methodMatcher).or(methodMatcherThan2700);
+  }
 }

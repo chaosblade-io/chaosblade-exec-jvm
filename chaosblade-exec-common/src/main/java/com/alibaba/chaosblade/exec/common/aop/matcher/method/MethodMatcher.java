@@ -18,17 +18,15 @@ package com.alibaba.chaosblade.exec.common.aop.matcher.method;
 
 import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface MethodMatcher {
 
-    /**
-     * Assert the method matched or not
-     *
-     * @param methodName
-     * @param methodInfo
-     * @return true if matched, otherwise false
-     */
-    boolean isMatched(String methodName, MethodInfo methodInfo);
+  /**
+   * Assert the method matched or not
+   *
+   * @param methodName
+   * @param methodInfo
+   * @return true if matched, otherwise false
+   */
+  boolean isMatched(String methodName, MethodInfo methodInfo);
 }

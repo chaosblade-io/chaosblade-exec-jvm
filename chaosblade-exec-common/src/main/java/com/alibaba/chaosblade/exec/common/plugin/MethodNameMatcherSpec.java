@@ -18,40 +18,37 @@ package com.alibaba.chaosblade.exec.common.plugin;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MethodNameMatcherSpec extends BasePredicateMatcherSpec {
 
-    private boolean required;
+  private boolean required;
 
-    public MethodNameMatcherSpec() {
-        super();
-    }
+  public MethodNameMatcherSpec() {
+    super();
+  }
 
-    public MethodNameMatcherSpec(boolean required) {
-        super();
-        this.required = required;
-    }
+  public MethodNameMatcherSpec(boolean required) {
+    super();
+    this.required = required;
+  }
 
-    @Override
-    public String getName() {
-        return MethodConstant.METHOD_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MethodConstant.METHOD_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The method name";
-    }
+  @Override
+  public String getDesc() {
+    return "The method name";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return this.required;
-    }
-
+  @Override
+  public boolean required() {
+    return this.required;
+  }
 }

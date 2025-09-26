@@ -21,28 +21,28 @@ import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
 /**
  * @Author qianfan
- * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread
- * @Date 2020/12/22 12:56 下午
+ *
+ * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread @Date 2020/12/22 12:56 下午
  */
 public class ThreadRunningMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return JvmConstant.ACTION_THREAD_RUNNING;
-    }
+  @Override
+  public String getName() {
+    return JvmConstant.ACTION_THREAD_RUNNING;
+  }
 
-    @Override
-    public String getDesc() {
-        return "To tag threads running experiment.";
-    }
+  @Override
+  public String getDesc() {
+    return "To tag threads running experiment.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return true;
-    }
+  @Override
+  public boolean noArgs() {
+    return true;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

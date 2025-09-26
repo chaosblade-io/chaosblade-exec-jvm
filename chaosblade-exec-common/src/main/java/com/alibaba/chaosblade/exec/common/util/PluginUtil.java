@@ -19,16 +19,16 @@ package com.alibaba.chaosblade.exec.common.util;
 import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.constant.DelimiterConstant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PluginUtil {
 
-    public static String getIdentifier(Plugin plugin) {
-        return plugin.getModelSpec().getTarget() + DelimiterConstant.BETWEEN_TARGET_PLUGIN_NAME + plugin.getName();
-    }
+  public static String getIdentifier(Plugin plugin) {
+    return plugin.getModelSpec().getTarget()
+        + DelimiterConstant.BETWEEN_TARGET_PLUGIN_NAME
+        + plugin.getName();
+  }
 
-    public static String getIdentifierForAfterEvent(Plugin plugin) {
-        return getIdentifier(plugin) + DelimiterConstant.BETWEEN_TARGET_PLUGIN_NAME + "after";
-    }
+  public static String getIdentifierForAfterEvent(Plugin plugin) {
+    return getIdentifier(plugin) + DelimiterConstant.BETWEEN_TARGET_PLUGIN_NAME + "after";
+  }
 }

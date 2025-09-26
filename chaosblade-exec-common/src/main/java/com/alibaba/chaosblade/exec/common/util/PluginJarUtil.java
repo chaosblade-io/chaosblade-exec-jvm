@@ -29,81 +29,82 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PluginJarUtil {
 
-    public static final Pattern COMPILE = Pattern.compile("plugins/(.*).jar");
+  public static final Pattern COMPILE = Pattern.compile("plugins/(.*).jar");
 
-    public static List<String> findAgentJarFileNames(Pattern pattern) {
-        URL agentJarUrl = getAgentJarUrl();
-        return findJarFileNames(agentJarUrl, pattern);
-    }
+  public static List<String> findAgentJarFileNames(Pattern pattern) {
+    URL agentJarUrl = getAgentJarUrl();
+    return findJarFileNames(agentJarUrl, pattern);
+  }
 
-    public static List<String> findJarFileNames(URL agentJarUrl, Pattern pattern) {
-        JarFile jarFile = null;
+  public static List<String> findJarFileNames(URL agentJarUrl, Pattern pattern) {
+    JarFile jarFile = null;
+    try {
+      jarFile = getAgentJarFile(agentJarUrl);
+
+      List<String> names = new ArrayList();
+      for (Enumeration<JarEntry> entries = jarFile.entries(); entries.hasMoreElements(); ) {
+        JarEntry jarEntry = entries.nextElement();
+        if (pattern.matcher(jarEntry.getName()).matches()) {
+          names.add(jarEntry.getName());
+        }
+      }
+      return names;
+    } catch (Exception e) {
+    } finally {
+      if (jarFile != null) {
         try {
-            jarFile = getAgentJarFile(agentJarUrl);
-
-            List<String> names = new ArrayList();
-            for (Enumeration<JarEntry> entries = jarFile.entries(); entries.hasMoreElements(); ) {
-                JarEntry jarEntry = entries.nextElement();
-                if (pattern.matcher(jarEntry.getName()).matches()) {
-                    names.add(jarEntry.getName());
-                }
-            }
-            return names;
-        } catch (Exception e) {
-        } finally {
-            if (jarFile != null) {
-                try {
-                    jarFile.close();
-                } catch (IOException localIOException2) {}
-            }
+          jarFile.close();
+        } catch (IOException localIOException2) {
         }
-        return Collections.emptyList();
+      }
     }
+    return Collections.emptyList();
+  }
 
-    public static URL getAgentJarUrl() {
-        return PluginJarUtil.class.getProtectionDomain().getCodeSource().getLocation();
+  public static URL getAgentJarUrl() {
+    return PluginJarUtil.class.getProtectionDomain().getCodeSource().getLocation();
+  }
+
+  private static JarFile getAgentJarFile(URL agentJarUrl) {
+    if (agentJarUrl == null) {
+      return null;
     }
-
-    private static JarFile getAgentJarFile(URL agentJarUrl) {
-        if (agentJarUrl == null) {
-            return null;
-        }
-        try {
-            return new JarFile(getAgentJarFileName(agentJarUrl));
-        } catch (IOException e) {}
-        return null;
+    try {
+      return new JarFile(getAgentJarFileName(agentJarUrl));
+    } catch (IOException e) {
     }
+    return null;
+  }
 
-    private static String getAgentJarFileName(URL agentJarUrl) {
-        if (agentJarUrl == null) {
-            return null;
-        }
-        try {
-            return URLDecoder.decode(agentJarUrl.getFile().replace("+", "%2B"), "UTF-8");
-        } catch (IOException e) {}
-        return null;
+  private static String getAgentJarFileName(URL agentJarUrl) {
+    if (agentJarUrl == null) {
+      return null;
     }
-
-    /**
-     * Get plugin jar
-     *
-     * @return
-     */
-    public static Map<String, URL> getPluginFiles(Class clazz) {
-        List<String> agentJarFileNames = findAgentJarFileNames(COMPILE);
-        Map<String, URL> urls = new HashMap<String, URL>(agentJarFileNames.size());
-        for (String agentJarFileName : agentJarFileNames) {
-            String name = agentJarFileName.substring(agentJarFileName.lastIndexOf('/') + 1,
-                agentJarFileName.lastIndexOf('.'));
-            URL url = clazz.getResource("/" + agentJarFileName);
-            urls.put(name, url);
-        }
-        return urls;
+    try {
+      return URLDecoder.decode(agentJarUrl.getFile().replace("+", "%2B"), "UTF-8");
+    } catch (IOException e) {
     }
+    return null;
+  }
 
+  /**
+   * Get plugin jar
+   *
+   * @return
+   */
+  public static Map<String, URL> getPluginFiles(Class clazz) {
+    List<String> agentJarFileNames = findAgentJarFileNames(COMPILE);
+    Map<String, URL> urls = new HashMap<String, URL>(agentJarFileNames.size());
+    for (String agentJarFileName : agentJarFileNames) {
+      String name =
+          agentJarFileName.substring(
+              agentJarFileName.lastIndexOf('/') + 1, agentJarFileName.lastIndexOf('.'));
+      URL url = clazz.getResource("/" + agentJarFileName);
+      urls.put(name, url);
+    }
+    return urls;
+  }
 }

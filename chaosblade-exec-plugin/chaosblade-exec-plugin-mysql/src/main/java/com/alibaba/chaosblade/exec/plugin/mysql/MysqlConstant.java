@@ -16,38 +16,38 @@
 
 package com.alibaba.chaosblade.exec.plugin.mysql;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface MysqlConstant {
 
-    String TARGET_NAME = "mysql";
+  String TARGET_NAME = "mysql";
 
-    String HOST_MATCHER_NAME = "host";
-    String TABLE_MATCHER_NAME = "select";
-    String DATABASE_MATCHER_NAME = "database";
-    String SQL_TYPE_MATCHER_NAME = "sqltype";
-    String PORT_MATCHER_NAME = "port";
+  String HOST_MATCHER_NAME = "host";
+  String TABLE_MATCHER_NAME = "select";
+  String DATABASE_MATCHER_NAME = "database";
+  String SQL_TYPE_MATCHER_NAME = "sqltype";
+  String PORT_MATCHER_NAME = "port";
 
-    String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
-    String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
-    String MYSQL_SERVER_PREPARED_STMT_CLASS = "com.mysql.jdbc.ServerPreparedStatement";
-    String MYSQL_SERVER_PREPARED_STMT_METHOD = "serverExecute";
+  String MYSQL_IO_CLASS = "com.mysql.jdbc.MysqlIO";
+  String INTERCEPTOR_PRE_METHOD = "sqlQueryDirect";
+  String MYSQL_SERVER_PREPARED_STMT_CLASS = "com.mysql.jdbc.ServerPreparedStatement";
+  String MYSQL_SERVER_PREPARED_STMT_METHOD = "serverExecute";
 
-    String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
-    String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
-    String MYSQL8_SERVER_PREPARED_STMT_CLASS = "com.mysql.cj.jdbc.ServerPreparedStatement";
-    String MYSQL8SERVER_PREPARED_STMT_METHOD = "serverExecute";
+  String MYSQL8_NATIVE_SESSION_CLASS = "com.mysql.cj.NativeSession";
+  String MYSQL8_NATIVE_SESSION_METHOD = "execSQL";
+  String MYSQL8_SERVER_PREPARED_STMT_CLASS = "com.mysql.cj.jdbc.ServerPreparedStatement";
+  String MYSQL8SERVER_PREPARED_STMT_METHOD = "serverExecute";
 
+  String AWS_MYSQL_NATIVE_SESSION_CLASS =
+      "software.aws.rds.jdbc.mysql.shading.com.mysql.cj.NativeSession";
+  String AWS_MYSQL_NATIVE_SESSION_METHOD = "execSQL";
 
-    String AWS_MYSQL_NATIVE_SESSION_CLASS = "software.aws.rds.jdbc.mysql.shading.com.mysql.cj.NativeSession";
-    String AWS_MYSQL_NATIVE_SESSION_METHOD = "execSQL";
+  String IO_SHARDING_STATEMENT_EXECUTOR_CLASS =
+      "io.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
+  String APACHE_SHARDING_STATEMENT_EXECUTOR_CLASS =
+      "org.apache.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
+  String IO_SHARDING_STATEMENT_EXECUTOR_METHOD = "executeCallback";
 
-    String IO_SHARDING_STATEMENT_EXECUTOR_CLASS = "io.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
-    String APACHE_SHARDING_STATEMENT_EXECUTOR_CLASS = "org.apache.shardingsphere.shardingjdbc.executor.AbstractStatementExecutor";
-    String IO_SHARDING_STATEMENT_EXECUTOR_METHOD = "executeCallback";
-
-    String APACHE_SHARDING_EXECUTOR_ENGINE_CLASS = "org.apache.shardingsphere.infra.executor.kernel.ExecutorEngine";
-    String APACHE_SHARDING_EXECUTOR_ENGINE_METHOD = "syncExecute";
-
+  String APACHE_SHARDING_EXECUTOR_ENGINE_CLASS =
+      "org.apache.shardingsphere.infra.executor.kernel.ExecutorEngine";
+  String APACHE_SHARDING_EXECUTOR_ENGINE_METHOD = "syncExecute";
 }

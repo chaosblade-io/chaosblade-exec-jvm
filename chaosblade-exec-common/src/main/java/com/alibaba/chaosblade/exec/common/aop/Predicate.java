@@ -19,16 +19,14 @@ package com.alibaba.chaosblade.exec.common.aop;
 import com.alibaba.chaosblade.exec.common.model.Model;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface Predicate {
 
-    /**
-     * Assert the model
-     *
-     * @param model
-     * @return
-     */
-    Response predicate(Model model);
+  /**
+   * Assert the model
+   *
+   * @param model
+   * @return
+   */
+  Response predicate(Model model);
 }

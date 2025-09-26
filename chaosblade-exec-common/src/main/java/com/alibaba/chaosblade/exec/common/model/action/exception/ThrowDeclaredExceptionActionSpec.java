@@ -16,58 +16,55 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.exception;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
+import java.util.Collections;
+import java.util.List;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ThrowDeclaredExceptionActionSpec extends BaseActionSpec {
 
-    private static final FlagSpec exceptionMessageFlag = new ExceptionMessageFlagSpec();
+  private static final FlagSpec exceptionMessageFlag = new ExceptionMessageFlagSpec();
 
-    public ThrowDeclaredExceptionActionSpec() {
-        super(new DefaultThrowExceptionExecutor(null, exceptionMessageFlag));
-    }
+  public ThrowDeclaredExceptionActionSpec() {
+    super(new DefaultThrowExceptionExecutor(null, exceptionMessageFlag));
+  }
 
-    @Override
-    public String getName() {
-        return ThrowExceptionExecutor.THROW_DECLARED_EXCEPTION;
-    }
+  @Override
+  public String getName() {
+    return ThrowExceptionExecutor.THROW_DECLARED_EXCEPTION;
+  }
 
-    @Override
-    public String[] getAliases() {
-        return new String[] {"tde"};
-    }
+  @Override
+  public String[] getAliases() {
+    return new String[] {"tde"};
+  }
 
-    @Override
-    public String getShortDesc() {
-        return "Throw the first declared exception of method";
-    }
+  @Override
+  public String getShortDesc() {
+    return "Throw the first declared exception of method";
+  }
 
-    @Override
-    public String getLongDesc() {
-        return "Throw the first declared exception of method";
-    }
+  @Override
+  public String getLongDesc() {
+    return "Throw the first declared exception of method";
+  }
 
-    @Override
-    public List<FlagSpec> getActionFlags() {
-        return Collections.singletonList(exceptionMessageFlag);
-    }
+  @Override
+  public List<FlagSpec> getActionFlags() {
+    return Collections.singletonList(exceptionMessageFlag);
+  }
 
-    @Override
-    public PredicateResult predicate(ActionModel actionModel) {
-        return PredicateResult.success();
-    }
+  @Override
+  public PredicateResult predicate(ActionModel actionModel) {
+    return PredicateResult.success();
+  }
 
-    @Override
-    public String[] getCategories() {
-        return new String[] {CategoryConstants.JAVA_CUSTOM, CategoryConstants.JAVA_EXCEPTION};
-    }
+  @Override
+  public String[] getCategories() {
+    return new String[] {CategoryConstants.JAVA_CUSTOM, CategoryConstants.JAVA_EXCEPTION};
+  }
 }

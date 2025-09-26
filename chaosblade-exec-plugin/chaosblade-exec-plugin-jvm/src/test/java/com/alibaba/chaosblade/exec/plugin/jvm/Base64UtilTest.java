@@ -21,20 +21,18 @@ import org.junit.Test;
 
 public class Base64UtilTest {
 
-    @Test
-    public void testEncode() {
-        Assert.assertEquals("", Base64Util.encode(new byte[0], true));
-        Assert.assertEquals("", Base64Util.encode(new byte[0], false));
-        Assert.assertEquals("AQID",
-                Base64Util.encode(new byte[]{1, 2, 3}, true));
-        Assert.assertEquals("AQID",
-                Base64Util.encode(new byte[]{1, 2, 3}, false));
-    }
+  @Test
+  public void testEncode() {
+    Assert.assertEquals("", Base64Util.encode(new byte[0], true));
+    Assert.assertEquals("", Base64Util.encode(new byte[0], false));
+    Assert.assertEquals("AQID", Base64Util.encode(new byte[] {1, 2, 3}, true));
+    Assert.assertEquals("AQID", Base64Util.encode(new byte[] {1, 2, 3}, false));
+  }
 
-    @Test
-    public void testDecode() {
-        Assert.assertEquals("", Base64Util.decode(new byte[0]));
-        Assert.assertEquals("", Base64Util.decode(new byte[]{0, 10}));
-        Assert.assertEquals("", Base64Util.decode(new byte[]{1, 2, 13, 10}));
-    }
+  @Test
+  public void testDecode() {
+    Assert.assertEquals("", Base64Util.decode(new byte[0]));
+    Assert.assertEquals("", Base64Util.decode(new byte[] {0, 10}));
+    Assert.assertEquals("", Base64Util.decode(new byte[] {1, 2, 13, 10}));
+  }
 }

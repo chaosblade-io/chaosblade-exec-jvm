@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.alibaba.chaosblade.exec.plugin.redisson;
 
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
@@ -24,25 +23,23 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
-/**
- * @author xueshaoyi
- * @Date 2020/11/23 上午11:36
- **/
+/** @author xueshaoyi @Date 2020/11/23 上午11:36 */
 public class RedissonPointCut implements PointCut {
-	private static final String REDISSON_ASYNC = "org.redisson.command.CommandAsyncService";
-	private static final String REDISSON_BATCH_ASYNC = "org.redisson.command.CommandBatchService";
-	private static final String INTERCEPTOR_PRE_METHOD = "async";
+  private static final String REDISSON_ASYNC = "org.redisson.command.CommandAsyncService";
+  private static final String REDISSON_BATCH_ASYNC = "org.redisson.command.CommandBatchService";
+  private static final String INTERCEPTOR_PRE_METHOD = "async";
 
-	@Override
-	public ClassMatcher getClassMatcher() {
-		OrClassMatcher orClassMatcher = new OrClassMatcher();
-		orClassMatcher.or(new NameClassMatcher(REDISSON_ASYNC)).or(
-				new NameClassMatcher(REDISSON_BATCH_ASYNC));
-		return orClassMatcher;
-	}
+  @Override
+  public ClassMatcher getClassMatcher() {
+    OrClassMatcher orClassMatcher = new OrClassMatcher();
+    orClassMatcher
+        .or(new NameClassMatcher(REDISSON_ASYNC))
+        .or(new NameClassMatcher(REDISSON_BATCH_ASYNC));
+    return orClassMatcher;
+  }
 
-	@Override
-	public MethodMatcher getMethodMatcher() {
-		return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
-	}
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return new NameMethodMatcher(INTERCEPTOR_PRE_METHOD);
+  }
 }

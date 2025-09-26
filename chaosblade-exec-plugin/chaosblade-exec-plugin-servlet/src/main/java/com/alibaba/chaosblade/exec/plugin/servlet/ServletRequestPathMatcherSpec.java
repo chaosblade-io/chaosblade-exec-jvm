@@ -20,24 +20,23 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
 
 public class ServletRequestPathMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return ServletConstant.REQUEST_PATH_KEY;
-    }
+  @Override
+  public String getName() {
+    return ServletConstant.REQUEST_PATH_KEY;
+  }
 
-    @Override
-    public String getDesc() {
-        return "equal RequestUri without ContextPath";
-    }
+  @Override
+  public String getDesc() {
+    return "equal RequestUri without ContextPath";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
-
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

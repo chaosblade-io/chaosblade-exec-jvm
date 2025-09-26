@@ -19,27 +19,25 @@ package com.alibaba.chaosblade.exec.plugin.dubbo.model;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class VersionMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return DubboConstant.VERSION_KEY;
-    }
+  @Override
+  public String getName() {
+    return DubboConstant.VERSION_KEY;
+  }
 
-    @Override
-    public String getDesc() {
-        return "the service version";
-    }
+  @Override
+  public String getDesc() {
+    return "the service version";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

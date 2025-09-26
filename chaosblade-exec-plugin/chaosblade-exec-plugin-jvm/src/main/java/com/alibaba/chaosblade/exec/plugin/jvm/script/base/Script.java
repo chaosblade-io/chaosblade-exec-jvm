@@ -18,81 +18,69 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
 import java.io.Serializable;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class Script implements Serializable {
 
-    /**
-     * Script type, such as Java, Groovy
-     */
-    private String language;
+  /** Script type, such as Java, Groovy */
+  private String language;
 
-    /**
-     * Script content
-     */
-    private String content;
+  /** Script content */
+  private String content;
 
-    /**
-     * Script name
-     */
-    private String name;
+  /** Script name */
+  private String name;
 
-    /**
-     * Script id
-     */
-    private String id;
+  /** Script id */
+  private String id;
 
-    /**
-     * Script signature
-     */
-    private String signature;
+  /** Script signature */
+  private String signature;
 
-    public Script(String id, String signature, String name, String content, String language) {
-        this.id = id;
-        this.signature = signature;
-        this.content = content;
-        this.language = language;
-        this.name = name;
-    }
+  public Script(String id, String signature, String name, String content, String language) {
+    this.id = id;
+    this.signature = signature;
+    this.content = content;
+    this.language = language;
+    this.name = name;
+  }
 
-    public String getLanguage() {
-        return language;
-    }
+  public String getLanguage() {
+    return language;
+  }
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+  public void setLanguage(String language) {
+    this.language = language;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getSignature() {
-        return signature;
-    }
+  public String getSignature() {
+    return signature;
+  }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
+  public void setSignature(String signature) {
+    this.signature = signature;
+  }
 }

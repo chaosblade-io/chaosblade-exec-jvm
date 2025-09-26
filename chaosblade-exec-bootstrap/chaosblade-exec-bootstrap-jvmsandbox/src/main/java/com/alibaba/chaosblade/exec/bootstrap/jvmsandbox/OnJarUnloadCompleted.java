@@ -16,29 +16,24 @@
 
 package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
 
-import com.alibaba.jvm.sandbox.api.spi.ModuleJarUnLoadSpi;
-
 import ch.qos.logback.classic.LoggerContext;
+import com.alibaba.jvm.sandbox.api.spi.ModuleJarUnLoadSpi;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class OnJarUnloadCompleted implements ModuleJarUnLoadSpi {
 
-    @Override
-    public void onJarUnLoadCompleted() {
-        closeLogback();
-    }
+  @Override
+  public void onJarUnLoadCompleted() {
+    closeLogback();
+  }
 
-    /**
-     * Close logback
-     */
-    private void closeLogback() {
-        try {
-            ((LoggerContext)LoggerFactory.getILoggerFactory()).stop();
-        } catch (Throwable cause) {
-            cause.printStackTrace();
-        }
+  /** Close logback */
+  private void closeLogback() {
+    try {
+      ((LoggerContext) LoggerFactory.getILoggerFactory()).stop();
+    } catch (Throwable cause) {
+      cause.printStackTrace();
     }
+  }
 }

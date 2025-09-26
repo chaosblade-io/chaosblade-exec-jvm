@@ -21,28 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MysqlPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return MysqlConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return MysqlConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new MysqlModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new MysqlModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new MysqlPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new MysqlPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new MysqlEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new MysqlEnhancer();
+  }
 }

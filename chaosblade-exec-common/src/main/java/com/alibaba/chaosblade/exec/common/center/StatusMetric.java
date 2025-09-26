@@ -16,52 +16,49 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
+import com.alibaba.chaosblade.exec.common.model.Model;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.alibaba.chaosblade.exec.common.model.Model;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class StatusMetric {
-    private Model model;
-    private AtomicLong hitCounts;
-    private Lock lock = new ReentrantLock();
+  private Model model;
+  private AtomicLong hitCounts;
+  private Lock lock = new ReentrantLock();
 
-    public StatusMetric(Model model) {
-        this.model = model;
-        this.hitCounts = new AtomicLong(0);
-    }
+  public StatusMetric(Model model) {
+    this.model = model;
+    this.hitCounts = new AtomicLong(0);
+  }
 
-    public Model getModel() {
-        return model;
-    }
+  public Model getModel() {
+    return model;
+  }
 
-    public void increase() {
-        hitCounts.incrementAndGet();
-    }
+  public void increase() {
+    hitCounts.incrementAndGet();
+  }
 
-    public void decrease() {
-        hitCounts.decrementAndGet();
-    }
+  public void decrease() {
+    hitCounts.decrementAndGet();
+  }
 
-    public boolean increaseWithLock(long limitCount) {
-        if (lock.tryLock()) {
-            try {
-                if (hitCounts.get() < limitCount) {
-                    increase();
-                    return true;
-                }
-            } finally {
-                lock.unlock();
-            }
+  public boolean increaseWithLock(long limitCount) {
+    if (lock.tryLock()) {
+      try {
+        if (hitCounts.get() < limitCount) {
+          increase();
+          return true;
         }
-        return false;
+      } finally {
+        lock.unlock();
+      }
     }
+    return false;
+  }
 
-    public long getCount() {
-        return hitCounts.get();
-    }
+  public long getCount() {
+    return hitCounts.get();
+  }
 }

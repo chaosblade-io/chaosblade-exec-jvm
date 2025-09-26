@@ -16,6 +16,9 @@
 
 package com.alibaba.chaosblade.exec.common.center;
 
+import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.chaosblade.exec.common.util.ModelUtil;
+import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -26,193 +29,181 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.util.ModelUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DefaultStatusManager implements StatusManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultStatusManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DefaultStatusManager.class);
 
-    /**
-     * The enhancer matched for the application
-     */
-    private ConcurrentHashMap<String, Boolean> enhancers = new ConcurrentHashMap<String, Boolean>();
-    /**
-     * The experiment rules
-     */
-    private ConcurrentHashMap<String, ConcurrentHashMap<String, StatusMetric>> models
-        = new ConcurrentHashMap<String, ConcurrentHashMap<String, StatusMetric>>();
+  /** The enhancer matched for the application */
+  private ConcurrentHashMap<String, Boolean> enhancers = new ConcurrentHashMap<String, Boolean>();
+  /** The experiment rules */
+  private ConcurrentHashMap<String, ConcurrentHashMap<String, StatusMetric>> models =
+      new ConcurrentHashMap<String, ConcurrentHashMap<String, StatusMetric>>();
 
-    /**
-     * suid, modelUid
-     */
-    private ConcurrentHashMap<String, String> experiments = new ConcurrentHashMap<String, String>();
+  /** suid, modelUid */
+  private ConcurrentHashMap<String, String> experiments = new ConcurrentHashMap<String, String>();
 
-    private volatile boolean closed;
+  private volatile boolean closed;
 
-    @Override
-    public void registerEnhancer(String enhancerName) {
-        if (isClosed()) {
-            return;
-        }
-        Boolean oldValue = enhancers.putIfAbsent(enhancerName, Boolean.TRUE);
-        if (oldValue == null) {
-            LOGGER.info("register enhancer: " + enhancerName);
-        }
+  @Override
+  public void registerEnhancer(String enhancerName) {
+    if (isClosed()) {
+      return;
     }
-
-    @Override
-    public RegisterResult registerExp(String suid, Model model) {
-
-        // get the target metric map
-        ConcurrentHashMap<String, StatusMetric> metricMap = getMetricMap(model.getTarget());
-        // create identifier by model
-        String identifier = ModelUtil.getIdentifier(model);
-        // check identifier exists or not
-        StatusMetric metric = metricMap.putIfAbsent(identifier, new StatusMetric(model));
-        if (metric != null) {
-            LOGGER.warn(model.toString() + " exists");
-            return RegisterResult.fail(metric.getModel());
-        }
-        experiments.put(suid, identifier);
-        return RegisterResult.success();
+    Boolean oldValue = enhancers.putIfAbsent(enhancerName, Boolean.TRUE);
+    if (oldValue == null) {
+      LOGGER.info("register enhancer: " + enhancerName);
     }
+  }
 
-    @Override
-    public Model removeExp(String suid) {
-        // get model identifier
-        String identifier = experiments.remove(suid);
-        if (StringUtil.isBlank(identifier)) {
-            return null;
-        }
-        String target = ModelUtil.getTarget(identifier);
-        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
-        if (metricMap == null || metricMap.size() == 0) {
-            return null;
-        }
-        // remove identifier
-        StatusMetric metric = metricMap.remove(identifier);
-        if (metric == null) {
-            return null;
-        }
-        return metric.getModel();
-    }
+  @Override
+  public RegisterResult registerExp(String suid, Model model) {
 
-    private ConcurrentHashMap<String, StatusMetric> getMetricMap(String targetName) {
-        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(targetName);
-        if (metricMap == null) {
-            metricMap = new ConcurrentHashMap<String, StatusMetric>();
-        }
-        ConcurrentHashMap<String, StatusMetric> oldMetricMap = models.putIfAbsent(targetName, metricMap);
-        return oldMetricMap == null ? metricMap : oldMetricMap;
+    // get the target metric map
+    ConcurrentHashMap<String, StatusMetric> metricMap = getMetricMap(model.getTarget());
+    // create identifier by model
+    String identifier = ModelUtil.getIdentifier(model);
+    // check identifier exists or not
+    StatusMetric metric = metricMap.putIfAbsent(identifier, new StatusMetric(model));
+    if (metric != null) {
+      LOGGER.warn(model.toString() + " exists");
+      return RegisterResult.fail(metric.getModel());
     }
+    experiments.put(suid, identifier);
+    return RegisterResult.success();
+  }
 
-    @Override
-    public Map<String, List<StatusMetric>> listExps() {
-        HashMap<String, List<StatusMetric>> map = new HashMap<String, List<StatusMetric>>();
-        Set<Entry<String, ConcurrentHashMap<String, StatusMetric>>> entries = models.entrySet();
-        for (Entry<String, ConcurrentHashMap<String, StatusMetric>> entry : entries) {
-            ConcurrentHashMap<String, StatusMetric> metricMap = entry.getValue();
-            String targetName = entry.getKey();
-            List<StatusMetric> statusMetrics = map.get(targetName);
-            if (statusMetrics == null) {
-                statusMetrics = new LinkedList<StatusMetric>();
-                map.put(targetName, statusMetrics);
-            }
-            for (StatusMetric statusMetric : metricMap.values()) {
-                statusMetrics.add(statusMetric);
-            }
-        }
-        return map;
+  @Override
+  public Model removeExp(String suid) {
+    // get model identifier
+    String identifier = experiments.remove(suid);
+    if (StringUtil.isBlank(identifier)) {
+      return null;
     }
+    String target = ModelUtil.getTarget(identifier);
+    ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
+    if (metricMap == null || metricMap.size() == 0) {
+      return null;
+    }
+    // remove identifier
+    StatusMetric metric = metricMap.remove(identifier);
+    if (metric == null) {
+      return null;
+    }
+    return metric.getModel();
+  }
 
-    @Override
-    public List<StatusMetric> getExpByTarget(String targetName) {
-        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(targetName);
-        if (metricMap == null) {
-            return Collections.emptyList();
-        }
-        LinkedList<StatusMetric> statusMetrics = new LinkedList<StatusMetric>();
-        for (StatusMetric statusMetric : metricMap.values()) {
-            statusMetrics.add(statusMetric);
-        }
-        return statusMetrics;
+  private ConcurrentHashMap<String, StatusMetric> getMetricMap(String targetName) {
+    ConcurrentHashMap<String, StatusMetric> metricMap = models.get(targetName);
+    if (metricMap == null) {
+      metricMap = new ConcurrentHashMap<String, StatusMetric>();
     }
+    ConcurrentHashMap<String, StatusMetric> oldMetricMap =
+        models.putIfAbsent(targetName, metricMap);
+    return oldMetricMap == null ? metricMap : oldMetricMap;
+  }
 
-    @Override
-    public boolean expExists(String targetName) {
-        return models.containsKey(targetName) && models.get(targetName).size() > 0;
+  @Override
+  public Map<String, List<StatusMetric>> listExps() {
+    HashMap<String, List<StatusMetric>> map = new HashMap<String, List<StatusMetric>>();
+    Set<Entry<String, ConcurrentHashMap<String, StatusMetric>>> entries = models.entrySet();
+    for (Entry<String, ConcurrentHashMap<String, StatusMetric>> entry : entries) {
+      ConcurrentHashMap<String, StatusMetric> metricMap = entry.getValue();
+      String targetName = entry.getKey();
+      List<StatusMetric> statusMetrics = map.get(targetName);
+      if (statusMetrics == null) {
+        statusMetrics = new LinkedList<StatusMetric>();
+        map.put(targetName, statusMetrics);
+      }
+      for (StatusMetric statusMetric : metricMap.values()) {
+        statusMetrics.add(statusMetric);
+      }
     }
+    return map;
+  }
 
-    @Override
-    public StatusMetric getStatusMetricByUid(String uid) {
-        // get model identifier
-        String identifier = experiments.get(uid);
-        if (StringUtil.isBlank(identifier)) {
-            return null;
-        }
-        String target = ModelUtil.getTarget(identifier);
-        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
-        if (metricMap == null || metricMap.size() == 0) {
-            return null;
-        }
-        return metricMap.get(identifier);
+  @Override
+  public List<StatusMetric> getExpByTarget(String targetName) {
+    ConcurrentHashMap<String, StatusMetric> metricMap = models.get(targetName);
+    if (metricMap == null) {
+      return Collections.emptyList();
     }
+    LinkedList<StatusMetric> statusMetrics = new LinkedList<StatusMetric>();
+    for (StatusMetric statusMetric : metricMap.values()) {
+      statusMetrics.add(statusMetric);
+    }
+    return statusMetrics;
+  }
 
-    @Override
-    public Set<String> getAllUids() {
-        Enumeration<String> keys = experiments.keys();
-        HashSet<String> uids = new HashSet<String>();
-        while (keys.hasMoreElements()) {
-            uids.add(keys.nextElement());
-        }
-        return uids;
-    }
+  @Override
+  public boolean expExists(String targetName) {
+    return models.containsKey(targetName) && models.get(targetName).size() > 0;
+  }
 
-    @Override
-    public Set<String> listUids(String target, String action) {
-        HashSet<String> uids = new HashSet<String>();
-        // identifier
-        ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
-        if (metricMap == null) {
-            return uids;
-        }
-        HashSet<String> identifiers = new HashSet<String>();
-        Set<Entry<String, StatusMetric>> entries = metricMap.entrySet();
-        for (Entry<String, StatusMetric> entry : entries) {
-            identifiers.add(entry.getKey());
-        }
-        Set<Entry<String, String>> uidIdentifierEntries = experiments.entrySet();
-        for (Entry<String, String> entry : uidIdentifierEntries) {
-            if (identifiers.contains(entry.getValue())) {
-                uids.add(entry.getKey());
-            }
-        }
-        return uids;
+  @Override
+  public StatusMetric getStatusMetricByUid(String uid) {
+    // get model identifier
+    String identifier = experiments.get(uid);
+    if (StringUtil.isBlank(identifier)) {
+      return null;
     }
+    String target = ModelUtil.getTarget(identifier);
+    ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
+    if (metricMap == null || metricMap.size() == 0) {
+      return null;
+    }
+    return metricMap.get(identifier);
+  }
 
-    @Override
-    public void load() {
-        closed = false;
+  @Override
+  public Set<String> getAllUids() {
+    Enumeration<String> keys = experiments.keys();
+    HashSet<String> uids = new HashSet<String>();
+    while (keys.hasMoreElements()) {
+      uids.add(keys.nextElement());
     }
+    return uids;
+  }
 
-    @Override
-    public void unload() {
-        closed = true;
-        experiments.clear();
-        models.clear();
-        enhancers.clear();
+  @Override
+  public Set<String> listUids(String target, String action) {
+    HashSet<String> uids = new HashSet<String>();
+    // identifier
+    ConcurrentHashMap<String, StatusMetric> metricMap = models.get(target);
+    if (metricMap == null) {
+      return uids;
     }
+    HashSet<String> identifiers = new HashSet<String>();
+    Set<Entry<String, StatusMetric>> entries = metricMap.entrySet();
+    for (Entry<String, StatusMetric> entry : entries) {
+      identifiers.add(entry.getKey());
+    }
+    Set<Entry<String, String>> uidIdentifierEntries = experiments.entrySet();
+    for (Entry<String, String> entry : uidIdentifierEntries) {
+      if (identifiers.contains(entry.getValue())) {
+        uids.add(entry.getKey());
+      }
+    }
+    return uids;
+  }
 
-    public boolean isClosed() {
-        return closed;
-    }
+  @Override
+  public void load() {
+    closed = false;
+  }
+
+  @Override
+  public void unload() {
+    closed = true;
+    experiments.clear();
+    models.clear();
+    enhancers.clear();
+  }
+
+  public boolean isClosed() {
+    return closed;
+  }
 }

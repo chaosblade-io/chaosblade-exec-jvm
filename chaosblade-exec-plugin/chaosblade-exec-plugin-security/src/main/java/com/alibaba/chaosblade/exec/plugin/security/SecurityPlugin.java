@@ -5,28 +5,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author liubin@njzfit.cn
- */
+/** @author liubin@njzfit.cn */
 public class SecurityPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return SecurityConstant.PLUGIN_NAME;
-    }
+  @Override
+  public String getName() {
+    return SecurityConstant.PLUGIN_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new SecurityModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new SecurityModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new SecurityPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new SecurityPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new SecurityEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new SecurityEnhancer();
+  }
 }

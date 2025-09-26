@@ -16,11 +16,9 @@
 
 package com.alibaba.chaosblade.exec.service.handler;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ParseException extends Exception {
-    public ParseException(String message) {
-        super(message);
-    }
+  public ParseException(String message) {
+    super(message);
+  }
 }

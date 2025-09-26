@@ -20,24 +20,23 @@ import java.util.Set;
 
 public class PluginBeans {
 
-    private boolean load;
+  private boolean load;
 
-    private Set<PluginBean> pluginBeans;
+  private Set<PluginBean> pluginBeans;
 
+  public boolean isLoad() {
+    return load;
+  }
 
-    public boolean isLoad() {
-        return load;
-    }
+  public void setLoad(boolean load) {
+    this.load = load;
+  }
 
-    public void setLoad(boolean load) {
-        this.load = load;
-    }
+  public Set<PluginBean> getPluginBeans() {
+    return pluginBeans;
+  }
 
-    public Set<PluginBean> getPluginBeans() {
-        return pluginBeans;
-    }
-
-    public void setPluginBeans(Set<PluginBean> pluginBeans) {
-        this.pluginBeans = pluginBeans;
-    }
+  public void setPluginBeans(Set<PluginBean> pluginBeans) {
+    this.pluginBeans = pluginBeans;
+  }
 }

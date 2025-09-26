@@ -1,12 +1,10 @@
 package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.OomObject;
 import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
-
+import java.lang.reflect.Method;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -17,35 +15,32 @@ import net.sf.cglib.proxy.MethodProxy;
  * @email rinalhb@icloud.com
  */
 public class NoHeapJvmOomExecutor extends JvmOomExecutor {
-    @Override
-    public JvmMemoryArea supportArea() {
-        return JvmMemoryArea.NOHEAP;
-    }
+  @Override
+  public JvmMemoryArea supportArea() {
+    return JvmMemoryArea.NOHEAP;
+  }
 
-    @Override
-    public void stop(EnhancerModel enhancerModel) throws Exception {
-        started.compareAndSet(true, false);
-    }
+  @Override
+  public void stop(EnhancerModel enhancerModel) throws Exception {
+    started.compareAndSet(true, false);
+  }
 
-    @Override
-    protected void innerRun(EnhancerModel enhancerModel, JvmOomConfiguration jvmOomConfiguration) {
-        Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(OomObject.class);
-        enhancer.setUseCache(false);
-        enhancer.setCallback(new MethodInterceptor() {
-            @Override
-            public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
-                throws Throwable {
-                return proxy.invokeSuper(obj, args);
-            }
+  @Override
+  protected void innerRun(EnhancerModel enhancerModel, JvmOomConfiguration jvmOomConfiguration) {
+    Enhancer enhancer = new Enhancer();
+    enhancer.setSuperclass(OomObject.class);
+    enhancer.setUseCache(false);
+    enhancer.setCallback(
+        new MethodInterceptor() {
+          @Override
+          public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
+              throws Throwable {
+            return proxy.invokeSuper(obj, args);
+          }
         });
-        enhancer.create();
+    enhancer.create();
+  }
 
-    }
-
-    @Override
-    protected void innerStop(EnhancerModel enhancerModel) {
-
-    }
-
+  @Override
+  protected void innerStop(EnhancerModel enhancerModel) {}
 }

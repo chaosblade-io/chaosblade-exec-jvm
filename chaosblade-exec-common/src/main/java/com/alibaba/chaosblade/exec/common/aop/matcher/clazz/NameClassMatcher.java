@@ -25,14 +25,14 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
  */
 public class NameClassMatcher implements ClassMatcher {
 
-    private String className;
+  private String className;
 
-    public NameClassMatcher(String className) {
-        this.className = className;
-    }
+  public NameClassMatcher(String className) {
+    this.className = className;
+  }
 
-    @Override
-    public boolean isMatched(String className, ClassInfo classInfo) {
-        return this.className.equals(className);
-    }
+  @Override
+  public boolean isMatched(String className, ClassInfo classInfo) {
+    return this.className.equals(className);
+  }
 }

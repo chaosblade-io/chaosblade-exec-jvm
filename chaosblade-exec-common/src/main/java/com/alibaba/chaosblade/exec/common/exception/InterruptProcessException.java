@@ -16,51 +16,42 @@
 
 package com.alibaba.chaosblade.exec.common.exception;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class InterruptProcessException extends Exception {
 
-    private final State state;
-    private final Object response;
+  private final State state;
+  private final Object response;
 
-    private InterruptProcessException(State state, Object response) {
-        this.state = state;
-        this.response = response;
-    }
+  private InterruptProcessException(State state, Object response) {
+    this.state = state;
+    this.response = response;
+  }
 
-    public static InterruptProcessException throwReturnImmediately(final Object object)
-        throws InterruptProcessException {
-        throw new InterruptProcessException(State.RETURN_IMMEDIATELY, object);
-    }
+  public static InterruptProcessException throwReturnImmediately(final Object object)
+      throws InterruptProcessException {
+    throw new InterruptProcessException(State.RETURN_IMMEDIATELY, object);
+  }
 
-    public static InterruptProcessException throwThrowsImmediately(final Throwable throwable)
-        throws InterruptProcessException {
-        throw new InterruptProcessException(State.THROWS_IMMEDIATELY, throwable);
-    }
+  public static InterruptProcessException throwThrowsImmediately(final Throwable throwable)
+      throws InterruptProcessException {
+    throw new InterruptProcessException(State.THROWS_IMMEDIATELY, throwable);
+  }
 
-    public State getState() {
-        return state;
-    }
+  public State getState() {
+    return state;
+  }
 
-    public Object getResponse() {
-        return response;
-    }
+  public Object getResponse() {
+    return response;
+  }
 
-    /**
-     * Process flow state
-     */
-    public enum State {
+  /** Process flow state */
+  public enum State {
 
-        /**
-         * return
-         */
-        RETURN_IMMEDIATELY,
+    /** return */
+    RETURN_IMMEDIATELY,
 
-        /**
-         * throw exception
-         */
-        THROWS_IMMEDIATELY,
-
-    }
+    /** throw exception */
+    THROWS_IMMEDIATELY,
+  }
 }

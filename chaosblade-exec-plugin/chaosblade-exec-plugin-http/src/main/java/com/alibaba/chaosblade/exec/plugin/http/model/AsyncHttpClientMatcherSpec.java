@@ -19,28 +19,26 @@ package com.alibaba.chaosblade.exec.plugin.http.model;
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
 
-/**
- * @author shizhi.zhu@qunar.com
- */
+/** @author shizhi.zhu@qunar.com */
 public class AsyncHttpClientMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return HttpConstant.ASYNC_HTTP_TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return HttpConstant.ASYNC_HTTP_TARGET_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "To tag async-http-client experiment.";
-    }
+  @Override
+  public String getDesc() {
+    return "To tag async-http-client experiment.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return true;
-    }
+  @Override
+  public boolean noArgs() {
+    return true;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

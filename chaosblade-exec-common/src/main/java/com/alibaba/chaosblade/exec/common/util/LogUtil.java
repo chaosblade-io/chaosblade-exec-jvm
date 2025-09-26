@@ -22,39 +22,32 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class LogUtil {
 
-    /**
-     * Set log level to debug
-     */
-    public static void setDebug() {
-        setLogLevel("DEBUG");
-    }
+  /** Set log level to debug */
+  public static void setDebug() {
+    setLogLevel("DEBUG");
+  }
 
-    /**
-     * Set log level
-     *
-     * @param level DEBUG
-     */
-    public static void setLogLevel(String level) {
-        ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-        if (loggerFactory instanceof LoggerContext) {
-            LoggerContext loggerContext = (LoggerContext) loggerFactory;
-            Logger logger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
-            ((ch.qos.logback.classic.Logger) logger).setLevel(Level.toLevel(level));
-            return;
-        }
-        throw new IllegalStateException("not support the log context object");
+  /**
+   * Set log level
+   *
+   * @param level DEBUG
+   */
+  public static void setLogLevel(String level) {
+    ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+    if (loggerFactory instanceof LoggerContext) {
+      LoggerContext loggerContext = (LoggerContext) loggerFactory;
+      Logger logger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
+      ((ch.qos.logback.classic.Logger) logger).setLevel(Level.toLevel(level));
+      return;
     }
+    throw new IllegalStateException("not support the log context object");
+  }
 
-
-    /**
-     * Set log level to info
-     */
-    public static void setInfo() {
-        setLogLevel("INFO");
-    }
+  /** Set log level to info */
+  public static void setInfo() {
+    setLogLevel("INFO");
+  }
 }

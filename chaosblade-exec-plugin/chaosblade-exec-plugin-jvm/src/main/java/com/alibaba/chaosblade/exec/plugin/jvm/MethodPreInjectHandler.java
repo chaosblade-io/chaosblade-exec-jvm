@@ -30,62 +30,58 @@ import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
 import com.alibaba.chaosblade.exec.common.plugin.MethodPlugin;
 
-/**
- * @author changjun.xcj
- */
+/** @author changjun.xcj */
 public class MethodPreInjectHandler {
 
-    /**
-     * Add class and method listeners
-     *
-     * @param model
-     * @throws ExperimentException
-     */
-    public static void preHandleInjection(Model model)
-        throws ExperimentException {
-        MethodPlugin methodPlugin = createMethodPlugin(model);
-        PluginLifecycleListener listener = getPluginLifecycleListener();
-        listener.add(new PluginBean(methodPlugin));
+  /**
+   * Add class and method listeners
+   *
+   * @param model
+   * @throws ExperimentException
+   */
+  public static void preHandleInjection(Model model) throws ExperimentException {
+    MethodPlugin methodPlugin = createMethodPlugin(model);
+    PluginLifecycleListener listener = getPluginLifecycleListener();
+    listener.add(new PluginBean(methodPlugin));
+  }
+
+  public static void preHandleRecovery(Model model) throws ExperimentException {
+    MethodPlugin methodPlugin = createMethodPlugin(model);
+    PluginLifecycleListener listener = getPluginLifecycleListener();
+    listener.delete(new PluginBean(methodPlugin));
+  }
+
+  private static PluginLifecycleListener getPluginLifecycleListener() throws ExperimentException {
+    PluginLifecycleListener listener =
+        ManagerFactory.getListenerManager().getPluginLifecycleListener();
+    if (listener == null) {
+      throw new ExperimentException("can get plugin listener");
     }
+    return listener;
+  }
 
-    public static void preHandleRecovery(Model model)
-        throws ExperimentException {
-        MethodPlugin methodPlugin = createMethodPlugin(model);
-        PluginLifecycleListener listener = getPluginLifecycleListener();
-        listener.delete(new PluginBean(methodPlugin));
-    }
+  private static MethodPlugin createMethodPlugin(Model model) {
+    MatcherModel matcher = model.getMatcher();
+    final String className = matcher.get(MethodConstant.CLASS_MATCHER_NAME);
+    final String methodName = matcher.get(MethodConstant.METHOD_MATCHER_NAME);
+    final String afterFlag = matcher.get(MethodConstant.AFTER_METHOD_FLAG);
+    PointCut pointCut =
+        new PointCut() {
+          @Override
+          public ClassMatcher getClassMatcher() {
+            return new NameClassMatcher(className);
+          }
 
-    private static PluginLifecycleListener getPluginLifecycleListener()
-        throws ExperimentException {
-        PluginLifecycleListener listener = ManagerFactory.getListenerManager().getPluginLifecycleListener();
-        if (listener == null) {
-            throw new ExperimentException("can get plugin listener");
-        }
-        return listener;
-    }
-
-    private static MethodPlugin createMethodPlugin(Model model) {
-        MatcherModel matcher = model.getMatcher();
-        final String className = matcher.get(MethodConstant.CLASS_MATCHER_NAME);
-        final String methodName = matcher.get(MethodConstant.METHOD_MATCHER_NAME);
-        final String afterFlag = matcher.get(MethodConstant.AFTER_METHOD_FLAG);
-        PointCut pointCut = new PointCut() {
-            @Override
-            public ClassMatcher getClassMatcher() {
-                return new NameClassMatcher(className);
-            }
-
-            @Override
-            public MethodMatcher getMethodMatcher() {
-                return new NameMethodMatcher(methodName);
-            }
+          @Override
+          public MethodMatcher getMethodMatcher() {
+            return new NameMethodMatcher(methodName);
+          }
         };
-        String pluginName = className + "#" + methodName;
-        boolean isAfterEvent = false;
-        if (Boolean.valueOf(afterFlag).equals(Boolean.TRUE)) {
-            isAfterEvent = true;
-        }
-        return new MethodPlugin(pluginName, pointCut, isAfterEvent);
+    String pluginName = className + "#" + methodName;
+    boolean isAfterEvent = false;
+    if (Boolean.valueOf(afterFlag).equals(Boolean.TRUE)) {
+      isAfterEvent = true;
     }
+    return new MethodPlugin(pluginName, pointCut, isAfterEvent);
+  }
 }
-

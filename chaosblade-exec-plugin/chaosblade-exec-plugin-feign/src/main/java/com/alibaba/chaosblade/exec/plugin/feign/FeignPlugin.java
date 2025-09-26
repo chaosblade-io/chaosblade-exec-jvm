@@ -6,28 +6,26 @@ import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.plugin.feign.model.FeignModelSpec;
 
-/**
- * @author guoyu486@gmail.com
- */
+/** @author guoyu486@gmail.com */
 public class FeignPlugin implements Plugin, FeignConstant {
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new FeignModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new FeignModelSpec();
+  }
 
-    @Override
-    public String getName() {
-        return "feign";
-    }
+  @Override
+  public String getName() {
+    return "feign";
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new FeignProducerPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new FeignProducerPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new FeignProducerEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new FeignProducerEnhancer();
+  }
 }

@@ -16,29 +16,27 @@
 
 package com.alibaba.chaosblade.exec.common.model;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ScopeModel {
 
-    private String type;
-    private String value;
+  private String type;
+  private String value;
 
-    public ScopeModel(String name, String value) {
-        this.type = name;
-        this.value = value;
-    }
+  public ScopeModel(String name, String value) {
+    this.type = name;
+    this.value = value;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public String getValue() {
-        return value;
-    }
+  public String getValue() {
+    return value;
+  }
 
-    @Override
-    public String toString() {
-        return type + "=" + value;
-    }
+  @Override
+  public String toString() {
+    return type + "=" + value;
+  }
 }

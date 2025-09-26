@@ -16,16 +16,14 @@
 
 package com.alibaba.chaosblade.exec.common.model;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface FlagSpec {
 
-    String getName();
+  String getName();
 
-    String getDesc();
+  String getDesc();
 
-    boolean noArgs();
+  boolean noArgs();
 
-    boolean required();
+  boolean required();
 }

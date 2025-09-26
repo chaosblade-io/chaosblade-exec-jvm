@@ -16,56 +16,66 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.groovy;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.util.Collections;
-
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
 import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
-
 import groovy.lang.Script;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Collections;
 import org.codehaus.groovy.GroovyBugError;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class GroovyScript implements ExecutableScript {
 
-    private final CompiledScript compiledScript;
+  private final CompiledScript compiledScript;
 
-    private final Script script;
+  private final Script script;
 
-    public GroovyScript(CompiledScript compiledScript, Script script) {
-        this.compiledScript = compiledScript;
-        this.script = script;
-    }
+  public GroovyScript(CompiledScript compiledScript, Script script) {
+    this.compiledScript = compiledScript;
+    this.script = script;
+  }
 
-    @Override
-    public Object run() {
-        try {
-            return AccessController.doPrivileged(new PrivilegedAction<Object>() {
-                @Override
-                public Object run() {
-                    return script.run();
-                }
-            });
-        } catch (AssertionError assertionError) {
-            if (assertionError instanceof GroovyBugError) {
-                final String message = "encountered bug in Groovy while executing script [" + compiledScript.getId()
-                    + "]";
-                throw new ScriptException(message, assertionError, Collections.<String>emptyList(), compiledScript
-                    .toString(), compiledScript.getLanguage());
+  @Override
+  public Object run() {
+    try {
+      return AccessController.doPrivileged(
+          new PrivilegedAction<Object>() {
+            @Override
+            public Object run() {
+              return script.run();
             }
-            final StackTraceElement[] elements = assertionError.getStackTrace();
-            if (elements.length > 0 && "org.codehaus.groovy.runtime.InvokerHelper".equals(elements[0].getClassName())) {
-                throw new ScriptException("error evaluating " + compiledScript.getId(), assertionError,
-                    Collections.<String>emptyList(), "", compiledScript.getLanguage());
-            }
-            throw assertionError;
-        } catch (Exception e) {
-            throw new ScriptException("error evaluating " + compiledScript.getId(), e, Collections.<String>emptyList(),
-                "", compiledScript.getLanguage());
-        }
+          });
+    } catch (AssertionError assertionError) {
+      if (assertionError instanceof GroovyBugError) {
+        final String message =
+            "encountered bug in Groovy while executing script [" + compiledScript.getId() + "]";
+        throw new ScriptException(
+            message,
+            assertionError,
+            Collections.<String>emptyList(),
+            compiledScript.toString(),
+            compiledScript.getLanguage());
+      }
+      final StackTraceElement[] elements = assertionError.getStackTrace();
+      if (elements.length > 0
+          && "org.codehaus.groovy.runtime.InvokerHelper".equals(elements[0].getClassName())) {
+        throw new ScriptException(
+            "error evaluating " + compiledScript.getId(),
+            assertionError,
+            Collections.<String>emptyList(),
+            "",
+            compiledScript.getLanguage());
+      }
+      throw assertionError;
+    } catch (Exception e) {
+      throw new ScriptException(
+          "error evaluating " + compiledScript.getId(),
+          e,
+          Collections.<String>emptyList(),
+          "",
+          compiledScript.getLanguage());
     }
+  }
 }

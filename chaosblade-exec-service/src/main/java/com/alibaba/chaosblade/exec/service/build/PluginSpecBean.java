@@ -18,36 +18,34 @@ package com.alibaba.chaosblade.exec.service.build;
 
 import java.util.List;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class PluginSpecBean {
 
-    private String version;
-    private String kind;
-    private List<ModelSpecBean> items;
+  private String version;
+  private String kind;
+  private List<ModelSpecBean> items;
 
-    public String getVersion() {
-        return version;
-    }
+  public String getVersion() {
+    return version;
+  }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
+  public void setVersion(String version) {
+    this.version = version;
+  }
 
-    public String getKind() {
-        return kind;
-    }
+  public String getKind() {
+    return kind;
+  }
 
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
+  public void setKind(String kind) {
+    this.kind = kind;
+  }
 
-    public List<ModelSpecBean> getItems() {
-        return items;
-    }
+  public List<ModelSpecBean> getItems() {
+    return items;
+  }
 
-    public void setItems(List<ModelSpecBean> items) {
-        this.items = items;
-    }
+  public void setItems(List<ModelSpecBean> items) {
+    this.items = items;
+  }
 }

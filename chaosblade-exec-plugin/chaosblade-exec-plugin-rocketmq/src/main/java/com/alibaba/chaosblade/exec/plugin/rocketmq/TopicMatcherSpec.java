@@ -9,23 +9,23 @@ import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec
  */
 public class TopicMatcherSpec extends BasePredicateMatcherSpec implements RocketMqConstant {
 
-    @Override
-    public String getName() {
-        return FLAG_NAME_TOPIC;
-    }
+  @Override
+  public String getName() {
+    return FLAG_NAME_TOPIC;
+  }
 
-    @Override
-    public String getDesc() {
-        return "Message topic";
-    }
+  @Override
+  public String getDesc() {
+    return "Message topic";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return true;
-    }
+  @Override
+  public boolean required() {
+    return true;
+  }
 }

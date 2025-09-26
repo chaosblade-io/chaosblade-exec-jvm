@@ -16,15 +16,13 @@
 
 package com.alibaba.chaosblade.exec.common.exception;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ExperimentException extends Exception {
-    public ExperimentException(String message) {
-        super(message);
-    }
+  public ExperimentException(String message) {
+    super(message);
+  }
 
-    public ExperimentException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public ExperimentException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

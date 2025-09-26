@@ -16,17 +16,14 @@
 
 package com.alibaba.chaosblade.exec.plugin.jedis;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- *
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public interface JedisConstant {
 
-    String TARGET_NAME = "jedis";
+  String TARGET_NAME = "jedis";
 
-    String HOST_MATCHER_NAME = "host";
-    String DATABASE_INDEX_MATCHER_NAME = "database";
-    String PORT_MATCHER_NAME = "port";
-    String KEY_MATCHER_NAME = "key";
-    String COMMAND_TYPE_MATCHER_NAME = "cmd";
+  String HOST_MATCHER_NAME = "host";
+  String DATABASE_INDEX_MATCHER_NAME = "database";
+  String PORT_MATCHER_NAME = "port";
+  String KEY_MATCHER_NAME = "key";
+  String COMMAND_TYPE_MATCHER_NAME = "cmd";
 }

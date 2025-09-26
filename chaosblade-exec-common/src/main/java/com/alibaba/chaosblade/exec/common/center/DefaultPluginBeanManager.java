@@ -18,44 +18,42 @@ package com.alibaba.chaosblade.exec.common.center;
 
 import com.alibaba.chaosblade.exec.common.aop.PluginBean;
 import com.alibaba.chaosblade.exec.common.aop.PluginBeans;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 public class DefaultPluginBeanManager implements PluginBeanManager {
 
-    private Map<String, PluginBeans> plugins = new HashMap<String, PluginBeans>();
+  private Map<String, PluginBeans> plugins = new HashMap<String, PluginBeans>();
 
-    @Override
-    public void load() {
-    }
+  @Override
+  public void load() {}
 
-    @Override
-    public void unload() {
-        plugins.clear();
-    }
+  @Override
+  public void unload() {
+    plugins.clear();
+  }
 
-    @Override
-    public PluginBeans getPlugins(String target) {
-        return plugins.get(target);
-    }
+  @Override
+  public PluginBeans getPlugins(String target) {
+    return plugins.get(target);
+  }
 
-    @Override
-    public void registerPlugin(PluginBean plugin) {
-        String target = plugin.getModelSpec().getTarget();
-        if (!plugins.containsKey(target)) {
-            PluginBeans pluginBeans = new PluginBeans();
-            pluginBeans.setLoad(false);
-            pluginBeans.setPluginBeans(new HashSet<PluginBean>());
-            plugins.put(target, pluginBeans);
-        }
-        plugins.get(target).getPluginBeans().add(plugin);
+  @Override
+  public void registerPlugin(PluginBean plugin) {
+    String target = plugin.getModelSpec().getTarget();
+    if (!plugins.containsKey(target)) {
+      PluginBeans pluginBeans = new PluginBeans();
+      pluginBeans.setLoad(false);
+      pluginBeans.setPluginBeans(new HashSet<PluginBean>());
+      plugins.put(target, pluginBeans);
     }
+    plugins.get(target).getPluginBeans().add(plugin);
+  }
 
-    @Override
-    public void setLoad(PluginBeans pluginBeans, String target) {
-        pluginBeans.setLoad(true);
-        plugins.put(target, pluginBeans);
-    }
+  @Override
+  public void setLoad(PluginBeans pluginBeans, String target) {
+    pluginBeans.setLoad(true);
+    plugins.put(target, pluginBeans);
+  }
 }

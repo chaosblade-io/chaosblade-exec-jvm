@@ -18,36 +18,34 @@ package com.alibaba.chaosblade.exec.common.aop;
 
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface Plugin {
 
-    /**
-     * Plugin name used to generate plugin identifier
-     *
-     * @return
-     */
-    String getName();
+  /**
+   * Plugin name used to generate plugin identifier
+   *
+   * @return
+   */
+  String getName();
 
-    /**
-     * Model spec used to define the experiment model
-     *
-     * @return
-     */
-    ModelSpec getModelSpec();
+  /**
+   * Model spec used to define the experiment model
+   *
+   * @return
+   */
+  ModelSpec getModelSpec();
 
-    /**
-     * The point cut
-     *
-     * @return
-     */
-    PointCut getPointCut();
+  /**
+   * The point cut
+   *
+   * @return
+   */
+  PointCut getPointCut();
 
-    /**
-     * Enhancer used to cache necessary experiment model arguments
-     *
-     * @return
-     */
-    Enhancer getEnhancer();
+  /**
+   * Enhancer used to cache necessary experiment model arguments
+   *
+   * @return
+   */
+  Enhancer getEnhancer();
 }

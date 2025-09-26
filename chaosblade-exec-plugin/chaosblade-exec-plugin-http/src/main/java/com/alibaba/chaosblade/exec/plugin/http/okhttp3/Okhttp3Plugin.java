@@ -13,18 +13,18 @@ import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
  */
 public class Okhttp3Plugin extends HttpPlugin {
 
-    @Override
-    public String getName() {
-        return HttpConstant.OKHTTP3_TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return HttpConstant.OKHTTP3_TARGET_NAME;
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new Okhttp3PointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new Okhttp3PointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new Okhttp3Enhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new Okhttp3Enhancer();
+  }
 }

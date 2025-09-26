@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.mysql;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MysqlDatabaseMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return MysqlConstant.DATABASE_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MysqlConstant.DATABASE_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The database name which used";
-    }
+  @Override
+  public String getDesc() {
+    return "The database name which used";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

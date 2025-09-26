@@ -16,72 +16,69 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache;
 
+import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
-
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public abstract class AbstractScriptCache<K, V> implements ScriptCache<K, V> {
 
-    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-    protected Map<K, V> cacheMap;
-    protected int cacheSize;
+  private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+  protected Map<K, V> cacheMap;
+  protected int cacheSize;
 
-    public AbstractScriptCache(int cacheSize) {
-        this.cacheSize = cacheSize;
-    }
+  public AbstractScriptCache(int cacheSize) {
+    this.cacheSize = cacheSize;
+  }
 
-    @Override
-    public void put(K k, V v) {
-        ObjectsUtil.requireNonNull(v);
-        Lock lock = readWriteLock.writeLock();
-        lock.lock();
-        try {
-            cacheMap.put(k, v);
-        } finally {
-            lock.unlock();
-        }
+  @Override
+  public void put(K k, V v) {
+    ObjectsUtil.requireNonNull(v);
+    Lock lock = readWriteLock.writeLock();
+    lock.lock();
+    try {
+      cacheMap.put(k, v);
+    } finally {
+      lock.unlock();
     }
+  }
 
-    @Override
-    public V get(K k) {
-        Lock lock = readWriteLock.readLock();
-        lock.lock();
-        try {
-            return cacheMap.get(k);
-        } finally {
-            lock.unlock();
-        }
+  @Override
+  public V get(K k) {
+    Lock lock = readWriteLock.readLock();
+    lock.lock();
+    try {
+      return cacheMap.get(k);
+    } finally {
+      lock.unlock();
     }
+  }
 
-    @Override
-    public boolean evict(K k) {
-        if (cacheMap.containsKey(k)) {
-            Lock lock = readWriteLock.writeLock();
-            lock.lock();
-            try {
-                cacheMap.remove(k);
-                return true;
-            } finally {
-                lock.unlock();
-            }
-        }
-        return false;
+  @Override
+  public boolean evict(K k) {
+    if (cacheMap.containsKey(k)) {
+      Lock lock = readWriteLock.writeLock();
+      lock.lock();
+      try {
+        cacheMap.remove(k);
+        return true;
+      } finally {
+        lock.unlock();
+      }
     }
+    return false;
+  }
 
-    @Override
-    public void clean() {
-        Lock lock = readWriteLock.writeLock();
-        lock.lock();
-        try {
-            cacheMap.clear();
-        } finally {
-            lock.unlock();
-        }
+  @Override
+  public void clean() {
+    Lock lock = readWriteLock.writeLock();
+    lock.lock();
+    try {
+      cacheMap.clear();
+    } finally {
+      lock.unlock();
     }
+  }
 }

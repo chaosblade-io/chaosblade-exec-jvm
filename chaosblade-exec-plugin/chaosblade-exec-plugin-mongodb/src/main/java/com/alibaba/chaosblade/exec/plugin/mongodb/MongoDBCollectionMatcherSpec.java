@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.plugin.mongodb;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Lingjian Xu
- */
+/** @author Lingjian Xu */
 public class MongoDBCollectionMatcherSpec extends BasePredicateMatcherSpec {
-    @Override
-    public String getName() {
-        return MongoDBConstant.COLLECTION_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MongoDBConstant.COLLECTION_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The first collection name in sql.";
-    }
+  @Override
+  public String getDesc() {
+    return "The first collection name in sql.";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

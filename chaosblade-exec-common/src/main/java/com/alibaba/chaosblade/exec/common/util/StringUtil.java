@@ -16,18 +16,16 @@
 
 package com.alibaba.chaosblade.exec.common.util;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class StringUtil {
 
-    /**
-     * Is not null or not empty
-     *
-     * @param value
-     * @return
-     */
-    public static boolean isBlank(String value) {
-        return value == null || (value.trim()).length() == 0;
-    }
+  /**
+   * Is not null or not empty
+   *
+   * @param value
+   * @return
+   */
+  public static boolean isBlank(String value) {
+    return value == null || (value.trim()).length() == 0;
+  }
 }

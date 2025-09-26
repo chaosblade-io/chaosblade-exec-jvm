@@ -9,16 +9,15 @@ import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
  */
 public class RocketMqEnhancerTest {
 
-    @org.junit.Test
-    public void doBeforeAdvice() {
+  @org.junit.Test
+  public void doBeforeAdvice() {}
 
-    }
-
-    public static void main(String[] args) {
-        Object rocketMqEnhancerTest = new RocketMqEnhancerTest();
-        System.out.println(ReflectUtil
-            .isAssignableFrom(Thread.currentThread().getContextClassLoader(), rocketMqEnhancerTest.getClass(),
-                RocketMqEnhancerTest.class.getName()));
-    }
-
+  public static void main(String[] args) {
+    Object rocketMqEnhancerTest = new RocketMqEnhancerTest();
+    System.out.println(
+        ReflectUtil.isAssignableFrom(
+            Thread.currentThread().getContextClassLoader(),
+            rocketMqEnhancerTest.getClass(),
+            RocketMqEnhancerTest.class.getName()));
+  }
 }

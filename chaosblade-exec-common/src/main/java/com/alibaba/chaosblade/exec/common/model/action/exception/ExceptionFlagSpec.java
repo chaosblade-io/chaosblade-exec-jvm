@@ -18,27 +18,25 @@ package com.alibaba.chaosblade.exec.common.model.action.exception;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ExceptionFlagSpec implements FlagSpec {
-    @Override
-    public String getName() {
-        return "exception";
-    }
+  @Override
+  public String getName() {
+    return "exception";
+  }
 
-    @Override
-    public String getDesc() {
-        return "Exception class inherit java.lang.Exception";
-    }
+  @Override
+  public String getDesc() {
+    return "Exception class inherit java.lang.Exception";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return true;
-    }
+  @Override
+  public boolean required() {
+    return true;
+  }
 }

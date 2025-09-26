@@ -18,28 +18,26 @@ package com.alibaba.chaosblade.exec.service.build;
 
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class JavaHomeFlagBean implements FlagSpec {
 
-    @Override
-    public String getName() {
-        return "javaHome";
-    }
+  @Override
+  public String getName() {
+    return "javaHome";
+  }
 
-    @Override
-    public String getDesc() {
-        return "Specify the JAVA_HOME variable to loading jre lib";
-    }
+  @Override
+  public String getDesc() {
+    return "Specify the JAVA_HOME variable to loading jre lib";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

@@ -19,30 +19,28 @@ package com.alibaba.chaosblade.exec.common.model.action.delay;
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class BaseTimeoutExecutor implements TimeoutExecutor {
 
-    protected long timeoutInMillis;
-    private ClassLoader classLoader;
+  protected long timeoutInMillis;
+  private ClassLoader classLoader;
 
-    public BaseTimeoutExecutor(ClassLoader classLoader, long timeoutInMillis) {
-        this.classLoader = classLoader;
-        this.timeoutInMillis = timeoutInMillis;
-    }
+  public BaseTimeoutExecutor(ClassLoader classLoader, long timeoutInMillis) {
+    this.classLoader = classLoader;
+    this.timeoutInMillis = timeoutInMillis;
+  }
 
-    @Override
-    public long getTimeoutInMillis() {
-        return timeoutInMillis;
-    }
+  @Override
+  public long getTimeoutInMillis() {
+    return timeoutInMillis;
+  }
 
-    @Override
-    public void run(EnhancerModel enhancerModel) throws Exception {
-        if (timeoutInMillis > 0) {
-            Exception exception = generateTimeoutException(classLoader);
-            InterruptProcessException.throwThrowsImmediately(exception != null ? exception : new Exception
-                ("chaosblade mock timeout"));
-        }
+  @Override
+  public void run(EnhancerModel enhancerModel) throws Exception {
+    if (timeoutInMillis > 0) {
+      Exception exception = generateTimeoutException(classLoader);
+      InterruptProcessException.throwThrowsImmediately(
+          exception != null ? exception : new Exception("chaosblade mock timeout"));
     }
+  }
 }

@@ -18,29 +18,26 @@ package com.alibaba.chaosblade.exec.common.plugin;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ClassNameMatcherSpec extends BasePredicateMatcherSpec {
 
-    @Override
-    public String getName() {
-        return MethodConstant.CLASS_MATCHER_NAME;
-    }
+  @Override
+  public String getName() {
+    return MethodConstant.CLASS_MATCHER_NAME;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The class name with package";
-    }
+  @Override
+  public String getDesc() {
+    return "The class name with package";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return true;
-    }
-
+  @Override
+  public boolean required() {
+    return true;
+  }
 }

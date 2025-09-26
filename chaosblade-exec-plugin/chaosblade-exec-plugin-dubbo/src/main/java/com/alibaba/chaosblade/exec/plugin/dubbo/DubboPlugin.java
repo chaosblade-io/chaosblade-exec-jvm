@@ -20,14 +20,11 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboModelSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class DubboPlugin implements Plugin {
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new DubboModelSpec();
-    }
-
+  @Override
+  public ModelSpec getModelSpec() {
+    return new DubboModelSpec();
+  }
 }

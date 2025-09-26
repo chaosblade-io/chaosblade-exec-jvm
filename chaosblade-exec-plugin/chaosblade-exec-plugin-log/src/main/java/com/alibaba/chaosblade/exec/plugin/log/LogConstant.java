@@ -1,12 +1,10 @@
 package com.alibaba.chaosblade.exec.plugin.log;
 
-/**
- * @author shizhi.zhu@qunar.com
- */
+/** @author shizhi.zhu@qunar.com */
 public interface LogConstant {
-    String TARGET = "log";
+  String TARGET = "log";
 
-    String LOGBACK_KEY = "logback";
+  String LOGBACK_KEY = "logback";
 
-    String LOG4J2_KEY = "log4j2";
+  String LOG4J2_KEY = "log4j2";
 }

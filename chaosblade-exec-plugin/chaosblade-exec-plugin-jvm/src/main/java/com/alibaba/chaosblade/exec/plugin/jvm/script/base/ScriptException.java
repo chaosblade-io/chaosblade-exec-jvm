@@ -16,32 +16,30 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
+import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
 import java.util.Collections;
 import java.util.List;
 
-import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
-
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class ScriptException extends RuntimeException {
 
-    private List<String> scriptStack;
-    private String scriptId;
-    private String lang;
+  private List<String> scriptStack;
+  private String scriptId;
+  private String lang;
 
-    public ScriptException(String message, Throwable cause, List<String> scriptStack, String scriptId, String lang) {
-        super(message, cause);
-        this.scriptStack = Collections.unmodifiableList(ObjectsUtil.requireNonNull(scriptStack));
-        this.scriptId = ObjectsUtil.requireNonNull(scriptId);
-        this.lang = ObjectsUtil.requireNonNull(lang);
-    }
+  public ScriptException(
+      String message, Throwable cause, List<String> scriptStack, String scriptId, String lang) {
+    super(message, cause);
+    this.scriptStack = Collections.unmodifiableList(ObjectsUtil.requireNonNull(scriptStack));
+    this.scriptId = ObjectsUtil.requireNonNull(scriptId);
+    this.lang = ObjectsUtil.requireNonNull(lang);
+  }
 
-    public ScriptException(String message) {
-        super(message);
-    }
+  public ScriptException(String message) {
+    super(message);
+  }
 
-    public ScriptException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public ScriptException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

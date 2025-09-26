@@ -20,24 +20,21 @@ import com.alibaba.chaosblade.exec.common.aop.Enhancer;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboPlugin;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DubboProviderPlugin extends DubboPlugin {
 
-    @Override
-    public String getName() {
-        return "provider";
-    }
+  @Override
+  public String getName() {
+    return "provider";
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new DubboProviderPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new DubboProviderPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new DubboProviderEnhancer();
-    }
-
+  @Override
+  public Enhancer getEnhancer() {
+    return new DubboProviderEnhancer();
+  }
 }

@@ -23,28 +23,26 @@ import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 import com.alibaba.chaosblade.exec.common.plugin.MethodEnhancer;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class JvmPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return ModelConstant.JVM_TARGET;
-    }
+  @Override
+  public String getName() {
+    return ModelConstant.JVM_TARGET;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new JvmModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new JvmModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return null;
-    }
+  @Override
+  public PointCut getPointCut() {
+    return null;
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new MethodEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new MethodEnhancer();
+  }
 }

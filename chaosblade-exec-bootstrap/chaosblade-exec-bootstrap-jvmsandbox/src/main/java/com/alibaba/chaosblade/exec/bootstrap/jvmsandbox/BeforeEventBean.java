@@ -16,49 +16,52 @@
 
 package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class BeforeEventBean {
 
-    private ClassLoader classLoader;
-    private Object object;
-    private String className;
-    private String methodName;
-    private String methodDesc;
-    private Object[] argumentArray;
+  private ClassLoader classLoader;
+  private Object object;
+  private String className;
+  private String methodName;
+  private String methodDesc;
+  private Object[] argumentArray;
 
-    public BeforeEventBean(ClassLoader classLoader, Object object, String className, String methodName,
-                           String methodDesc, Object[] argumentArray) {
-        this.classLoader = classLoader;
-        this.object = object;
-        this.className = className;
-        this.methodName = methodName;
-        this.methodDesc = methodDesc;
-        this.argumentArray = argumentArray;
-    }
+  public BeforeEventBean(
+      ClassLoader classLoader,
+      Object object,
+      String className,
+      String methodName,
+      String methodDesc,
+      Object[] argumentArray) {
+    this.classLoader = classLoader;
+    this.object = object;
+    this.className = className;
+    this.methodName = methodName;
+    this.methodDesc = methodDesc;
+    this.argumentArray = argumentArray;
+  }
 
-    public ClassLoader getClassLoader() {
-        return classLoader;
-    }
+  public ClassLoader getClassLoader() {
+    return classLoader;
+  }
 
-    public Object getObject() {
-        return object;
-    }
+  public Object getObject() {
+    return object;
+  }
 
-    public String getClassName() {
-        return className;
-    }
+  public String getClassName() {
+    return className;
+  }
 
-    public String getMethodName() {
-        return methodName;
-    }
+  public String getMethodName() {
+    return methodName;
+  }
 
-    public String getMethodDesc() {
-        return methodDesc;
-    }
+  public String getMethodDesc() {
+    return methodDesc;
+  }
 
-    public Object[] getArgumentArray() {
-        return argumentArray;
-    }
+  public Object[] getArgumentArray() {
+    return argumentArray;
+  }
 }

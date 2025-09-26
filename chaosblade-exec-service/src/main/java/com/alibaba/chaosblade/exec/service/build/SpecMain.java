@@ -16,19 +16,17 @@
 
 package com.alibaba.chaosblade.exec.service.build;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class SpecMain {
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            throw new RuntimeException("less plugin path");
-        }
-        String pluginPath = args[0];
-        String specFileName = "chaosblade-jvm-spec.yaml";
-        if (args.length > 1) {
-            specFileName = args[1];
-        }
-        BuildUtil.generatePluginSpec(pluginPath, specFileName);
+  public static void main(String[] args) {
+    if (args.length == 0) {
+      throw new RuntimeException("less plugin path");
     }
+    String pluginPath = args[0];
+    String specFileName = "chaosblade-jvm-spec.yaml";
+    if (args.length > 1) {
+      specFileName = args[1];
+    }
+    BuildUtil.generatePluginSpec(pluginPath, specFileName);
+  }
 }

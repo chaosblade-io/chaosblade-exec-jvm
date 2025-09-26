@@ -16,22 +16,20 @@
 
 package com.alibaba.chaosblade.exec.common.aop;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface PluginLifecycleListener {
 
-    /**
-     * Add plugin bean
-     *
-     * @param plugin
-     */
-    void add(PluginBean plugin);
+  /**
+   * Add plugin bean
+   *
+   * @param plugin
+   */
+  void add(PluginBean plugin);
 
-    /**
-     * Delete plugin bean
-     *
-     * @param plugin
-     */
-    void delete(PluginBean plugin);
+  /**
+   * Delete plugin bean
+   *
+   * @param plugin
+   */
+  void delete(PluginBean plugin);
 }

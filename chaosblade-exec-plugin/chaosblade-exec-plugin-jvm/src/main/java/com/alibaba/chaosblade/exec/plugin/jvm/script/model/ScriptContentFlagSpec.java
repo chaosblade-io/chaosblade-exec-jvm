@@ -19,28 +19,26 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ScriptContentFlagSpec implements FlagSpec {
 
-    @Override
-    public String getName() {
-        return JvmConstant.FLAG_NAME_SCRIPT_CONTENT;
-    }
+  @Override
+  public String getName() {
+    return JvmConstant.FLAG_NAME_SCRIPT_CONTENT;
+  }
 
-    @Override
-    public String getDesc() {
-        return "The script contents";
-    }
+  @Override
+  public String getDesc() {
+    return "The script contents";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

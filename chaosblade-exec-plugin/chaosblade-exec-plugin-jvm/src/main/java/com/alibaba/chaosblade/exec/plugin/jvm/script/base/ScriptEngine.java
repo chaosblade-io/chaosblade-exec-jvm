@@ -18,35 +18,32 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
 import java.util.Map;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public interface ScriptEngine {
 
-    /**
-     * Get the script type
-     *
-     * @return
-     */
-    String getLanguage();
+  /**
+   * Get the script type
+   *
+   * @return
+   */
+  String getLanguage();
 
-    /**
-     * Compile script
-     *
-     * @param script      script object
-     * @param classLoader
-     * @param configs     compiled configs
-     * @return
-     */
-    Object compile(Script script, ClassLoader classLoader, Map<String, String> configs);
+  /**
+   * Compile script
+   *
+   * @param script script object
+   * @param classLoader
+   * @param configs compiled configs
+   * @return
+   */
+  Object compile(Script script, ClassLoader classLoader, Map<String, String> configs);
 
-    /**
-     * Execute compiled script
-     *
-     * @param compiledScript
-     * @param vars
-     * @return
-     */
-    ExecutableScript execute(CompiledScript compiledScript, Map<String, Object> vars);
-
+  /**
+   * Execute compiled script
+   *
+   * @param compiledScript
+   * @param vars
+   * @return
+   */
+  ExecutableScript execute(CompiledScript compiledScript, Map<String, Object> vars);
 }

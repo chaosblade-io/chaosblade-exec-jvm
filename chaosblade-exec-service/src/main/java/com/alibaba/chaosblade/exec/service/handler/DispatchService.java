@@ -19,13 +19,11 @@ package com.alibaba.chaosblade.exec.service.handler;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface DispatchService {
-    Response dispatch(String paramString, Request paramRequest);
+  Response dispatch(String paramString, Request paramRequest);
 
-    void unload();
+  void unload();
 
-    void load();
+  void load();
 }

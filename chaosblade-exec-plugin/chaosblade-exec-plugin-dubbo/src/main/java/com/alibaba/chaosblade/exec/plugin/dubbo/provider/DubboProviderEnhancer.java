@@ -23,47 +23,48 @@ import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
 import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
-
 import java.util.Map;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DubboProviderEnhancer extends DubboEnhancer {
 
-    @Override
-    protected Object getUrl(Object instance, Object invocation) throws Exception {
-        Object invoker = ReflectUtil.invokeMethod(invocation, GET_INVOKER, new Object[0], false);
-        return ReflectUtil.invokeMethod(invoker, GET_URL, new Object[0], false);
-    }
+  @Override
+  protected Object getUrl(Object instance, Object invocation) throws Exception {
+    Object invoker = ReflectUtil.invokeMethod(invocation, GET_INVOKER, new Object[0], false);
+    return ReflectUtil.invokeMethod(invoker, GET_URL, new Object[0], false);
+  }
 
-    @Override
-    protected TimeoutExecutor createTimeoutExecutor(ClassLoader classLoader, long timeout, String className) {
-        return null;
-    }
+  @Override
+  protected TimeoutExecutor createTimeoutExecutor(
+      ClassLoader classLoader, long timeout, String className) {
+    return null;
+  }
 
-    @Override
-    protected Map<String, Map<String, String>> getBusinessParams(final Object invocation) throws Exception {
-        return BusinessParamUtil.getAndParse(DubboConstant.TARGET_NAME, new BusinessDataGetter() {
-            @Override
-            public String get(String key) throws Exception {
-                Map<String, String> attachments = ReflectUtil.invokeMethod(invocation, GET_ATTACHMENTS, new Object[0], false);
-                if (attachments == null || attachments.isEmpty()) {
-                    return null;
-                }
-                return attachments.get(key);
+  @Override
+  protected Map<String, Map<String, String>> getBusinessParams(final Object invocation)
+      throws Exception {
+    return BusinessParamUtil.getAndParse(
+        DubboConstant.TARGET_NAME,
+        new BusinessDataGetter() {
+          @Override
+          public String get(String key) throws Exception {
+            Map<String, String> attachments =
+                ReflectUtil.invokeMethod(invocation, GET_ATTACHMENTS, new Object[0], false);
+            if (attachments == null || attachments.isEmpty()) {
+              return null;
             }
+            return attachments.get(key);
+          }
         });
-    }
+  }
 
-    @Override
-    protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
-        enhancerModel.addMatcher(DubboConstant.PROVIDER_KEY, "true");
-    }
+  @Override
+  protected void postDoBeforeAdvice(EnhancerModel enhancerModel) {
+    enhancerModel.addMatcher(DubboConstant.PROVIDER_KEY, "true");
+  }
 
-    @Override
-    protected int getTimeout(String method, Object instance, Object invocation) {
-        return 0;
-    }
-
+  @Override
+  protected int getTimeout(String method, Object instance, Object invocation) {
+    return 0;
+  }
 }

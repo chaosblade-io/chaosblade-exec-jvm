@@ -21,20 +21,20 @@ import org.junit.Test;
 
 public class JavaUtilsTest {
 
-    @Test
-    public void testGetClassName() {
-        Assert.assertEquals("", JavaUtils.getClassName(""));
-        Assert.assertEquals("", JavaUtils.getClassName("String"));
-        Assert.assertEquals("", JavaUtils.getClassName("classString"));
-        Assert.assertEquals("", JavaUtils.getClassName("class.String"));
-        Assert.assertEquals("String", JavaUtils.getClassName("classString%"));
-    }
+  @Test
+  public void testGetClassName() {
+    Assert.assertEquals("", JavaUtils.getClassName(""));
+    Assert.assertEquals("", JavaUtils.getClassName("String"));
+    Assert.assertEquals("", JavaUtils.getClassName("classString"));
+    Assert.assertEquals("", JavaUtils.getClassName("class.String"));
+    Assert.assertEquals("String", JavaUtils.getClassName("classString%"));
+  }
 
-    @Test
-    public void testIsAsciiAlpha() {
-        Assert.assertTrue(JavaUtils.isAsciiAlpha('B'));
-        Assert.assertTrue(JavaUtils.isAsciiAlpha('b'));
+  @Test
+  public void testIsAsciiAlpha() {
+    Assert.assertTrue(JavaUtils.isAsciiAlpha('B'));
+    Assert.assertTrue(JavaUtils.isAsciiAlpha('b'));
 
-        Assert.assertFalse(JavaUtils.isAsciiAlpha('%'));
-    }
+    Assert.assertFalse(JavaUtils.isAsciiAlpha('%'));
+  }
 }

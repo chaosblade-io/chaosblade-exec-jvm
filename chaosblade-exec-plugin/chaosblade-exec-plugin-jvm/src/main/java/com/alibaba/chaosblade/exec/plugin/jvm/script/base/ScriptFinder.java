@@ -23,11 +23,11 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
  */
 public interface ScriptFinder {
 
-    /**
-     * Find script by id
-     *
-     * @param scriptId
-     * @return
-     */
-    Script find(String scriptId);
+  /**
+   * Find script by id
+   *
+   * @param scriptId
+   * @return
+   */
+  Script find(String scriptId);
 }

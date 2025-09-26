@@ -16,17 +16,14 @@
 
 package com.alibaba.chaosblade.exec.plugin.postgrelsql;
 
-/**
- * @author guoping.yao <a href="mailto:bryan880901@qq.com">
- *
- */
+/** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public interface PostgrelsqlConstant {
 
-    String TARGET_NAME = "psql";
+  String TARGET_NAME = "psql";
 
-    String HOST_MATCHER_NAME = "host";
-    String TABLE_MATCHER_NAME = "table";
-    String DATABASE_MATCHER_NAME = "database";
-    String SQL_TYPE_MATCHER_NAME = "sqltype";
-    String PORT_MATCHER_NAME = "port";
+  String HOST_MATCHER_NAME = "host";
+  String TABLE_MATCHER_NAME = "table";
+  String DATABASE_MATCHER_NAME = "database";
+  String SQL_TYPE_MATCHER_NAME = "sqltype";
+  String PORT_MATCHER_NAME = "port";
 }

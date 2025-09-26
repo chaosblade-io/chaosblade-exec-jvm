@@ -20,34 +20,31 @@ import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MethodAfterMatcherSpec implements MatcherSpec {
 
-    @Override
-    public String getName() {
-        return MethodConstant.AFTER_METHOD_FLAG;
-    }
+  @Override
+  public String getName() {
+    return MethodConstant.AFTER_METHOD_FLAG;
+  }
 
-    @Override
-    public String getDesc() {
-        return "Specify the method after event";
-    }
+  @Override
+  public String getDesc() {
+    return "Specify the method after event";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return true;
-    }
+  @Override
+  public boolean noArgs() {
+    return true;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 
-    @Override
-    public PredicateResult predicate(MatcherModel matcherModel) {
-        return PredicateResult.success();
-    }
-
+  @Override
+  public PredicateResult predicate(MatcherModel matcherModel) {
+    return PredicateResult.success();
+  }
 }

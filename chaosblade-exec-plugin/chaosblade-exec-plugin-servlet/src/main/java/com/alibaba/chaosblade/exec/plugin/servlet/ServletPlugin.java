@@ -21,28 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ServletPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return ServletConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return ServletConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new ServletModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new ServletModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new ServletPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new ServletPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new ServletEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new ServletEnhancer();
+  }
 }

@@ -8,18 +8,18 @@ import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
 /**
  * @Author yuhan
- * @package: com.alibaba.chaosblade.exec.plugin.http.resttemplate
- * @Date 2019-05-22 16:21
+ *
+ * @package: com.alibaba.chaosblade.exec.plugin.http.resttemplate @Date 2019-05-22 16:21
  */
 public class RestTemplatePointCut implements PointCut {
 
-    @Override
-    public ClassMatcher getClassMatcher() {
-        return new NameClassMatcher("org.springframework.web.client.RestTemplate");
-    }
+  @Override
+  public ClassMatcher getClassMatcher() {
+    return new NameClassMatcher("org.springframework.web.client.RestTemplate");
+  }
 
-    @Override
-    public MethodMatcher getMethodMatcher() {
-        return new NameMethodMatcher("doExecute");
-    }
+  @Override
+  public MethodMatcher getMethodMatcher() {
+    return new NameMethodMatcher("doExecute");
+  }
 }

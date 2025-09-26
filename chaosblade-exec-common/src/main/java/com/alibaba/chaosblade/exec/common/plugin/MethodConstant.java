@@ -16,11 +16,9 @@
 
 package com.alibaba.chaosblade.exec.common.plugin;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface MethodConstant {
-    String CLASS_MATCHER_NAME = "classname";
-    String METHOD_MATCHER_NAME = "methodname";
-    String AFTER_METHOD_FLAG = "after";
+  String CLASS_MATCHER_NAME = "classname";
+  String METHOD_MATCHER_NAME = "methodname";
+  String AFTER_METHOD_FLAG = "after";
 }

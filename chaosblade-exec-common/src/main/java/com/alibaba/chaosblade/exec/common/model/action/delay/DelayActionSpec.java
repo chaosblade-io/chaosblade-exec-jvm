@@ -16,9 +16,6 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.delay;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
@@ -26,57 +23,57 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import java.util.Arrays;
+import java.util.List;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DelayActionSpec extends BaseActionSpec {
 
-    private static TimeFlagSpec timeFlag = new TimeFlagSpec();
-    private static TimeOffsetFlagSpec offsetFlag = new TimeOffsetFlagSpec();
+  private static TimeFlagSpec timeFlag = new TimeFlagSpec();
+  private static TimeOffsetFlagSpec offsetFlag = new TimeOffsetFlagSpec();
 
-    public DelayActionSpec() {
-        super(new DefaultDelayExecutor(timeFlag, offsetFlag));
-    }
+  public DelayActionSpec() {
+    super(new DefaultDelayExecutor(timeFlag, offsetFlag));
+  }
 
-    @Override
-    public String getName() {
-        return "delay";
-    }
+  @Override
+  public String getName() {
+    return "delay";
+  }
 
-    @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
+  @Override
+  public String[] getAliases() {
+    return new String[0];
+  }
 
-    @Override
-    public String getShortDesc() {
-        return "delay time";
-    }
+  @Override
+  public String getShortDesc() {
+    return "delay time";
+  }
 
-    @Override
-    public String getLongDesc() {
-        if (StringUtils.isNotBlank(super.getLongDesc())) {
-            return super.getLongDesc();
-        }
-        return "delay time...";
+  @Override
+  public String getLongDesc() {
+    if (StringUtils.isNotBlank(super.getLongDesc())) {
+      return super.getLongDesc();
     }
+    return "delay time...";
+  }
 
-    @Override
-    public List<FlagSpec> getActionFlags() {
-        return Arrays.asList(timeFlag, offsetFlag);
-    }
+  @Override
+  public List<FlagSpec> getActionFlags() {
+    return Arrays.asList(timeFlag, offsetFlag);
+  }
 
-    @Override
-    public PredicateResult predicate(ActionModel actionModel) {
-        if (StringUtil.isBlank(actionModel.getFlag(timeFlag.getName()))) {
-            return PredicateResult.fail("less time argument");
-        }
-        return PredicateResult.success();
+  @Override
+  public PredicateResult predicate(ActionModel actionModel) {
+    if (StringUtil.isBlank(actionModel.getFlag(timeFlag.getName()))) {
+      return PredicateResult.fail("less time argument");
     }
+    return PredicateResult.success();
+  }
 
-    @Override
-    public String[] getCategories() {
-        return new String[] {CategoryConstants.JAVA_DELAY};
-    }
+  @Override
+  public String[] getCategories() {
+    return new String[] {CategoryConstants.JAVA_DELAY};
+  }
 }

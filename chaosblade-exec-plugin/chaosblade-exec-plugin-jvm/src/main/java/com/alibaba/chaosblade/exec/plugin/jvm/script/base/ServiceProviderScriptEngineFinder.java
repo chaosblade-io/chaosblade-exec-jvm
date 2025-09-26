@@ -16,12 +16,11 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
+import com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder.ScriptEngineFinder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder.ScriptEngineFinder;
 
 /**
  * Load script engine by spi
@@ -30,44 +29,52 @@ import com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder.ScriptEngineFin
  */
 public class ServiceProviderScriptEngineFinder implements ScriptEngineFinder {
 
-    private final Map<String, ScriptEngine> languageToScriptEngine;
+  private final Map<String, ScriptEngine> languageToScriptEngine;
 
-    private final Map<Class<? extends ScriptEngine>, String> scriptEngineToLanguage;
+  private final Map<Class<? extends ScriptEngine>, String> scriptEngineToLanguage;
 
-    protected ScriptEngineService scriptEngineService;
+  protected ScriptEngineService scriptEngineService;
 
-    public ServiceProviderScriptEngineFinder(ScriptEngineService scriptEngineService) {
-        this.scriptEngineService = scriptEngineService;
-        languageToScriptEngine = new ConcurrentHashMap<String, ScriptEngine>();
-        scriptEngineToLanguage = new ConcurrentHashMap<Class<? extends ScriptEngine>, String>();
-        loadScriptEngines();
+  public ServiceProviderScriptEngineFinder(ScriptEngineService scriptEngineService) {
+    this.scriptEngineService = scriptEngineService;
+    languageToScriptEngine = new ConcurrentHashMap<String, ScriptEngine>();
+    scriptEngineToLanguage = new ConcurrentHashMap<Class<? extends ScriptEngine>, String>();
+    loadScriptEngines();
+  }
+
+  public void loadScriptEngines() {
+    ServiceLoader<ScriptEngine> scriptEngineServiceLoader =
+        ServiceLoader.load(
+            ScriptEngine.class, ServiceProviderScriptEngineFinder.class.getClassLoader());
+    Iterator<ScriptEngine> scriptEngineIterator = scriptEngineServiceLoader.iterator();
+    while (scriptEngineIterator.hasNext()) {
+      ScriptEngine scriptEngine = scriptEngineIterator.next();
+      if (scriptEngineToLanguage.containsKey(scriptEngine.getClass())) {
+        throw new IllegalArgumentException(
+            "Script engine ["
+                + scriptEngine.getClass()
+                + "] already registered for language ["
+                + scriptEngine.getLanguage()
+                + "]");
+      }
+      scriptEngineToLanguage.put(scriptEngine.getClass(), scriptEngine.getLanguage());
+      if (languageToScriptEngine.containsKey(scriptEngine.getLanguage())) {
+        throw new IllegalArgumentException(
+            "Script Language ["
+                + scriptEngine.getLanguage()
+                + "] already registered for engine ["
+                + scriptEngine.getClass().getCanonicalName()
+                + "]");
+      }
+      languageToScriptEngine.put(scriptEngine.getLanguage().toUpperCase(), scriptEngine);
     }
+  }
 
-    public void loadScriptEngines() {
-        ServiceLoader<ScriptEngine> scriptEngineServiceLoader = ServiceLoader.load(ScriptEngine.class,
-            ServiceProviderScriptEngineFinder.class.getClassLoader());
-        Iterator<ScriptEngine> scriptEngineIterator = scriptEngineServiceLoader.iterator();
-        while (scriptEngineIterator.hasNext()) {
-            ScriptEngine scriptEngine = scriptEngineIterator.next();
-            if (scriptEngineToLanguage.containsKey(scriptEngine.getClass())) {
-                throw new IllegalArgumentException(
-                    "Script engine [" + scriptEngine.getClass() + "] already registered for language [" + scriptEngine
-                        .getLanguage() + "]");
-            }
-            scriptEngineToLanguage.put(scriptEngine.getClass(), scriptEngine.getLanguage());
-            if (languageToScriptEngine.containsKey(scriptEngine.getLanguage())) {
-                throw new IllegalArgumentException(
-                    "Script Language [" + scriptEngine.getLanguage() + "] already registered for engine ["
-                        + scriptEngine
-                        .getClass().getCanonicalName() + "]");
-            }
-            languageToScriptEngine.put(scriptEngine.getLanguage().toUpperCase(), scriptEngine);
-        }
+  @Override
+  public ScriptEngine findByLang(String language) {
+    if (language == null) {
+      return null;
     }
-
-    @Override
-    public ScriptEngine findByLang(String language) {
-        if (language == null) { return null; }
-        return languageToScriptEngine.get(language.toUpperCase());
-    }
+    return languageToScriptEngine.get(language.toUpperCase());
+  }
 }

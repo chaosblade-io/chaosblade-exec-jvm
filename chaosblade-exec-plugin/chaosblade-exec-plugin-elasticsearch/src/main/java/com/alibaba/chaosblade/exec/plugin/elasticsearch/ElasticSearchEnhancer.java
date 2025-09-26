@@ -21,45 +21,46 @@ import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.JsonUtil;
 import com.alibaba.chaosblade.exec.plugin.elasticsearch.index.RequestIndexProvider;
+import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
-
 /**
  * @Author yuhan
- * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch
- * @Date 2019-05-22 20:35
+ *
+ * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch @Date 2019-05-22 20:35
  */
 public class ElasticSearchEnhancer extends BeforeEnhancer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchEnhancer.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchEnhancer.class);
 
-    @Override
-    public EnhancerModel doBeforeAdvice(ClassLoader classLoader, String className, Object object,
-                                        Method method, Object[]
-                                            methodArguments)
-        throws Exception {
-        MatcherModel matcherModel = new MatcherModel();
+  @Override
+  public EnhancerModel doBeforeAdvice(
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception {
+    MatcherModel matcherModel = new MatcherModel();
 
-        matcherModel.add(ElasticSearchConstant.INDEX, getIndex(methodArguments));
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("http matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
-        }
-
-        return new EnhancerModel(classLoader, matcherModel);
+    matcherModel.add(ElasticSearchConstant.INDEX, getIndex(methodArguments));
+    if (LOGGER.isDebugEnabled()) {
+      LOGGER.debug("http matchers: {}", JsonUtil.writer().writeValueAsString(matcherModel));
     }
 
-    private String getIndex(Object[] args){
-        if (null == args) {
-            return null;
-        }
-        if (args.length == 3) {
-            return String.valueOf(args[0]);
-        } else if (RequestIndexProvider.isRequest(args[1])) {
-            return RequestIndexProvider.get(args[1]).getIndexOfString(args[1]);
-        }
-        return RequestIndexProvider.get(args[0]).getIndexOfString(args[0]);
-    }
+    return new EnhancerModel(classLoader, matcherModel);
+  }
 
+  private String getIndex(Object[] args) {
+    if (null == args) {
+      return null;
+    }
+    if (args.length == 3) {
+      return String.valueOf(args[0]);
+    } else if (RequestIndexProvider.isRequest(args[1])) {
+      return RequestIndexProvider.get(args[1]).getIndexOfString(args[1]);
+    }
+    return RequestIndexProvider.get(args[0]).getIndexOfString(args[0]);
+  }
 }

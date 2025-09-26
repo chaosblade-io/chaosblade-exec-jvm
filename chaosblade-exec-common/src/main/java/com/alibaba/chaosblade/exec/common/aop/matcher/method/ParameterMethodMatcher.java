@@ -16,113 +16,110 @@
 
 package com.alibaba.chaosblade.exec.common.aop.matcher.method;
 
+import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
-
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ParameterMethodMatcher implements MethodMatcher {
 
-    public static final int LESS_THAN = -1;
-    public static final int EQUAL = 0;
-    public static final int GREAT_THAN = 1;
+  public static final int LESS_THAN = -1;
+  public static final int EQUAL = 0;
+  public static final int GREAT_THAN = 1;
 
-    public static final int DEFAULT_LENGTH = -1;
-    private Map<Integer, String> parametersMap;
-    private int parametersLength = DEFAULT_LENGTH;
-    private int compareFlag;
+  public static final int DEFAULT_LENGTH = -1;
+  private Map<Integer, String> parametersMap;
+  private int parametersLength = DEFAULT_LENGTH;
+  private int compareFlag;
 
-    public ParameterMethodMatcher(int parametersLength, int compareFlag) {
-        this.parametersLength = parametersLength;
-        this.compareFlag = compareFlag;
+  public ParameterMethodMatcher(int parametersLength, int compareFlag) {
+    this.parametersLength = parametersLength;
+    this.compareFlag = compareFlag;
+  }
+
+  public ParameterMethodMatcher(String[] parameters) {
+    convertToMap(parameters);
+  }
+
+  public ParameterMethodMatcher(String[] parameters, int parametersLength, int compareFlag) {
+    this.parametersMap = convertToMap(parameters);
+    this.parametersLength = parametersLength;
+    this.compareFlag = compareFlag;
+  }
+
+  private Map<Integer, String> convertToMap(String[] parameters) {
+    HashMap<Integer, String> map = new HashMap<Integer, String>(4);
+    for (int i = 0; i < parameters.length; i++) {
+      if (parameters[i] != null) {
+        map.put(i, parameters[i]);
+      }
+    }
+    return map;
+  }
+
+  /**
+   * Compare method parameters
+   *
+   * @param methodName
+   * @param methodInfo
+   * @return
+   */
+  @Override
+  public boolean isMatched(String methodName, MethodInfo methodInfo) {
+    String[] parameterTypes = methodInfo.getParameterTypes();
+    int length = parameterTypes.length;
+
+    boolean result = compareParametersLength(length);
+    if (!result) {
+      return false;
     }
 
-    public ParameterMethodMatcher(String[] parameters) {
-        convertToMap(parameters);
+    if (parametersMap == null || parametersMap.isEmpty()) {
+      return true;
     }
-
-    public ParameterMethodMatcher(String[] parameters, int parametersLength, int compareFlag) {
-        this.parametersMap = convertToMap(parameters);
-        this.parametersLength = parametersLength;
-        this.compareFlag = compareFlag;
+    Set<Entry<Integer, String>> entries = parametersMap.entrySet();
+    for (Entry<Integer, String> entry : entries) {
+      int index = entry.getKey();
+      if (index >= length) {
+        return false;
+      }
+      if (!parameterTypes[index].equals(entry.getValue())) {
+        return false;
+      }
     }
+    return true;
+  }
 
-    private Map<Integer, String> convertToMap(String[] parameters) {
-        HashMap<Integer, String> map = new HashMap<Integer, String>(4);
-        for (int i = 0; i < parameters.length; i++) {
-            if (parameters[i] != null) {
-                map.put(i, parameters[i]);
-            }
-        }
-        return map;
-    }
-
-    /**
-     * Compare method parameters
-     *
-     * @param methodName
-     * @param methodInfo
-     * @return
-     */
-    @Override
-    public boolean isMatched(String methodName, MethodInfo methodInfo) {
-        String[] parameterTypes = methodInfo.getParameterTypes();
-        int length = parameterTypes.length;
-
-        boolean result = compareParametersLength(length);
-        if (!result) {
+  /**
+   * Compare parameters length
+   *
+   * @param length
+   * @return
+   */
+  private boolean compareParametersLength(int length) {
+    if (parametersLength != DEFAULT_LENGTH) {
+      switch (compareFlag) {
+        case LESS_THAN:
+          if (length >= parametersLength) {
             return false;
-        }
-
-        if (parametersMap == null || parametersMap.isEmpty()) {
-            return true;
-        }
-        Set<Entry<Integer, String>> entries = parametersMap.entrySet();
-        for (Entry<Integer, String> entry : entries) {
-            int index = entry.getKey();
-            if (index >= length) {
-                return false;
-            }
-            if (!parameterTypes[index].equals(entry.getValue())) {
-                return false;
-            }
-        }
-        return true;
+          }
+          break;
+        case EQUAL:
+          if (length != parametersLength) {
+            return false;
+          }
+          break;
+        case GREAT_THAN:
+          if (length <= parametersLength) {
+            return false;
+          }
+          break;
+        default:
+          return false;
+      }
     }
-
-    /**
-     * Compare parameters length
-     *
-     * @param length
-     * @return
-     */
-    private boolean compareParametersLength(int length) {
-        if (parametersLength != DEFAULT_LENGTH) {
-            switch (compareFlag) {
-                case LESS_THAN:
-                    if (length >= parametersLength) {
-                        return false;
-                    }
-                    break;
-                case EQUAL:
-                    if (length != parametersLength) {
-                        return false;
-                    }
-                    break;
-                case GREAT_THAN:
-                    if (length <= parametersLength) {
-                        return false;
-                    }
-                    break;
-                default:
-                    return false;
-            }
-        }
-        return true;
-    }
+    return true;
+  }
 }

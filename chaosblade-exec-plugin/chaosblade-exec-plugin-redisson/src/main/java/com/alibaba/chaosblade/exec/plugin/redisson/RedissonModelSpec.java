@@ -21,60 +21,56 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author xueshaoyi
- * @Date 2020/11/23 上午11:36
- **/
+/** @author xueshaoyi @Date 2020/11/23 上午11:36 */
 public class RedissonModelSpec extends FrameworkModelSpec {
 
-    public RedissonModelSpec() {
-        addActionExample();
+  public RedissonModelSpec() {
+    addActionExample();
+  }
+
+  private void addActionExample() {
+    List<ActionSpec> actions = getActions();
+    for (ActionSpec action : actions) {
+      if (action instanceof DelayActionSpec) {
+        action.setLongDesc("Redisson commands delay experiments");
+        action.setExample(
+            "# Do a delay 2s experiment on Redisson `hset key name lina` command\n"
+                + "blade create redisson delay --cmd hset --key name --time 2000\n\n"
+                + "#Do a delay 2s experiment on Redisson `key name lina` command\n"
+                + "blade create redisson delay --key name --time 2000");
+      }
+      if (action instanceof ThrowCustomExceptionActionSpec) {
+        action.setLongDesc("Redisson commands throws custom exception experiments");
+        action.setExample(
+            "# Do a throws custom exception experiment on Redisson `key name lina` command\n"
+                + "blade create redisson throwCustomException --exception java.lang.Exception --key name");
+      }
     }
+  }
 
-    private void addActionExample() {
-        List<ActionSpec> actions = getActions();
-        for (ActionSpec action : actions) {
-            if (action instanceof DelayActionSpec) {
-                action.setLongDesc("Redisson commands delay experiments");
-                action.setExample("# Do a delay 2s experiment on Redisson `hset key name lina` command\n" +
-                        "blade create redisson delay --cmd hset --key name --time 2000\n\n" +
+  @Override
+  protected List<MatcherSpec> createNewMatcherSpecs() {
+    ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
+    matcherSpecs.add(new RedissonCmdTypeMatcherSpec());
+    matcherSpecs.add(new RedissonKeyMatcherSpec());
+    return matcherSpecs;
+  }
 
-                        "#Do a delay 2s experiment on Redisson `key name lina` command\n" +
-                        "blade create redisson delay --key name --time 2000");
-            }
-            if (action instanceof ThrowCustomExceptionActionSpec) {
-                action.setLongDesc("Redisson commands throws custom exception experiments");
-                action.setExample("# Do a throws custom exception experiment on Redisson `key name lina` command\n" +
-                        "blade create redisson throwCustomException --exception java.lang.Exception --key name");
-            }
-        }
-    }
+  @Override
+  public String getTarget() {
+    return RedissonConstant.TARGET_NAME;
+  }
 
-    @Override
-    protected List<MatcherSpec> createNewMatcherSpecs() {
-        ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
-        matcherSpecs.add(new RedissonCmdTypeMatcherSpec());
-        matcherSpecs.add(new RedissonKeyMatcherSpec());
-        return matcherSpecs;
-    }
+  @Override
+  public String getShortDesc() {
+    return "redisson experiment";
+  }
 
-    @Override
-    public String getTarget() {
-        return RedissonConstant.TARGET_NAME;
-    }
-
-    @Override
-    public String getShortDesc() {
-        return "redisson experiment";
-    }
-
-    @Override
-    public String getLongDesc() {
-        return "redisson experiment contains delay and exception by command and so on.";
-    }
-
+  @Override
+  public String getLongDesc() {
+    return "redisson experiment contains delay and exception by command and so on.";
+  }
 }

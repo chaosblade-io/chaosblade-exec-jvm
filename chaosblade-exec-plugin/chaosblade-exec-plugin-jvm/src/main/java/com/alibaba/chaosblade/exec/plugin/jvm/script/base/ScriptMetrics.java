@@ -7,8 +7,6 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
  */
 public interface ScriptMetrics {
 
-    /**
-     * Increase count
-     */
-    void incrCompiledScript();
+  /** Increase count */
+  void incrCompiledScript();
 }

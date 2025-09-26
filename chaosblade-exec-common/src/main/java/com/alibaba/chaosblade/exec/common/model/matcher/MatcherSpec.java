@@ -19,18 +19,14 @@ package com.alibaba.chaosblade.exec.common.model.matcher;
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface MatcherSpec extends FlagSpec {
 
-    /**
-     * Predicate the matcher model
-     *
-     * @param matcherModel
-     * @return
-     */
-    PredicateResult predicate(MatcherModel matcherModel);
-
+  /**
+   * Predicate the matcher model
+   *
+   * @param matcherModel
+   * @return
+   */
+  PredicateResult predicate(MatcherModel matcherModel);
 }
-

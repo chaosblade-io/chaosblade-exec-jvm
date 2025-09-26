@@ -16,9 +16,6 @@
 
 package com.alibaba.chaosblade.exec.common.model.action.exception;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
 import com.alibaba.chaosblade.exec.common.model.FlagSpec;
@@ -26,61 +23,61 @@ import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
 import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import java.util.Arrays;
+import java.util.List;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ThrowCustomExceptionActionSpec extends BaseActionSpec {
 
-    private static FlagSpec exceptionFlag = new ExceptionFlagSpec();
-    private static FlagSpec exceptionMessageFlag = new ExceptionMessageFlagSpec();
+  private static FlagSpec exceptionFlag = new ExceptionFlagSpec();
+  private static FlagSpec exceptionMessageFlag = new ExceptionMessageFlagSpec();
 
-    public ThrowCustomExceptionActionSpec() {
-        super(new DefaultThrowExceptionExecutor(exceptionFlag, exceptionMessageFlag));
-    }
+  public ThrowCustomExceptionActionSpec() {
+    super(new DefaultThrowExceptionExecutor(exceptionFlag, exceptionMessageFlag));
+  }
 
-    @Override
-    public String getName() {
-        return ThrowExceptionExecutor.THROW_CUSTOM_EXCEPTION;
-    }
+  @Override
+  public String getName() {
+    return ThrowExceptionExecutor.THROW_CUSTOM_EXCEPTION;
+  }
 
-    @Override
-    public String[] getAliases() {
-        return new String[] {"tce"};
-    }
+  @Override
+  public String[] getAliases() {
+    return new String[] {"tce"};
+  }
 
-    @Override
-    public String getShortDesc() {
-        return "throw custom exception";
-    }
+  @Override
+  public String getShortDesc() {
+    return "throw custom exception";
+  }
 
-    @Override
-    public String getLongDesc() {
-        if (StringUtils.isNotBlank(super.getLongDesc())) {
-            return super.getLongDesc();
-        }
-        return "Throw custom exception with --exception option";
+  @Override
+  public String getLongDesc() {
+    if (StringUtils.isNotBlank(super.getLongDesc())) {
+      return super.getLongDesc();
     }
+    return "Throw custom exception with --exception option";
+  }
 
-    @Override
-    public List<FlagSpec> getActionFlags() {
-        return Arrays.asList(exceptionFlag, exceptionMessageFlag);
-    }
+  @Override
+  public List<FlagSpec> getActionFlags() {
+    return Arrays.asList(exceptionFlag, exceptionMessageFlag);
+  }
 
-    @Override
-    public PredicateResult predicate(ActionModel actionModel) {
-        String exceptionClass = actionModel.getFlag(exceptionFlag.getName());
-        if (StringUtil.isBlank(exceptionClass)) {
-            return PredicateResult.fail("less exception argument");
-        }
-        if (exceptionClass.startsWith("-")) {
-            return PredicateResult.fail("illegal exception value");
-        }
-        return PredicateResult.success();
+  @Override
+  public PredicateResult predicate(ActionModel actionModel) {
+    String exceptionClass = actionModel.getFlag(exceptionFlag.getName());
+    if (StringUtil.isBlank(exceptionClass)) {
+      return PredicateResult.fail("less exception argument");
     }
+    if (exceptionClass.startsWith("-")) {
+      return PredicateResult.fail("illegal exception value");
+    }
+    return PredicateResult.success();
+  }
 
-    @Override
-    public String[] getCategories() {
-        return new String[] {CategoryConstants.JAVA_CUSTOM};
-    }
+  @Override
+  public String[] getCategories() {
+    return new String[] {CategoryConstants.JAVA_CUSTOM};
+  }
 }

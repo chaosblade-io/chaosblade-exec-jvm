@@ -19,41 +19,40 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class ClassLoaderForScript extends URLClassLoader {
-    private ClassLoader pluginClassLoader;
-    private ClassLoader bizClassLoader;
+  private ClassLoader pluginClassLoader;
+  private ClassLoader bizClassLoader;
 
-    public ClassLoaderForScript(ClassLoader pluginClassLoader, ClassLoader bizClassLoader) {
-        this(pluginClassLoader, bizClassLoader, new URL[]{});
-    }
+  public ClassLoaderForScript(ClassLoader pluginClassLoader, ClassLoader bizClassLoader) {
+    this(pluginClassLoader, bizClassLoader, new URL[] {});
+  }
 
-    public ClassLoaderForScript(ClassLoader pluginClassLoader, ClassLoader bizClassLoader, URL[] urls) {
-        super(urls);
-        this.pluginClassLoader = pluginClassLoader;
-        this.bizClassLoader = bizClassLoader;
-    }
+  public ClassLoaderForScript(
+      ClassLoader pluginClassLoader, ClassLoader bizClassLoader, URL[] urls) {
+    super(urls);
+    this.pluginClassLoader = pluginClassLoader;
+    this.bizClassLoader = bizClassLoader;
+  }
 
-    @Override
-    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-        if (pluginClassLoader != null) {
-            Class<?> aClass = null;
-            try {
-                aClass = pluginClassLoader.loadClass(name);
-            } catch (ClassNotFoundException e) {
-                if (bizClassLoader != null) {
-                    aClass = bizClassLoader.loadClass(name);
-                }
-            }
-            if (aClass != null) {
-                if (resolve) {
-                    resolveClass(aClass);
-                }
-                return aClass;
-            }
+  @Override
+  protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+    if (pluginClassLoader != null) {
+      Class<?> aClass = null;
+      try {
+        aClass = pluginClassLoader.loadClass(name);
+      } catch (ClassNotFoundException e) {
+        if (bizClassLoader != null) {
+          aClass = bizClassLoader.loadClass(name);
         }
-        return super.loadClass(name, resolve);
+      }
+      if (aClass != null) {
+        if (resolve) {
+          resolveClass(aClass);
+        }
+        return aClass;
+      }
     }
+    return super.loadClass(name, resolve);
+  }
 }

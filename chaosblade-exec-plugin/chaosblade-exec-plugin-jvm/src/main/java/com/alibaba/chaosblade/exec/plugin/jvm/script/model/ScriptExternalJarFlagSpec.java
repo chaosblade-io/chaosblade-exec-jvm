@@ -9,23 +9,23 @@ import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
  */
 public class ScriptExternalJarFlagSpec implements FlagSpec {
 
-    @Override
-    public String getName() {
-        return JvmConstant.FLAG_NAME_EXTERNAL_JAR;
-    }
+  @Override
+  public String getName() {
+    return JvmConstant.FLAG_NAME_EXTERNAL_JAR;
+  }
 
-    @Override
-    public String getDesc() {
-        return "add external jar file";
-    }
+  @Override
+  public String getDesc() {
+    return "add external jar file";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

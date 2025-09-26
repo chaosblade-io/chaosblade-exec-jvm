@@ -21,42 +21,40 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class MethodPlugin implements Plugin {
 
-    private PointCut pointCut;
-    private String pluginName;
-    private boolean afterEvent;
+  private PointCut pointCut;
+  private String pluginName;
+  private boolean afterEvent;
 
-    public MethodPlugin(String pluginName, PointCut pointCut, boolean afterEvent) {
-        this.pluginName = pluginName;
-        this.pointCut = pointCut;
-        this.afterEvent = afterEvent;
-    }
+  public MethodPlugin(String pluginName, PointCut pointCut, boolean afterEvent) {
+    this.pluginName = pluginName;
+    this.pointCut = pointCut;
+    this.afterEvent = afterEvent;
+  }
 
-    @Override
-    public String getName() {
-        return pluginName;
-    }
+  @Override
+  public String getName() {
+    return pluginName;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new MethodModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new MethodModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return pointCut;
-    }
+  @Override
+  public PointCut getPointCut() {
+    return pointCut;
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new MethodEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new MethodEnhancer();
+  }
 
-    public boolean isAfterEvent() {
-        return afterEvent;
-    }
+  public boolean isAfterEvent() {
+    return afterEvent;
+  }
 }

@@ -19,13 +19,11 @@ package com.alibaba.chaosblade.exec.service.handler;
 import com.alibaba.chaosblade.exec.common.transport.Request;
 import com.alibaba.chaosblade.exec.common.transport.Response;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public interface RequestHandler {
-    String getHandlerName();
+  String getHandlerName();
 
-    Response handle(Request paramRequest);
+  Response handle(Request paramRequest);
 
-    void unload();
+  void unload();
 }

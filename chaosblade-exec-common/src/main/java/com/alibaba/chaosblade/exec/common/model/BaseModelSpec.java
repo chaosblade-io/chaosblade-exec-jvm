@@ -16,12 +16,6 @@
 
 package com.alibaba.chaosblade.exec.common.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
 import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
 import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
@@ -30,106 +24,111 @@ import com.alibaba.chaosblade.exec.common.model.matcher.EffectPercentMatcherSpec
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.prepare.AgentPrepareSpec;
 import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public abstract class BaseModelSpec implements ModelSpec {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseModelSpec.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(BaseModelSpec.class);
 
-    private ConcurrentHashMap<String, ActionSpec> actionSpecs = new ConcurrentHashMap<String, ActionSpec>();
+  private ConcurrentHashMap<String, ActionSpec> actionSpecs =
+      new ConcurrentHashMap<String, ActionSpec>();
 
-    @Override
-    public List<ActionSpec> getActions() {
-        return new ArrayList<ActionSpec>(actionSpecs.values());
+  @Override
+  public List<ActionSpec> getActions() {
+    return new ArrayList<ActionSpec>(actionSpecs.values());
+  }
+
+  @Override
+  public Map<String, ActionSpec> getActionSpecs() {
+    return actionSpecs;
+  }
+
+  @Override
+  public ActionSpec getActionSpec(String actionName) {
+    return actionSpecs.get(actionName);
+  }
+
+  @Override
+  public void addActionSpec(ActionSpec actionSpec) {
+    ActionSpec oldActionSpec = actionSpecs.putIfAbsent(actionSpec.getName(), actionSpec);
+    if (oldActionSpec != null) {
+      LOGGER.warn("{} action has defined in {} target model", actionSpec.getName(), getTarget());
+      return;
     }
-
-    @Override
-    public Map<String, ActionSpec> getActionSpecs() {
-        return actionSpecs;
+    if (!(actionSpec instanceof DirectlyInjectionAction)) {
+      // add effect matcher
+      actionSpec.addMatcherDesc(new EffectCountMatcherSpec());
+      actionSpec.addMatcherDesc(new EffectPercentMatcherSpec());
     }
+  }
 
-    @Override
-    public ActionSpec getActionSpec(String actionName) {
-        return actionSpecs.get(actionName);
+  @Override
+  public PredicateResult predicate(Model model) {
+    // check action
+    Collection<ActionSpec> actionSpecs = getActionSpecs().values();
+    if (actionSpecs == null) {
+      LOGGER.error("the model action desc is null. target: {}", this.getTarget());
+      return PredicateResult.fail("model action desc is null");
     }
+    for (ActionSpec actionSpec : actionSpecs) {
+      if (!actionSpec.getName().equals(model.getActionName())) {
+        continue;
+      }
+      PredicateResult result = actionSpec.predicate(model.getAction());
+      if (!result.isSuccess()) {
+        LOGGER.error(
+            "the model action predicate failed. target: {}, action: {}",
+            this.getTarget(),
+            actionSpec.getName());
+        return PredicateResult.fail(result.getErr());
+      }
 
-    @Override
-    public void addActionSpec(ActionSpec actionSpec) {
-        ActionSpec oldActionSpec = actionSpecs.putIfAbsent(actionSpec.getName(), actionSpec);
-        if (oldActionSpec != null) {
-            LOGGER.warn("{} action has defined in {} target model", actionSpec.getName(), getTarget());
-            return;
+      // check matcher
+      result = preMatcherPredicate(model);
+      if (!result.isSuccess()) {
+        return PredicateResult.fail(result.getErr());
+      }
+      Collection<MatcherSpec> matcherSpecs = actionSpec.getMatcherSpecs().values();
+      if (matcherSpecs == null) {
+        continue;
+      }
+      for (MatcherSpec matcherSpec : matcherSpecs) {
+        result = matcherSpec.predicate(model.getMatcher());
+        if (!result.isSuccess()) {
+          return PredicateResult.fail(result.getErr());
         }
-        if (!(actionSpec instanceof DirectlyInjectionAction)) {
-            // add effect matcher
-            actionSpec.addMatcherDesc(new EffectCountMatcherSpec());
-            actionSpec.addMatcherDesc(new EffectPercentMatcherSpec());
-        }
+      }
     }
+    return PredicateResult.success();
+  }
 
-    @Override
-    public PredicateResult predicate(Model model) {
-        // check action
-        Collection<ActionSpec> actionSpecs = getActionSpecs().values();
-        if (actionSpecs == null) {
-            LOGGER.error("the model action desc is null. target: {}", this.getTarget());
-            return PredicateResult.fail("model action desc is null");
-        }
-        for (ActionSpec actionSpec : actionSpecs) {
-            if (!actionSpec.getName().equals(model.getActionName())) {
-                continue;
-            }
-            PredicateResult result = actionSpec.predicate(model.getAction());
-            if (!result.isSuccess()) {
-                LOGGER.error("the model action predicate failed. target: {}, action: {}",
-                    this.getTarget(), actionSpec.getName());
-                return PredicateResult.fail(result.getErr());
-            }
-
-            // check matcher
-            result = preMatcherPredicate(model);
-            if (!result.isSuccess()) {
-                return PredicateResult.fail(result.getErr());
-            }
-            Collection<MatcherSpec> matcherSpecs = actionSpec.getMatcherSpecs().values();
-            if (matcherSpecs == null) {
-                continue;
-            }
-            for (MatcherSpec matcherSpec : matcherSpecs) {
-                result = matcherSpec.predicate(model.getMatcher());
-                if (!result.isSuccess()) {
-                    return PredicateResult.fail(result.getErr());
-                }
-            }
-        }
-        return PredicateResult.success();
+  @Override
+  public void addMatcherDefToAllActions(MatcherSpec matcherSpec) {
+    for (ActionSpec actionSpec : actionSpecs.values()) {
+      actionSpec.addMatcherDesc(matcherSpec);
     }
+  }
 
-    @Override
-    public void addMatcherDefToAllActions(MatcherSpec matcherSpec) {
-        for (ActionSpec actionSpec : actionSpecs.values()) {
-            actionSpec.addMatcherDesc(matcherSpec);
-        }
-    }
+  /**
+   * @param matcherSpecs
+   * @return
+   */
+  protected abstract PredicateResult preMatcherPredicate(Model matcherSpecs);
 
-    /**
-     * @param matcherSpecs
-     * @return
-     */
-    protected abstract PredicateResult preMatcherPredicate(Model matcherSpecs);
+  @Override
+  public PrepareSpec getPrepareSpec() {
+    return new AgentPrepareSpec();
+  }
 
-    @Override
-    public PrepareSpec getPrepareSpec() {
-        return new AgentPrepareSpec();
-    }
-
-    @Override
-    public String getScope() {
-        return "host";
-    }
+  @Override
+  public String getScope() {
+    return "host";
+  }
 }

@@ -20,17 +20,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class JsonUtil {
-    final static ObjectMapper mapper = new ObjectMapper();
+  static final ObjectMapper mapper = new ObjectMapper();
 
-    public static ObjectReader reader() {
-        return mapper.reader();
-    }
+  public static ObjectReader reader() {
+    return mapper.reader();
+  }
 
-    public static ObjectWriter writer() {
-        return mapper.writer();
-    }
+  public static ObjectWriter writer() {
+    return mapper.writer();
+  }
 }

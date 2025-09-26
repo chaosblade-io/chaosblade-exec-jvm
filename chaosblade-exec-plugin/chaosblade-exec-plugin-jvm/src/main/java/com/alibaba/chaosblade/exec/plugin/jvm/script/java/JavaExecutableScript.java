@@ -16,42 +16,41 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.java;
 
+import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
+import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
-
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class JavaExecutableScript implements ExecutableScript {
 
-    public static String RUN_METHOD = "run";
+  public static String RUN_METHOD = "run";
 
-    private Object instance;
+  private Object instance;
 
-    private Map<String, Object> params;
+  private Map<String, Object> params;
 
-    public JavaExecutableScript(Object instance, Map<String, Object> params) {
-        this.instance = instance;
-        this.params = params;
+  public JavaExecutableScript(Object instance, Map<String, Object> params) {
+    this.instance = instance;
+    this.params = params;
+  }
+
+  @Override
+  public Object run() {
+    try {
+      Method method = instance.getClass().getDeclaredMethod(RUN_METHOD, Map.class);
+      method.setAccessible(true);
+      return method.invoke(this.instance, params);
+    } catch (NoSuchMethodException nc) {
+      throw new ScriptException(
+          "No suitable method found,method name:"
+              + RUN_METHOD
+              + ",param Type:"
+              + Map.class.getName(),
+          nc);
+
+    } catch (Exception ex) {
+      throw new ScriptException("Execute method failed", ex);
     }
-
-    @Override
-    public Object run() {
-        try {
-            Method method = instance.getClass().getDeclaredMethod(RUN_METHOD, Map.class);
-            method.setAccessible(true);
-            return method.invoke(this.instance, params);
-        } catch (NoSuchMethodException nc) {
-            throw new ScriptException(
-                "No suitable method found,method name:" + RUN_METHOD + ",param Type:" + Map.class.getName(), nc);
-
-        } catch (Exception ex) {
-            throw new ScriptException(
-                "Execute method failed", ex);
-        }
-    }
-
+  }
 }

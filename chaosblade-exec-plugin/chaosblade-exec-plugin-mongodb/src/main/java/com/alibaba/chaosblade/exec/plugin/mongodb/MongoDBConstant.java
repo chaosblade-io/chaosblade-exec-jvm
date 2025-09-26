@@ -16,13 +16,11 @@
 
 package com.alibaba.chaosblade.exec.plugin.mongodb;
 
-/**
- * @author Lingjian Xu
- */
+/** @author Lingjian Xu */
 public interface MongoDBConstant {
 
-    String TARGET_NAME = "mongodb";
-    String COLLECTION_MATCHER_NAME = "collection";
-    String DATABASE_MATCHER_NAME = "database";
-    String SQL_TYPE_MATCHER_NAME = "sqltype";
+  String TARGET_NAME = "mongodb";
+  String COLLECTION_MATCHER_NAME = "collection";
+  String DATABASE_MATCHER_NAME = "database";
+  String SQL_TYPE_MATCHER_NAME = "sqltype";
 }

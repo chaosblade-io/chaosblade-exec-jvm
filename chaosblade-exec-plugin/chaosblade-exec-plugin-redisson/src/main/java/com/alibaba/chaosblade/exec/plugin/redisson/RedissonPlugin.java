@@ -21,29 +21,26 @@ import com.alibaba.chaosblade.exec.common.aop.Plugin;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.model.ModelSpec;
 
-/**
- * @author xueshaoyi
- * @Date 2020/11/23 上午11:36
- **/
+/** @author xueshaoyi @Date 2020/11/23 上午11:36 */
 public class RedissonPlugin implements Plugin {
 
-    @Override
-    public String getName() {
-        return RedissonConstant.TARGET_NAME;
-    }
+  @Override
+  public String getName() {
+    return RedissonConstant.TARGET_NAME;
+  }
 
-    @Override
-    public ModelSpec getModelSpec() {
-        return new RedissonModelSpec();
-    }
+  @Override
+  public ModelSpec getModelSpec() {
+    return new RedissonModelSpec();
+  }
 
-    @Override
-    public PointCut getPointCut() {
-        return new RedissonPointCut();
-    }
+  @Override
+  public PointCut getPointCut() {
+    return new RedissonPointCut();
+  }
 
-    @Override
-    public Enhancer getEnhancer() {
-        return new RedissonEnhancer();
-    }
+  @Override
+  public Enhancer getEnhancer() {
+    return new RedissonEnhancer();
+  }
 }

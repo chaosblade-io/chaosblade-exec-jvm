@@ -18,31 +18,25 @@ package com.alibaba.chaosblade.exec.common.center;
 
 import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 public class DefaultListenerManager implements ListenerManager {
 
-    /**
-     * Plugin listener
-     */
-    private PluginLifecycleListener pluginLifecycleListener;
+  /** Plugin listener */
+  private PluginLifecycleListener pluginLifecycleListener;
 
-    @Override
-    public PluginLifecycleListener getPluginLifecycleListener() {
-        return pluginLifecycleListener;
-    }
+  @Override
+  public PluginLifecycleListener getPluginLifecycleListener() {
+    return pluginLifecycleListener;
+  }
 
-    @Override
-    public void setPluginLifecycleListener(PluginLifecycleListener listener) {
-        this.pluginLifecycleListener = listener;
-    }
+  @Override
+  public void setPluginLifecycleListener(PluginLifecycleListener listener) {
+    this.pluginLifecycleListener = listener;
+  }
 
-    @Override
-    public void load() {
-    }
+  @Override
+  public void load() {}
 
-    @Override
-    public void unload() {
-    }
+  @Override
+  public void unload() {}
 }

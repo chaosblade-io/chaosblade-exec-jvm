@@ -18,40 +18,40 @@ package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
 import java.util.Map;
 
-/**
- * @author RinaisSuper
- */
+/** @author RinaisSuper */
 public class ScriptContext {
 
-    private Map<String, String> options;
+  private Map<String, String> options;
 
-    public Map<String, String> getOptions() {
-        return options;
+  public Map<String, String> getOptions() {
+    return options;
+  }
+
+  public void setOptions(Map<String, String> options) {
+    this.options = options;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ScriptContext)) {
+      return false;
     }
 
-    public void setOptions(Map<String, String> options) {
-        this.options = options;
-    }
+    ScriptContext that = (ScriptContext) o;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (!(o instanceof ScriptContext)) { return false; }
+    return options != null ? options.equals(that.options) : that.options == null;
+  }
 
-        ScriptContext that = (ScriptContext)o;
+  @Override
+  public int hashCode() {
+    return options != null ? options.hashCode() : 0;
+  }
 
-        return options != null ? options.equals(that.options) : that.options == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return options != null ? options.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "ScriptContext{" +
-            "options=" + options +
-            '}';
-    }
+  @Override
+  public String toString() {
+    return "ScriptContext{" + "options=" + options + '}';
+  }
 }

@@ -16,8 +16,5 @@
 
 package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
 
-/**
- * @author RinaisSuper
- */
-public class DefaultScriptEngineService extends AbstractScriptEngineService {
-}
+/** @author RinaisSuper */
+public class DefaultScriptEngineService extends AbstractScriptEngineService {}

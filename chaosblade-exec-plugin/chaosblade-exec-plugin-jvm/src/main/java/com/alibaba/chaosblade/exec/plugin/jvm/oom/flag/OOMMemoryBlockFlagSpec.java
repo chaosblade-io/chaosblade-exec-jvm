@@ -24,23 +24,23 @@ import com.alibaba.chaosblade.exec.common.model.FlagSpec;
  * @email haibin.lhb@alibaba-inc.com
  */
 public class OOMMemoryBlockFlagSpec implements FlagSpec {
-    @Override
-    public String getName() {
-        return "block";
-    }
+  @Override
+  public String getName() {
+    return "block";
+  }
 
-    @Override
-    public String getDesc() {
-        return "Each block size when fill memory,only used for Heap OffHeap Area,Unit:MB";
-    }
+  @Override
+  public String getDesc() {
+    return "Each block size when fill memory,only used for Heap OffHeap Area,Unit:MB";
+  }
 
-    @Override
-    public boolean noArgs() {
-        return false;
-    }
+  @Override
+  public boolean noArgs() {
+    return false;
+  }
 
-    @Override
-    public boolean required() {
-        return false;
-    }
+  @Override
+  public boolean required() {
+    return false;
+  }
 }

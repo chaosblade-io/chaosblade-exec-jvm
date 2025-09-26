@@ -20,17 +20,15 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * @author Changjun Xiao
- */
+/** @author Changjun Xiao */
 @java.lang.annotation.Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Target {
 
-    /**
-     * Name of the component
-     *
-     * @return
-     */
-    String value();
+  /**
+   * Name of the component
+   *
+   * @return
+   */
+  String value();
 }
