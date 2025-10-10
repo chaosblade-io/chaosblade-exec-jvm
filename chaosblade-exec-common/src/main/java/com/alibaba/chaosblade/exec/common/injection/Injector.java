@@ -176,6 +176,6 @@ public class Injector {
       LOGGER.debug("match key:{} fail", keyName);
       return false;
     }
-    return true;
+    return !matchers.isEmpty();
   }
 }
