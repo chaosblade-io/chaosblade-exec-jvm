@@ -113,4 +113,4 @@ jobs:
           echo "## Full Build Summary" >> $GITHUB_STEP_SUMMARY
           echo "- **Build Target:** build-target/" >> $GITHUB_STEP_SUMMARY
           echo "- **Plugins:** $(ls plugins/*.jar 2>/dev/null | wc -l) plugins built" >> $GITHUB_STEP_SUMMARY
-          echo "- **Version:** ${{ env.BLADE_VERSION || '1.7.5' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ env.BLADE_VERSION || '1.8.0' }}" >> $GITHUB_STEP_SUMMARY
