@@ -21,7 +21,7 @@
     <parent>
         <artifactId>chaosblade-exec-jvm</artifactId>
         <groupId>com.alibaba.chaosblade</groupId>
-        <version>1.7.5</version>
+        <version>1.8.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
