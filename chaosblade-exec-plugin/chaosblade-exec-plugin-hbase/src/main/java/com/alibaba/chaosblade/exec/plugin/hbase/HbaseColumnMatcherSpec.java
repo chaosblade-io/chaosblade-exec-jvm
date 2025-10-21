@@ -1,5 +1,5 @@
 /*
- * Copyright 1999-2013 Alibaba Group Holding Ltd.
+ * Copyright 2025 The ChaosBlade Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.chaosblade.exec.plugin.hbase;
 
 import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
