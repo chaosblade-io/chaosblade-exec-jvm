@@ -35,4 +35,7 @@ public interface ModelConstant {
 
   /** the flag of buisness params */
   String BUSINESS_PARAMS = "b-params";
+
+  /** the flag of param express */
+  String PARAM_EXP_FLAG = "param-express";
 }
