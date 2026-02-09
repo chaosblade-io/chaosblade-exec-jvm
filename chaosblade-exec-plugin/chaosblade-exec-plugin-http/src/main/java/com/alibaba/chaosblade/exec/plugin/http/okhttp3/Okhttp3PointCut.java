@@ -19,6 +19,7 @@ package com.alibaba.chaosblade.exec.plugin.http.okhttp3;
 import com.alibaba.chaosblade.exec.common.aop.PointCut;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
 import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
@@ -32,7 +33,9 @@ public class Okhttp3PointCut implements PointCut {
 
   @Override
   public ClassMatcher getClassMatcher() {
-    return new NameClassMatcher("okhttp3.RealCall");
+    return new OrClassMatcher()
+        .or(new NameClassMatcher("okhttp3.RealCall"))
+        .or(new NameClassMatcher("okhttp3.internal.connection.RealCall"));
   }
 
   @Override
