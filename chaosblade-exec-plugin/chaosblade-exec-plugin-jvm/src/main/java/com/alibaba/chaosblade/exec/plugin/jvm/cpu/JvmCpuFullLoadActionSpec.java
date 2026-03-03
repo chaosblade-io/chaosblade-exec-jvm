@@ -1,15 +1,15 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.cpu;
+package com.alibaba.xblade.exec.plugin.jvm.cpu;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
-import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.constant.CategoryConstants;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.action.ActionModel;
+import com.alibaba.xblade.exec.common.model.action.BaseActionSpec;
+import com.alibaba.xblade.exec.common.model.action.DirectlyInjectionAction;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,14 +1,14 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.thread.runstrategy;
+package com.alibaba.xblade.exec.plugin.jvm.thread.runstrategy;
 
-import com.alibaba.chaosblade.exec.common.model.action.threadpool.WaitThread;
-import com.alibaba.chaosblade.exec.plugin.jvm.thread.ThreadRunStrategy;
+import com.alibaba.xblade.exec.common.model.action.threadpool.WaitThread;
+import com.alibaba.xblade.exec.plugin.jvm.thread.ThreadRunStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @Author qianfan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread @Date 2020/12/22 1:14 下午
+ * @package: com.alibaba.xblade.exec.plugin.jvm.thread @Date 2020/12/22 1:14 下午
  */
 public class ThreadWaitStrategy implements ThreadRunStrategy {
 

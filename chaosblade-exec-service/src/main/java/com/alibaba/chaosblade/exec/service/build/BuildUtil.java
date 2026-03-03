@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.service.build;
+package com.alibaba.xblade.exec.service.build;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;

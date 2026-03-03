@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.center;
+package com.alibaba.xblade.exec.common.center;
 
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.util.ModelUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.util.ModelUtil;
+import com.alibaba.xblade.exec.common.util.StringUtil;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.aop.matcher;
+package com.alibaba.xblade.exec.common.aop.matcher;
 
 /** @author Changjun Xiao */
 public class ClassInfo {

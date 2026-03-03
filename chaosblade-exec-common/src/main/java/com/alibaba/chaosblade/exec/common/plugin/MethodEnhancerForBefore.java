@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.plugin;
+package com.alibaba.xblade.exec.common.plugin;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
 import java.lang.reflect.Method;
 
 /** @author Changjun Xiao */

@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.common.model.matcher;
+package com.alibaba.xblade.exec.common.model.matcher;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamPatternEnum;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.aop.matcher.busi.BusinessParamPatternEnum;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.xblade.exec.common.util.StringUtils;
 import java.util.List;
 
 /** @author wufunc@gmail.com */

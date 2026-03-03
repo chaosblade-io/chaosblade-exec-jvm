@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.plugin.lettuce;
+package com.alibaba.xblade.exec.plugin.lettuce;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 /** @author yefei */
 public class LettucePlugin implements Plugin {

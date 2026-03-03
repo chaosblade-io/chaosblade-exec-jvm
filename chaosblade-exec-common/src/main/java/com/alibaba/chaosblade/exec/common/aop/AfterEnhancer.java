@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.aop;
+package com.alibaba.xblade.exec.common.aop;
 
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
-import com.alibaba.chaosblade.exec.common.injection.Injector;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.injection.Injector;
 import java.lang.reflect.Method;
 
 /** @author Changjun Xiao */

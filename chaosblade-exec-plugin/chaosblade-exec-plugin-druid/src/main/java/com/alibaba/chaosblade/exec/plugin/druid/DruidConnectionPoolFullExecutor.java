@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.druid;
+package com.alibaba.xblade.exec.plugin.druid;
 
-import com.alibaba.chaosblade.exec.common.model.action.connpool.WaitingTriggerConnectionPoolFullExecutor;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.model.action.connpool.WaitingTriggerConnectionPoolFullExecutor;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

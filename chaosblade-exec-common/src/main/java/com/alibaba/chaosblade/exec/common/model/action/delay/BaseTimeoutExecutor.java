@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action.delay;
+package com.alibaba.xblade.exec.common.model.action.delay;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.exception.InterruptProcessException;
 
 /** @author Changjun Xiao */
 public abstract class BaseTimeoutExecutor implements TimeoutExecutor {

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
+package com.alibaba.xblade.exec.bootstrap.jvmsandbox;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PluginBean;
-import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.common.transport.Request;
-import com.alibaba.chaosblade.exec.common.transport.Response;
-import com.alibaba.chaosblade.exec.common.transport.Response.Code;
-import com.alibaba.chaosblade.exec.common.util.PluginJarUtil;
-import com.alibaba.chaosblade.exec.common.util.PluginLoader;
-import com.alibaba.chaosblade.exec.common.util.PluginUtil;
-import com.alibaba.chaosblade.exec.service.handler.DefaultDispatchService;
-import com.alibaba.chaosblade.exec.service.handler.DispatchService;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PluginBean;
+import com.alibaba.xblade.exec.common.aop.PluginLifecycleListener;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.transport.Request;
+import com.alibaba.xblade.exec.common.transport.Response;
+import com.alibaba.xblade.exec.common.transport.Response.Code;
+import com.alibaba.xblade.exec.common.util.PluginJarUtil;
+import com.alibaba.xblade.exec.common.util.PluginLoader;
+import com.alibaba.xblade.exec.common.util.PluginUtil;
+import com.alibaba.xblade.exec.service.handler.DefaultDispatchService;
+import com.alibaba.xblade.exec.service.handler.DispatchService;
 import com.alibaba.jvm.sandbox.api.Information;
 import com.alibaba.jvm.sandbox.api.Module;
 import com.alibaba.jvm.sandbox.api.ModuleLifecycle;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jedis;
+package com.alibaba.xblade.exec.plugin.jedis;
 
 /** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public interface JedisConstant {

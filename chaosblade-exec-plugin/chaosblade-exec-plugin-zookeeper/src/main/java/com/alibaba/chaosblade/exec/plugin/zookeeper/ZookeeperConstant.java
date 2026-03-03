@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.zookeeper;
+package com.alibaba.xblade.exec.plugin.zookeeper;
 
 /** @author liuhq @Date 2020/11/23 上午11:36 */
 public interface ZookeeperConstant {

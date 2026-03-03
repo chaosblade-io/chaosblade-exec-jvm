@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.plugin.log.log4j2;
+package com.alibaba.xblade.exec.plugin.log.log4j2;
 
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.*;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.*;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
 /** @author orion233 */
 public class Log4j2PointCut implements PointCut {

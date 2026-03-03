@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.servlet.code;
+package com.alibaba.xblade.exec.plugin.servlet.code;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
 
 /** @author yefei */
 public class HttpCodeFlagSpec implements FlagSpec {

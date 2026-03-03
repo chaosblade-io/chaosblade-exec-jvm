@@ -1,12 +1,12 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.thread;
+package com.alibaba.xblade.exec.plugin.jvm.thread;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.thread.runstrategy.ThreadRunningStrategy;
-import com.alibaba.chaosblade.exec.plugin.jvm.thread.runstrategy.ThreadWaitStrategy;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.plugin.jvm.thread.runstrategy.ThreadRunningStrategy;
+import com.alibaba.xblade.exec.plugin.jvm.thread.runstrategy.ThreadWaitStrategy;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @Author Yuhan Tang
  *
- * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread @Date 2020-11-02 11:09
+ * @package: com.alibaba.xblade.exec.plugin.jvm.thread @Date 2020-11-02 11:09
  */
 public class JvmThreadPoolFullExecutor implements ActionExecutor, StoppableActionExecutor {
 

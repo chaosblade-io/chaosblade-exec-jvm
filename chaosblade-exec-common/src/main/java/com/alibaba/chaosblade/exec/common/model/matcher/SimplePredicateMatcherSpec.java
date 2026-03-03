@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.common.model.matcher;
+package com.alibaba.xblade.exec.common.model.matcher;
 
 /** Author: xiaochangjun */
 public class SimplePredicateMatcherSpec extends BasePredicateMatcherSpec {

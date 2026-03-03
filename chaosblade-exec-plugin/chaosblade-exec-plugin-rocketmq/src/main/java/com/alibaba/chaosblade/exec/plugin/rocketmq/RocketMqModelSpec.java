@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.plugin.rocketmq;
+package com.alibaba.xblade.exec.plugin.rocketmq;
 
-import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
 import java.util.ArrayList;
 import java.util.List;
 

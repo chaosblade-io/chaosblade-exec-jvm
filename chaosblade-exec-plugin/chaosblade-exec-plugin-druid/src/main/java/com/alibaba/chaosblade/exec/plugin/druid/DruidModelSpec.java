@@ -1,14 +1,14 @@
-package com.alibaba.chaosblade.exec.plugin.druid;
+package com.alibaba.xblade.exec.plugin.druid;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
-import com.alibaba.chaosblade.exec.common.model.BaseModelSpec;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.connpool.ConnectionPoolFullActionSpec;
-import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
-import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.exception.ExperimentException;
+import com.alibaba.xblade.exec.common.model.BaseModelSpec;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.connpool.ConnectionPoolFullActionSpec;
+import com.alibaba.xblade.exec.common.model.handler.PreCreateInjectionModelHandler;
+import com.alibaba.xblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
 
 /** @author Changjun Xiao */
 public class DruidModelSpec extends BaseModelSpec

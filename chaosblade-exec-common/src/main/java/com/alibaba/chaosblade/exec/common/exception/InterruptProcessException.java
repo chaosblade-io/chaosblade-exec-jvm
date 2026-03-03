@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.exception;
+package com.alibaba.xblade.exec.common.exception;
 
 /** @author Changjun Xiao */
 public class InterruptProcessException extends Exception {

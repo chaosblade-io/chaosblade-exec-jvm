@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
+package com.alibaba.xblade.exec.plugin.jvm;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.common.plugin.MethodEnhancer;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.plugin.MethodEnhancer;
 
 /** @author Changjun Xiao */
 public class JvmPlugin implements Plugin {

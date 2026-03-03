@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.dubbo.model;
+package com.alibaba.xblade.exec.plugin.dubbo.model;
 
-import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
+import com.alibaba.xblade.exec.common.aop.CustomMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

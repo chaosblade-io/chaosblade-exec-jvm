@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.gc;
+package com.alibaba.xblade.exec.plugin.jvm.gc;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
 
 /** @author shizhi.zhu@qunar.com */
 public class FullGCEffectCountFlagSpec implements FlagSpec {

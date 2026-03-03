@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl;
+package com.alibaba.xblade.exec.plugin.jvm.oom.executor.impl;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.OomObject;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.oom.JvmMemoryArea;
+import com.alibaba.xblade.exec.plugin.jvm.oom.OomObject;
+import com.alibaba.xblade.exec.plugin.jvm.oom.executor.JvmOomExecutor;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.util.ArrayList;

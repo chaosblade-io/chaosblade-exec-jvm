@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.postgrelsql;
+package com.alibaba.xblade.exec.plugin.postgrelsql;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.common.util.SQLParserUtil;
-import com.alibaba.chaosblade.exec.common.util.SQLParserUtil.SqlType;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.JsonUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.util.SQLParserUtil;
+import com.alibaba.xblade.exec.common.util.SQLParserUtil.SqlType;
 import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

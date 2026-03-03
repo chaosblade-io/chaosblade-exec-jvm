@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.zookeeper;
+package com.alibaba.xblade.exec.plugin.zookeeper;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /** @author liuhq @Date 2020/11/23 上午11:36 */
 public class ZookeeperPathMatcherSpec extends BasePredicateMatcherSpec {

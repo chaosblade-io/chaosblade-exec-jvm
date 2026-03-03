@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.common.model.action.threadpool;
+package com.alibaba.xblade.exec.common.model.action.threadpool;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /** @author Changjun Xiao */

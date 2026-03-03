@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo.model;
+package com.alibaba.xblade.exec.plugin.dubbo.model;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
-import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.threadpool.ThreadPoolFullActionSpec;
-import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
-import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
-import com.alibaba.chaosblade.exec.common.model.matcher.BusinessParamsMatcherSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-import com.alibaba.chaosblade.exec.common.plugin.MethodNameMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.exception.ExperimentException;
+import com.alibaba.xblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.action.threadpool.ThreadPoolFullActionSpec;
+import com.alibaba.xblade.exec.common.model.handler.PreCreateInjectionModelHandler;
+import com.alibaba.xblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
+import com.alibaba.xblade.exec.common.model.matcher.BusinessParamsMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.plugin.MethodNameMatcherSpec;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboConstant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

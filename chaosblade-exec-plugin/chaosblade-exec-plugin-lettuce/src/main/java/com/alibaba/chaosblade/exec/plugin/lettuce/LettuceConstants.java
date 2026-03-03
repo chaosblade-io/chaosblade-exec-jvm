@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.lettuce;
+package com.alibaba.xblade.exec.plugin.lettuce;
 
 /**
  * @author yefei

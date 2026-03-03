@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.plugin.feign;
+package com.alibaba.xblade.exec.plugin.feign;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.plugin.feign.model.FeignModelSpec;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.plugin.feign.model.FeignModelSpec;
 
 /** @author guoyu486@gmail.com */
 public class FeignPlugin implements Plugin, FeignConstant {

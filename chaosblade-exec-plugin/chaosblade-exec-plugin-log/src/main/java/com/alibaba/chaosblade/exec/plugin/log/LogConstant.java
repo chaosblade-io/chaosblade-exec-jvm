@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.log;
+package com.alibaba.xblade.exec.plugin.log;
 
 /** @author shizhi.zhu@qunar.com */
 public interface LogConstant {

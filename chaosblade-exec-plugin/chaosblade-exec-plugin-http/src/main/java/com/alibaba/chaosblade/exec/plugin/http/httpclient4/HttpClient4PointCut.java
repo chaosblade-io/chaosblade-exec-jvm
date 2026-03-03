@@ -1,19 +1,19 @@
-package com.alibaba.chaosblade.exec.plugin.http.httpclient4;
+package com.alibaba.xblade.exec.plugin.http.httpclient4;
 
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.OrClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.OrMethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.ClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.OrClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.AndMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.OrMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
 /**
  * @Author yuhan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.http.httpclient4 @Date 2019-05-22 16:10
+ * @package: com.alibaba.xblade.exec.plugin.http.httpclient4 @Date 2019-05-22 16:10
  */
 public class HttpClient4PointCut implements PointCut {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.service.handler;
+package com.alibaba.xblade.exec.service.handler;
 
 /** @author Changjun Xiao */
 public class ParseException extends Exception {

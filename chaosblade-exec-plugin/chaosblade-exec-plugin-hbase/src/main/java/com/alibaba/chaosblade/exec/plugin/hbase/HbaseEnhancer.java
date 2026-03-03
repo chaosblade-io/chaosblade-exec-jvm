@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.hbase;
+package com.alibaba.xblade.exec.plugin.hbase;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.JsonUtil;
+import com.alibaba.xblade.exec.common.util.StringUtils;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @Author Yuhan Tang
  *
- * @package: com.alibaba.chaosblade.exec.plugin.hbase @Date 2020-10-30 14:46
+ * @package: com.alibaba.xblade.exec.plugin.hbase @Date 2020-10-30 14:46
  */
 public class HbaseEnhancer extends BeforeEnhancer {
 

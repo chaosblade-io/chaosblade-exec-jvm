@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action;
+package com.alibaba.xblade.exec.common.model.action;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
 import java.util.List;
 import java.util.Map;
 

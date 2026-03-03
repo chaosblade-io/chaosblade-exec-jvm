@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.common.model.handler;
+package com.alibaba.xblade.exec.common.model.handler;
 
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
-import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.exception.ExperimentException;
+import com.alibaba.xblade.exec.common.model.Model;
 
 /**
  * Model Level Handler before destroy injections
@@ -11,7 +11,7 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  * <p>For example,a module contains multiple actions, before invoke destroy actions,we need do
  * something,so you can make
  *
- * @author RinaisSuper @{@link com.alibaba.chaosblade.exec.common.model.ModelSpec} implements this
+ * @author RinaisSuper @{@link com.alibaba.xblade.exec.common.model.ModelSpec} implements this
  *     interface.
  * @date 2019-04-19
  */

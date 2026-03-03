@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.elasticsearch.index;
+package com.alibaba.xblade.exec.plugin.elasticsearch.index;
 
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

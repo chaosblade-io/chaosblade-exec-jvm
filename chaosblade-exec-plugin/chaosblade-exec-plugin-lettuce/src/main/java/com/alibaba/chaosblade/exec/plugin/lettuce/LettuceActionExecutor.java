@@ -1,8 +1,8 @@
-package com.alibaba.chaosblade.exec.plugin.lettuce;
+package com.alibaba.xblade.exec.plugin.lettuce;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;

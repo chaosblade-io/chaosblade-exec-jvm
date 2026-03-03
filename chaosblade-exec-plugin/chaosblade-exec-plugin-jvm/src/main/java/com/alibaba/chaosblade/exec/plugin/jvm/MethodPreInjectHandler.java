@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
+package com.alibaba.xblade.exec.plugin.jvm;
 
-import com.alibaba.chaosblade.exec.common.aop.PluginBean;
-import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
-import com.alibaba.chaosblade.exec.common.plugin.MethodPlugin;
+import com.alibaba.xblade.exec.common.aop.PluginBean;
+import com.alibaba.xblade.exec.common.aop.PluginLifecycleListener;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.ClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.exception.ExperimentException;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.plugin.MethodConstant;
+import com.alibaba.xblade.exec.common.plugin.MethodPlugin;
 
 /** @author changjun.xcj */
 public class MethodPreInjectHandler {

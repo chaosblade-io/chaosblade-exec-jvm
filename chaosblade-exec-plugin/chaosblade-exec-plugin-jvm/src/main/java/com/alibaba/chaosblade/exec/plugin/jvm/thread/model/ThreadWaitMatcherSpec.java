@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.thread.model;
+package com.alibaba.xblade.exec.plugin.jvm.thread.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
 
 /**
  * @Author qianfan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread @Date 2020/12/22 12:56 下午
+ * @package: com.alibaba.xblade.exec.plugin.jvm.thread @Date 2020/12/22 12:56 下午
  */
 public class ThreadWaitMatcherSpec extends BasePredicateMatcherSpec {
 

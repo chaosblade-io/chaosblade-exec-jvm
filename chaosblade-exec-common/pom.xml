@@ -20,7 +20,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>chaosblade-exec-jvm</artifactId>
-        <groupId>com.alibaba.chaosblade</groupId>
+        <groupId>com.alibaba.xblade</groupId>
         <version>1.8.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -30,7 +30,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba.chaosblade</groupId>
+            <groupId>com.alibaba.xblade</groupId>
             <artifactId>chaosblade-exec-spi</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.plugin.druid;
+package com.alibaba.xblade.exec.plugin.druid;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 /** @author Changjun Xiao */
 public class DruidDataSourcePlugin implements Plugin {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.plugin;
+package com.alibaba.xblade.exec.common.plugin;
 
 /** @author Changjun Xiao */
 public interface MethodConstant {

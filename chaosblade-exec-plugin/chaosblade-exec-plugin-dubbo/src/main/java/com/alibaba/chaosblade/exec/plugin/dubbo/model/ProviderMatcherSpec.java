@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo.model;
+package com.alibaba.xblade.exec.plugin.dubbo.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboConstant;
 
 /** @author Changjun Xiao */
 public class ProviderMatcherSpec extends BasePredicateMatcherSpec {

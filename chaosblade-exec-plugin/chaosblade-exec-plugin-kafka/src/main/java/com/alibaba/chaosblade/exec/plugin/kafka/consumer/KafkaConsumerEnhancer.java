@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.plugin.kafka.consumer;
+package com.alibaba.xblade.exec.plugin.kafka.consumer;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.plugin.kafka.KafkaConstant;
-import com.alibaba.chaosblade.exec.plugin.kafka.model.ConsumerTopicMatcher;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.plugin.kafka.KafkaConstant;
+import com.alibaba.xblade.exec.plugin.kafka.model.ConsumerTopicMatcher;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;

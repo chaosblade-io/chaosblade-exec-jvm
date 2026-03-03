@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.common.util;
+package com.alibaba.xblade.exec.common.util;
 
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
-import com.alibaba.chaosblade.exec.common.center.StatusMetric;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.context.GlobalContext;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.center.StatusMetric;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.context.GlobalContext;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.spi.BusinessDataGetter;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
 import org.slf4j.Logger;

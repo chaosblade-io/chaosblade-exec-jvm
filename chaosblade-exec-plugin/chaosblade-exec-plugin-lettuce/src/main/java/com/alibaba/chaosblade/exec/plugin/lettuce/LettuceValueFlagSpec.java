@@ -1,8 +1,8 @@
-package com.alibaba.chaosblade.exec.plugin.lettuce;
+package com.alibaba.xblade.exec.plugin.lettuce;
 
-import static com.alibaba.chaosblade.exec.plugin.lettuce.LettuceConstants.VALUE;
+import static com.alibaba.xblade.exec.plugin.lettuce.LettuceConstants.VALUE;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
 
 /** @author yefei */
 public class LettuceValueFlagSpec implements FlagSpec {

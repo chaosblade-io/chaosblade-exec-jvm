@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.plugin.gateway;
+package com.alibaba.xblade.exec.plugin.gateway;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.JsonUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
 import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @Author wb-shd671576
  *
- * @package: com.alibaba.chaosblade.exec.plugin.gateway @Date 2021-07-29
+ * @package: com.alibaba.xblade.exec.plugin.gateway @Date 2021-07-29
  */
 public class GatewayEnhancer extends BeforeEnhancer {
 

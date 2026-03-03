@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.center;
+package com.alibaba.xblade.exec.common.center;
 
 /** @author Changjun Xiao */
 public interface ManagerService {

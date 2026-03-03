@@ -1,8 +1,8 @@
-package com.alibaba.chaosblade.exec.plugin.rabbitmq.consumer;
+package com.alibaba.xblade.exec.plugin.rabbitmq.consumer;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.plugin.rabbitmq.RabbitMqPlugin;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.plugin.rabbitmq.RabbitMqPlugin;
 
 /** @author raygenyang@163.com */
 public class RabbitMqConsumerPlugin extends RabbitMqPlugin {

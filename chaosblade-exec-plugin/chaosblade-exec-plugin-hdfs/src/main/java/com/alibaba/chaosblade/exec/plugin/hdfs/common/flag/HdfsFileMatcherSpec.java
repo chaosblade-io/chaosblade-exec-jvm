@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.hdfs.common.flag;
+package com.alibaba.xblade.exec.plugin.hdfs.common.flag;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.hdfs.common.HdfsConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.hdfs.common.HdfsConstant;
 
 public class HdfsFileMatcherSpec extends BasePredicateMatcherSpec {
   @Override

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.util;
+package com.alibaba.xblade.exec.common.util;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.constant.DelimiterConstant;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.constant.DelimiterConstant;
 
 /** @author Changjun Xiao */
 public class PluginUtil {

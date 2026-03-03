@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.feign;
+package com.alibaba.xblade.exec.plugin.feign;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
 import java.lang.reflect.Method;
 import org.junit.Assert;
 import org.junit.Before;
@@ -77,6 +77,6 @@ public class FeignProducerEnhancerTest {
     Assert.assertNotNull("FeignProducerEnhancer实例应该不为null", enhancer);
     Assert.assertTrue(
         "应该继承自BeforeEnhancer",
-        enhancer instanceof com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer);
+        enhancer instanceof com.alibaba.xblade.exec.common.aop.BeforeEnhancer);
   }
 }

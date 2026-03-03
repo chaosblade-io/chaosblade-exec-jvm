@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.kafka.model;
+package com.alibaba.xblade.exec.plugin.kafka.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.kafka.KafkaConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.kafka.KafkaConstant;
 
 /** @author ljzhxx@gmail.com */
 public class TopicMatcherSpec extends BasePredicateMatcherSpec implements KafkaConstant {

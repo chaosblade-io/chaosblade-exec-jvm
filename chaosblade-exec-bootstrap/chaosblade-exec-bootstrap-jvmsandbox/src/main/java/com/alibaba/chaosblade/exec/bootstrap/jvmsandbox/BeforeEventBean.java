@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
+package com.alibaba.xblade.exec.bootstrap.jvmsandbox;
 
 /** @author Changjun Xiao */
 public class BeforeEventBean {

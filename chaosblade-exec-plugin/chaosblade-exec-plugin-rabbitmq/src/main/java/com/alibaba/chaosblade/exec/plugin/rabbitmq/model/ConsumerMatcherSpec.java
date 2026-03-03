@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.rabbitmq.model;
+package com.alibaba.xblade.exec.plugin.rabbitmq.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.rabbitmq.RabbitMqConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.rabbitmq.RabbitMqConstant;
 
 /** @author raygenyang@163.com */
 public class ConsumerMatcherSpec extends BasePredicateMatcherSpec implements RabbitMqConstant {

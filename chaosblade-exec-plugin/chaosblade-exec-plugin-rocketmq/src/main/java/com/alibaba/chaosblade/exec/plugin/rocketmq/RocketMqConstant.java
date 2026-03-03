@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.rocketmq;
+package com.alibaba.xblade.exec.plugin.rocketmq;
 
 /**
  * @author RinaisSuper

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.util;
+package com.alibaba.xblade.exec.common.util;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
 
 /**
  * @author haibin

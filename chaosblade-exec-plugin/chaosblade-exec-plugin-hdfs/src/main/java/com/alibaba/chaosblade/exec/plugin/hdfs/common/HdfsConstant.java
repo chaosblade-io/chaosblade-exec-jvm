@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.hdfs.common;
+package com.alibaba.xblade.exec.plugin.hdfs.common;
 
 public class HdfsConstant {
   public static final String TARGET_NAME = "hdfs";

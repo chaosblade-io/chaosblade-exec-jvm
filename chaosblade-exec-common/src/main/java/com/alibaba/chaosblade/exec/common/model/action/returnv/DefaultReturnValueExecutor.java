@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action.returnv;
+package com.alibaba.xblade.exec.common.model.action.returnv;
 
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.common.util.StringUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.Method;

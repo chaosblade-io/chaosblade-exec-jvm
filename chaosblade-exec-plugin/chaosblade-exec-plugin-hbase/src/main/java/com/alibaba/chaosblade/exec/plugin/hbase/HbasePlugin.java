@@ -1,14 +1,14 @@
-package com.alibaba.chaosblade.exec.plugin.hbase;
+package com.alibaba.xblade.exec.plugin.hbase;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 /**
  * @Author <a href="tangyuhan@shulie.io">yuhan.tang</a>
  *
- * @package: com.alibaba.chaosblade.exec.plugin.hbase @Date 2020-10-30 14:06
+ * @package: com.alibaba.xblade.exec.plugin.hbase @Date 2020-10-30 14:06
  */
 public class HbasePlugin implements Plugin {
 

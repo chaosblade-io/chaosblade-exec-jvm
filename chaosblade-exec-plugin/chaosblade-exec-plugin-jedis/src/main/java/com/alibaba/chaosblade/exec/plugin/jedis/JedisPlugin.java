@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jedis;
+package com.alibaba.xblade.exec.plugin.jedis;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 /** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public class JedisPlugin implements Plugin {

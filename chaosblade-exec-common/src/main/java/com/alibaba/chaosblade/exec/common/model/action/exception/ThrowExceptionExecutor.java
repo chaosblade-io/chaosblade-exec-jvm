@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action.exception;
+package com.alibaba.xblade.exec.common.model.action.exception;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
 import java.lang.reflect.Method;
 
 /** @author Changjun Xiao */

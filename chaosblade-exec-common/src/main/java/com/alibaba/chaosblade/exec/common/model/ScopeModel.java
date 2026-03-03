@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model;
+package com.alibaba.xblade.exec.common.model;
 
 /** @author Changjun Xiao */
 public class ScopeModel {

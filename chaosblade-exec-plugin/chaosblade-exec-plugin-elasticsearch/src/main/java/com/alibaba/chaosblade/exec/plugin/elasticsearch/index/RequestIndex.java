@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.plugin.elasticsearch.index;
+package com.alibaba.xblade.exec.plugin.elasticsearch.index;
 
 import java.util.List;
 
 /**
  * @Author Yuhan Tang
  *
- * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch.index.impl @Date 2020-10-30 16:16
+ * @package: com.alibaba.xblade.exec.plugin.elasticsearch.index.impl @Date 2020-10-30 16:16
  */
 public interface RequestIndex {
   /**

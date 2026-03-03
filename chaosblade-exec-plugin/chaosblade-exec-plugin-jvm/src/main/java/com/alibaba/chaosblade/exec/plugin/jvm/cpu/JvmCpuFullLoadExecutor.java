@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.cpu;
+package com.alibaba.xblade.exec.plugin.jvm.cpu;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.slf4j.Logger;

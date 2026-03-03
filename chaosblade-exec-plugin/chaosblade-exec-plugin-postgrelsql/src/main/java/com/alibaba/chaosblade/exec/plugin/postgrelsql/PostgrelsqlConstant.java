@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.postgrelsql;
+package com.alibaba.xblade.exec.plugin.postgrelsql;
 
 /** @author guoping.yao <a href="mailto:bryan880901@qq.com"> */
 public interface PostgrelsqlConstant {

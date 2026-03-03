@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action.delay;
+package com.alibaba.xblade.exec.common.model.action.delay;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
 
 /** @author Changjun Xiao */
 public interface TimeoutExecutor extends ActionExecutor {

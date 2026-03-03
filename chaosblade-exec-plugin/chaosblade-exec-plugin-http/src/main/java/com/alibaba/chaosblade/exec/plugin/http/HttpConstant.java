@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.http;
+package com.alibaba.xblade.exec.plugin.http;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Author yuhan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.http @Date 2019-05-22 16:28
+ * @package: com.alibaba.xblade.exec.plugin.http @Date 2019-05-22 16:28
  */
 public class HttpConstant {
 

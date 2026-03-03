@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model;
+package com.alibaba.xblade.exec.common.model;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.model.action.ActionModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
 
 /** @author Changjun Xiao */
 public class Model {

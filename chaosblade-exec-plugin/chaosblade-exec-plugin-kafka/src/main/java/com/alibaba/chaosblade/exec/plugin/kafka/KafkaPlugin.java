@@ -1,8 +1,8 @@
-package com.alibaba.chaosblade.exec.plugin.kafka;
+package com.alibaba.xblade.exec.plugin.kafka;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.plugin.kafka.model.KafkaModelSpec;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.plugin.kafka.model.KafkaModelSpec;
 
 /** @author ljzhxx@gmail.com */
 public abstract class KafkaPlugin implements Plugin, KafkaConstant {

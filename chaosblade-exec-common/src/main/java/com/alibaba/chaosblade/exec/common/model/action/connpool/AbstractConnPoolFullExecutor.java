@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.common.model.action.connpool;
+package com.alibaba.xblade.exec.common.model.action.connpool;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.util.ThreadUtil;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.util.ThreadUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.CopyOnWriteArraySet;

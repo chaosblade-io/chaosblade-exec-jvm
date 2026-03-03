@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.spi;
+package com.alibaba.xblade.exec.spi;
 
 /**
  * @author wufunc@gmail.com

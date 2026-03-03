@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.java;
+package com.alibaba.xblade.exec.plugin.jvm.script.java;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ExecutableScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptException;
 import java.lang.reflect.Method;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.common.model.action.threadpool;
+package com.alibaba.xblade.exec.common.model.action.threadpool;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;

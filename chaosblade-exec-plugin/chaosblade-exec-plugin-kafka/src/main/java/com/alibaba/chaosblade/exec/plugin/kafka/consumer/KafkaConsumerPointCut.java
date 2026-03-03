@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.plugin.kafka.consumer;
+package com.alibaba.xblade.exec.plugin.kafka.consumer;
 
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.plugin.kafka.KafkaConstant;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.MethodInfo;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.ClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.plugin.kafka.KafkaConstant;
 
 /** @author ljzhxx@gmail.com */
 public class KafkaConsumerPointCut implements PointCut, KafkaConstant {

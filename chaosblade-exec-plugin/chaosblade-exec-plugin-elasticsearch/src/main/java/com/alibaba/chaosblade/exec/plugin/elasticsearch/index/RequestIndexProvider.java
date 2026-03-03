@@ -1,13 +1,13 @@
-package com.alibaba.chaosblade.exec.plugin.elasticsearch.index;
+package com.alibaba.xblade.exec.plugin.elasticsearch.index;
 
-import com.alibaba.chaosblade.exec.plugin.elasticsearch.index.impl.*;
+import com.alibaba.xblade.exec.plugin.elasticsearch.index.impl.*;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @Author qianfan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch.index @Date 2020/11/4 4:51 下午
+ * @package: com.alibaba.xblade.exec.plugin.elasticsearch.index @Date 2020/11/4 4:51 下午
  */
 public final class RequestIndexProvider {
   private static Map<String, AbstractRequestIndex> registry =

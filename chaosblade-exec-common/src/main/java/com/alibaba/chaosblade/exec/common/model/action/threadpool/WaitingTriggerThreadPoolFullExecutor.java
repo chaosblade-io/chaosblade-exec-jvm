@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.common.model.action.threadpool;
+package com.alibaba.xblade.exec.common.model.action.threadpool;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

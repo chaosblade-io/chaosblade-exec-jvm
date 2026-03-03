@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.kafka;
+package com.alibaba.xblade.exec.plugin.kafka;
 
 /** @author ljzhxx@gmail.com */
 public interface KafkaConstant {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action;
+package com.alibaba.xblade.exec.common.model.action;
 
 import java.util.HashMap;
 import java.util.Map;

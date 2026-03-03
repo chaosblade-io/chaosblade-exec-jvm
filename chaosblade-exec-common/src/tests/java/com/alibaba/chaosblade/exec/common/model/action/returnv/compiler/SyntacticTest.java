@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.common.model.action.returnv.compiler;
+package com.alibaba.xblade.exec.common.model.action.returnv.compiler;
 
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.alibaba.chaosblade.exec.common.model.action.returnv.compiler.ConstantType.*;
+import static com.alibaba.xblade.exec.common.model.action.returnv.compiler.ConstantType.*;
 import static org.junit.Assert.*;
 
 public class SyntacticTest {

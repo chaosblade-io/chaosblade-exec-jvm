@@ -1,14 +1,14 @@
-package com.alibaba.chaosblade.exec.plugin.gateway;
+package com.alibaba.xblade.exec.plugin.gateway;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 /**
  * @Author wb-shd671576
  *
- * @package: com.alibaba.chaosblade.exec.plugin.gateway @Date 2021-07-29
+ * @package: com.alibaba.xblade.exec.plugin.gateway @Date 2021-07-29
  */
 public class GatewayPlugin implements Plugin {
 

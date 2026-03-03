@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.thread.runstrategy;
+package com.alibaba.xblade.exec.plugin.jvm.thread.runstrategy;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.thread.ThreadRunStrategy;
+import com.alibaba.xblade.exec.plugin.jvm.thread.ThreadRunStrategy;
 
 /**
  * @Author qianfan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.jvm.thread @Date 2020/12/22 1:19 下午
+ * @package: com.alibaba.xblade.exec.plugin.jvm.thread @Date 2020/12/22 1:19 下午
  */
 public class ThreadRunningStrategy implements ThreadRunStrategy {
 

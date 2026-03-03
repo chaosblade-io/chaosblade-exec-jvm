@@ -1,14 +1,14 @@
-package com.alibaba.chaosblade.exec.plugin.http.resttemplate;
+package com.alibaba.xblade.exec.plugin.http.resttemplate;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
-import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.plugin.http.HttpConstant;
+import com.alibaba.xblade.exec.plugin.http.HttpPlugin;
 
 /**
  * @Author yuhan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.restTemplate @Date 2019-05-10 10:25
+ * @package: com.alibaba.xblade.exec.plugin.restTemplate @Date 2019-05-10 10:25
  */
 public class RestTemplatePlugin extends HttpPlugin {
 

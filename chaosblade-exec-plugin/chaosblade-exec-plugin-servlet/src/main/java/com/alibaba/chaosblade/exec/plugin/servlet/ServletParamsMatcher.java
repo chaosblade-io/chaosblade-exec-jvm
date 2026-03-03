@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.servlet;
+package com.alibaba.xblade.exec.plugin.servlet;
 
-import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
+import com.alibaba.xblade.exec.common.aop.CustomMatcher;
 import java.util.Map;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;

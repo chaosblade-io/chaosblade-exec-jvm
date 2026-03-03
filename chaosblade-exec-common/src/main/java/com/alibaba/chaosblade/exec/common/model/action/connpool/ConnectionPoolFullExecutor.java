@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.common.model.action.connpool;
+package com.alibaba.xblade.exec.common.model.action.connpool;
 
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
 import javax.sql.DataSource;
 
 /** @author Changjun Xiao */

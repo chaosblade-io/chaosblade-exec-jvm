@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.servlet;
+package com.alibaba.xblade.exec.plugin.servlet;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
-import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.matcher.busi.BusinessParamMatcher;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.xblade.exec.common.util.JsonUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.util.StringUtils;
+import com.alibaba.xblade.exec.spi.BusinessDataGetter;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.HashMap;

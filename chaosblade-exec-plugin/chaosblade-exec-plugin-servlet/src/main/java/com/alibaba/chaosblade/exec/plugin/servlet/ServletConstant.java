@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.servlet;
+package com.alibaba.xblade.exec.plugin.servlet;
 
 /** @author Changjun Xiao */
 public interface ServletConstant {

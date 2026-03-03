@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.aop;
+package com.alibaba.xblade.exec.common.aop;
 
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.common.plugin.MethodPlugin;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.plugin.MethodPlugin;
 
 /** @author Changjun Xiao */
 public class PluginBean implements Plugin {

@@ -1,8 +1,8 @@
-package com.alibaba.chaosblade.exec.plugin.rabbitmq;
+package com.alibaba.xblade.exec.plugin.rabbitmq;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.plugin.rabbitmq.model.RabbitMqModelSpec;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.plugin.rabbitmq.model.RabbitMqModelSpec;
 
 /** @author raygenyang@163.com */
 public abstract class RabbitMqPlugin implements Plugin, RabbitMqConstant {

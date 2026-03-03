@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
+package com.alibaba.xblade.exec.plugin.jvm.script.base;
 
-import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache.LruScriptCache;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache.ScriptCache;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder.ScriptEngineFinder;
+import com.alibaba.xblade.exec.common.util.ObjectsUtil;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.cache.LruScriptCache;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.cache.ScriptCache;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.finder.ScriptEngineFinder;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 

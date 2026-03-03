@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.java;
+package com.alibaba.xblade.exec.plugin.jvm.script.java;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptEngine;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.CompiledScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ExecutableScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.Script;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptEngine;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptException;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;

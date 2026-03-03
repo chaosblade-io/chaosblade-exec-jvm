@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.http.model;
+package com.alibaba.xblade.exec.plugin.http.model;
 
-import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
+import com.alibaba.xblade.exec.common.aop.CustomMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

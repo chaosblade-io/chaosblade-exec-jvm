@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.common.util;
+package com.alibaba.xblade.exec.common.util;
 
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
-import com.alibaba.chaosblade.exec.common.center.StatusMetric;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.center.StatusMetric;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;

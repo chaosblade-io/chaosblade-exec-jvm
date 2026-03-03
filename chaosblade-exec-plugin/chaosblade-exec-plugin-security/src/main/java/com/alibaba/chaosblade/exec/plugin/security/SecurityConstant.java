@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.security;
+package com.alibaba.xblade.exec.plugin.security;
 
 /** @author liubin@njzfit.cn */
 public class SecurityConstant {

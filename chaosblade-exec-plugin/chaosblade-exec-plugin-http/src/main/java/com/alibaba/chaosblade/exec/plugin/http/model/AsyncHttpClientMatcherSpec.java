@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.http.model;
+package com.alibaba.xblade.exec.plugin.http.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.http.HttpConstant;
 
 /** @author shizhi.zhu@qunar.com */
 public class AsyncHttpClientMatcherSpec extends BasePredicateMatcherSpec {

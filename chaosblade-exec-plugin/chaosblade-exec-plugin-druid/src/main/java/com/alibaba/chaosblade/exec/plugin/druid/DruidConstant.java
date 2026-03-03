@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.druid;
+package com.alibaba.xblade.exec.plugin.druid;
 
 /** @author Changjun Xiao */
 public interface DruidConstant {

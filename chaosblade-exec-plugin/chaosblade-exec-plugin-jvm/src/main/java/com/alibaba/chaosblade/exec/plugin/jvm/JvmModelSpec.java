@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
+package com.alibaba.xblade.exec.plugin.jvm;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
-import com.alibaba.chaosblade.exec.common.model.handler.PreCreateInjectionModelHandler;
-import com.alibaba.chaosblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
-import com.alibaba.chaosblade.exec.common.plugin.MethodModelSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.codecache.CodeCacheFillingActionSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.cpu.JvmCpuFullLoadActionSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.gc.FullGCActionSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmOomActionSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.exception.ExperimentException;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.DirectlyInjectionAction;
+import com.alibaba.xblade.exec.common.model.handler.PreCreateInjectionModelHandler;
+import com.alibaba.xblade.exec.common.model.handler.PreDestroyInjectionModelHandler;
+import com.alibaba.xblade.exec.common.plugin.MethodModelSpec;
+import com.alibaba.xblade.exec.plugin.jvm.codecache.CodeCacheFillingActionSpec;
+import com.alibaba.xblade.exec.plugin.jvm.cpu.JvmCpuFullLoadActionSpec;
+import com.alibaba.xblade.exec.plugin.jvm.gc.FullGCActionSpec;
+import com.alibaba.xblade.exec.plugin.jvm.oom.JvmOomActionSpec;
+import com.alibaba.xblade.exec.plugin.jvm.script.model.JvmDynamicActionSpec;
+import com.alibaba.xblade.exec.plugin.jvm.thread.model.JvmThreadFullActionSpec;
 import java.util.Arrays;
 
 /**

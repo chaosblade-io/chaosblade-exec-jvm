@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.thread;
+package com.alibaba.xblade.exec.plugin.jvm.thread;
 
 public interface ThreadRunStrategy {
 

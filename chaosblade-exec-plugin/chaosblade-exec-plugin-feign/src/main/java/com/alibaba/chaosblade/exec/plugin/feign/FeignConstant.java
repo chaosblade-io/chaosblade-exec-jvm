@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.feign;
+package com.alibaba.xblade.exec.plugin.feign;
 
 /** @author guoyu486@gmail.com */
 public interface FeignConstant {

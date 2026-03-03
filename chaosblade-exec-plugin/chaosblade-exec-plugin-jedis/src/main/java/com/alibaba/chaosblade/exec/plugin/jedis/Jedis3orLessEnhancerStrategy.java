@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jedis;
+package com.alibaba.xblade.exec.plugin.jedis;
 
-import static com.alibaba.chaosblade.exec.plugin.jedis.JedisEnhancer.CHARSET;
+import static com.alibaba.xblade.exec.plugin.jedis.JedisEnhancer.CHARSET;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;

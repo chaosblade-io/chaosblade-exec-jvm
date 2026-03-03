@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
+package com.alibaba.xblade.exec.plugin.jvm.script.base;
 
-import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
+import com.alibaba.xblade.exec.common.util.ObjectsUtil;
 import java.util.Collections;
 import java.util.List;
 

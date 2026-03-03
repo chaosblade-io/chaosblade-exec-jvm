@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.gc;
+package com.alibaba.xblade.exec.plugin.jvm.gc;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.util.ConfigUtil;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.util.ConfigUtil;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
 import java.lang.management.ManagementFactory;
 import java.util.Set;
 import java.util.concurrent.Executors;

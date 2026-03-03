@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache;
+package com.alibaba.xblade.exec.plugin.jvm.script.base.cache;
 
-import com.alibaba.chaosblade.exec.common.util.ObjectsUtil;
+import com.alibaba.xblade.exec.common.util.ObjectsUtil;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;

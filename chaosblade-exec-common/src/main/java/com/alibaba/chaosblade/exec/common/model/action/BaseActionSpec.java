@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action;
+package com.alibaba.xblade.exec.common.model.action;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

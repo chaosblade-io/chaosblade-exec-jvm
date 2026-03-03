@@ -43,7 +43,7 @@
                 <include>**/**</include>
             </includes>
             <excludes>
-                <exclude>com/alibaba/chaosblade/exec/service/build/**</exclude>
+                <exclude>com/alibaba/xblade/exec/service/build/**</exclude>
             </excludes>
         </fileSet>
         <fileSet>

@@ -1,8 +1,8 @@
-package com.alibaba.chaosblade.exec.plugin.tars.client;
+package com.alibaba.xblade.exec.plugin.tars.client;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.plugin.tars.TarsPlugin;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.plugin.tars.TarsPlugin;
 
 /**
  * @author saikei

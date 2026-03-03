@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.security;
+package com.alibaba.xblade.exec.plugin.security;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /** @author liubin@njzfit.cn */
 public class SecurityMatcherSpec extends BasePredicateMatcherSpec {

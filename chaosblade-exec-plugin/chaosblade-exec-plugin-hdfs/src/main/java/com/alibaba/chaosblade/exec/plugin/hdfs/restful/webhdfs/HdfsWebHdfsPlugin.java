@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.hdfs.restful.webhdfs;
+package com.alibaba.xblade.exec.plugin.hdfs.restful.webhdfs;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.plugin.hdfs.common.HdfsConstant;
-import com.alibaba.chaosblade.exec.plugin.hdfs.common.HdfsPlugin;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.plugin.hdfs.common.HdfsConstant;
+import com.alibaba.xblade.exec.plugin.hdfs.common.HdfsPlugin;
 
 public class HdfsWebHdfsPlugin extends HdfsPlugin {
   @Override

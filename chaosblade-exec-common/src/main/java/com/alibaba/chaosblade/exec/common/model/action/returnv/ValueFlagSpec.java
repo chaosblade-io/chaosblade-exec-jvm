@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action.returnv;
+package com.alibaba.xblade.exec.common.model.action.returnv;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
 
 /** @author Changjun Xiao */
 public class ValueFlagSpec implements FlagSpec {

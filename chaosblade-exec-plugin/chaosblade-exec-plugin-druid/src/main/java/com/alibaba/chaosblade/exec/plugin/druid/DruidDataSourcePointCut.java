@@ -1,12 +1,12 @@
-package com.alibaba.chaosblade.exec.plugin.druid;
+package com.alibaba.xblade.exec.plugin.druid;
 
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.NameClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.AndMethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.ClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.NameClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.AndMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.ParameterMethodMatcher;
 
 /** @author Changjun Xiao */
 public class DruidDataSourcePointCut implements PointCut {

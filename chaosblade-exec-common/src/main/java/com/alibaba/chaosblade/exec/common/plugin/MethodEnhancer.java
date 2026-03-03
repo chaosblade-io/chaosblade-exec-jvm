@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.plugin;
+package com.alibaba.xblade.exec.common.plugin;
 
-import com.alibaba.chaosblade.exec.common.aop.AfterEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.AfterEnhancer;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
 import java.lang.reflect.Method;
 
 /** @author Changjun Xiao */

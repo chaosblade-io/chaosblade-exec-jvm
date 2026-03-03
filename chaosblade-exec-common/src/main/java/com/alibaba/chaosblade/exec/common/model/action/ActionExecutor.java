@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action;
+package com.alibaba.xblade.exec.common.model.action;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
 
 /** @author Changjun Xiao */
 public interface ActionExecutor {

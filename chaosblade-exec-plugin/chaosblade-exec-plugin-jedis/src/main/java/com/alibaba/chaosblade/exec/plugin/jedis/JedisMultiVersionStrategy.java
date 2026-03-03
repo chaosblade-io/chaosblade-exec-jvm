@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jedis;
+package com.alibaba.xblade.exec.plugin.jedis;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
 
 /** @author liuhq <a href="15669072513@163.com"> */
 public interface JedisMultiVersionStrategy {

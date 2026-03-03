@@ -1,13 +1,13 @@
-package com.alibaba.chaosblade.exec.plugin.http.resttemplate;
+package com.alibaba.xblade.exec.plugin.http.resttemplate;
 
-import static com.alibaba.chaosblade.exec.plugin.http.HttpConstant.*;
+import static com.alibaba.xblade.exec.plugin.http.HttpConstant.*;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.plugin.http.HttpEnhancer;
-import com.alibaba.chaosblade.exec.plugin.http.UrlUtils;
-import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.plugin.http.HttpEnhancer;
+import com.alibaba.xblade.exec.plugin.http.UrlUtils;
+import com.alibaba.xblade.exec.spi.BusinessDataGetter;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @Author yuhan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.restTemplate @Date 2019-05-08 20:23
+ * @package: com.alibaba.xblade.exec.plugin.restTemplate @Date 2019-05-08 20:23
  */
 public class RestTemplateEnhancer extends HttpEnhancer {
   private static final Logger LOGGER = LoggerFactory.getLogger(RestTemplateEnhancer.class);

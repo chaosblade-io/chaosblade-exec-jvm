@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.center;
+package com.alibaba.xblade.exec.common.center;
 
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 /** @author Changjun Xiao */
 public interface ModelSpecManager extends ManagerService {

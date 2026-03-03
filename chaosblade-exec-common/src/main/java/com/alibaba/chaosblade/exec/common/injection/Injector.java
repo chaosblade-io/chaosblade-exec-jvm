@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.injection;
+package com.alibaba.xblade.exec.common.injection;
 
-import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
-import com.alibaba.chaosblade.exec.common.center.StatusMetric;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.returnv.UnsupportedReturnTypeException;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.util.ModelUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.common.aop.CustomMatcher;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.center.StatusMetric;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.returnv.UnsupportedReturnTypeException;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.util.ModelUtil;
+import com.alibaba.xblade.exec.common.util.StringUtil;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

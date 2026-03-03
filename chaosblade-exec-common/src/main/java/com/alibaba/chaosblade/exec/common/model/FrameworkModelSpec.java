@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model;
+package com.alibaba.xblade.exec.common.model;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
 import java.util.List;
 
 /** @author Changjun Xiao */

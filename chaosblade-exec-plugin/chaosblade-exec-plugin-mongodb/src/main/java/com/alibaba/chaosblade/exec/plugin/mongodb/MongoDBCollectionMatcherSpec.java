@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mongodb;
+package com.alibaba.xblade.exec.plugin.mongodb;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /** @author Lingjian Xu */
 public class MongoDBCollectionMatcherSpec extends BasePredicateMatcherSpec {

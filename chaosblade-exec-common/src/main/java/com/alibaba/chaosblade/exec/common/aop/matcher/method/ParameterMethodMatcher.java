@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.aop.matcher.method;
+package com.alibaba.xblade.exec.common.aop.matcher.method;
 
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
+import com.alibaba.xblade.exec.common.aop.matcher.MethodInfo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

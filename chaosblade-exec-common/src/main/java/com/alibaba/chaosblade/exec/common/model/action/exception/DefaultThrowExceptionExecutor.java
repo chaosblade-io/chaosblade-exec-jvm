@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model.action.exception;
+package com.alibaba.xblade.exec.common.model.action.exception;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.util.StringUtil;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

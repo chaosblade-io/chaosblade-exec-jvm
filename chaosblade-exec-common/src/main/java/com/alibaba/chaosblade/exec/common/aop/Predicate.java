@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.aop;
+package com.alibaba.xblade.exec.common.aop;
 
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.transport.Response;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.transport.Response;
 
 /** @author Changjun Xiao */
 public interface Predicate {

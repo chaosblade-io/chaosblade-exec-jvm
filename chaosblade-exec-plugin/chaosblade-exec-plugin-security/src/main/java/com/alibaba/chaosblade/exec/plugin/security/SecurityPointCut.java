@@ -1,10 +1,10 @@
-package com.alibaba.chaosblade.exec.plugin.security;
+package com.alibaba.xblade.exec.plugin.security;
 
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.InterfaceClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.NameMethodMatcher;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.ClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.InterfaceClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.NameMethodMatcher;
 
 /** @author liubin@njzfit.cn */
 public class SecurityPointCut implements PointCut {

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.codecache;
+package com.alibaba.xblade.exec.plugin.jvm.codecache;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.DefaultScriptEngineService;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.model.ScriptTypeEnum;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.CompiledScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.DefaultScriptEngineService;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.Script;
+import com.alibaba.xblade.exec.plugin.jvm.script.model.ScriptTypeEnum;
 import java.util.UUID;
 
 /**

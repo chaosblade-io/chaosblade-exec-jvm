@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.http.enhancer;
+package com.alibaba.xblade.exec.plugin.http.enhancer;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

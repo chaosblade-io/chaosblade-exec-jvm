@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo.consumer;
+package com.alibaba.xblade.exec.plugin.dubbo.consumer;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
-import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
-import com.alibaba.chaosblade.exec.common.util.FlagUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
-import com.alibaba.chaosblade.exec.plugin.dubbo.model.CallPointMatcher;
-import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.action.delay.BaseTimeoutExecutor;
+import com.alibaba.xblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.xblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.xblade.exec.common.util.FlagUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.util.StringUtils;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboConstant;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboEnhancer;
+import com.alibaba.xblade.exec.plugin.dubbo.model.CallPointMatcher;
+import com.alibaba.xblade.exec.spi.BusinessDataGetter;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;

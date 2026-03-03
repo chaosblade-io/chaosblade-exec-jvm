@@ -1,17 +1,17 @@
-package com.alibaba.chaosblade.exec.plugin.elasticsearch;
+package com.alibaba.xblade.exec.plugin.elasticsearch;
 
-import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @Author <a href="tangyuhan@shulie.io">yuhan.tang</a>
  *
- * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch @Date 2020-10-30 14:10
+ * @package: com.alibaba.xblade.exec.plugin.elasticsearch @Date 2020-10-30 14:10
  */
 public class ElasticSearchModelSpec extends FrameworkModelSpec {
 

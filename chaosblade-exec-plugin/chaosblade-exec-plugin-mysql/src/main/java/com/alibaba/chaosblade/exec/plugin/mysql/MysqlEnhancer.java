@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mysql;
+package com.alibaba.xblade.exec.plugin.mysql;
 
-import static com.alibaba.chaosblade.exec.plugin.mysql.MysqlConstant.*;
+import static com.alibaba.xblade.exec.plugin.mysql.MysqlConstant.*;
 
-import com.alibaba.chaosblade.exec.common.aop.BeforeEnhancer;
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.aop.BeforeEnhancer;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
 import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

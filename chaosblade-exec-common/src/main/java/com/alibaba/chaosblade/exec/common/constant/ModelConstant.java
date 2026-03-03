@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.constant;
+package com.alibaba.xblade.exec.common.constant;
 
 /** @author Changjun Xiao */
 public interface ModelConstant {

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo.consumer;
+package com.alibaba.xblade.exec.plugin.dubbo.consumer;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboPlugin;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboPlugin;
 
 /** @author Changjun Xiao */
 public class DubboConsumerPlugin extends DubboPlugin {

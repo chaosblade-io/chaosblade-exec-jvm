@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.cpu;
+package com.alibaba.xblade.exec.plugin.jvm.cpu;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
 
 /** @author Changjun Xiao */
 public class CpuCountFlagSpec implements FlagSpec {

@@ -1,12 +1,12 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor;
+package com.alibaba.xblade.exec.plugin.jvm.oom.executor;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.HeapJvmOomExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.NoHeapJvmOomExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.executor.impl.OffHeapJvmOomExecutor;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.plugin.jvm.oom.JvmMemoryArea;
+import com.alibaba.xblade.exec.plugin.jvm.oom.executor.impl.HeapJvmOomExecutor;
+import com.alibaba.xblade.exec.plugin.jvm.oom.executor.impl.NoHeapJvmOomExecutor;
+import com.alibaba.xblade.exec.plugin.jvm.oom.executor.impl.OffHeapJvmOomExecutor;
 import java.util.ArrayList;
 import java.util.List;
 

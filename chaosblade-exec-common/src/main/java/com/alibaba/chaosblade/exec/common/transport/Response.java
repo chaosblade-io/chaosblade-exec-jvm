@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.transport;
+package com.alibaba.xblade.exec.common.transport;
 
-import com.alibaba.chaosblade.exec.common.util.JsonUtil;
+import com.alibaba.xblade.exec.common.util.JsonUtil;
 
 /** @author Changjun Xiao */
 public class Response {

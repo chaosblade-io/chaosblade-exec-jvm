@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.oom;
+package com.alibaba.xblade.exec.plugin.jvm.oom;
 
 /**
  * @author RinaisSuper

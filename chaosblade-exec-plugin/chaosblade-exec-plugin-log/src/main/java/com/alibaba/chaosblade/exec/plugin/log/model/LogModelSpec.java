@@ -1,13 +1,13 @@
-package com.alibaba.chaosblade.exec.plugin.log.model;
+package com.alibaba.xblade.exec.plugin.log.model;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.log.LogConstant;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.plugin.log.LogConstant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

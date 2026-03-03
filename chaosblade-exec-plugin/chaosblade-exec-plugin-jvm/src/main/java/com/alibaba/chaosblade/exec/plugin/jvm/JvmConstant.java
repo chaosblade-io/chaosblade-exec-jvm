@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm;
+package com.alibaba.xblade.exec.plugin.jvm;
 
 /**
  * @author RinaisSuper

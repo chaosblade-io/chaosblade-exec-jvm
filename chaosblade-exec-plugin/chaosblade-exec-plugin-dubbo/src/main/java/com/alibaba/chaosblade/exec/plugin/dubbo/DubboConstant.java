@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo;
+package com.alibaba.xblade.exec.plugin.dubbo;
 
-import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
+import com.alibaba.xblade.exec.common.plugin.MethodConstant;
 
 /** @author Changjun Xiao */
 public interface DubboConstant {

@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.plugin.elasticsearch;
+package com.alibaba.xblade.exec.plugin.elasticsearch;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
  * @Author <a href="tangyuhan@shulie.io">yuhan.tang</a>
  *
- * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch @Date 2020-10-30 14:21
+ * @package: com.alibaba.xblade.exec.plugin.elasticsearch @Date 2020-10-30 14:21
  */
 public class ElasticSearchIndexMatcherSpec extends BasePredicateMatcherSpec {
 

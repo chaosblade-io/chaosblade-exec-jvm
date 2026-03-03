@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo.provider;
+package com.alibaba.xblade.exec.plugin.dubbo.provider;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
-import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
-import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
-import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.action.delay.TimeoutExecutor;
+import com.alibaba.xblade.exec.common.util.BusinessParamUtil;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboConstant;
+import com.alibaba.xblade.exec.plugin.dubbo.DubboEnhancer;
+import com.alibaba.xblade.exec.spi.BusinessDataGetter;
 import java.util.Map;
 
 /** @author Changjun Xiao */

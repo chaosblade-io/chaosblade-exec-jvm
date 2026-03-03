@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.center;
+package com.alibaba.xblade.exec.common.center;
 
-import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.Model;
 
 /** @author Changjun Xiao */
 public class RegisterResult {

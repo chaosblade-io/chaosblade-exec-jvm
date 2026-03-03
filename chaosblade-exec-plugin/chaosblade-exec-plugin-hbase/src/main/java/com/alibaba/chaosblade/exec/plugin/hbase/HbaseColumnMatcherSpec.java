@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.chaosblade.exec.plugin.hbase;
+package com.alibaba.xblade.exec.plugin.hbase;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 public class HbaseColumnMatcherSpec extends BasePredicateMatcherSpec {
   @Override

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.dubbo;
+package com.alibaba.xblade.exec.plugin.dubbo;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
-import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboModelSpec;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.plugin.dubbo.model.DubboModelSpec;
 
 /** @author Changjun Xiao */
 public abstract class DubboPlugin implements Plugin {

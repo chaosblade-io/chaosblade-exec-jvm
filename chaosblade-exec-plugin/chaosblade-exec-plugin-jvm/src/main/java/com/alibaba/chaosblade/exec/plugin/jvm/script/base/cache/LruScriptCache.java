@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base.cache;
+package com.alibaba.xblade.exec.plugin.jvm.script.base.cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mysql;
+package com.alibaba.xblade.exec.plugin.mysql;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /** @author Changjun Xiao */
 public class MysqlSqlTypeMatcherSpec extends BasePredicateMatcherSpec {

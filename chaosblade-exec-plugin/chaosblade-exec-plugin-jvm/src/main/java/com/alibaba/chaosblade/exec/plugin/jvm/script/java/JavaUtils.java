@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.java;
+package com.alibaba.xblade.exec.plugin.jvm.script.java;
 
 /** @author RinaisSuper */
 public class JavaUtils {

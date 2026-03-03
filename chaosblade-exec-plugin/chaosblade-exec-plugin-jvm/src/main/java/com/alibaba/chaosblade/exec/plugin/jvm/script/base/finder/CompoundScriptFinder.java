@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder;
+package com.alibaba.xblade.exec.plugin.jvm.script.base.finder;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptFinder;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.Script;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptFinder;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;

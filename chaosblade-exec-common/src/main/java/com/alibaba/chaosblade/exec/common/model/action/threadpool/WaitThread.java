@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.common.model.action.threadpool;
+package com.alibaba.xblade.exec.common.model.action.threadpool;
 
 /**
  * @Author qianfan
  *
- * @package: com.alibaba.chaosblade.exec.common.model.action.threadpool @Date 2020/12/22 11:44 上午
+ * @package: com.alibaba.xblade.exec.common.model.action.threadpool @Date 2020/12/22 11:44 上午
  */
 public class WaitThread extends Thread {
 

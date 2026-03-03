@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.plugin.elasticsearch;
+package com.alibaba.xblade.exec.plugin.elasticsearch;
 
 /**
  * @Author yuhan
  *
- * @package: com.alibaba.chaosblade.exec.plugin.elasticsearch @Date 2019-05-22 16:28
+ * @package: com.alibaba.xblade.exec.plugin.elasticsearch @Date 2019-05-22 16:28
  */
 public class ElasticSearchConstant {
 

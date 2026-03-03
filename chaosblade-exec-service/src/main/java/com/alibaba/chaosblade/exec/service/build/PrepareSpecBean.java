@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.service.build;
+package com.alibaba.xblade.exec.service.build;
 
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.prepare.PrepareSpec;
 import java.util.ArrayList;
 import java.util.List;
 

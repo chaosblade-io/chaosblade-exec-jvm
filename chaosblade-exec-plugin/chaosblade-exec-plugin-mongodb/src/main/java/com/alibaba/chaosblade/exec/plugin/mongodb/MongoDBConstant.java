@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mongodb;
+package com.alibaba.xblade.exec.plugin.mongodb;
 
 /** @author Lingjian Xu */
 public interface MongoDBConstant {

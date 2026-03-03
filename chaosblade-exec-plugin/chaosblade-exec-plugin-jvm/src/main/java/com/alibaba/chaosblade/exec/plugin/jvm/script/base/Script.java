@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
+package com.alibaba.xblade.exec.plugin.jvm.script.base;
 
 import java.io.Serializable;
 

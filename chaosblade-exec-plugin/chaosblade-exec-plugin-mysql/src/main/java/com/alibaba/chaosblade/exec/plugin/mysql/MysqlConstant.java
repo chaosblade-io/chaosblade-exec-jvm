@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.mysql;
+package com.alibaba.xblade.exec.plugin.mysql;
 
 /** @author Changjun Xiao */
 public interface MysqlConstant {

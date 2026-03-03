@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
+package com.alibaba.xblade.exec.plugin.jvm.script.model;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
-import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
-import com.alibaba.chaosblade.exec.common.plugin.ClassNameMatcherSpec;
-import com.alibaba.chaosblade.exec.common.plugin.MethodAfterMatcherSpec;
-import com.alibaba.chaosblade.exec.common.plugin.MethodNameMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.constant.CategoryConstants;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionModel;
+import com.alibaba.xblade.exec.common.model.action.BaseActionSpec;
+import com.alibaba.xblade.exec.common.plugin.ClassNameMatcherSpec;
+import com.alibaba.xblade.exec.common.plugin.MethodAfterMatcherSpec;
+import com.alibaba.xblade.exec.common.plugin.MethodNameMatcherSpec;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
 import java.util.ArrayList;
 import java.util.List;
 

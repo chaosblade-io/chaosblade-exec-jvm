@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.rabbitmq;
+package com.alibaba.xblade.exec.plugin.rabbitmq;
 
 /** @author raygenyang@163.com */
 public interface RabbitMqConstant {

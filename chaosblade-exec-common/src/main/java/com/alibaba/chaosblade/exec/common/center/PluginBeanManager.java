@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.center;
+package com.alibaba.xblade.exec.common.center;
 
-import com.alibaba.chaosblade.exec.common.aop.PluginBean;
-import com.alibaba.chaosblade.exec.common.aop.PluginBeans;
+import com.alibaba.xblade.exec.common.aop.PluginBean;
+import com.alibaba.xblade.exec.common.aop.PluginBeans;
 
 public interface PluginBeanManager extends ManagerService {
   /**

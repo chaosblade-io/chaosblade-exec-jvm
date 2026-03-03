@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.java;
+package com.alibaba.xblade.exec.plugin.jvm.script.java;
 
 import org.junit.Assert;
 import org.junit.Test;

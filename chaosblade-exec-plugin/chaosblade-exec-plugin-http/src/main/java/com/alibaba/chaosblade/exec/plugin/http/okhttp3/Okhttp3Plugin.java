@@ -1,9 +1,9 @@
-package com.alibaba.chaosblade.exec.plugin.http.okhttp3;
+package com.alibaba.xblade.exec.plugin.http.okhttp3;
 
-import com.alibaba.chaosblade.exec.common.aop.Enhancer;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.plugin.http.HttpConstant;
-import com.alibaba.chaosblade.exec.plugin.http.HttpPlugin;
+import com.alibaba.xblade.exec.common.aop.Enhancer;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.plugin.http.HttpConstant;
+import com.alibaba.xblade.exec.plugin.http.HttpPlugin;
 
 /**
  * okhttp3 的插件定义

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.service.build;
+package com.alibaba.xblade.exec.service.build;
 
 /** @author Changjun Xiao */
 public class SpecMain {

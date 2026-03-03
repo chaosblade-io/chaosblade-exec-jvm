@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
+package com.alibaba.xblade.exec.plugin.jvm.script.model;
 
 import java.net.URL;
 import java.net.URLClassLoader;

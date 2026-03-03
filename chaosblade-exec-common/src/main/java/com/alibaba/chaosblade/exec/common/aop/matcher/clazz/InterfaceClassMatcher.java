@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.aop.matcher.clazz;
+package com.alibaba.xblade.exec.common.aop.matcher.clazz;
 
-import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
+import com.alibaba.xblade.exec.common.aop.matcher.ClassInfo;
 
 /** @author shizhi.zhu@qunar.com */
 public class InterfaceClassMatcher implements ClassMatcher {

@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.dubbo;
+package com.alibaba.xblade.exec.plugin.dubbo;
 
-import com.alibaba.chaosblade.exec.plugin.dubbo.consumer.DubboConsumerEnhancer;
+import com.alibaba.xblade.exec.plugin.dubbo.consumer.DubboConsumerEnhancer;
 import org.junit.Assert;
 import org.junit.Test;
 

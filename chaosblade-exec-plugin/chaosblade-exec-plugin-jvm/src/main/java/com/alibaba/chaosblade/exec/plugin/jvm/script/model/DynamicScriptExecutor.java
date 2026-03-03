@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.model;
+package com.alibaba.xblade.exec.plugin.jvm.script.model;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
-import com.alibaba.chaosblade.exec.common.plugin.MethodConstant;
-import com.alibaba.chaosblade.exec.common.util.StringUtil;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
-import com.alibaba.chaosblade.exec.plugin.jvm.Base64Util;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.DefaultScriptEngineService;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherModel;
+import com.alibaba.xblade.exec.common.plugin.MethodConstant;
+import com.alibaba.xblade.exec.common.util.StringUtil;
+import com.alibaba.xblade.exec.common.util.StringUtils;
+import com.alibaba.xblade.exec.plugin.jvm.Base64Util;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.CompiledScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.DefaultScriptEngineService;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ExecutableScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.Script;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;

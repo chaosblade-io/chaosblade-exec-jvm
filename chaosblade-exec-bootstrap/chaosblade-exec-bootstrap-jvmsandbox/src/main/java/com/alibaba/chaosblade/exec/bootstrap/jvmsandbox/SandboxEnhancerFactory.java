@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
+package com.alibaba.xblade.exec.bootstrap.jvmsandbox;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.aop.PointCut;
-import com.alibaba.chaosblade.exec.common.aop.matcher.ClassInfo;
-import com.alibaba.chaosblade.exec.common.aop.matcher.MethodInfo;
-import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
-import com.alibaba.chaosblade.exec.common.aop.matcher.method.MethodMatcher;
-import com.alibaba.chaosblade.exec.common.center.ManagerFactory;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.aop.PointCut;
+import com.alibaba.xblade.exec.common.aop.matcher.ClassInfo;
+import com.alibaba.xblade.exec.common.aop.matcher.MethodInfo;
+import com.alibaba.xblade.exec.common.aop.matcher.clazz.ClassMatcher;
+import com.alibaba.xblade.exec.common.aop.matcher.method.MethodMatcher;
+import com.alibaba.xblade.exec.common.center.ManagerFactory;
 import com.alibaba.jvm.sandbox.api.filter.Filter;
 import com.alibaba.jvm.sandbox.api.listener.EventListener;
 
@@ -31,7 +31,7 @@ public class SandboxEnhancerFactory {
 
   public static final String JAVA = "java.";
   public static final String SUN = "sun.";
-  public static final String CHAOSBLADE = "com.alibaba.chaosblade";
+  public static final String CHAOSBLADE = "com.alibaba.xblade";
 
   /**
    * Create class and method filter to match the pointcut

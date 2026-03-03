@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.center;
+package com.alibaba.xblade.exec.common.center;
 
-import com.alibaba.chaosblade.exec.common.aop.PluginLifecycleListener;
+import com.alibaba.xblade.exec.common.aop.PluginLifecycleListener;
 
 /** @author Changjun Xiao */
 public interface ListenerManager extends ManagerService {

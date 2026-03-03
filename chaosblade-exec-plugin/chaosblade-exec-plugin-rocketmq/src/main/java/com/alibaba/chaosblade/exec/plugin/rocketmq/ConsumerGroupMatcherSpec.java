@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.rocketmq;
+package com.alibaba.xblade.exec.plugin.rocketmq;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
 
 /**
  * consumerGroup

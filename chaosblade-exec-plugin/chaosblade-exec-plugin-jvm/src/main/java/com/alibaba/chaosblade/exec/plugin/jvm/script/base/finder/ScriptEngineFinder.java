@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base.finder;
+package com.alibaba.xblade.exec.plugin.jvm.script.base.finder;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptEngine;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptEngine;
 
 /**
  * Script engine finder

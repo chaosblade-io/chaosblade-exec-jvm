@@ -1,6 +1,6 @@
-package com.alibaba.chaosblade.exec.plugin.kafka.model;
+package com.alibaba.xblade.exec.plugin.kafka.model;
 
-import com.alibaba.chaosblade.exec.common.aop.CustomMatcher;
+import com.alibaba.xblade.exec.common.aop.CustomMatcher;
 import java.util.Set;
 
 public class ConsumerTopicMatcher implements CustomMatcher {

@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.dubbo.model;
+package com.alibaba.xblade.exec.plugin.dubbo.model;
 
-import com.alibaba.chaosblade.exec.common.model.action.threadpool.WaitingTriggerThreadPoolFullExecutor;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.model.action.threadpool.WaitingTriggerThreadPoolFullExecutor;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
 import java.util.concurrent.ThreadPoolExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

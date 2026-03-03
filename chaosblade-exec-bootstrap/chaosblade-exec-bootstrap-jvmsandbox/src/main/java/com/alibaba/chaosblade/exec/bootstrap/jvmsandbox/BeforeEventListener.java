@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.bootstrap.jvmsandbox;
+package com.alibaba.xblade.exec.bootstrap.jvmsandbox;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException;
-import com.alibaba.chaosblade.exec.common.exception.InterruptProcessException.State;
-import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.exception.InterruptProcessException;
+import com.alibaba.xblade.exec.common.exception.InterruptProcessException.State;
+import com.alibaba.xblade.exec.common.util.ReflectUtil;
 import com.alibaba.jvm.sandbox.api.ProcessControlException;
 import com.alibaba.jvm.sandbox.api.event.BeforeEvent;
 import com.alibaba.jvm.sandbox.api.event.Event;

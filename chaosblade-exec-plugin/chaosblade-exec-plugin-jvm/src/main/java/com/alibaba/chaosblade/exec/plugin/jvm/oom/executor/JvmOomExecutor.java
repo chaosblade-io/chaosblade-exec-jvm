@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.oom.executor;
+package com.alibaba.xblade.exec.plugin.jvm.oom.executor;
 
-import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.util.ConfigUtil;
-import com.alibaba.chaosblade.exec.plugin.jvm.JvmConstant;
-import com.alibaba.chaosblade.exec.plugin.jvm.StoppableActionExecutor;
-import com.alibaba.chaosblade.exec.plugin.jvm.oom.JvmMemoryArea;
+import com.alibaba.xblade.exec.common.aop.EnhancerModel;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.util.ConfigUtil;
+import com.alibaba.xblade.exec.plugin.jvm.JvmConstant;
+import com.alibaba.xblade.exec.plugin.jvm.StoppableActionExecutor;
+import com.alibaba.xblade.exec.plugin.jvm.oom.JvmMemoryArea;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;

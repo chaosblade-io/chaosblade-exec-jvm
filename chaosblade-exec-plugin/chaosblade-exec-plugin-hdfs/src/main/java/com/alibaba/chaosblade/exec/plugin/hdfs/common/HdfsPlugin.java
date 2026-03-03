@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.hdfs.common;
+package com.alibaba.xblade.exec.plugin.hdfs.common;
 
-import com.alibaba.chaosblade.exec.common.aop.Plugin;
-import com.alibaba.chaosblade.exec.common.model.ModelSpec;
+import com.alibaba.xblade.exec.common.aop.Plugin;
+import com.alibaba.xblade.exec.common.model.ModelSpec;
 
 public abstract class HdfsPlugin implements Plugin {
   @Override

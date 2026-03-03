@@ -1,12 +1,12 @@
-package com.alibaba.chaosblade.exec.common.model.action.threadpool;
+package com.alibaba.xblade.exec.common.model.action.threadpool;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
-import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
-import com.alibaba.chaosblade.exec.common.util.StringUtils;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.constant.CategoryConstants;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionModel;
+import com.alibaba.xblade.exec.common.model.action.BaseActionSpec;
+import com.alibaba.xblade.exec.common.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 

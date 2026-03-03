@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.jvm.script.base;
+package com.alibaba.xblade.exec.plugin.jvm.script.base;
 
 /**
  * Script metrics

@@ -1,11 +1,11 @@
-package com.alibaba.chaosblade.exec.common.model.action.connpool;
+package com.alibaba.xblade.exec.common.model.action.connpool;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.constant.CategoryConstants;
-import com.alibaba.chaosblade.exec.common.model.FlagSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionExecutor;
-import com.alibaba.chaosblade.exec.common.model.action.ActionModel;
-import com.alibaba.chaosblade.exec.common.model.action.BaseActionSpec;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.constant.CategoryConstants;
+import com.alibaba.xblade.exec.common.model.FlagSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionExecutor;
+import com.alibaba.xblade.exec.common.model.action.ActionModel;
+import com.alibaba.xblade.exec.common.model.action.BaseActionSpec;
 import java.util.ArrayList;
 import java.util.List;
 

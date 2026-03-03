@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.log.model;
+package com.alibaba.xblade.exec.plugin.log.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.log.LogConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.log.LogConstant;
 
 /** @author shizhi.zhu@qunar.com */
 public class Log4j2ModelSpec extends BasePredicateMatcherSpec {

@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.plugin.feign.model;
+package com.alibaba.xblade.exec.plugin.feign.model;
 
-import com.alibaba.chaosblade.exec.common.model.matcher.BasePredicateMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.feign.FeignConstant;
+import com.alibaba.xblade.exec.common.model.matcher.BasePredicateMatcherSpec;
+import com.alibaba.xblade.exec.plugin.feign.FeignConstant;
 
 /** @author guoyu486@gmail.com */
 public class ServiceNameMatcherSpec extends BasePredicateMatcherSpec implements FeignConstant {

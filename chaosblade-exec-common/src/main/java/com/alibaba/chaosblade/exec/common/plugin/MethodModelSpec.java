@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.plugin;
+package com.alibaba.xblade.exec.common.plugin;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.constant.ModelConstant;
-import com.alibaba.chaosblade.exec.common.model.BaseModelSpec;
-import com.alibaba.chaosblade.exec.common.model.Model;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowDeclaredExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.returnv.ReturnValueActionSpec;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.constant.ModelConstant;
+import com.alibaba.xblade.exec.common.model.BaseModelSpec;
+import com.alibaba.xblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowDeclaredExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.action.returnv.ReturnValueActionSpec;
 
 /** @author Changjun Xiao */
 public class MethodModelSpec extends BaseModelSpec {

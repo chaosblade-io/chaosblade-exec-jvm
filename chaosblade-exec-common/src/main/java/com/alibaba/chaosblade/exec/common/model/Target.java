@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model;
+package com.alibaba.xblade.exec.common.model;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

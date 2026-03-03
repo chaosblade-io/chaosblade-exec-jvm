@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.common.model;
+package com.alibaba.xblade.exec.common.model;
 
-import com.alibaba.chaosblade.exec.common.aop.PredicateResult;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
-import com.alibaba.chaosblade.exec.common.model.matcher.EffectCountMatcherSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.EffectPercentMatcherSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-import com.alibaba.chaosblade.exec.common.model.prepare.AgentPrepareSpec;
-import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
+import com.alibaba.xblade.exec.common.aop.PredicateResult;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.DirectlyInjectionAction;
+import com.alibaba.xblade.exec.common.model.matcher.EffectCountMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.EffectPercentMatcherSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.common.model.prepare.AgentPrepareSpec;
+import com.alibaba.xblade.exec.common.model.prepare.PrepareSpec;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.alibaba.chaosblade.exec.common.model.handler;
+package com.alibaba.xblade.exec.common.model.handler;
 
-import com.alibaba.chaosblade.exec.common.exception.ExperimentException;
-import com.alibaba.chaosblade.exec.common.model.Model;
+import com.alibaba.xblade.exec.common.exception.ExperimentException;
+import com.alibaba.xblade.exec.common.model.Model;
 
 /**
  * Model Level Handler before create injections
@@ -9,7 +9,7 @@ import com.alibaba.chaosblade.exec.common.model.Model;
  * <p>Useful for need do something on model level not action level when receive a create request
  *
  * <p>For example,a module contains multiple actions, before invoke actions,we need do something,so
- * you can make @{@link com.alibaba.chaosblade.exec.common.model.ModelSpec} implements this
+ * you can make @{@link com.alibaba.xblade.exec.common.model.ModelSpec} implements this
  * interface.
  *
  * @author RinaisSuper

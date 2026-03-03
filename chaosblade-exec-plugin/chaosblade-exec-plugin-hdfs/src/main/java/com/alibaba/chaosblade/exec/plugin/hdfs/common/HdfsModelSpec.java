@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.hdfs.common;
+package com.alibaba.xblade.exec.plugin.hdfs.common;
 
-import com.alibaba.chaosblade.exec.common.model.FrameworkModelSpec;
-import com.alibaba.chaosblade.exec.common.model.action.ActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.delay.DelayActionSpec;
-import com.alibaba.chaosblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
-import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.hdfs.common.flag.HdfsFileMatcherSpec;
-import com.alibaba.chaosblade.exec.plugin.hdfs.restful.flag.HdfsRestfulOperationMatcherSpec;
+import com.alibaba.xblade.exec.common.model.FrameworkModelSpec;
+import com.alibaba.xblade.exec.common.model.action.ActionSpec;
+import com.alibaba.xblade.exec.common.model.action.delay.DelayActionSpec;
+import com.alibaba.xblade.exec.common.model.action.exception.ThrowCustomExceptionActionSpec;
+import com.alibaba.xblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.xblade.exec.plugin.hdfs.common.flag.HdfsFileMatcherSpec;
+import com.alibaba.xblade.exec.plugin.hdfs.restful.flag.HdfsRestfulOperationMatcherSpec;
 import java.util.ArrayList;
 import java.util.List;
 

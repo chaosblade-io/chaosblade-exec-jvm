@@ -1,4 +1,4 @@
-package com.alibaba.chaosblade.exec.plugin.http;
+package com.alibaba.xblade.exec.plugin.http;
 
 /** @author pengpj */
 public class UrlUtils {

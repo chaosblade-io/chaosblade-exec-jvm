@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.alibaba.chaosblade.exec.plugin.jvm.script.groovy;
+package com.alibaba.xblade.exec.plugin.jvm.script.groovy;
 
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.CompiledScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ExecutableScript;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptEngine;
-import com.alibaba.chaosblade.exec.plugin.jvm.script.base.ScriptException;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.CompiledScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ExecutableScript;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptEngine;
+import com.alibaba.xblade.exec.plugin.jvm.script.base.ScriptException;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyCodeSource;
@@ -63,7 +63,7 @@ public class GroovyScriptEngine implements ScriptEngine {
 
   @Override
   public Object compile(
-      com.alibaba.chaosblade.exec.plugin.jvm.script.base.Script script,
+      com.alibaba.xblade.exec.plugin.jvm.script.base.Script script,
       ClassLoader classLoader,
       Map<String, String> configs) {
     String className = "groovy_script_" + script.getId();
