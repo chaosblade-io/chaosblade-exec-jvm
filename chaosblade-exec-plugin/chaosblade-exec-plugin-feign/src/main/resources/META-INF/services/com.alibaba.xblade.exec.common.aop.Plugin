@@ -1,5 +1,5 @@
 #
-# Copyright 1999-2023 Alibaba Group Holding Ltd.
+# Copyright 1999-2019 Alibaba Group Holding Ltd.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,5 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.hdfs.restful.httpfs.HdfsHttpFSPlugin
-com.alibaba.chaosblade.exec.plugin.hdfs.restful.webhdfs.HdfsWebHdfsPlugin
+com.alibaba.xblade.exec.plugin.feign.FeignPlugin

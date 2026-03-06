@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.rocketmq.RocketMqPlugin
+com.alibaba.xblade.exec.plugin.jedis.JedisPlugin

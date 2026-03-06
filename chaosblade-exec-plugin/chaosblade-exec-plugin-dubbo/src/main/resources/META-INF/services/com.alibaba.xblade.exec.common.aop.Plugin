@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.dubbo.consumer.DubboConsumerPlugin
-com.alibaba.chaosblade.exec.plugin.dubbo.provider.DubboProviderPlugin
+com.alibaba.xblade.exec.plugin.dubbo.consumer.DubboConsumerPlugin
+com.alibaba.xblade.exec.plugin.dubbo.provider.DubboProviderPlugin

@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.hbase.HbasePlugin
+com.alibaba.xblade.exec.plugin.redisson.RedissonPlugin

@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.kafka.producer.KafkaProducerPlugin
-com.alibaba.chaosblade.exec.plugin.kafka.consumer.KafkaConsumerPlugin
+com.alibaba.xblade.exec.plugin.kafka.producer.KafkaProducerPlugin
+com.alibaba.xblade.exec.plugin.kafka.consumer.KafkaConsumerPlugin

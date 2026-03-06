@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.druid.DruidDataSourcePlugin
+com.alibaba.xblade.exec.plugin.gateway.GatewayPlugin

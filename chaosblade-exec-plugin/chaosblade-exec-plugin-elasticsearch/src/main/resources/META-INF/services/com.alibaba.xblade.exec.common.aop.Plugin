@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.security.SecurityPlugin
+com.alibaba.xblade.exec.plugin.elasticsearch.ElasticSearchPlugin

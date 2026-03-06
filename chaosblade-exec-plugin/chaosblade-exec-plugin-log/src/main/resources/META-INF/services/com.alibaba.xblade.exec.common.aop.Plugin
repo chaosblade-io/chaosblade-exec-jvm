@@ -14,4 +14,5 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.servlet.ServletPlugin
+com.alibaba.xblade.exec.plugin.log.logback.LogbackPlugin
+com.alibaba.xblade.exec.plugin.log.log4j2.Log4j2Plugin

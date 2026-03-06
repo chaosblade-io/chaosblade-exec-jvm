@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.jedis.JedisPlugin
+com.alibaba.xblade.exec.plugin.mongodb.MongoDBPlugin

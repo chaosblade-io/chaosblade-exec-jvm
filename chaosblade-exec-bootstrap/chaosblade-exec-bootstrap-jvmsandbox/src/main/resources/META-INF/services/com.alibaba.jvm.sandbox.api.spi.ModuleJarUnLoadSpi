@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.bootstrap.jvmsandbox.OnJarUnloadCompleted
+com.alibaba.xblade.exec.bootstrap.jvmsandbox.OnJarUnloadCompleted

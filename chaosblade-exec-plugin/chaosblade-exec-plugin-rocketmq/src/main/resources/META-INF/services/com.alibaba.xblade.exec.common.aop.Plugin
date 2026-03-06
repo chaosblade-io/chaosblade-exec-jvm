@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.postgrelsql.PostgrelsqlPlugin
+com.alibaba.xblade.exec.plugin.rocketmq.RocketMqPlugin

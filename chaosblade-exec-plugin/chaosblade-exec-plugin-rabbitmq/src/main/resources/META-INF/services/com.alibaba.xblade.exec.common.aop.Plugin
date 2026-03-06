@@ -14,4 +14,5 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.mysql.MysqlPlugin
+com.alibaba.xblade.exec.plugin.rabbitmq.producer.RabbitMqProducerPlugin
+com.alibaba.xblade.exec.plugin.rabbitmq.consumer.RabbitMqConsumerPlugin

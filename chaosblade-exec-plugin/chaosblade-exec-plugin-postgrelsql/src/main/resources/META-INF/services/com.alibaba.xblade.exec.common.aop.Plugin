@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.lettuce.LettucePlugin
+com.alibaba.xblade.exec.plugin.postgrelsql.PostgrelsqlPlugin

@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.feign.FeignPlugin
+com.alibaba.xblade.exec.plugin.jvm.JvmPlugin

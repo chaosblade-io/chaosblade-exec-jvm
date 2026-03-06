@@ -14,5 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.rabbitmq.producer.RabbitMqProducerPlugin
-com.alibaba.chaosblade.exec.plugin.rabbitmq.consumer.RabbitMqConsumerPlugin
+com.alibaba.xblade.exec.plugin.tars.client.TarsClientPlugin

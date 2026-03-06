@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.tars.client.TarsClientPlugin
+com.alibaba.xblade.exec.plugin.hbase.HbasePlugin

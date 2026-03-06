@@ -14,4 +14,8 @@
 # limitations under the License.
 #
 
-com.alibaba.chaosblade.exec.plugin.elasticsearch.ElasticSearchPlugin
+com.alibaba.xblade.exec.plugin.http.resttemplate.RestTemplatePlugin
+com.alibaba.xblade.exec.plugin.http.httpclient4.HttpClient4Plugin
+com.alibaba.xblade.exec.plugin.http.httpclient3.HttpClient3Plugin
+com.alibaba.xblade.exec.plugin.http.okhttp3.Okhttp3Plugin
+com.alibaba.xblade.exec.plugin.http.asynchttpclient.AsyncHttpClientPlugin
