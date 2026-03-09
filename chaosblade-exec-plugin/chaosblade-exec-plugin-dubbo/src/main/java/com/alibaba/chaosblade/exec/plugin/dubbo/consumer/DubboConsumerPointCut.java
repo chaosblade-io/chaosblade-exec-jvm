@@ -38,7 +38,9 @@ public class DubboConsumerPointCut implements PointCut {
         .or(new NameClassMatcher("com.alibaba.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"))
         .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker"))
         .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.thrift.ThriftInvoker"))
-        .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"));
+        .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.dubbo.ChannelWrappedInvoker"))
+        // Triple protocol support (Dubbo 3.x)
+        .or(new NameClassMatcher("org.apache.dubbo.rpc.protocol.tri.TripleInvoker"));
     return classMatcher;
   }
 

@@ -17,6 +17,7 @@
 package com.alibaba.chaosblade.exec.plugin.dubbo.provider;
 
 import com.alibaba.chaosblade.exec.common.aop.EnhancerModel;
+import com.alibaba.chaosblade.exec.common.model.action.delay.BaseTimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.model.action.delay.TimeoutExecutor;
 import com.alibaba.chaosblade.exec.common.util.BusinessParamUtil;
 import com.alibaba.chaosblade.exec.common.util.ReflectUtil;
@@ -24,9 +25,16 @@ import com.alibaba.chaosblade.exec.plugin.dubbo.DubboConstant;
 import com.alibaba.chaosblade.exec.plugin.dubbo.DubboEnhancer;
 import com.alibaba.chaosblade.exec.spi.BusinessDataGetter;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** @author Changjun Xiao */
 public class DubboProviderEnhancer extends DubboEnhancer {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(DubboProviderEnhancer.class);
+  private static final String GET_METHOD_PARAMETER = "getMethodParameter";
+  private static final String TIMEOUT_KEY = "timeout";
+  private static final int DEFAULT_TIMEOUT = 0;
 
   @Override
   protected Object getUrl(Object instance, Object invocation) throws Exception {
@@ -37,7 +45,15 @@ public class DubboProviderEnhancer extends DubboEnhancer {
   @Override
   protected TimeoutExecutor createTimeoutExecutor(
       ClassLoader classLoader, long timeout, String className) {
-    return null;
+    if (timeout <= 0) {
+      return null;
+    }
+    return new BaseTimeoutExecutor(classLoader, timeout) {
+      @Override
+      public Exception generateTimeoutException(ClassLoader classLoader) {
+        return new RuntimeException(DubboConstant.TIMEOUT_EXCEPTION_MSG);
+      }
+    };
   }
 
   @Override
@@ -65,6 +81,21 @@ public class DubboProviderEnhancer extends DubboEnhancer {
 
   @Override
   protected int getTimeout(String method, Object instance, Object invocation) {
-    return 0;
+    try {
+      Object invoker = ReflectUtil.invokeMethod(invocation, GET_INVOKER, new Object[0], false);
+      Object url = ReflectUtil.invokeMethod(invoker, GET_URL, new Object[0], false);
+      if (url != null) {
+        Integer timeout =
+            ReflectUtil.invokeMethod(
+                url,
+                GET_METHOD_PARAMETER,
+                new Object[] {method, TIMEOUT_KEY, DEFAULT_TIMEOUT},
+                false);
+        return timeout != null ? timeout : DEFAULT_TIMEOUT;
+      }
+    } catch (Exception e) {
+      LOGGER.warn("Getting timeout from url occurs exception for provider", e);
+    }
+    return DEFAULT_TIMEOUT;
   }
 }

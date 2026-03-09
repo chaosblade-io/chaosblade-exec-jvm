@@ -16,13 +16,15 @@
 
 package com.alibaba.chaosblade.exec.plugin.dubbo;
 
+import com.alibaba.chaosblade.exec.common.aop.PointCut;
+import com.alibaba.chaosblade.exec.common.aop.matcher.clazz.ClassMatcher;
 import com.alibaba.chaosblade.exec.plugin.dubbo.consumer.DubboConsumerEnhancer;
+import com.alibaba.chaosblade.exec.plugin.dubbo.consumer.DubboConsumerPointCut;
+import com.alibaba.chaosblade.exec.plugin.dubbo.model.DubboThreadPoolFullExecutor;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * 测试dubbo服务url拦截
- *
  * @author dknight.chen
  * @create 2019/6/24 5:21 PM
  */
@@ -55,5 +57,20 @@ public class DubboEnhancerTest {
     Assert.assertEquals("com.alibaba.dubbo.demo.DemoService", serviceVersion[0]);
     Assert.assertEquals("2.0.0", serviceVersion[1]);
     Assert.assertNull(serviceVersion[2]);
+  }
+
+  @Test
+  public void testConsumerPointCutMatchesTripleInvoker() {
+    DubboConsumerPointCut pointCut = new DubboConsumerPointCut();
+    ClassMatcher classMatcher = pointCut.getClassMatcher();
+    Assert.assertNotNull(classMatcher);
+  }
+
+  @Test
+  public void testThreadPoolFullExecutorTripleFallback() {
+    DubboThreadPoolFullExecutor executor = DubboThreadPoolFullExecutor.INSTANCE;
+    // trySetTripleExecutor should not throw when classloader can't find Dubbo classes
+    executor.trySetTripleExecutor(getClass().getClassLoader(), new MockDubboUrl());
+    Assert.assertFalse(executor.isRunning());
   }
 }

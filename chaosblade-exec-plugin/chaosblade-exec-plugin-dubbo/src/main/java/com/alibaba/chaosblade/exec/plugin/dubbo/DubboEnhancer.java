@@ -73,6 +73,11 @@ public abstract class DubboEnhancer extends BeforeEnhancer {
       LOGGER.warn("Url is null, can not get necessary values.");
       return null;
     }
+    // Triple protocol thread pool full: try to capture executor from DefaultExecutorRepository
+    if (DubboThreadPoolFullExecutor.INSTANCE.isExpReceived()
+        && !DubboThreadPoolFullExecutor.INSTANCE.isRunning()) {
+      DubboThreadPoolFullExecutor.INSTANCE.trySetTripleExecutor(classLoader, url);
+    }
     String methodName = null;
     String provideGeneric =
         ReflectUtil.invokeMethod(url, GET_PARAMETER, new Object[] {GENERIC}, false);
