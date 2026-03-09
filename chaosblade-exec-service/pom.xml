@@ -20,7 +20,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>chaosblade-exec-jvm</artifactId>
-        <groupId>com.alibaba.xblade</groupId>
+        <groupId>com.otel.business.c</groupId>
         <version>1.8.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -54,7 +54,7 @@
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath/>
-                        <argument>com.alibaba.xblade.exec.service.build.SpecMain</argument>
+                        <argument>com.otel.business.c.exec.service.build.SpecMain</argument>
                         <argument>${project.parent.basedir}/plugins</argument>
                         <argument>chaosblade-jvm-spec-${project.version}.yaml</argument>
                     </arguments>
@@ -71,7 +71,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.xblade</groupId>
+            <groupId>com.otel.business.c</groupId>
             <artifactId>chaosblade-exec-common</artifactId>
             <version>${project.version}</version>
         </dependency>

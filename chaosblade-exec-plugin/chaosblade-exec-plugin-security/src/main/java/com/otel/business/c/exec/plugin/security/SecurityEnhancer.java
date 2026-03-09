@@ -1,0 +1,36 @@
+package com.otel.business.c.exec.plugin.security;
+
+import com.otel.business.c.exec.common.aop.BeforeEnhancer;
+import com.otel.business.c.exec.common.aop.EnhancerModel;
+import com.otel.business.c.exec.common.model.matcher.MatcherModel;
+import java.lang.reflect.Method;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/** @author liubin@njzfit.cn */
+public class SecurityEnhancer extends BeforeEnhancer {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(SecurityEnhancer.class);
+
+  @Override
+  public EnhancerModel doBeforeAdvice(
+      ClassLoader classLoader,
+      String className,
+      Object object,
+      Method method,
+      Object[] methodArguments)
+      throws Exception {
+    if (methodArguments.length < 1) {
+      LOGGER.warn(
+          "argument's length less than 1, className:{}, methodName:{}",
+          className,
+          method.getName());
+      return null;
+    }
+    Object username = methodArguments[0];
+
+    MatcherModel matcherModel = new MatcherModel();
+    matcherModel.add(SecurityConstant.PARAM_USERNAME, username);
+    return new EnhancerModel(classLoader, matcherModel);
+  }
+}

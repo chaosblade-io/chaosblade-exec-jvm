@@ -1,0 +1,28 @@
+package com.otel.business.c.exec.common.model.action;
+
+import com.otel.business.c.exec.common.model.Model;
+
+/**
+ * @author RinaisSuper
+ * @date 2019-04-19
+ */
+public interface DirectlyInjectionAction {
+
+  /**
+   * create injection
+   *
+   * @param uid the injection uid
+   * @param model the injection model
+   * @throws Exception
+   */
+  void createInjection(String uid, Model model) throws Exception;
+
+  /**
+   * destroy injection
+   *
+   * @param uid the injection uid
+   * @param model the injection model
+   * @throws Exception
+   */
+  void destroyInjection(String uid, Model model) throws Exception;
+}

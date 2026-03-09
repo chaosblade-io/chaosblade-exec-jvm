@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.alibaba.xblade.exec.bootstrap.jvmsandbox.SandboxModule
+com.otel.business.c.exec.bootstrap.jvmsandbox.SandboxModule
