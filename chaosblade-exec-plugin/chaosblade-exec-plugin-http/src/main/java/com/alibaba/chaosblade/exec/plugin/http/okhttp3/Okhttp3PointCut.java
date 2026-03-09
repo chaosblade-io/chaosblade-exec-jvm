@@ -32,7 +32,7 @@ public class Okhttp3PointCut implements PointCut {
 
   @Override
   public ClassMatcher getClassMatcher() {
-    return new NameClassMatcher("okhttp3.RealCall");
+    return new NameClassMatcher("okhttp3.internal.connection.RealCall");
   }
 
   @Override

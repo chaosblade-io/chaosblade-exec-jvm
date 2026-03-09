@@ -158,6 +158,7 @@ public class BusinessParamUtil {
     private String key;
     private String value;
     private String mode = BusinessParamUtil.mode.rpc.getValue();
+    private boolean flat = false;
 
     public String getFirstLevelKey() {
       if (hasMultiLevelKey()) {
@@ -168,11 +169,10 @@ public class BusinessParamUtil {
     }
 
     public boolean hasMultiLevelKey() {
-      if (key.contains(".")) {
-        return true;
-      } else {
+      if (flat) {
         return false;
       }
+      return key.contains(".");
     }
 
     public String getJsonPath() {
@@ -201,6 +201,14 @@ public class BusinessParamUtil {
 
     public void setMode(String mode) {
       this.mode = mode;
+    }
+
+    public boolean isFlat() {
+      return flat;
+    }
+
+    public void setFlat(boolean flat) {
+      this.flat = flat;
     }
   }
 
