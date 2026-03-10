@@ -110,6 +110,7 @@ public class BusinessParamUtil {
     return null;
   }
 
+
   private static String getValueFromRpc(
       BusinessParam businessParam, BusinessDataGetter dataGetter) {
     String value = "";
@@ -158,6 +159,7 @@ public class BusinessParamUtil {
     private String key;
     private String value;
     private String mode = BusinessParamUtil.mode.rpc.getValue();
+    private boolean literalKey = false;
 
     public String getFirstLevelKey() {
       if (hasMultiLevelKey()) {
@@ -168,11 +170,18 @@ public class BusinessParamUtil {
     }
 
     public boolean hasMultiLevelKey() {
-      if (key.contains(".")) {
-        return true;
-      } else {
-        return false;
-      }
+        if (isLiteralKey()) {
+            return false;
+        }
+        return key != null && key.contains(".");
+    }
+
+    public boolean isLiteralKey() {
+        return literalKey;
+    }
+
+    public void setLiteralKey(boolean literalKey) {
+        this.literalKey = literalKey;
     }
 
     public String getJsonPath() {
