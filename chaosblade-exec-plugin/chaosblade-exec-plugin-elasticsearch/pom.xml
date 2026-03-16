@@ -33,7 +33,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>8.18.8</version>
+            <version>8.19.8</version>
 <!--            <scope>provided</scope>-->
         </dependency>
 
