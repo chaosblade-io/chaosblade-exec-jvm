@@ -22,6 +22,7 @@ import com.alibaba.chaosblade.exec.common.model.action.DirectlyInjectionAction;
 import com.alibaba.chaosblade.exec.common.model.matcher.EffectCountMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.EffectPercentMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherSpec;
+import com.alibaba.chaosblade.exec.common.model.matcher.ParamExpMatcherSpec;
 import com.alibaba.chaosblade.exec.common.model.prepare.AgentPrepareSpec;
 import com.alibaba.chaosblade.exec.common.model.prepare.PrepareSpec;
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public abstract class BaseModelSpec implements ModelSpec {
       // add effect matcher
       actionSpec.addMatcherDesc(new EffectCountMatcherSpec());
       actionSpec.addMatcherDesc(new EffectPercentMatcherSpec());
+      // add param exp matcher
+      actionSpec.addMatcherDesc(new ParamExpMatcherSpec());
     }
   }
 

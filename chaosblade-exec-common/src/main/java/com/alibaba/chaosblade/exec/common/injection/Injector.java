@@ -29,17 +29,26 @@ import com.alibaba.chaosblade.exec.common.model.action.returnv.UnsupportedReturn
 import com.alibaba.chaosblade.exec.common.model.matcher.MatcherModel;
 import com.alibaba.chaosblade.exec.common.util.ModelUtil;
 import com.alibaba.chaosblade.exec.common.util.StringUtil;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+import org.mvel2.MVEL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** @author Changjun Xiao */
 public class Injector {
   private static final Logger LOGGER = LoggerFactory.getLogger(Injector.class);
+
+  private static Cache<String, Serializable> EXP_CACHE =
+      CacheBuilder.newBuilder().expireAfterAccess(60, TimeUnit.MINUTES).build();
 
   /**
    * Inject
@@ -56,7 +65,15 @@ public class Injector {
         continue;
       }
       try {
-        boolean pass = limitAndIncrease(statusMetric);
+        boolean pass =
+            passParamExp(
+                target, model.getMatcher().get(ModelConstant.PARAM_EXP_FLAG), enhancerModel);
+        if (!pass) {
+          LOGGER.info("passParamExp by: {}", model);
+          break;
+        }
+
+        pass = limitAndIncrease(statusMetric);
         if (!pass) {
           LOGGER.info("Limited by: {}", model);
           break;
@@ -132,7 +149,8 @@ public class Injector {
       LOGGER.debug("match key:{} beginning...", keyName);
       // filter effect count and effect percent
       if (keyName.equalsIgnoreCase(ModelConstant.EFFECT_COUNT_MATCHER_NAME)
-          || keyName.equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)) {
+          || keyName.equalsIgnoreCase(ModelConstant.EFFECT_PERCENT_MATCHER_NAME)
+          || keyName.equalsIgnoreCase(ModelConstant.PARAM_EXP_FLAG)) {
         continue;
       }
 
@@ -177,5 +195,58 @@ public class Injector {
       return false;
     }
     return !matchers.isEmpty();
+  }
+
+  /**
+   * Compare the experiment rule with the date collected by method enhancer
+   *
+   * @param paramExp
+   * @param enhancerModel
+   * @return
+   */
+  private static boolean passParamExp(String target, String paramExp, EnhancerModel enhancerModel) {
+    LOGGER.info("passParamExp target: {} paramExp: {}", target, paramExp);
+    Object[] methodArguments = enhancerModel.getMethodArguments();
+    if (LOGGER.isDebugEnabled()) {
+      LOGGER.debug(
+          "passParamExp target: {} paramExp: {} methodArguments: {}",
+          target,
+          paramExp,
+          methodArguments);
+    }
+    if (null == methodArguments || methodArguments.length == 0 || StringUtil.isBlank(paramExp)) {
+      return true;
+    }
+
+    Map<String, Object> paramMap = new HashMap<String, Object>(methodArguments.length);
+
+    for (int i = 0; i < methodArguments.length; i++) {
+      paramMap.put("arg" + i, methodArguments[i]);
+    }
+
+    Serializable exp = EXP_CACHE.getIfPresent(paramExp);
+
+    try {
+      if (exp == null) {
+        synchronized (Injector.class) {
+          Serializable compileExpression = MVEL.compileExpression(paramExp);
+          EXP_CACHE.put(paramExp, compileExpression);
+          exp = compileExpression;
+        }
+      }
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("passParamExp exp: {} paramMap: {}", exp, paramMap);
+      }
+      Object result = MVEL.executeExpression(exp, paramMap);
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("passParamExp result: {}", result);
+      }
+      if (Boolean.TRUE.equals(result)) {
+        return true;
+      }
+    } catch (Throwable e) {
+      LOGGER.error("matchParamExp err", e);
+    }
+    return false;
   }
 }
