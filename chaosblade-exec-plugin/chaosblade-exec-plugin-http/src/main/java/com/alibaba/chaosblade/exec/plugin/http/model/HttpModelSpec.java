@@ -43,7 +43,9 @@ public class HttpModelSpec extends FrameworkModelSpec {
       if (action instanceof DelayActionSpec) {
         action.setLongDesc("HTTP client delay experiment");
         action.setExample(
-            "# Do a delay 3s experiment with HTTP request URI = https://www.taobao.com for HttpClient4\n"
+            "# Do a delay 3s experiment with HTTP request URI = https://www.taobao.com for HttpClient5\n"
+                + "blade create http delay --httpclient5 --uri https://www.taobao.com --time 3000\n\n"
+                + "# Do a delay 3s experiment with HTTP request URI = https://www.taobao.com for HttpClient4\n"
                 + "blade create http delay --httpclient4 --uri https://www.taobao.com --time 3000\n\n"
                 + "# Do a delay 3s experiment with HTTP request URI = https://www.taobao.com for HttpClient3\n"
                 + "blade create http delay --httpclient3 --uri https://www.taobao.com --time 3000\n\n"
@@ -55,8 +57,10 @@ public class HttpModelSpec extends FrameworkModelSpec {
       if (action instanceof ThrowCustomExceptionActionSpec) {
         action.setLongDesc("HTTP client throws custom exception experiment");
         action.setExample(
-            "# Do a throws custom exception with HTTP request URI = https://www.taobao.com/ for HttpClient4\n"
-                + "blade c http throwCustomException --httpclient4 --exception=java.lang.Exception --exception-message=customException --uri=https://www.taobao.com/");
+            "# Do a throws custom exception with HTTP request URI = https://www.taobao.com/ for HttpClient5\n"
+                + "blade create http throwCustomException --httpclient5 --exception=java.lang.Exception --exception-message=customException --uri=https://www.taobao.com/\n\n"
+                + "# Do a throws custom exception with HTTP request URI = https://www.taobao.com/ for HttpClient4\n"
+                + "blade create http throwCustomException --httpclient4 --exception=java.lang.Exception --exception-message=customException --uri=https://www.taobao.com/");
       }
     }
   }
@@ -75,6 +79,7 @@ public class HttpModelSpec extends FrameworkModelSpec {
   protected List<MatcherSpec> createNewMatcherSpecs() {
     ArrayList<MatcherSpec> matcherSpecs = new ArrayList<MatcherSpec>();
     matcherSpecs.add(new RestTemplateMatcherSpec());
+    matcherSpecs.add(new HttpClient5MatcherSpec());
     matcherSpecs.add(new HttpClient4MatcherSpec());
     matcherSpecs.add(new HttpClient3MatcherSpec());
     matcherSpecs.add(new Okhttp3MatcherSpec());
