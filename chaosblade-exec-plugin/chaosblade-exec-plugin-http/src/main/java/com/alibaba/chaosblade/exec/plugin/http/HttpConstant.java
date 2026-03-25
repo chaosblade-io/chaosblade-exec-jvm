@@ -32,6 +32,7 @@ public class HttpConstant {
   public static final String REST_KEY = "rest";
   public static final String HTTPCLIENT4 = "httpclient4";
   public static final String HTTPCLIENT3 = "httpclient3";
+  public static final String HTTPCLIENT5 = "httpclient5";
   public static final String OKHTTP3 = "okhttp3";
   public static final String ASYNC_HTTP_TARGET_NAME = "asyncHttpClient";
   public static final String getURI = "getURI";
@@ -46,5 +47,6 @@ public class HttpConstant {
   public static final String REST_TARGET_NAME = "rest";
   public static final String HTTPCLIENT3_TARGET_NAME = "httpclient3";
   public static final String HTTPCLIENT4_TARGET_NAME = "httpclient4";
+  public static final String HTTPCLIENT5_TARGET_NAME = "httpclient5";
   public static final String OKHTTP3_TARGET_NAME = "okhttp3";
 }
