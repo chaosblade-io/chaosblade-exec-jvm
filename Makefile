@@ -50,10 +50,26 @@ BLADE_JAVA_TOOLS_JAR_DOWNLOAD_URL := $(BLADE_OSS_URL)/$(BLADE_JAVA_TOOLS_JAR_NAM
 all: build test
 
 # 构建项目
+# 产物归一化：maven 产物名由 pom 版本决定，与产品版本 BLADE_VERSION 无关。
+# 此处按 glob 定位实际产物并断言恰好一个，强制重命名为 BLADE_VERSION 名，
+# 保证「产物名 == BLADE_VERSION」由构造成立（单组件 bump 时 pom 版本不变也能正确产出）。
 build: pre-build build-java
-	@echo "复制构建产物..."
-	cp $(PLUGINS_PATH)/$(JVM_YAML_FILE_NAME) $(BUILD_TARGET_YAML)/
-	cp $(TARGET_PATH)/$(JVM_AGENT_FILE_NAME) $(JVM_SANDBOX_TARGET_PATH)/module/
+	@echo "复制构建产物（归一化到 BLADE_VERSION=$(BLADE_VERSION)）..."
+	@set -e; \
+	set -- $(PLUGINS_PATH)/chaosblade-jvm-spec-*.yaml; \
+	if [ "$$#" -ne 1 ] || [ ! -f "$$1" ]; then \
+		echo "错误: $(PLUGINS_PATH) 下应恰好有 1 个 chaosblade-jvm-spec-*.yaml（匹配数: $$#，首个匹配: $$1）"; \
+		exit 1; \
+	fi; \
+	cp "$$1" $(BUILD_TARGET_YAML)/$(JVM_YAML_FILE_NAME); \
+	echo "已归一化: $$1 -> $(JVM_YAML_FILE_NAME)"; \
+	set -- $(TARGET_PATH)/chaosblade-java-agent-*.jar; \
+	if [ "$$#" -ne 1 ] || [ ! -f "$$1" ]; then \
+		echo "错误: $(TARGET_PATH) 下应恰好有 1 个 chaosblade-java-agent-*.jar（匹配数: $$#，首个匹配: $$1）"; \
+		exit 1; \
+	fi; \
+	cp "$$1" $(JVM_SANDBOX_TARGET_PATH)/module/$(JVM_AGENT_FILE_NAME); \
+	echo "已归一化: $$1 -> $(JVM_AGENT_FILE_NAME)"
 	@echo "构建完成: $(BUILD_TARGET_PKG_DIR)"
 
 # 运行测试
