@@ -65,22 +65,26 @@ BLADE_JAVA_TOOLS_JAR_DOWNLOAD_URL := $(BLADE_OSS_URL)/$(BLADE_JAVA_TOOLS_JAR_NAM
 all: build test
 
 # 构建项目
+# 产物归一化：maven 产物名由 pom 版本决定，与产品版本 BLADE_VERSION 无关。
+# 此处按 glob 定位实际产物并断言恰好一个，强制重命名为 BLADE_VERSION 名，
+# 保证「产物名 == BLADE_VERSION」由构造成立（单组件 bump 时 pom 版本不变也能正确产出）。
 build: pre-build build-java
-	@echo "复制构建产物..."
-	@if [ -f $(PLUGINS_PATH)/$(JVM_YAML_FILE_NAME) ]; then \
-		cp $(PLUGINS_PATH)/$(JVM_YAML_FILE_NAME) $(BUILD_TARGET_YAML)/; \
-	else \
-		echo "警告: $(JVM_YAML_FILE_NAME) 不存在，尝试使用 Maven 生成的版本..."; \
-		MAVEN_YAML_FILE=chaosblade-jvm-spec-$(DEFAULT_BLADE_VERSION).yaml; \
-		if [ -f $(PLUGINS_PATH)/$$MAVEN_YAML_FILE ]; then \
-			cp $(PLUGINS_PATH)/$$MAVEN_YAML_FILE $(BUILD_TARGET_YAML)/$(JVM_YAML_FILE_NAME); \
-			echo "已复制并重命名: $$MAVEN_YAML_FILE -> $(JVM_YAML_FILE_NAME)"; \
-		else \
-			echo "错误: 找不到任何 YAML 文件"; \
-			exit 1; \
-		fi; \
-	fi
-	cp $(TARGET_PATH)/$(JVM_AGENT_FILE_NAME) $(JVM_SANDBOX_TARGET_PATH)/module/
+	@echo "复制构建产物（归一化到 BLADE_VERSION=$(BLADE_VERSION)）..."
+	@set -e; \
+	set -- $(PLUGINS_PATH)/chaosblade-jvm-spec-*.yaml; \
+	if [ "$$#" -ne 1 ] || [ ! -f "$$1" ]; then \
+		echo "错误: $(PLUGINS_PATH) 下应恰好有 1 个 chaosblade-jvm-spec-*.yaml（匹配数: $$#，首个匹配: $$1）"; \
+		exit 1; \
+	fi; \
+	cp "$$1" $(BUILD_TARGET_YAML)/$(JVM_YAML_FILE_NAME); \
+	echo "已归一化: $$1 -> $(JVM_YAML_FILE_NAME)"; \
+	set -- $(TARGET_PATH)/chaosblade-java-agent-*.jar; \
+	if [ "$$#" -ne 1 ] || [ ! -f "$$1" ]; then \
+		echo "错误: $(TARGET_PATH) 下应恰好有 1 个 chaosblade-java-agent-*.jar（匹配数: $$#，首个匹配: $$1）"; \
+		exit 1; \
+	fi; \
+	cp "$$1" $(JVM_SANDBOX_TARGET_PATH)/module/$(JVM_AGENT_FILE_NAME); \
+	echo "已归一化: $$1 -> $(JVM_AGENT_FILE_NAME)"
 	@echo "构建完成: $(BUILD_TARGET_PKG_DIR)"
 
 # 运行测试
@@ -142,10 +146,10 @@ build-java:
 	rm -rf $(PLUGINS_PATH)
 	mkdir -p $(PLUGINS_PATH)
 	@echo "编译插件..."
-	mvn clean package -Dmaven.test.skip=true -U -q -Dproject.version=$(BLADE_VERSION)
+	mvn clean package -Dmaven.test.skip=true -U -q
 	cp $(BLADE_SRC_ROOT)/chaosblade-exec-plugin/chaosblade-exec-plugin-*/target/chaosblade-exec-plugin-*.jar $(PLUGINS_PATH)
 	@echo "打包最终产物..."
-	mvn clean assembly:assembly -Dmaven.test.skip=true -U -q -Dproject.version=$(BLADE_VERSION)
+	mvn clean assembly:assembly -Dmaven.test.skip=true -U -q
 
 .PHONY: license-check
 license-check:
